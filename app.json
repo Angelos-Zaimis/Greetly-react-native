@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "helloch",
+    "slug": "helloch",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#F06748"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#F06748"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#F06748"
+      },
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#F06748"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-localization",
+    [
+      "expo-camera",
+      {
+        "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+      }
+    ],
+    [
+      "expo-media-library",
+      {
+        "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+        "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+        "isAccessMediaLocationEnabled": true
+      }
+    ]
+  ]
+  }
+}

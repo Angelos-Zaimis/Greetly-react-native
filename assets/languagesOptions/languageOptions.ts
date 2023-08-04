@@ -1,0 +1,33 @@
+
+
+export const languageOptions = [
+  { label: 'EN', value: 'en' },
+  { label: 'GR', value: 'gr' },
+  { label: 'ES', value: 'es' },
+  { label: 'FR', value: 'fr' },
+  { label: 'IT', value: 'it' },
+  { label: 'GE', value: 'ge' },
+  { label: 'AR', value: 'ar' },
+  { label: 'RU', value: 'ru' },
+  { label: 'JP', value: 'ja' },
+  { label: 'CN', value: 'zh' },
+  { label: 'KR', value: 'ko' },
+  { label: 'IN', value: 'hi' },
+  { label: 'IL', value: 'he' },
+  { label: 'TR', value: 'tr' },
+  { label: 'PT', value: 'pt' },
+  { label: 'NL', value: 'nl' },
+  { label: 'SW', value: 'sv' },
+  { label: 'PL', value: 'pl' },
+  { label: 'FI', value: 'fi' },
+  { label: 'VN', value: 'vi' },
+  { label: 'TH', value: 'th' },
+  { label: 'CZ', value: 'cs' },
+  { label: 'HU', value: 'hu' },
+  { label: 'RO', value: 'ro' },
+  { label: 'DA', value: 'da' },
+  { label: 'NO', value: 'no' },
+  { label: 'BG', value: 'bg' },
+  { label: 'EL', value: 'el' },
+  { label: 'UK', value: 'uk' }
+  ];
