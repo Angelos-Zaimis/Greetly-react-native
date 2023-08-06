@@ -154,7 +154,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   arrowButtonContainer: {
-    marginVertical: '13%'
+    marginTop: '13%',
+    marginBottom: 30
   },
   subCategoriesTextContainer: {
     flexDirection: 'row',

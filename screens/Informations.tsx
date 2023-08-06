@@ -175,9 +175,9 @@ const styles = StyleSheet.create({
   descriptionText: {
     width: '90%',
     textAlign: 'center',
-    lineHeight: 25,
-    fontSize: 16
-  
+    lineHeight: 30,
+    fontSize: 18,
+
   },
   requiredDocumentsContainer: {
     flex: 1,
