@@ -81,5 +81,13 @@
     "translate": "Translate",
     "howToDoYourtaxesEUemployee": "As an employee from the European Union (EU) working in Switzerland, there are several things you need to do and have in order to file your taxes in Zurich.Register for a Swiss Tax Identification Number.Determine your tax residency status (resident or non-resident).Gather relevant documents, such as employment contracts and pay slips.Familiarize yourself with the Swiss tax system and understand the specific rules and rates in Zurich.Complete a tax return form provided by the Zurich tax authorities.Report your income, deductions, and other financial information on the form.",
     "howToDoYourtaxesEUstudent": "As an student from the European Union (EU) working in Switzerland, there are several things you need to do and have in order to file your taxes in Zurich.Register for a Swiss Tax Identification Number.Determine your tax residency status (resident or non-resident).Gather relevant documents, such as employment contracts and pay slips.Familiarize yourself with the Swiss tax system and understand the specific rules and rates in Zurich.Complete a tax return form provided by the Zurich tax authorities.Report your income, deductions, and other financial information on the form.",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "goPremiumPopUpFirstText": "You are currently on the free plan.",
+    "goPremiumPopUpSecondText": "Only a minimum amount of content is available.",
+    "goPremiumPopUpThirdText": "Upgrade to get access to all content personalized to your status.",
+    "withOnyFive": "with only 5€ / month",
+    "VatIncluded": "VAT included",
+    "GoPremium": "GO PREMIUM",
+    "GoPremiumPageTextOne": "Upgrade to get access to all content personalized to your status.",
+    "GoPremiumTermsCondition": "Your subscription will renew automatically every month. Cancel it anytime from your account settings."
 }

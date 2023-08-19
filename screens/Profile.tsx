@@ -98,7 +98,7 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
                 <View style={styles.itemContainer}>
                    <View>
                      <Text style={styles.inputText}>Email</Text>
-                     <Text style={styles.inputSubText}>{userInfos?.username}</Text>
+                     <Text style={styles.inputEmailText}>{userInfos?.username}</Text>
                    </View>
                 </View>
             </View>
@@ -239,6 +239,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textTransform: 'capitalize'
 
+    },
+    inputEmailText: {
+        color: '#3F465C',
+        fontSize: 16,
     },
     itemContainer: {
         flexDirection: 'row', 

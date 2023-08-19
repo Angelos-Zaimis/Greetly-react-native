@@ -4,7 +4,7 @@ import useSWR from 'swr';
 import CategoryButton from '../components/atoms/CategoryButton';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
-
+import GoPremiumPopUp from '../components/atoms/GoPremiumPopUp';
 
 type SubCategoriesProps = {
   navigation: any;
@@ -23,6 +23,8 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const [incomingCategory, setIncomingCategory] = useState(category);
 
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(true);
+
   const {t} = useLanguage();
   
   const { data: subCategories, error } = useSWR(
@@ -31,6 +33,14 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const handleNavigationBack = () => {
     navigation.goBack();
+  }
+
+  const handleClosePopUp = useCallback(() => {
+    setIsSubscribed(false)
+  },[setIsSubscribed,isSubscribed])
+
+  const handleGoPremium = () => {
+    navigation.push("GoPremium")
   }
 
 
@@ -112,6 +122,9 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
              keyExtractor={(item) => item.title.toString()}
           /> 
       </View>
+      {isSubscribed && (
+        <GoPremiumPopUp handleClosePopUp={handleClosePopUp} handleGoPremium={handleGoPremium} />
+      )}
     </View>
   );
 };

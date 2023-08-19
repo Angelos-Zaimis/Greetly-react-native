@@ -37,7 +37,11 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
     },[setShowPopup])
 
     const handleNavigatForward = () => {
-        if (selectedCountry === '') return;
+        if (selectedCountry === '') {
+    
+          return
+        }
+  
         navigation.push('OnboardingTwo',{selectedCountry})
     }
 

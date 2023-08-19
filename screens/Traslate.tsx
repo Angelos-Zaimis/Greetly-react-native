@@ -35,6 +35,7 @@ const Traslate: FC = () => {
   const { translatedImage, error, translateImage } = useImageTranslation();
   const [isTranslating, setIsTranslating] = useState(false);
 
+  const [borderError, setBoarderError] = useState<boolean>(false)
 
   useEffect(() => {
     (async () => {
@@ -53,7 +54,11 @@ const Traslate: FC = () => {
   const rowTextForSelection = (item: { countryLanguage: string }) => item.countryLanguage;
 
   const handleOpenCamera = () => {
-    if (!language || language === '') return;
+    if (!language || language === '') {
+      setBoarderError(true)
+      return;
+    }
+    setBoarderError(false)
     setShowCamera(true);
   }
 
@@ -63,6 +68,7 @@ const Traslate: FC = () => {
 
   const handleLanguage = (language: LanguageObject) => {
     setLanguage(language.language)
+    setBoarderError(false)
   }
 
   const handleDeleteImage = useCallback(() => {
@@ -164,7 +170,7 @@ const Traslate: FC = () => {
       <SafeAreaView style={styles.conainer}>
         <Text style={styles.text}>{t('translateAdocument')}</Text>
       <View style={styles.buttonTranslateContainer}>
-        <View style={styles.changeLanguage}>
+        <View style={[styles.changeLanguage, {borderColor: borderError ? 'red' : '#fd68463e'}]}>
           <View style={styles.translateAndText}>
             <MaterialIcons name="translate" size={22} color="#F06748" />
             <SelectDropdown data={languages} 
@@ -249,6 +255,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 18,
     flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: '#fd68463e'
   },
   arrowContainer: {
     alignItems: 'center',

@@ -456,22 +456,37 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15.5
      },
       dropdown: {
-        width: '100%',
-        height: 50
+        position:'relative',
+        backgroundColor: '#F8F9FC',
+        borderRadius: 18,
+        paddingHorizontal: 15,
+        paddingVertical: 3
       },
-      dropdownText: {
-        fontSize: 16,
-        color: '#72788D'
-      },
+       dropdownText: {
+      fontSize: 16,
+      color: '#72788D'
+    },
       item: {
         borderBottomColor: '#d8d8dc',
         borderBottomWidth: 0.5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 8,
       },
       deleteIcon: {
         width: 14,
         height: 14,
-        marginLeft: 14
+        position: 'absolute',
+        right: -35,
+        top: -5
+      },
+    selectStatus: {
+      marginLeft: 20,
+      borderWidth: 1,
+      borderColor: '#DADADC',
+      borderRadius: 18,
+      width: '91%',
+      paddingVertical: 12, // Equivalent to height / 2 = 90 / 2 = 45
+      paddingHorizontal: 16,
+      marginTop: 10,
     },
     inputIcon: {
         position: 'absolute',

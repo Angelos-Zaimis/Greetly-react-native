@@ -53,7 +53,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
             tabBarActiveTintColor: '#F06748',
             tabBarLabelStyle: styles.scanText,
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="photo-filter" style={{marginRight: 20}} size={27} color={color} />
+              <MaterialIcons name="photo-filter" size={27} color={color} />
             )
           }}
         >
@@ -63,7 +63,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         <Tab.Screen
           name="HelpContainer"
           options={{
-            tabBarItemStyle: [styles.helpTap, {width: SCREEN_HEIGHT < 700 ? 59 : 69, height: SCREEN_HEIGHT < 700 ? 59 : 69}],
+            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 59 : 60}],
             tabBarStyle: styles.tabContainer,
             headerShown: false,
             title: 'Help',
@@ -89,7 +89,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
             tabBarActiveTintColor: '#F06748',
             tabBarLabelStyle: styles.bookText,
             tabBarIcon: ({ color, size }) => (
-              <Feather name="heart" style={{marginLeft: 53}} size={25} color={color} />
+              <Feather name="heart" size={25} color={color} />
             )
           }}
         >
@@ -124,14 +124,11 @@ export default BottomNavigator;
         backgroundColor: '#F5F8FD',
     },
     helpTap: {
-      position: 'absolute',
-      paddingVertical: 12,
-      left: '43%',
-      top: '-38%',
-      width: 69,
-      height: 69,
+      position: 'relative',
+      paddingVertical: 8,
+      top: '-2%',
       backgroundColor: '#F06748', 
-      borderRadius: 100,
+      borderRadius: 35,
       elevation: 6, 
       shadowColor: '#F06748',
       shadowOffset: {
@@ -145,14 +142,12 @@ export default BottomNavigator;
       fontSize: 12,
     },
     bookText:{
-      marginLeft: 53
     },
     helpText: {
       color: 'white',
       fontSize: 12
     },
     scanText: {
-      marginRight: 20,
       fontSize: 12,
     }
   })

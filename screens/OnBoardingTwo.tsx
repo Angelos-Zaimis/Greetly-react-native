@@ -39,8 +39,6 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
         setShowPopup(false)
     },[setShowPopup])
 
-    const rowTextForSelection = (item: { label: string }) => item.label;
-
     const handleNavigatForward = () => {
         navigation.push('OnboardingThree',{
             selectedCountry,
@@ -69,7 +67,6 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
       <TouchableOpacity
         style={[styles.renderedItem, {width: SCREEN_HEIGHT < 700 ? 250 : 270}]}
         onPress={() => handleStatusClick(item.value)}
-        key={index}
       >
         <Text style={styles.renderedText}>{item.label}</Text>
       </TouchableOpacity>
@@ -122,7 +119,6 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
                   renderItem={renderItem}
                   scrollsToTop
                   keyExtractor={(item, index) => index.toString()}
-                  
                 />
               </View>
             </View>

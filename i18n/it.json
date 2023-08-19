@@ -73,7 +73,15 @@
     "Retake": "Riprendere",
     "save": "Salvare",
     "translate": "Tradurre",
-    "selectLanguage": "Seleziona la lingua"
+    "selectLanguage": "Seleziona la lingua",
+    "goPremiumPopUpFirstText": "Al momento siete nel piano gratuito.",
+    "goPremiumPopUpSecondText": "È disponibile solo una quantità minima di contenuti.",
+    "goPremiumPopUpThirdText": "Effettua l'upgrade per avere accesso a tutti i contenuti personalizzati in base al tuo status.",
+    "withOnyFive": "con soli 5€ / mese",
+    "VatIncluded": "VAT inclusa",
+    "GoPremium": "VAI AL PREMIUM",
+    "GoPremiumPageTextOne": "Effettua l'upgrade per avere accesso a tutti i contenuti personalizzati in base al tuo status.",
+    "GoPremiumTermsCondition": "L'abbonamento si rinnova automaticamente ogni mese. Potete annullarlo in qualsiasi momento dalle impostazioni del vostro account."
 
 }
   
