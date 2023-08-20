@@ -46,12 +46,11 @@ export default GoPremiumPopUp
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 30,
-        backgroundColor: 'white',
-        padding: 15,
+        flex:1,
+        alignSelf: 'center',
+        justifyContent:'flex-end',
+        marginBottom: 40,
+    
     },
     subcontainer: {
         width: 400,
@@ -59,10 +58,12 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         backgroundColor: '#F8F9FC',
         shadowColor: '#1C63F23B',
-        shadowOffset: { width: 0, height: 0 },
+        shadowOffset: { width: 0, height: 5 },
         shadowOpacity: 10,
-        shadowRadius: 18,
+        shadowRadius: 60,
         elevation: 2,
+        borderWidth: 1,
+        borderColor:'white'
     },
     deleteContainer: {
         alignItems: 'flex-end',

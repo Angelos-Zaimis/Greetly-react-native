@@ -89,5 +89,7 @@
     "VatIncluded": "VAT included",
     "GoPremium": "GO PREMIUM",
     "GoPremiumPageTextOne": "Upgrade to get access to all content personalized to your status.",
-    "GoPremiumTermsCondition": "Your subscription will renew automatically every month. Cancel it anytime from your account settings."
+    "GoPremiumTermsCondition": "Your subscription will renew automatically every month. Cancel it anytime from your account settings. By clicking \"Confirm and pay\", you agree to",
+    "termsAndConditions": "Terms and Conditions.",
+    "Completeyourpayment": "Complete your payment"
 }

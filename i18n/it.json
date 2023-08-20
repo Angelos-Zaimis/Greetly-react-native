@@ -81,7 +81,8 @@
     "VatIncluded": "VAT inclusa",
     "GoPremium": "VAI AL PREMIUM",
     "GoPremiumPageTextOne": "Effettua l'upgrade per avere accesso a tutti i contenuti personalizzati in base al tuo status.",
-    "GoPremiumTermsCondition": "L'abbonamento si rinnova automaticamente ogni mese. Potete annullarlo in qualsiasi momento dalle impostazioni del vostro account."
-
+    "GoPremiumTermsCondition": "L'abbonamento si rinnova automaticamente ogni mese. È possibile annullarlo in qualsiasi momento dalle impostazioni dell'account. Facendo clic su \"Conferma e paga\", l'utente accetta di",
+    "termsAndConditions": "Termini e condizioni.",
+    "Completeyourpayment": "Completare il pagamento"
 }
   

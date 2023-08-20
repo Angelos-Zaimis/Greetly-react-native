@@ -31,7 +31,7 @@ const ConfirmModal: FC<ConfirmModalProps> = ({ visible, onCancel, onConfirm, tex
                     <Text style={styles.text}>{t(subText)}</Text>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <ConfirmButton handlePress={onConfirm}/>
+                    <ConfirmButton text={'Confirm'} handlePress={onConfirm}/>
                     <TouchableOpacity onPress={onCancel} style={styles.cancelButton}>
                         <Text style={styles.cancelButtonText}>{t('cancel')}</Text>
                     </TouchableOpacity>

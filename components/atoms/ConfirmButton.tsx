@@ -4,15 +4,16 @@ import React, { FC } from 'react'
 
 type ConfirmButtonProps = {
     handlePress: () => void;
+    text: string;
   
   };
   
 
-const ConfirmButton: FC<ConfirmButtonProps> = ({handlePress}) => {
+const ConfirmButton: FC<ConfirmButtonProps> = ({handlePress, text}) => {
 
   return (
     <TouchableOpacity onPress={handlePress}  style={styles.button }>
-      <Text style={styles.buttonText}>Confirm</Text>
+      <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity> 
   
   )
