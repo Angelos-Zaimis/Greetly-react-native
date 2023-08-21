@@ -2,9 +2,11 @@ import { useContext } from 'react';
 import useSWR from 'swr';
 import RNFetchBlob from 'rn-fetch-blob';
 import axios from 'axios';
+import AppURLS from '../appURLS';
+import { TRANSLATE_IMAGE_ENDPOINT } from '../endpoints';
 
 
-const translationEndpoint = 'http://127.0.0.1:8000/api/translateImage/';
+const translationEndpoint = `${AppURLS.middlewareInformationURL}/${TRANSLATE_IMAGE_ENDPOINT}/`;
 
 export const useImageTranslation = () => {
 
@@ -27,7 +29,7 @@ export const useImageTranslation = () => {
       },
     });
     mutate()
-    console.log(response)
+  
     return response.data;
  
   } catch (error) {

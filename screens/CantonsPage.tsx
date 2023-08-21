@@ -24,9 +24,6 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
   const {getUserInfo, user} = useContext(AuthContext)
 
-
-  console.log(cities)
-
   return (
     <SafeAreaView  style={styles.container}>
       <View style={styles.header}>

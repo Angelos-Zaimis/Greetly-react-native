@@ -5,6 +5,8 @@ import CategoryButton from '../components/atoms/CategoryButton';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import GoPremiumPopUp from '../components/atoms/GoPremiumPopUp';
+import AppURLS from '../components/appURLS';
+import { CITIES_ENDPOINT, SUB_CATEGORIES_ENDPOINT } from '../components/endpoints';
 
 type SubCategoriesProps = {
   navigation: any;
@@ -23,12 +25,12 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const [incomingCategory, setIncomingCategory] = useState(category);
 
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(true);
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
   const {t} = useLanguage();
   
   const { data: subCategories, error } = useSWR(
-    `http://127.0.0.1:8000/api/cities/${cityName}/${incomingCategory}/subcategories`
+    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${incomingCategory}/${SUB_CATEGORIES_ENDPOINT}`
   );
 
   const handleNavigationBack = () => {

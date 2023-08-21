@@ -7,6 +7,8 @@ import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import { useBookmarks } from '../components/util/useBookmarks';
 import CustomToaster from '../components/atoms/CustomToaster';
+import AppURLS from '../components/appURLS';
+import { CITIES_ENDPOINT } from '../components/endpoints';
 
 type InformationsProps = {
   navigation: any;
@@ -21,7 +23,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   const {userInfos} = useContext(AuthContext)
 
   const { data: information, error } = useSWR(
-    `http://127.0.0.1:8000/api/cities/${cityName}/${category}/${subcategory}/${userInfos?.citizenship}-${userInfos?.status}-${subcategory}`,
+    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfos?.citizenship}-${userInfos?.status}-${subcategory}`,
   );
 
   const {height: SCREEN_HEIGHT} = useWindowDimensions();

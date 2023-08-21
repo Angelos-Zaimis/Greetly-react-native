@@ -6,6 +6,8 @@ import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
+import AppURLS from '../components/appURLS';
+import { TEAM_MEMBERS_ENDPOINT } from '../components/endpoints';
 
 type TeamMemberProps = {
     route: any
@@ -15,7 +17,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
 
     const {teamMemberId} = route.params ?? {}
 
-    const { data: teamMember, error } = useSWR(`http://127.0.0.1:8000/api/teamMembers/${teamMemberId}`);
+    const { data: teamMember, error } = useSWR(`${AppURLS.middlewareInformationURL}/${TEAM_MEMBERS_ENDPOINT}/${teamMemberId}`);
 
     const {t} = useLanguage();
 

@@ -1,9 +1,8 @@
 
-import { useContext } from 'react';
 import useSWR from 'swr';
-import { AuthContext } from '../../hooks/auth/AuthContext';
-
-const apiUrl = 'http://127.0.0.1:8000/api/cities/';
+import AppURLS from '../appURLS';
+import { CITIES_ENDPOINT } from '../endpoints';
+const apiUrl = `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/`;
 
 export const useCities = () => {
 

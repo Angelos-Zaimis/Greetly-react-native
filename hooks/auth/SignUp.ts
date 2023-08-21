@@ -1,4 +1,6 @@
 import axios from "axios";
+import AppURLS from "../../components/appURLS";
+import { AUTH_REGISTRATION_ENDPOINT } from "../../components/endpoints";
 
 
 type SignUpProps = {
@@ -13,7 +15,7 @@ const signUp = async(body: SignUpProps) => {
 
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/auth/registration/',
+        `${AppURLS.middlewareInformationURL}/${AUTH_REGISTRATION_ENDPOINT}/`,
         body,
         {
           headers: {

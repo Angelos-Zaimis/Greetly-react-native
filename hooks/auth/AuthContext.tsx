@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppURLS from "../../components/appURLS";
+import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_TOKEN_ENDPOINT, USER_INFO_ENDPOINT } from "../../components/endpoints";
 
 
 interface AuthContextType {
@@ -107,14 +109,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
   
   // ...
-  console.log(user)
+
   /*
   For logging in
   */
   const login = async (body: LoginProps) => {
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/auth/token/',
+        `${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`,
         body,
         {
           headers: {
@@ -137,7 +139,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const updateUserInfo = async (body: { email: string; language: string, country: string, status: string}) => {
     try {
-      const response = await axios.put('http://127.0.0.1:8000/api/userInfo/', body, {
+      const response = await axios.put(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/`, body, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -154,7 +156,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     try {
 
-      const response =  await axios.get(`http://127.0.0.1:8000/api/userInfo/?email=${userInfos.username}`,
+      const response =  await axios.get(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/?email=${userInfos?.username}`,
         {
           headers: {
             'Content-Type': 'application/json'
@@ -170,9 +172,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const changePassword = async( email:string) => {
-    console.log(email)
+  
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/changePassword/',
+      const response = await axios.post(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_ENDPOINT}/`,
       {email},
       {
         headers: {
@@ -189,9 +191,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const changePasswordVerify = async(body: {email: string, code: string, password: string}) => {
-    console.log(body)
+
     try {
-      const response = await axios.patch('http://127.0.0.1:8000/api/auth/changePasswordVerify/', body, {
+      const response = await axios.patch(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT}/`, body, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -212,7 +214,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const deleteAccount = async (email: string) => {
-    const response = await axios.delete('http://127.0.0.1:8000/api/auth/token/', {
+    const response = await axios.delete(`${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`, {
       headers: {
         'Content-Type': 'application/json'
       },
@@ -232,7 +234,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   //   try {
   //     const response = await axios.post(
-  //       'http://127.0.0.1:8000/api/auth/token/refresh/',
+  //       `${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_REFRESH}/`,
   //       {
   //         refresh: authTokens?.refresh
   //       },

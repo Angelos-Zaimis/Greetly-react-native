@@ -2,8 +2,10 @@
 import { useContext } from 'react';
 import useSWR from 'swr';
 import { AuthContext } from '../../hooks/auth/AuthContext';
+import AppURLS from '../appURLS';
+import { BOOKMARKS_ENDPOINT } from '../endpoints';
 
-const apiUrl = 'http://127.0.0.1:8000/api/bookmarks/';
+const apiUrl = `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/`;
 
 export const useBookmarks = (informationTitle?: string) => {
 
@@ -12,7 +14,7 @@ export const useBookmarks = (informationTitle?: string) => {
   const { data: bookmarks, error, mutate } = useSWR(`${apiUrl}?user_email=${userInfos?.user}`); // replace fetcher with your own function
  
   const { data: bookmarkSaved, mutate: mutateBookmark } = useSWR(
-    `http://127.0.0.1:8000/api/bookmarks/${informationTitle}/?user_email=${userInfos?.user}`,
+    `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/${informationTitle}/?user_email=${userInfos?.user}`,
   );
 
   const createBookmark = async (postData: any) => {

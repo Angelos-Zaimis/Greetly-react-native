@@ -38,6 +38,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         getUserInfo()
         setLanguage(userInfos.language);
       }
+    }else{
+      setLanguage('en')
     }
   }, [userInfos,selectedLanguage,userInfos?.language]);
 
@@ -54,6 +56,27 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
           it: {
             translation: require('../../i18n/it.json'),
           },
+          es: {
+            translation: require('../../i18n/es.json')
+          },
+          de: {
+            translation: require('../../i18n/de.json')
+          },
+          el: {
+            translation: require('../../i18n/el.json')
+          },
+          fr: {
+            translation: require('../../i18n/fr.json')
+          },
+          he: {
+            translation: require('../../i18n/he.json')
+          },
+          ar: {
+            translation: require('../../i18n/ar.json')
+          },
+          ru:{
+            translation: require('../../i18n/ru.json')
+          }
         },
         fallbackLng: 'en',
         interpolation: {
@@ -61,7 +84,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         },
       });
   },[]);
-console.log(selectedLanguage)
+
   const contextValue: LanguageContextType = {
     t: (key: string) => i18next.t(key, { lng: selectedLanguage ? selectedLanguage : 'en'}),
     setLanguage: (language: string) => setLanguage(language),

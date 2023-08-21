@@ -4,6 +4,8 @@ import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
 import { FontAwesome5} from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import AppURLS from '../components/appURLS';
+import { CATEGORIES_ENDPOINT, CITIES_ENDPOINT } from '../components/endpoints';
 
 type CategoriesProps = {
   navigation: any,
@@ -14,7 +16,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   const {cityName} = route.params ?? {};
 
-  const { data: categories, error } = useSWR(`http://127.0.0.1:8000/api/cities/${cityName}/categories`)
+  const { data: categories, error } = useSWR(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${CATEGORIES_ENDPOINT}`)
  
   const {t} = useLanguage();
   

@@ -3,6 +3,8 @@ import {Text,SafeAreaView,StyleSheet, View, Image, FlatList, TouchableOpacity, u
 import { useLanguage } from '../components/util/LangContext';
 import useSWR from 'swr';
 import { FontAwesome } from '@expo/vector-icons';
+import AppURLS from '../components/appURLS';
+import { TEAM_MEMBERS_ENDPOINT } from '../components/endpoints';
 
 type HelpProps = {
   navigation: any,
@@ -18,7 +20,7 @@ type HelpProps = {
 
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
 
-  const { data: teamMembers, error } = useSWR('http://127.0.0.1:8000/api/teamMembers/')
+  const { data: teamMembers, error } = useSWR(`${AppURLS.middlewareInformationURL}/${TEAM_MEMBERS_ENDPOINT}/`)
 
   return (
     <SafeAreaView style={styles.container}>
