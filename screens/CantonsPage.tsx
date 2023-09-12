@@ -1,9 +1,6 @@
-import React, { FC, useContext, useEffect, useState } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View,Image, FlatList, StyleSheet} from 'react-native'
-import { AuthContext } from '../hooks/auth/AuthContext'
+import React, { FC } from 'react'
+import { SafeAreaView, Text, TouchableOpacity, View,Image, FlatList, StyleSheet, useWindowDimensions} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
-
-import useSWR from 'swr'
 import { useCities } from '../components/util/useCities'
 import Spinner from '../components/atoms/Spinner'
 
@@ -18,11 +15,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
   
   const {t} = useLanguage()
 
- 
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
-
-
-  const {getUserInfo, user} = useContext(AuthContext)
 
   return (
     <SafeAreaView  style={styles.container}>
@@ -124,7 +117,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.7,
     shadowRadius: 8,
-    elevation: 2,
+    elevation: 0,
   },
   image: {
     height: 110,

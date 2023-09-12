@@ -11,8 +11,6 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
     
-
-
   const [isFirstLanchEver, setIsFirstLanchEver] = useState<boolean>(false);
 
   /**

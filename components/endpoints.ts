@@ -1,7 +1,7 @@
 export const BOOKMARKS_ENDPOINT = 'bookmarks';
 export const CITIES_ENDPOINT = 'cities'
 export const TRANSLATE_IMAGE_ENDPOINT = 'translateImage'
-export const AUTH_TOKEN_ENDPOINT = '/auth/token'
+export const AUTH_TOKEN_ENDPOINT = 'auth/token'
 export const USER_INFO_ENDPOINT = 'userInfo'
 export const AUTH_CHANGE_PASSWORD_ENDPOINT = 'auth/changePassword'
 export const AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT = 'auth/changePasswordVerify'

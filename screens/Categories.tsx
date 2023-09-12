@@ -16,7 +16,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   const {cityName} = route.params ?? {};
 
-  const { data: categories, error } = useSWR(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${CATEGORIES_ENDPOINT}`)
+  const { data: categories, error } = useSWR(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${CATEGORIES_ENDPOINT}/`)
  
   const {t} = useLanguage();
   
@@ -26,7 +26,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      {categories && categories[0] && <Image style={styles.image} source={{uri: categories[0].image}}></Image>}
+      {categories && categories[0] && <Image style={styles.image} source={{uri: categories[2].image}}></Image>}
       <View>
         <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
           <AntDesign name="left" size={21} color="black" />

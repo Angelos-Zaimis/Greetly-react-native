@@ -206,7 +206,8 @@ const styles = StyleSheet.create({
     },
     headerSubText: {
         color: '#72788D',
-        fontSize: 14
+        fontSize: 14,
+        textAlign: 'center'
     },
     iconArrow:{
         height: 18,

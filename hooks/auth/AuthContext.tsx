@@ -21,6 +21,7 @@ interface AuthContextType {
     language: string;
     country: string;
     status: string;
+    isSubscribed: boolean | null;
   }>;
   updateUserInfo: (body: { email: string; language?: string , country?:string, status?: string}) => void; // Updated type
   isUpdated: boolean;
@@ -54,7 +55,8 @@ const initialAuthContextValue: AuthContextType = {
     return {
       language: '',
       country: '',
-      status: ''
+      status: '',
+      isSubscribed: null
     };
   },
   deleteAccount: function (emai: string): void {
@@ -114,6 +116,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   For logging in
   */
   const login = async (body: LoginProps) => {
+    console.log(`${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`)
     try {
       const response = await axios.post(
         `${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`,

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { View, Image, ImageSourcePropType, StyleSheet, TouchableOpacity,Text, FlatList} from 'react-native';
 import useSWR from 'swr';
 import CategoryButton from '../components/atoms/CategoryButton';
@@ -7,6 +7,9 @@ import { AntDesign } from '@expo/vector-icons';
 import GoPremiumPopUp from '../components/atoms/GoPremiumPopUp';
 import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT, SUB_CATEGORIES_ENDPOINT } from '../components/endpoints';
+import { AuthContext } from '../hooks/auth/AuthContext';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Animated } from 'react-native';
 
 type SubCategoriesProps = {
   navigation: any;
@@ -27,15 +30,20 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
+  const {userInfos} = useContext(AuthContext)
+
+
   const {t} = useLanguage();
   
   const { data: subCategories, error } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${incomingCategory}/${SUB_CATEGORIES_ENDPOINT}`
+    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${incomingCategory}/${SUB_CATEGORIES_ENDPOINT}/`
   );
 
   const handleNavigationBack = () => {
     navigation.goBack();
   }
+
+  const [opacity, setOpacity] = useState(new Animated.Value(0));
 
   const handleClosePopUp = useCallback(() => {
     setIsSubscribed(false)
@@ -45,6 +53,21 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
     navigation.push("GoPremium")
   }
 
+  useEffect(() => {
+    if (isSubscribed) {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 500, 
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isSubscribed]);
 
   const categories: Category[] = [
     {
@@ -103,29 +126,40 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
         </View>
       </View>
       <View style={styles.flatlistContainer}>
-          <FlatList 
-            data={subCategories}
-            renderItem={({ item }) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => navigation.push('Informations',{
-                 cityName: cityName,
-                 category: incomingCategory,
-                 subcategory: item.title,
-                 image: subCategories[0].image,
-
-              })}
-             style={styles.categoryContainer}
-            >
-              <Text style={styles.subcategoryText}>{t(item.title)}</Text>
-              <Image style={styles.iconArrow} source={require('../assets/categories/right.png')}></Image>
-            </TouchableOpacity>
-            )}
-             keyExtractor={(item) => item.title.toString()}
-          /> 
+        <FlatList 
+          data={subCategories}
+          renderItem={({ item, index }) => {
+              const showAsSubscribed = userInfos?.isSubscribed || index < 3;
+              return (
+                  <TouchableOpacity
+                      key={item.id}
+                      onPress={
+                          showAsSubscribed 
+                          ? () => navigation.push('Informations',{
+                            cityName: cityName,
+                            category: incomingCategory,
+                            subcategory: item.title,
+                            image: subCategories[0].image,})
+                          : () => setIsSubscribed(true)}
+                            style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
+                  >
+                    <Text style={[styles.subcategoryText, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
+                    {showAsSubscribed 
+                    ? <Image style={styles.iconArrow} source={require('../assets/categories/right.png')} />
+                    : <MaterialIcons name="lock" size={22} color="#E3B9B0" />}
+                  </TouchableOpacity>
+                )
+              }}
+              keyExtractor={(item) => item.title.toString()}
+        />
       </View>
       {isSubscribed && (
-        <GoPremiumPopUp handleClosePopUp={handleClosePopUp} handleGoPremium={handleGoPremium} />
+          <Animated.View style={{ opacity: opacity }}>
+            <GoPremiumPopUp 
+              handleClosePopUp={handleClosePopUp} 
+              handleGoPremium={handleGoPremium} 
+            />
+          </Animated.View>
       )}
     </View>
   );
@@ -199,6 +233,6 @@ const styles = StyleSheet.create({
   },
   subcategoryText: {
     fontSize: 16,
-
+    fontWeight: 'bold'
   }
 })

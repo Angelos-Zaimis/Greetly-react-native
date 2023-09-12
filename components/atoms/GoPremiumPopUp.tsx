@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         shadowRadius: 60,
         elevation: 2,
         borderWidth: 1,
-        borderColor:'white'
+        borderColor:'white',
     },
     deleteContainer: {
         alignItems: 'flex-end',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         alignItems: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     firstText: {
         color: '#3F465C',
@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         width: 300,
-        marginTop: 25,
+        marginTop: 17,
         lineHeight: 26
     },
     fourthText: {
         color: '#3F465C',
         fontSize: 16,
         fontWeight: '600',
-        marginTop: 20
+        marginTop: 10
     },
     fifthText: {
         color: "#72788D",
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         marginRight: 15
     },
     button: {
-        marginTop:20,
+        marginTop:15,
         flexDirection: 'row',
         alignItems: 'center'
     }

@@ -17,7 +17,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
 
     const {teamMemberId} = route.params ?? {}
 
-    const { data: teamMember, error } = useSWR(`${AppURLS.middlewareInformationURL}/${TEAM_MEMBERS_ENDPOINT}/${teamMemberId}`);
+    const { data: teamMember, error } = useSWR(`${AppURLS.middlewareInformationURL}/${TEAM_MEMBERS_ENDPOINT}/${teamMemberId}/`);
 
     const {t} = useLanguage();
 
@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
         color: '#3F465C',
         fontWeight: '600',
         marginTop: 15,
-        textAlign: 'center'
+        textAlign: 'center',
+        width: 300
     },
     freeOfCharge: {
         fontSize: 17,
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     assistText: {
         color: '#72788D',
         fontSize: 16,
-        width: 270,
+        width: 300,
         textAlign: 'center',
         marginTop: 15,
         lineHeight: 25

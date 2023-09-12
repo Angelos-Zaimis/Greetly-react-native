@@ -25,7 +25,7 @@ const Intro: FC<IntroProps>= ({navigation}) => {
         <Image style={[styles.image, {height: SCREEN_HEIGHT < 700 ? 300 : 400}]} source={require('../assets/intro/zurich.png')}/>
       </View>
       <View>
-        <Text  style={styles.title}>Ease your move with hello.ch</Text>
+        <Text  style={styles.title}>Ease your move with Greetly.ch</Text>
         <Text style={styles.subtitle}>Find solutions for all aspects of relocation based on your origin and occupation.</Text>
         <Text style={styles.subtitle}>Get consultation from experts.</Text>
       </View>

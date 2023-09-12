@@ -23,10 +23,8 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   const {userInfos} = useContext(AuthContext)
 
   const { data: information, error } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfos?.citizenship}-${userInfos?.status}-${subcategory}`,
+    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfos?.citizenship}-${userInfos?.status}-${subcategory}/`,
   );
-
-  const {height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const {
     createBookmark, 
@@ -86,6 +84,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     await mutateBookmark()
   },[bookmarkSaved?.uniqueTitle])
 
+  console.log(bookmarkSaved)
   return (
     <View style={styles.container}>
       {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
@@ -103,10 +102,11 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.descriptionText}>{t(information?.description)}</Text>
-      </View>
-
+      <ScrollView>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.descriptionText}>{t(information?.description)}</Text>
+        </View>
+      </ScrollView>
       {
         information?.requiredDocuments && (
           <View style={styles.requiredDocumentsContainer}>
@@ -168,7 +168,9 @@ const styles = StyleSheet.create({
   subCategoryTitle: {
     fontSize: 20,
     color: '#3F465C',
-    fontWeight: '500'
+    fontWeight: '500',
+    textAlign: 'center',
+    width: 270
   },
   descriptionContainer: {
     alignItems: 'center',
