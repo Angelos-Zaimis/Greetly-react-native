@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons';
-import ConfirmModal from '../components/atoms/ConfirmModal';
+import ConfirmModal from '../components/shared/ConfirmModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { languages } from '../assets/languages';
 

@@ -40,11 +40,11 @@ type HelpProps = {
       </View>
       <View>
         <Image
-        style={[styles.image, {height: SCREEN_HEIGHT < 700 ? 120 : 200}]}
+        style={styles.image}
         source={require('../assets/help/help.png')}
         />
       </View>
-      <View style={styles.flatlistContainer}>
+      <View>
           <FlatList 
             data={teamMembers}
             renderItem={({ item }) => (
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     width: '70%',
     paddingLeft: 20,
     marginTop: '8%',
-    lineHeight: 32
+    lineHeight: 28
 
   },
   titleOrange: {
@@ -109,16 +109,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     paddingLeft: 20,
-    width: '63%',
-    marginTop: 13
+    width: '64%',
+    marginTop: 8
   },
   image: {
     resizeMode: 'contain',
     width: '100%',
-    height: 200
-  },
-  flatlistContainer: {
-    flex: 1,
+    height: 100,
+    marginBottom: 5
   },
   personContainer: {
     flex: 1,
@@ -130,7 +128,7 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 20,
     paddingTop: 15,
-    marginBottom: '7%',
+    marginBottom: '5%',
     backgroundColor: '#F8F9FC',
   },
   profileImage: {

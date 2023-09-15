@@ -7,11 +7,10 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../countriesAndStatus/countries';
 import { AntDesign } from '@expo/vector-icons'; 
 import { statusList } from '../assets/statuslist/statusList';
-import CreateButtonSignIn from '../components/atoms/CreateButtonSignIn';
+import CreateButtonSignIn from '../components/shared/CreateButtonSignIn';
 import { Ionicons } from '@expo/vector-icons';
+import Spinner from '../components/shared/Spinner';
 
-import Spinner from '../components/atoms/Spinner';
-import { color } from 'react-native-reanimated';
 type SignInProps = {
     navigation: any;
 }
@@ -214,11 +213,11 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
         </View>
         <View style={styles.emailandpasswordContainer}>
           <View style={styles.inner}>
-            <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT <= 700 ? 8 : 16, width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
+            <View style={[styles.input, { width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
               <Text style={styles.inputTextEmail}>Email</Text>
                 {
                   email !== '' ?  
-                  <View style={[styles.validation,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
+                  <View style={[styles.validation,{left: '99%'}]}>
                   {isValidInputEmailText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
                    </View>
                    : 
@@ -234,19 +233,19 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
                 keyboardType="email-address">
               </TextInput>
             </View>
-            <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT <= 700 ? 8 : 16}]}>
+            <View style={styles.input}>
               <Text style={styles.inputText}>Password</Text>
               <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainer}>
                 {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
-              </TouchableOpacity>
                 {
                   password !== '' ?  
-                  <View style={[styles.validation,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
+                  <View style={[styles.validation,]}>
                   {isValidInputPasswordText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
                    </View>
                    : 
                    null
                   }
+              </TouchableOpacity>
                 <TextInput
                   placeholderTextColor={'#AFB1B5'}
                   placeholder="enter your password"
@@ -260,7 +259,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
             </View>
         </View>
         <View style={styles.inputCountryOccupation}>
-          <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountry, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 20,width: SCREEN_HEIGHT < 700 ? '901%' : '85%'}]}>
+          <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountry]}>
             <Text style={styles.buttonText}>{t('countryOfOrigin')}</Text>
             <View style={styles.inputContainer}>
               <Text style={styles.buttonTextSelected}>{selectedCountry ? selectedCountry : t('pageOnboardingSelect')}</Text>
@@ -289,7 +288,6 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
                   search
                   maxHeight={340}
                   itemContainerStyle={styles.item}
-                  selectedTextStyle={styles.selectedItem}
                   labelField={'label'}
                   valueField="value"
                   placeholder={!selectedCountry ? t('pageOnboardingSearch') : selectedCountry}
@@ -305,7 +303,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
          </Modal>
         </View>
         <View style={styles.inputCountryOccupation}>
-          <TouchableOpacity onPress={handleShowPopup} style={[styles.selectStatus, {width: SCREEN_HEIGHT < 700 ? '901%' : '85%'}]}>
+          <TouchableOpacity onPress={handleShowPopup} style={[styles.selectStatus]}>
             <Text style={styles.buttonText}>{t('pageOnboardingIam')}</Text>
             <View style={styles.inputContainer}>
                 <Text style={styles.buttonTextSelected}>{status ? status : t('pageOnboardingSelect')}</Text>
@@ -354,17 +352,11 @@ const styles = ScaledSheet.create({
     },
     subtitle: {
       width: 280,
-      fontSize: 20,
+      fontSize: 16,
       marginLeft: 20,
       color: '#72788D',
      marginBottom: 12
   },
-    InputContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'white',
-     },
      header: {
       marginTop: 10
      },
@@ -383,31 +375,24 @@ const styles = ScaledSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingTop: 15,
+      
     },
     textInput: {
-        height: 40,
         borderColor: '#000000',
         borderBottomWidth: 1,
-        marginBottom: 36,
     },
     btnContainer: {
         backgroundColor: 'white',
     },
     input: {
-      paddingVertical: 16,
+      paddingVertical: 15,
       paddingHorizontal: 16,
       borderWidth: 1,
       borderColor: '#DADADC',
       borderRadius: 18,
-      marginBottom: 20,
-      backgroundColor: 'white'
-    },
-    languageButtonStyle: {
-      marginTop: 10,
-      width: 120,
-      backgroundColor: 'transparrent',
-      marginHorizontal: 7,
+      marginBottom: 15,
+      backgroundColor: 'white',
+      justifyContent: 'center'
     },
     languageText: {
       fontSize: 14,
@@ -418,7 +403,7 @@ const styles = ScaledSheet.create({
     fontSize: 26,
     width: 400,
     marginLeft: 20,
-    marginBottom: 18,
+    marginBottom: 10,
     color: '#3F465C',
     fontWeight: '500',
   },
@@ -447,7 +432,8 @@ const styles = ScaledSheet.create({
     buttonText: {
       fontSize: 16,
       color: '#3F465C',
-      fontWeight: '500'
+      fontWeight: '500',
+      marginBottom: 10
   },
   overlay: {
     flex: 1,
@@ -461,9 +447,6 @@ const styles = ScaledSheet.create({
     height: '55%',
     padding: 7,
     borderRadius: 8,
-  },
-  containerStyle: {
-
   },
   popupFlatlist: {
     backgroundColor: '#fff',
@@ -480,7 +463,6 @@ const styles = ScaledSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     borderRadius: 8,
-
   },
   placeholderDropdown: {
     flex: 1,
@@ -499,8 +481,6 @@ const styles = ScaledSheet.create({
     position:'relative',
     backgroundColor: '#F8F9FC',
     borderRadius: 18,
-    paddingHorizontal: 15,
-    paddingVertical: 3
   },
   dropdownText: {
     fontSize: 16,
@@ -508,15 +488,12 @@ const styles = ScaledSheet.create({
     marginBottom: 20,
     alignSelf: 'center',
     paddingTop: 10
-
   },
   item: {
     borderBottomColor: '#d8d8dc',
     borderBottomWidth: 0.5,
     paddingHorizontal: 10,
   },
-    selectedItem: {
-    },
     deleteIcon: {
       width: 14,
       height: 14,
@@ -528,26 +505,25 @@ const styles = ScaledSheet.create({
     borderWidth: 1,
     borderColor: '#DADADC',
     borderRadius: 18,
-    width: '90%',
-    height: 90,
     paddingHorizontal: 16,
-    paddingVertical: 16,
-    marginTop: 10,
+    height: 80,
+    justifyContent: 'center',
+    width: '91%'
   },
   selectStatus: {
     borderWidth: 1,
     borderColor: '#DADADC',
     borderRadius: 18,
-    width: '90%',
-    height: 90,
+    width: '91%',
+    height: 80,
     paddingHorizontal: 16,
-    paddingVertical: 16,
-    marginTop: 5,
+    marginTop: 15,
+    justifyContent: 'center'
   },
     buttonTextSelected: {
     fontSize: 16,
     textTransform: 'capitalize',
-    color: '#72788D',
+    color: '#3F465C',
   },
   inputTextEmail: {
     fontSize: 15,
@@ -591,6 +567,6 @@ const styles = ScaledSheet.create({
   },
   validation: {
     position: 'absolute',
-    top: '120%',
+    top: '100%'
   },
 })

@@ -1,11 +1,11 @@
 import React, { FC ,useCallback,useContext,useState } from 'react'
 import { Keyboard, KeyboardAvoidingView,Image, Platform, SafeAreaView,Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, useWindowDimensions, Alert, StyleSheet } from 'react-native'
 import { AuthContext } from '../hooks/auth/AuthContext';
-import { EnterButton } from '../components/atoms/EnterButton';
-import Spinner from '../components/atoms/Spinner';
+import { EnterButton } from '../components/shared/EnterButton';
+import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import LinkButton from '../components/atoms/LinkButton';
+import LinkButton from '../components/shared/LinkButton';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const Login: FC = ({navigation}:any) => {
@@ -131,6 +131,7 @@ const Login: FC = ({navigation}:any) => {
 
         Alert.alert(response.email[1])
         Alert.alert(response.password[1])
+        setLoginPending(false)
       }
       setLoginPending(false)
     }
@@ -162,9 +163,9 @@ const Login: FC = ({navigation}:any) => {
           </Text>
         </TouchableOpacity>
       </SafeAreaView>
-      <View style={styles.body}>
-        <View style={styles.inner}>
-          <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT <= 700 ? 7 : 16, height:SCREEN_HEIGHT <= 700 ? 75 : 83, width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
+      <View>
+        <View style={styles.inputWrapper}>
+          <View style={[styles.input]}>
             <Text style={styles.inputTextEmail}>Email</Text>
               {
                 email !== '' ?  
@@ -184,7 +185,7 @@ const Login: FC = ({navigation}:any) => {
                     keyboardType="email-address">
                   </TextInput>
                 </View>
-                <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT <= 700 ? 5 : 16, height:SCREEN_HEIGHT <= 700 ? 75 : 83,width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
+                <View style={styles.input}>
                   <Text  style={styles.inputText}>Password</Text>
                   <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainer}>
                     {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
@@ -239,22 +240,12 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: 'white'
   },
-  InputContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
-   },
    body: {
-    marginTop: 20,
-    alignItems: 'center'
+    alignItems:'center'
    },
    passwordForget: {
    color:'#2768f6'
    },
-  inner: {
-       justifyContent: 'center',
-  },
   textInput: {
       height: 40,
       borderColor: '#000000',
@@ -264,15 +255,20 @@ const styles = StyleSheet.create({
   btnContainer: {
       backgroundColor: 'white',
   },
+  inputWrapper: {
+    marginTop: 15,
+    alignItems: 'center'
+  },
   input: {
-      width: 310,
-      paddingVertical: 16,
+      width: '91%',
+      height: 85,
       paddingHorizontal: 16,
       borderWidth: 1,
       borderColor: '#DADADC',
       borderRadius: 18,
       marginBottom: 20,
-      backgroundColor: 'white'
+      backgroundColor: 'white',
+      justifyContent:'center'
   },
   inputText: {
     fontSize: 15,
@@ -312,7 +308,6 @@ const styles = StyleSheet.create({
   },
   eyeIconContainer: {
     alignItems: 'flex-end',
-
   },
   inputTextEmail: {
     fontSize: 15,

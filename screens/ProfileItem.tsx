@@ -1,13 +1,13 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image,Modal, FlatList} from 'react-native'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
-import SaveButton from '../components/atoms/SaveButton';
+import SaveButton from '../components/shared/SaveButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../countriesAndStatus/countries';
 import { AntDesign } from '@expo/vector-icons'; 
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { statusList } from '../assets/statuslist/statusList';
-import CustomToaster from '../components/atoms/CustomToaster';
+import CustomToaster from '../components/shared/CustomToaster';
 import { Entypo } from '@expo/vector-icons';
 import { languages } from '../assets/languages';
 

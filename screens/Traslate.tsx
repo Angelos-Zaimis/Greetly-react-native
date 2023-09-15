@@ -8,8 +8,8 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { languages } from '../assets/languages';
 import { Camera, CameraType , FlashMode } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-import CameraButton from '../components/atoms/CameraButton';
-import CustomToaster from '../components/atoms/CustomToaster';
+import CameraButton from '../components/shared/CameraButton';
+import CustomToaster from '../components/shared/CustomToaster';
 import { useImageTranslation } from '../components/util/useTranslateImage';
 import { AntDesign } from '@expo/vector-icons';
 

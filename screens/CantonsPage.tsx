@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View,Image, FlatList, StyleSheet, useWindowDimensions} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
-import Spinner from '../components/atoms/Spinner'
+import Spinner from '../components/shared/Spinner'
 
 type CantonsPageProps = {
     navigation: any
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:  'center',
         justifyContent: 'space-between',
-        paddingHorizontal: 30,
+        paddingHorizontal: 20,
         paddingVertical: 10
     },
     logo: {
@@ -99,30 +99,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 20,
     color: '#72788D',
-    lineHeight: 28,
-
+    lineHeight: 24,
   },
   flatlistContainer: {
-    flex: 1,
+    flex: 1
   },
   imageContainer: {
-    paddingTop: 20,
-    flex: 1,
-    alignSelf:'center',
+    paddingTop: 25,
+    alignSelf: 'center',
     width: '90%',
-    height: 50,
-    borderRadius: 11,
-    marginBottom: '20%',
+    borderRadius: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.7,
     shadowRadius: 8,
     elevation: 0,
   },
   image: {
-    height: 110,
-    resizeMode: 'contain',
-    borderRadius: 18,
+    height: 100,
+    resizeMode: 'stretch',
+    borderRadius: 16,
   },
 
 })

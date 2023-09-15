@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
-import ConfirmButton from '../components/atoms/ConfirmButton';
+import ConfirmButton from '../components/shared/ConfirmButton';
 
 type GoPremiumProps = {
     navigation: any
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     },
     image: {
         resizeMode: 'contain',
-        height: 250,
+        height: 120,
         marginTop: 10
     },
     goPremiumText:{
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     title: {
         color:'#3F465C',
         fontWeight: '600',
-        fontSize: 20
+        fontSize: 18
     },
     goBackContainer: {
         alignSelf: 'flex-start',
@@ -91,27 +91,26 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         textAlign: 'center',
         width: 300,
-        marginTop: 20,
-        lineHeight: 27
-
+        marginTop: 5,
+        lineHeight: 24
     },
     fourthText: {
         color: '#3F465C',
         fontSize: 16,
         fontWeight: '600',
-        marginTop: 20,
+        marginTop: 15,
         textAlign: 'center'
     },
     fifthText: {
         color: "#72788D",
         fontSize: 13,
-        marginTop: 6,
+        marginTop: 4,
         textAlign: 'center'
     },
     sixthText: {
         color: "#72788D",
         fontSize: 16,
-        marginTop: 30,
+        marginTop: 20,
         textAlign: 'center',
         width: 300,
         lineHeight: 26
@@ -125,6 +124,6 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 40
     }
 })

@@ -1,10 +1,10 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { View, Image, ImageSourcePropType, StyleSheet, TouchableOpacity,Text, FlatList} from 'react-native';
 import useSWR from 'swr';
-import CategoryButton from '../components/atoms/CategoryButton';
+import CategoryButton from '../components/shared/CategoryButton';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
-import GoPremiumPopUp from '../components/atoms/GoPremiumPopUp';
+import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
 import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT, SUB_CATEGORIES_ENDPOINT } from '../components/endpoints';
 import { AuthContext } from '../hooks/auth/AuthContext';

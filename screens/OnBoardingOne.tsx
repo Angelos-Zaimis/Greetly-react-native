@@ -1,13 +1,11 @@
-import { Button, StyleSheet, Text, View, Image, ImageComponent,TouchableOpacity,SafeAreaView, Modal, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, ImageComponent,TouchableOpacity,SafeAreaView, Modal, Platform } from 'react-native'
 import React, { FC, useCallback, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
-import { useLanguage } from '../components/util/LangContext';
 import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../countriesAndStatus/countries';
-import { NextButton } from '../components/atoms/NextButton';
+import { NextButton } from '../components/shared/NextButton';
 import { useWindowDimensions } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import { languageOptions } from '../assets/languagesOptions/languageOptions';
+
 
 type OnBoardingOneProps = {
     navigation: any
@@ -17,7 +15,6 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
 
     const [selectedCountry, setSelectedCountry] = useState<string>('');
     const [showPopup, setShowPopup] = useState<boolean>(false);
-    const [borderColorRequired, setBorderColorRequired] = useState<boolean>()
 
     const text = 'Get customized information based on your country of origin'.split(' ');
 
@@ -45,8 +42,6 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
         navigation.push('OnboardingTwo',{selectedCountry})
     }
 
-    const rowTextForSelection = (item: { label: string }) => item.label;
-
     const handleDisabled =  useCallback(() => {
         if (selectedCountry === ''){
          return true
@@ -58,7 +53,7 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={[styles.header, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 15}]}>
         <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
-          <Image source={require('../assets/onboarding/arrowLeft.png')}></Image>
+          <AntDesign name="left" size={21} color="black" />
         </TouchableOpacity>
       </View>
       <View>
@@ -152,11 +147,11 @@ const styles = StyleSheet.create({
        fontSize: 26,
         width: 280,
         marginLeft: 20,
-        marginBottom: 25,
+        marginBottom: 15,
         fontWeight: '500'
     },
     arrow: {
-      marginLeft: 30,
+      marginLeft: 20,
       marginVertical: 20
     },
     main: {

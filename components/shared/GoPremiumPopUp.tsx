@@ -47,13 +47,12 @@ export default GoPremiumPopUp
 const styles = StyleSheet.create({
     container: {
         flex:1,
+        width: '92%',
         alignSelf: 'center',
         justifyContent:'flex-end',
         marginBottom: 40,
-    
     },
     subcontainer: {
-        width: 400,
         height: 368,
         borderRadius: 18,
         backgroundColor: '#F8F9FC',
@@ -67,9 +66,9 @@ const styles = StyleSheet.create({
     },
     deleteContainer: {
         alignItems: 'flex-end',
-        marginTop: 20,
+        marginTop: 10,
         marginRight: 30,
-        marginBottom: 40
+        marginBottom: 15
     },
     delete: {
         fontSize: 18,
@@ -84,11 +83,13 @@ const styles = StyleSheet.create({
         color: '#3F465C',
         fontSize: 16,
         fontWeight: '600',
-        marginBottom: 8
+        marginBottom: 8,
+        textAlign: 'center'
     },
     secondText: {
         color:'#72788D',
-        fontSize: 16
+        fontSize: 16,
+        textAlign: 'center'
     },
     line: {
         borderTopWidth: 1,

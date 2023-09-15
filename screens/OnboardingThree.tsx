@@ -3,11 +3,9 @@ import { FC } from "react";
 import { KeyboardAvoidingView, Image,Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert} from "react-native";
 import signUp from "../hooks/auth/SignUp";
 import { useLanguage } from "../components/util/LangContext";
-import CreateButton from "../components/atoms/CreateButton";
-import SelectDropdown from 'react-native-select-dropdown';
+import CreateButton from "../components/shared/CreateButton";
 import { Ionicons } from '@expo/vector-icons';
-import { languageOptions } from "../assets/languagesOptions/languageOptions";
-import Spinner from "../components/atoms/Spinner";
+import Spinner from "../components/shared/Spinner";
 import { AntDesign } from '@expo/vector-icons';
 
 type OnboardingThreeProps = {
@@ -28,8 +26,6 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
     const text = t('pageOnboardingOneTitleThree').split(' ');
-
-
     
     const isValidEmail = (email: string) => {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -151,17 +147,8 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
         {signPending && <Spinner/>}
         <View style={styles.header}>
           <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
-            <Image source={require('../assets/onboarding/arrowLeft.png')}></Image>
-          </TouchableOpacity>
-          <SelectDropdown data={languageOptions} 
-             onSelect={handleLanguage}
-             buttonTextAfterSelection={rowTextForSelection} 
-             rowTextForSelection={rowTextForSelection} 
-             defaultValue={selectedLanguage} 
-             buttonStyle={styles.languageButtonStyle}
-             defaultButtonText={selectedLanguage}
-             buttonTextStyle={styles.languageText}
-          /> 
+            <AntDesign name="left" size={21} color="black" />
+          </TouchableOpacity> 
         </View>
         <View style={{flex: 1.7}}>
           <Text style={styles.title}>
@@ -186,7 +173,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
           >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
-              <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT <= 700 ? 7 : 16, height:SCREEN_HEIGHT <= 700 ? 75 : 83, width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
+              <View style={[styles.input, { height:SCREEN_HEIGHT <= 700 ? 75 : 83, width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
                 <Text style={styles.inputTextEmail}>Email</Text>
                 {
                   email !== '' ?  
@@ -206,7 +193,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
                   keyboardType="email-address">
                 </TextInput>
               </View>
-              <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT <= 700 ? 5 : 16, height:SCREEN_HEIGHT <= 700 ? 75 : 83,width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
+              <View style={[styles.input, { height:SCREEN_HEIGHT <= 700 ? 75 : 83,width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
                 <Text style={styles.inputText}>Password</Text>
                 <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainer}>
                   {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
@@ -259,7 +246,8 @@ const styles = StyleSheet.create({
       backgroundColor: 'white'
      },
      arrow: {
-      marginLeft: 30
+      marginLeft: 20,
+      marginTop: 19
     },
     inner: {
          justifyContent: 'center',
@@ -269,6 +257,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems:  'center',
       justifyContent: 'space-between',
+      marginBottom: 15
     },
     textInput: {
         height: 40,
@@ -282,6 +271,7 @@ const styles = StyleSheet.create({
     input: {
         width: 360,
         paddingHorizontal: 13,
+        justifyContent: 'center',
         height: 83,
         borderWidth: 1,
         borderColor: '#DADADC',

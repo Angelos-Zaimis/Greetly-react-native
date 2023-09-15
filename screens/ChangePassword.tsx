@@ -3,7 +3,7 @@ import React, { FC, useCallback, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 import { AuthContext } from '../hooks/auth/AuthContext';
-import Spinner from '../components/atoms/Spinner';
+import Spinner from '../components/shared/Spinner';
 
 type changePasswordProps = {
     navigation: any

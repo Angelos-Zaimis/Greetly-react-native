@@ -2,7 +2,7 @@ import { StyleSheet, Text, View,SafeAreaView,TouchableOpacity,Image, Button} fro
 import React, { FC, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
-import SlideButton from '../components/atoms/SlideButton';
+import SlideButton from '../components/shared/SlideButton';
 
 type SelectPaymentProps = {
     navigation: any
@@ -18,8 +18,8 @@ const SelectPayment:FC<SelectPaymentProps> = ({navigation}) => {
     const [selectedMethod, setSelectedMethod] = useState('');
 
     const paymentMethods = [
-      'Credit Card',
       'Debit Card',
+      'Twint',
       'PayPal'
     ];
 
@@ -78,7 +78,8 @@ const SelectPayment:FC<SelectPaymentProps> = ({navigation}) => {
                                         selectedMethod === method && styles.radioButtonSelectedInside,]}>
                                 </View>
                             </View>
-                            <Text>{method}</Text>
+                            <Text style={styles.methodText} >{method}</Text>
+                            
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     image: {
         alignSelf: 'center',
         resizeMode: 'contain',
-        height: 200,
+        height: 150,
         marginVertical: 10
     },
     goPremiumText:{
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
         height: 70,
         backgroundColor: '#F4F5F8',
         justifyContent:'center',
-        paddingLeft: 15
+        paddingLeft: 15,
     },
     selecteBgContainer:{
         backgroundColor:'#FFFFFF',
@@ -171,5 +172,8 @@ const styles = StyleSheet.create({
       paymentContainer: {
        alignItems:'center',
        marginTop:20
+      },
+      methodText: {
+        fontWeight: '500'
       }
 })

@@ -6,7 +6,7 @@ import RightCircleOutlined from '@ant-design/icons/lib/icons/RightCircleOutlined
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import { useBookmarks } from '../components/util/useBookmarks';
-import CustomToaster from '../components/atoms/CustomToaster';
+import CustomToaster from '../components/shared/CustomToaster';
 import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT } from '../components/endpoints';
 

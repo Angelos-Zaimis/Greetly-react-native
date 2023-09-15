@@ -2,13 +2,9 @@
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Modal, FlatList } from 'react-native'
 import React, { FC, useCallback, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
-import { useLanguage } from '../components/util/LangContext';
-import { ScaledSheet } from 'react-native-size-matters';
-import { NextButton } from '../components/atoms/NextButton';
+import { NextButton } from '../components/shared/NextButton';
 import { useWindowDimensions } from 'react-native';
 import { statusList } from '../assets/statuslist/statusList';
-import SelectDropdown from 'react-native-select-dropdown';
-import { languageOptions } from '../assets/languagesOptions/languageOptions';
 
 type OnBoardingTwoProps = {
     navigation: any
@@ -23,7 +19,6 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
     const {selectedCountry} = route.params ?? {};
 
     const text = 'Save time. Choose your status to filter the eligibility criteria'.split(' ');
-
 
     const {height: SCREEN_HEIGHT} = useWindowDimensions();
 
@@ -76,7 +71,7 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
       <View style={[styles.header, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 16}]}>
         <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
-          <Image source={require('../assets/onboarding/arrowLeft.png')}></Image>
+          <AntDesign name="left" size={21} color="black" />
         </TouchableOpacity>
       </View>
       <View>
@@ -155,7 +150,7 @@ const styles = StyleSheet.create({
       fontSize: 26,
       width: 250,
       marginLeft: 20,
-      marginBottom: 25,
+      marginBottom: 15,
       fontWeight: '500'
     },
     titleOrange: {
@@ -171,7 +166,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
     },
     arrow: {
-      marginLeft: 30,
+      marginLeft: 20,
       marginVertical: 20
     },
     main: {
@@ -179,10 +174,10 @@ const styles = StyleSheet.create({
     },
     subtitle: {
        width: 300,
-        fontSize: 16,
-        marginLeft: 20,
-        color: '#72788D',
-        lineHeight: 25
+       fontSize: 16,
+       marginLeft: 20,
+       color: '#72788D',
+       lineHeight: 25
     },
     languageButtonStyle: {
       marginTop: 10,
@@ -204,8 +199,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        resizeMode: 'stretch',
-        marginBottom: 10
+        resizeMode: 'contain',
+
     },
     selectedItem: {
     },

@@ -67,7 +67,6 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
                   <Text style={styles.canton}>{item?.canton}</Text>
                   <View style={styles.titleIcon}>
                     <Text style={styles.title}>{t(item?.title)}</Text>
-                    <Feather name="arrow-right-circle" size={1} color="black" />
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => deleteToBoomark(item?.uniqueTitle)} style={styles.imageContainer}>
@@ -146,7 +145,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     borderColor: '#F8F9FC',
-    paddingLeft: 30
+    marginLeft: 15
   },
   icon: {
     marginLeft: 27,

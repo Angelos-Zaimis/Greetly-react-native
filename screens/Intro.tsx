@@ -14,7 +14,7 @@ const Intro: FC<IntroProps>= ({navigation}) => {
   }
 
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
-
+  
   return (
     <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 20 }]}>
       <View>
@@ -57,21 +57,18 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
   welcomeTwo: {
-    marginTop: 10,
     marginLeft: 20,
     fontSize: 40,
     color: '#F06748',
     fontWeight: '500'
   },
   image: {
-    height: 300,
     resizeMode: 'contain',
     width: '100%'
   },
   title: {
    marginLeft: 20,
    fontSize: 18,
-   marginTop: 15,
    color: '#3F465C',
    fontWeight: '500'
   },
