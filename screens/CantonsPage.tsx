@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View,Image, FlatList, StyleSheet, useWindowDimensions} from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View,Image, FlatList, StyleSheet, Platform} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
 import Spinner from '../components/shared/Spinner'
@@ -18,7 +18,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
 
   return (
-    <SafeAreaView  style={styles.container}>
+    <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.header}>
         <Image style={styles.logo} source={require('../assets/welcomepage/logo.png')}></Image>
       </View>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   image: {
-    height: 100,
+    height: 105,
     resizeMode: 'stretch',
     borderRadius: 16,
   },

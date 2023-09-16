@@ -51,7 +51,7 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.header, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 15}]}>
+      <View style={[styles.header,Platform.OS === 'android' && { paddingTop: 40}, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 15, }]}>
         <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
           <AntDesign name="left" size={21} color="black" />
         </TouchableOpacity>
@@ -141,7 +141,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:  'center',
         justifyContent: 'space-between',
-        marginBottom: 15
     },
     title: {
        fontSize: 26,
@@ -152,7 +151,7 @@ const styles = StyleSheet.create({
     },
     arrow: {
       marginLeft: 20,
-      marginVertical: 20
+      marginVertical: 10
     },
     main: {
       flex: 1

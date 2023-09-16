@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import {Text,SafeAreaView,StyleSheet, View, Image, FlatList, TouchableOpacity, useWindowDimensions} from "react-native";
+import {Text,SafeAreaView,StyleSheet, View, Image, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
 import useSWR from 'swr';
 import { FontAwesome } from '@expo/vector-icons';
@@ -23,7 +23,7 @@ type HelpProps = {
   const { data: teamMembers, error } = useSWR(`${AppURLS.middlewareInformationURL}/${TEAM_MEMBERS_ENDPOINT}/`)
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
       <View>
         <Text style={styles.title}>
           {text.map((word, index) => (

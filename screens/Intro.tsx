@@ -2,7 +2,6 @@ import React, { FC, useState } from 'react'
 import { View ,Text,SafeAreaView,TouchableOpacity,Image, useWindowDimensions, Platform, StyleSheet} from 'react-native'
 import { Fontisto } from '@expo/vector-icons'; 
 
-
 type IntroProps = {
   navigation: any
 }
@@ -14,15 +13,15 @@ const Intro: FC<IntroProps>= ({navigation}) => {
   }
 
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
-  
+
   return (
-    <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 20 }]}>
+    <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 15 }]}>
       <View>
         <Text style={[styles.welcome, {fontSize: SCREEN_HEIGHT < 700 ? 40 : 45}]}>Welcome to</Text>
         <Text style={[styles.welcomeTwo,  {fontSize: SCREEN_HEIGHT < 700 ? 40 : 45}]}>Switzerland</Text>
       </View>
       <View>
-        <Image style={[styles.image, {height: SCREEN_HEIGHT < 700 ? 300 : 400}]} source={require('../assets/intro/zurich.png')}/>
+        <Image style={[styles.image]} source={require('../assets/intro/zurich.png')}/>
       </View>
       <View>
         <Text  style={styles.title}>Ease your move with Greetly.ch</Text>
@@ -64,7 +63,8 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: 'contain',
-    width: '100%'
+    width: '100%',
+    height: 350
   },
   title: {
    marginLeft: 20,

@@ -20,7 +20,7 @@ interface AuthContextType {
   getUserInfo: () => Promise<{
     language: string;
     country: string;
-    status: string;
+    status?: string;
     isSubscribed: boolean | null;
   }>;
   updateUserInfo: (body: { email: string; language?: string , country?:string, status?: string}) => void; // Updated type
@@ -116,7 +116,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   For logging in
   */
   const login = async (body: LoginProps) => {
-    console.log(`${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`)
     try {
       const response = await axios.post(
         `${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`,

@@ -1,5 +1,5 @@
-import { StyleSheet,Image, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import { StyleSheet,Image, Text, View, SafeAreaView, TouchableOpacity, Platform } from 'react-native'
+import React, { FC, useContext, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -87,7 +87,7 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
       
 
   return (
-  <ScrollView style={styles.container}>
+  <ScrollView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerText}>{t('yourProfile')}</Text>

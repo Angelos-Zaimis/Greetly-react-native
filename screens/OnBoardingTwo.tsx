@@ -1,5 +1,5 @@
 
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Modal, FlatList } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Modal, FlatList, Platform } from 'react-native'
 import React, { FC, useCallback, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
 import { NextButton } from '../components/shared/NextButton';
@@ -68,8 +68,8 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
     );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={[styles.header, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 16}]}>
+    <SafeAreaView style={[styles.container ,Platform.OS === 'android' && { paddingTop: 40}]}>
+      <View style={[styles.header]}>
         <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
           <AntDesign name="left" size={21} color="black" />
         </TouchableOpacity>
@@ -143,8 +143,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems:  'center',
-        justifyContent: 'space-between',
-        marginBottom: 15
+        justifyContent: 'space-between'
     },
     title: {
       fontSize: 26,

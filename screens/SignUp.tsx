@@ -182,7 +182,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
 
   return (
     <>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
         <View style={styles.header}>
           <Text style={styles.title}>
             {text.map((word, index) => (

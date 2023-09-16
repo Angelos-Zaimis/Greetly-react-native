@@ -128,7 +128,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
           setSigninPending(false)
         }
       } catch (e) {
-        console.log(e)
+       
         Alert.alert('Something went wrong, please try again.') 
         setSigninPending(false)
       }
@@ -143,7 +143,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     },[email,password,selectedCountry,status])
 
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container ,Platform.OS === 'android' && { paddingTop: 25}]}>
         {signPending && <Spinner/>}
         <View style={styles.header}>
           <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
@@ -161,7 +161,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
           </Text>
           <View>
             <Image
-              style={[styles.image, { height: SCREEN_HEIGHT < 700 ? 160 : 260}]}
+              style={[styles.image, { height: SCREEN_HEIGHT < 700 ? 160 : 190}]}
               source={require('../assets/onboarding/createaccount.png')}
             />
           </View>

@@ -5,7 +5,7 @@ import ProfileContainer from '../navigation/profileNavigator/ProfileContainer';
 import BookmarksContainer from '../navigation/booksmarksNavigator/BookmarksContainer';
 import HelpNavigator from '../navigation/helpNavigator/HelpContainer';
 import { MaterialIcons, Feather, MaterialCommunityIcons} from '@expo/vector-icons';
-import { StyleSheet, useWindowDimensions} from 'react-native';
+import { Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import { FC } from 'react';
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
@@ -62,7 +62,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         <Tab.Screen
           name="HelpContainer"
           options={{
-            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 59 : 60}],
+            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 0 : 60}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}],
             tabBarStyle: styles.tabContainer,
             headerShown: false,
             title: 'Help',
@@ -124,7 +124,7 @@ export default BottomNavigator;
     },
     helpTap: {
       position: 'relative',
-      paddingVertical: 8,
+      paddingVertical: 7,
       top: '-2%',
       backgroundColor: '#F06748', 
       borderRadius: 35,

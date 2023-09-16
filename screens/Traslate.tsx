@@ -1,15 +1,12 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, ActivityIndicator, TouchableOpacity, Platform} from 'react-native'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import SelectDropdown from 'react-native-select-dropdown';
 import { languages } from '../assets/languages';
 import { Camera, CameraType , FlashMode } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import CameraButton from '../components/shared/CameraButton';
-import CustomToaster from '../components/shared/CustomToaster';
 import { useImageTranslation } from '../components/util/useTranslateImage';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -167,7 +164,7 @@ const Traslate: FC = () => {
           )}
         </>
       : 
-      <SafeAreaView style={styles.conainer}>
+      <SafeAreaView style={[styles.conainer, Platform.OS === 'android' && { paddingTop: 30} ]}>
         <Text style={styles.text}>{t('translateAdocument')}</Text>
       <View style={styles.buttonTranslateContainer}>
         <View style={[styles.changeLanguage, {borderColor: borderError ? 'red' : '#fd68463e'}]}>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Alert,Platform } from 'react-native'
 import React, { FC, useCallback, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
@@ -73,7 +73,7 @@ const ChangePassword: FC<changePasswordProps> = ({navigation, route}) => {
     }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,Platform.OS === 'android' && { paddingTop: 25}]}>
         <View style={styles.header}>
             <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
                 <AntDesign name="left" size={21} color="black" />

@@ -102,10 +102,11 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       } },
   ];
 
+
   return (
     <View style={styles.container}>
       {subCategories && subCategories[0] && (
-        <Image style={styles.image} source={{ uri: subCategories[0].image}} />
+        <Image style={styles.image} source={{ uri: subCategories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
       )}
       <View style={styles.upperButtonContainer}>
         {categories.map((categoryItem) => (

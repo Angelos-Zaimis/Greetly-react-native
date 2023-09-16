@@ -138,7 +138,7 @@ const Login: FC = ({navigation}:any) => {
     
   return (
     <>
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, Platform.OS === 'android' && { paddingTop: 35}]}>
       <SafeAreaView>
         <Text style={styles.title}>
           {text.map((word, index) => (
