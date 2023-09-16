@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image, Linking, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image, Linking, useWindowDimensions, Platform } from 'react-native'
 import React, { FC } from 'react'
 import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
@@ -28,7 +28,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
     }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25} ]}>
         <View>
             <TouchableOpacity style={[styles.iconArrowButton, {marginTop: SCREEN_HEIGHT < 700 ? 15 : 25}]} onPress={handleNavigationBack}>
                 <AntDesign name="left" size={23} color="black" />
@@ -64,7 +64,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
                 <Text style={[styles.freeOfCharge, {fontSize: SCREEN_HEIGHT < 700 ? 14 : 17}]}>{t('freeofcharge')}</Text>
                 <Text style={[styles.assistText, {fontSize: SCREEN_HEIGHT < 700 ? 13 : 16}]}>{t('assist')}</Text>
             </View>
-            <View style={[styles.buttonsContainer, {marginTop: SCREEN_HEIGHT < 700 ? 25 : 50 }]}>
+            <View style={[styles.buttonsContainer, {marginTop: SCREEN_HEIGHT < 700 ? 25 : 25 }]}>
                 <TouchableOpacity  onPress={() => Linking.openURL('mailto:angelos.zaimis.dev@g.com')} style={[styles.buttonEmail, {width: SCREEN_HEIGHT < 700 ? 125 : 150}]}>
                     <FontAwesome name="send" size={18} color="white" />
                     <Text style={styles.emailText}>Email us</Text>

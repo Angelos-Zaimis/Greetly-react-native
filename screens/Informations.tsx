@@ -84,7 +84,6 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     await mutateBookmark()
   },[bookmarkSaved?.uniqueTitle])
 
-  console.log(bookmarkSaved)
   return (
     <View style={styles.container}>
       {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}

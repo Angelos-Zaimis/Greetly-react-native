@@ -24,8 +24,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 
   const {userInfos,getUserInfo, user} = useContext(AuthContext)
-
-  console.log(userInfos)
   const [selectedLanguage, setLanguage] = useState<string>('');
 
   useEffect(() => {

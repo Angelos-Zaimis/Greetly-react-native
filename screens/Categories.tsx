@@ -26,7 +26,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      {categories && categories[0] && <Image style={styles.image} source={{uri: categories[2].image}}></Image>}
+      {categories && categories[0] && <Image style={styles.image} source={{uri: categories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}}></Image>}
       <View>
         <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
           <AntDesign name="left" size={21} color="black" />

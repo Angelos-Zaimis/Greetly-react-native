@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image,Modal, FlatList} from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Image,Modal, FlatList, TouchableOpacity} from 'react-native'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import SaveButton from '../components/shared/SaveButton';
@@ -23,9 +23,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     const { status, language, country } = route.params;
 
     const {t} = useLanguage();
-    
 
-    
     const [selectedCountry, setSelectedCountry] = useState<string>('');
     const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>()
     const [selectedStatus, setSelectedStatus] = useState<string | undefined>()
@@ -37,16 +35,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     const [toastText, setToastText] = useState<string>('')
     const {user,getUserInfo, userInfos, updateUserInfo} = useContext(AuthContext);
 
-    const languageOptions = [
-        { label: 'EN', value: 'en' },
-        { label: 'GR', value: 'gr' },
-        { label: 'ES', value: 'es' },
-        { label: 'FR', value: 'fr' },
-        { label: 'IT', value: 'it'},
-        { label: 'GE', value: 'ge'}
-      ];
-
-    
     const handleNavigationBack = () => {
         navigation.goBack();
     }
@@ -105,7 +93,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
       );
 
     const handleChange = async() => {
-
 
         if (country && country !== selectedCountry) {
             try {
