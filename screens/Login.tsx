@@ -1,16 +1,15 @@
 import React, { FC ,useCallback,useContext,useState } from 'react'
-import { Keyboard, KeyboardAvoidingView,Image, Platform, SafeAreaView,Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, useWindowDimensions, Alert, StyleSheet } from 'react-native'
+import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet } from 'react-native'
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
 import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import LinkButton from '../components/shared/LinkButton';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Image } from 'expo-image';
 
 const Login: FC = ({navigation}:any) => {
-
-
+  
     const [email,setEmail] = useState<string>('');
     const [password,setPassword] = useState<string>('');
     const [error,setError] = useState<string>('')

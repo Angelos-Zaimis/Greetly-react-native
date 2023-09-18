@@ -1,8 +1,9 @@
 import React, { FC } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View,Image, FlatList, StyleSheet, Platform} from 'react-native'
+import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
 import Spinner from '../components/shared/Spinner'
+import { Image } from 'expo-image'
 
 type CantonsPageProps = {
     navigation: any
@@ -20,7 +21,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
   return (
     <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.header}>
-        <Image style={styles.logo} source={require('../assets/welcomepage/logo.png')}></Image>
+        <Image style={styles.logo} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
       </View>
       <View>
         <Text style={styles.title}>
@@ -49,7 +50,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
              })}
              style={styles.imageContainer}
            >
-               <Image style={styles.image} source={{ uri: item.image }} />
+               <Image style={styles.image} priority={'high'} source={{ uri: item.image }} />
            </TouchableOpacity>
            )}
             keyExtractor={(item) => item.id.toString()}

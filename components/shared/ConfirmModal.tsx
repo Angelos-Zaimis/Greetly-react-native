@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
 import ConfirmButton from './ConfirmButton';
 import { useLanguage } from '../util/LangContext';
 import { FontAwesome5} from '@expo/vector-icons';

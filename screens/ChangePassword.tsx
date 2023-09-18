@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, Alert,Platform } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert,Platform } from 'react-native'
 import React, { FC, useCallback, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 import { AuthContext } from '../hooks/auth/AuthContext';
 import Spinner from '../components/shared/Spinner';
+import { Image } from 'expo-image';
 
 type changePasswordProps = {
     navigation: any

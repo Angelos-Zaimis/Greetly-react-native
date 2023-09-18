@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Image, Linking, useWindowDimensions, Platform } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Linking, useWindowDimensions, Platform } from 'react-native'
 import React, { FC } from 'react'
 import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
@@ -8,6 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
 import AppURLS from '../components/appURLS';
 import { TEAM_MEMBERS_ENDPOINT } from '../components/endpoints';
+import { Image } from 'expo-image';
 
 type TeamMemberProps = {
     route: any

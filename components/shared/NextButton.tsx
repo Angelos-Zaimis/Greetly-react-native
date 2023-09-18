@@ -1,10 +1,7 @@
-import React, { FC, useCallback, useState } from 'react'
-import { Image,TouchableOpacity, Text, FlatList} from 'react-native'
+import React, { FC } from 'react'
+import { Image,TouchableOpacity, Text } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { ScaledSheet } from 'react-native-size-matters';
-import Animated from 'react-native-reanimated';
-
-
 
 type NextButtonProps = {
   handlePress: () => void;

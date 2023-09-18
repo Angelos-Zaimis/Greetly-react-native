@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View ,Image, SafeAreaView} from 'react-native'
+import { StyleSheet, Text, View , SafeAreaView} from 'react-native'
 import React, { FC } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
 import ConfirmButton from '../components/shared/ConfirmButton';
+import { Image } from 'expo-image';
 
 type GoPremiumProps = {
     navigation: any

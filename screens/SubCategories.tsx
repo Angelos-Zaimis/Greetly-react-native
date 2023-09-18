@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
-import { View, Image, ImageSourcePropType, StyleSheet, TouchableOpacity,Text, FlatList} from 'react-native';
+import { View, StyleSheet, TouchableOpacity,Text, FlatList} from 'react-native';
 import useSWR from 'swr';
 import CategoryButton from '../components/shared/CategoryButton';
 import { useLanguage } from '../components/util/LangContext';
@@ -10,6 +10,7 @@ import { CITIES_ENDPOINT, SUB_CATEGORIES_ENDPOINT } from '../components/endpoint
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
+import { Image } from 'expo-image';
 
 type SubCategoriesProps = {
   navigation: any;
@@ -106,7 +107,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       {subCategories && subCategories[0] && (
-        <Image style={styles.image} source={{ uri: subCategories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
+        <Image style={styles.image} transition={1000} priority={'high'} source={{ uri: subCategories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
       )}
       <View style={styles.upperButtonContainer}>
         {categories.map((categoryItem) => (

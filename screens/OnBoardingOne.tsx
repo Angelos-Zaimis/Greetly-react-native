@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, Image, ImageComponent,TouchableOpacity,SafeAreaView, Modal, Platform } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,SafeAreaView, Modal, Platform } from 'react-native'
 import React, { FC, useCallback, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
 import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../countriesAndStatus/countries';
 import { NextButton } from '../components/shared/NextButton';
 import { useWindowDimensions } from 'react-native';
-
+import { Image } from 'expo-image';
 
 type OnBoardingOneProps = {
     navigation: any

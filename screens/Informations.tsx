@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity,ScrollView, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,ScrollView, useWindowDimensions } from 'react-native'
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../hooks/auth/AuthContext';
 import useSWR, { mutate } from 'swr';
-import RightCircleOutlined from '@ant-design/icons/lib/icons/RightCircleOutlined';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import { useBookmarks } from '../components/util/useBookmarks';
 import CustomToaster from '../components/shared/CustomToaster';
 import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT } from '../components/endpoints';
+import { Image } from 'expo-image';
 
 type InformationsProps = {
   navigation: any;
@@ -59,7 +59,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         category: category,
         title: subcategory,
         description: information?.description,
-        image: image,
+        image: image.replace("https://middleware-information-b3a171d27812.herokuapp.com", ""),
         requiredDocuments: information?.requiredDocuments,
         saved: true,
         uniqueTitle: information?.title
@@ -87,7 +87,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   return (
     <View style={styles.container}>
       {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
-      <Image style={styles.image} source={{ uri: image}} />
+      <Image style={styles.image} priority={'high'} source={{ uri: image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
       <View>
         <View style={styles.arrowButtonContainer}>
           <TouchableOpacity onPress={handleNavigationBack}>

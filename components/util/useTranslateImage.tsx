@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import useSWR from 'swr';
-import RNFetchBlob from 'rn-fetch-blob';
 import axios from 'axios';
 import AppURLS from '../appURLS';
 import { TRANSLATE_IMAGE_ENDPOINT } from '../endpoints';

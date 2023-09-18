@@ -1,4 +1,4 @@
-import { StyleSheet,Image, Text, View, SafeAreaView, TouchableOpacity, Platform } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform } from 'react-native'
 import React, { FC, useContext, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { AuthContext } from '../hooks/auth/AuthContext';

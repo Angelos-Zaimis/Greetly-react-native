@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View, Image,Modal, FlatList, TouchableOpacity} from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View,Modal, FlatList, TouchableOpacity} from 'react-native'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import SaveButton from '../components/shared/SaveButton';
@@ -10,6 +10,7 @@ import { statusList } from '../assets/statuslist/statusList';
 import CustomToaster from '../components/shared/CustomToaster';
 import { Entypo } from '@expo/vector-icons';
 import { languages } from '../assets/languages';
+import { Image } from 'expo-image';
 
 
 type ProfileItemProps = {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,Image, ImageSourcePropType, TouchableOpacity} from 'react-native'
+import { StyleSheet, TouchableOpacity} from 'react-native'
 import React, { FC } from 'react'
 
 import { FontAwesome5} from '@expo/vector-icons';

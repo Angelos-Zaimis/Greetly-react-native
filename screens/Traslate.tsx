@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, Image, ActivityIndicator, TouchableOpacity, Platform} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ActivityIndicator, TouchableOpacity, Platform} from 'react-native'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -9,6 +9,7 @@ import * as MediaLibrary from 'expo-media-library';
 import CameraButton from '../components/shared/CameraButton';
 import { useImageTranslation } from '../components/util/useTranslateImage';
 import { AntDesign } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 
 type CameraRefProps = {
   takePictureAsync: () => Promise<any>; // Adjust the return type accordingly

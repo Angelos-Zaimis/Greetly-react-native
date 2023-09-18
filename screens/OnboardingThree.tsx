@@ -1,12 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { FC } from "react";
-import { KeyboardAvoidingView, Image,Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert} from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert} from "react-native";
 import signUp from "../hooks/auth/SignUp";
 import { useLanguage } from "../components/util/LangContext";
 import CreateButton from "../components/shared/CreateButton";
 import { Ionicons } from '@expo/vector-icons';
 import Spinner from "../components/shared/Spinner";
 import { AntDesign } from '@expo/vector-icons';
+import { Image } from "expo-image";
 
 type OnboardingThreeProps = {
     navigation: any;

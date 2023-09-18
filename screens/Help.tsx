@@ -1,10 +1,11 @@
 import React, { FC, useState } from 'react'
-import {Text,SafeAreaView,StyleSheet, View, Image, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
+import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
 import useSWR from 'swr';
 import { FontAwesome } from '@expo/vector-icons';
 import AppURLS from '../components/appURLS';
 import { TEAM_MEMBERS_ENDPOINT } from '../components/endpoints';
+import { Image } from 'expo-image';
 
 type HelpProps = {
   navigation: any,
