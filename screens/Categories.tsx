@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity,Image, FlatList} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList} from 'react-native'
 import React, { FC } from 'react'
 import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
@@ -6,6 +6,7 @@ import { FontAwesome5} from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import AppURLS from '../components/appURLS';
 import { CATEGORIES_ENDPOINT, CITIES_ENDPOINT } from '../components/endpoints';
+import { Image } from 'expo-image';
 
 type CategoriesProps = {
   navigation: any,
@@ -26,7 +27,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      {categories && categories[0] && <Image style={styles.image} source={{uri: categories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}}></Image>}
+      {categories && categories[0] && <Image style={styles.image} priority={'high'} transition={1000} source={{uri: categories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}}></Image>}
       <View>
         <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
           <AntDesign name="left" size={21} color="black" />

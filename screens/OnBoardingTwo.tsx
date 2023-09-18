@@ -1,10 +1,11 @@
 
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Image, Modal, FlatList, Platform } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Modal, FlatList, Platform } from 'react-native'
 import React, { FC, useCallback, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'; 
 import { NextButton } from '../components/shared/NextButton';
 import { useWindowDimensions } from 'react-native';
 import { statusList } from '../assets/statuslist/statusList';
+import { Image } from 'expo-image';
 
 type OnBoardingTwoProps = {
     navigation: any

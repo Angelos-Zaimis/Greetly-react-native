@@ -91,5 +91,8 @@
     "GoPremiumPageTextOne": "Upgrade to get access to all content personalized to your status.",
     "GoPremiumTermsCondition": "Your subscription will renew automatically every month. Cancel it anytime from your account settings. By clicking \"Confirm and pay\", you agree to",
     "termsAndConditions": "Terms and Conditions.",
-    "Completeyourpayment": "Complete your payment"
+    "Completeyourpayment": "Complete your payment",
+
+    "eu/eftastudentHowToOpenBankAccount" : "Opening a bank account in Switzerland as an European Student from EU-EFTA involves selecting a bank, gathering necessary documents, attending an appointment, providing personal information, completing application forms, depositing funds, reviewing terms and conditions, signing the agreement, and receiving account details."
+
 }

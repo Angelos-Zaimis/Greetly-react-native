@@ -1,11 +1,8 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, Image } from 'react-native'
-import React, { FC, useContext } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
+import React, { FC } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { useBookmarks } from '../components/util/useBookmarks';
-import { AuthContext } from '../hooks/auth/AuthContext';
 import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
-
 
 type bookmarksProps = {
   navigation: any

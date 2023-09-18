@@ -1,9 +1,6 @@
 import React, { FC, useCallback, useState } from 'react'
 import { Image,TouchableOpacity, Text, FlatList} from 'react-native'
-import { FontAwesome5 } from '@expo/vector-icons'; 
-import { Button } from 'react-native-elements';
 import { ScaledSheet } from 'react-native-size-matters';
-import Animated from 'react-native-reanimated';
 
 
 

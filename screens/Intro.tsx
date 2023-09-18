@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react'
-import { View ,Text,SafeAreaView,TouchableOpacity,Image, useWindowDimensions, Platform, StyleSheet} from 'react-native'
+import { View ,Text,SafeAreaView,TouchableOpacity,useWindowDimensions, Platform, StyleSheet} from 'react-native'
+import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons'; 
 
 type IntroProps = {

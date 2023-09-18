@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, Image,TouchableOpacity, View, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, useWindowDimensions, Alert, Modal, FlatList } from 'react-native'
+import { SafeAreaView, Text,TouchableOpacity, View, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, useWindowDimensions, Alert, Modal, FlatList } from 'react-native'
 import React, { FC, useCallback, useState } from 'react'
 import { ScaledSheet } from 'react-native-size-matters';
 import { useLanguage } from '../components/util/LangContext';
@@ -10,6 +10,7 @@ import { statusList } from '../assets/statuslist/statusList';
 import CreateButtonSignIn from '../components/shared/CreateButtonSignIn';
 import { Ionicons } from '@expo/vector-icons';
 import Spinner from '../components/shared/Spinner';
+import { Image } from 'expo-image';
 
 type SignInProps = {
     navigation: any;

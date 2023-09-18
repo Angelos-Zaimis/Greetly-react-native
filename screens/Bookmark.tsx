@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { FC, useState } from 'react'
 import useSWR from 'swr';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 
 
 type BookMarkProps = {
@@ -31,7 +32,7 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
   
   return (
     <View style={styles.container}>
-    <Image style={styles.image} source={{ uri: image}} />
+    <Image style={styles.image} priority={'high'} source={{ uri: image}} />
     <View>
       <View style={styles.arrowButtonContainer}>
         <TouchableOpacity onPress={handleNavigationBack}>
