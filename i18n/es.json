@@ -25,17 +25,6 @@
     "pageSignInCreateAccountSubtitle": "Encuentra soluciones para todos los aspectos de la reubicación según tus necesidades específicas. Obtén consultas de expertos.",
     "pageWelcomeTitle": "Selecciona el cantón al que te mudas",
     "pageWelcomeSubtitle": "Cada uno de los cantones y medios cantones tiene su propia constitución, legislatura, ejecutivo y judiciatura.",
-    "Legal System & Immigration": "Sistema legal e inmigración",
-    "Money & Banking": "Dinero y banca",
-    "Immigration, legal, support, police": "inmigración, legal, apoyo, policía",
-    "open a bank account, filling taxes": "abrir una cuenta bancaria, hacer impuestos",
-    "Healthcare & insurance": "Salud y seguro",
-    "medical system, find a doctor": "sistema médico, encontrar un médico",
-    "Employment": "Empleo",
-    "finding a job, working in Switzerland": "encontrar trabajo, trabajar en Suiza",
-    "Housing": "Vivienda",
-    "finding a place to rent or buy": "encontrar un lugar para alquilar o comprar",
-    "Open a bank account": "Abrir una cuenta bancaria",
     "descriptionOfInformation": "Abrir una cuenta bancaria en Suiza como estudiante de la UE-EFTA implica seleccionar un banco, reunir documentos necesarios, asistir a una cita, proporcionar información personal, completar formularios de solicitud, depositar fondos, revisar términos y condiciones, firmar el acuerdo y recibir los detalles de la cuenta.",
     "openBankAccountEmployeeEU": "Como ciudadano de la UE empleado y con la intención de abrir una cuenta bancaria en Zúrich, Suiza, comienza eligiendo un banco adecuado. La mayoría de los bancos requerirán una cita, que puedes programar en línea o por teléfono. Tener pruebas de empleo y residencia, ya sea en Suiza o en la UE, es crucial para muchos bancos. Llega puntual a tu cita, ya que la cultura suiza valora la puntualidad. En el banco, llenarás formularios de solicitud, después de lo cual el banco verificará tus datos, un proceso que puede tomar algunas horas o días. Una vez verificada, tu cuenta se activa. Ten en cuenta que algunos bancos pueden requerir un depósito inicial. Para obtener una lista detallada de la documentación necesaria, haz clic en el botón en la parte inferior izquierda de esta página.",
     "Valid Passport or National Identity Card": "Pasaporte válido o Tarjeta de Identidad Nacional",
@@ -52,7 +41,6 @@
     "Yourbookmarks": "Tus marcadores",
     "Nobookmarks": "No tienes ningún marcador guardado",
     "in": "en",
-    "How to do your taxes": "Cómo hacer tus impuestos",
     "yourProfile": "Tu Perfil",
     "yourProfileSubtitle": "Completa tu perfil para obtener información personalizada",
     "countryOfOrigin": "País de Origen",
@@ -91,5 +79,28 @@
     "GoPremiumPageTextOne": "Actualiza para acceder a todo el contenido personalizado según tu estado.",
     "GoPremiumTermsCondition": "Tu suscripción se renovará automáticamente cada mes. Puedes cancelarla en cualquier momento desde la configuración de tu cuenta. Al hacer clic en \"Confirmar y pagar\", aceptas los",
     "termsAndConditions": "Términos y Condiciones.",
-    "Completeyourpayment": "Completa tu pago"
+    "Completeyourpayment": "Completa tu pago",
+
+
+
+
+
+    "Legal System & Immigration": "Sistema jurídico e inmigración",
+    "Money & Banking": "Dinero y banca",
+    "Healthcare & Insurance": "Sanidad y seguros",
+    "Employment": "Empleo",
+    "Housing": "Vivienda",
+
+    "immigration, legal support, police": "inmigración, asuntos jurídicos, servicios de apoyo, policía, etc.",
+    "open a bank account, filling taxes": "abrir una cuenta bancaria, cumplimentar los impuestos, etc.",
+    "medical system, find a doctor": "sistema médico, encontrar un médico, etc.",
+    "finding a job, working in Switzerland": "encontrar trabajo, trabajar en Suiza, etc.",
+    "finding a place to rent or buy": "encontrar un lugar para alquilar o comprar, etc.",
+  
+    "Register as a new resident": "Registrarse como nuevo residente",
+    "Do your taxes": "Hacer sus impuestos",
+    "Obtain Health Insurance": "Obtener seguro de salud",
+    "Find a job": "Encontrar un trabajo",
+    "Rent an apartment": "Alquilar un apartamento",
+    "Open a bank account": "Abrir una cuenta bancaria"
 }

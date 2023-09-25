@@ -24,18 +24,18 @@ const SelectPayment:FC<SelectPaymentProps> = ({navigation}) => {
       'PayPal'
     ];
 
-    const RadioButton = ({ value, onPress }) => (
-        <TouchableOpacity
-          style={[
-            styles.radioButtonContainer,
-            { borderColor: selectedMethod === value ? '#1e90ff' : 'gray' },
-            selectedMethod === value && styles.selectedRadioButton,
-          ]}
-          onPress={onPress}
-        >
-          <Text>{value}</Text>
-        </TouchableOpacity>
-    );
+    // const RadioButton = ({ value: string, onPress }) => (
+    //     <TouchableOpacity
+    //       style={[
+    //         styles.radioButtonContainer,
+    //         { borderColor: selectedMethod === value ? '#1e90ff' : 'gray' },
+    //         selectedMethod === value && styles.selectedRadioButton,
+    //       ]}
+    //       onPress={onPress}
+    //     >
+    //       <Text>{value}</Text>
+    //     </TouchableOpacity>
+    // );
   return (
     <SafeAreaView style={styles.container}>
        <View style={styles.goBackContainer}>

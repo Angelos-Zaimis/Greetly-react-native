@@ -169,7 +169,6 @@ const Login: FC = ({navigation}:any) => {
               {
                 email !== '' ?  
                 <View style={[styles.validation,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
-                  {isValidInputEmailText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
                    </View>
                    : 
                     null
@@ -192,7 +191,6 @@ const Login: FC = ({navigation}:any) => {
                   {
                   password !== '' ?  
                   <View style={[styles.validation,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
-                  {isValidInputPasswordText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
                    </View>
                    : 
                    null

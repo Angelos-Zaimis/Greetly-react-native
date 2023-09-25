@@ -36,7 +36,7 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
     <View>
       <View style={styles.arrowButtonContainer}>
         <TouchableOpacity onPress={handleNavigationBack}>
-           <AntDesign name="left" size={21} color="black" />
+           <AntDesign name="left" size={23} color="black" />
         </TouchableOpacity>
         <View>
           <Text style={styles.subCategoryTitle}>{t(title)}</Text>

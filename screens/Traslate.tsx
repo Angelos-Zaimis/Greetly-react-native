@@ -101,7 +101,8 @@ const Traslate: FC = () => {
   const handleTranslateImage = async () => {
     setIsTranslating(true)
     try {
-      const translatedImageBase= await translateImage(imageToTranslate, language);
+      const translatedImageBase = await translateImage(imageToTranslate, language);
+      console.log(translatedImageBase)
     } catch (error) {
       console.error('Error:', error);
     }
@@ -332,7 +333,8 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain',
     width: '100%',
-    height: '50%',
+    height: '80%',
+    marginTop:  60,
     backgroundColor: 'black',
   },
   imageContainer: {

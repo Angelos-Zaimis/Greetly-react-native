@@ -6,6 +6,7 @@ import { countries } from '../countriesAndStatus/countries';
 import { NextButton } from '../components/shared/NextButton';
 import { useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
+import { Fontisto } from '@expo/vector-icons';
 
 type OnBoardingOneProps = {
     navigation: any
@@ -53,7 +54,7 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <View style={[styles.header,Platform.OS === 'android' && { paddingTop: 40}, {marginBottom: SCREEN_HEIGHT < 700 ? 0 : 15, }]}>
         <TouchableOpacity style={styles.arrow} onPress={handleNavigationBack}>
-          <AntDesign name="left" size={21} color="black" />
+          <AntDesign name="left" size={23} color="black" />
         </TouchableOpacity>
       </View>
       <View>
@@ -87,7 +88,7 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
               <View style={styles.selectText}>
                 <Text style={styles.dropdownText}>Select your country of origin</Text>
                 <TouchableOpacity onPress={closePopup}>
-                  <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                  <Fontisto style={styles.deleteIcon} name="close-a" size={14} color="black" />
                 </TouchableOpacity>
               </View>
               <Dropdown

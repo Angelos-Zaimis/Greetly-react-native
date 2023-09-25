@@ -6,6 +6,7 @@ import { NextButton } from '../components/shared/NextButton';
 import { useWindowDimensions } from 'react-native';
 import { statusList } from '../assets/statuslist/statusList';
 import { Image } from 'expo-image';
+import { Fontisto } from '@expo/vector-icons';
 
 type OnBoardingTwoProps = {
     navigation: any
@@ -106,7 +107,7 @@ const OnBoardingTwo: FC<OnBoardingTwoProps>  = ({navigation, route}) => {
               <View style={styles.selectText}>
                 <Text style={styles.dropdownText}>Select your occupation</Text>
                 <TouchableOpacity onPress={closePopup}>
-                  <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                  <Fontisto style={styles.deleteIcon} name="close-a" size={14} color="black" />
                 </TouchableOpacity>
               </View>
               <View style={[styles.popupFlatlist, {height: SCREEN_HEIGHT < 700 ? 350 : 460}]}>
