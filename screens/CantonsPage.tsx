@@ -1,9 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
 import Spinner from '../components/shared/Spinner'
 import { Image } from 'expo-image'
+import { AuthContext } from '../hooks/auth/AuthContext'
 
 type CantonsPageProps = {
     navigation: any
@@ -12,8 +13,15 @@ type CantonsPageProps = {
 const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
 
-  const {cities, isLoading} = useCities();
+  const {cities} = useCities();
   
+  const {getUserInfo} = useContext(AuthContext)
+
+  useEffect(() => {
+    
+    getUserInfo()
+  },[])
+
   const {t} = useLanguage()
 
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
@@ -24,17 +32,21 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
         <Image style={styles.logo} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
       </View>
       <View>
-        <Text style={styles.title}>
-          {title.map((word, index) => (
-            index === 2 ? (
-              <Text key={index} style={styles.titleOrange}>{word} </Text>
-            ) : (
-              <Text key={index}>{word} </Text>
-           )))}
-        </Text>
-        <Text style={styles.subtitle}>
-          {t('pageWelcomeSubtitle')}
-        </Text>
+        {cities && (
+          <>
+            <Text style={styles.title}>
+              {title.map((word, index) => (
+                index === 2 ? (
+                <Text key={index} style={styles.titleOrange}>{word} </Text>
+                ) : (
+                <Text key={index}>{word} </Text>
+              )))}
+            </Text>
+            <Text style={styles.subtitle}>
+              {t('pageWelcomeSubtitle')}
+            </Text>
+          </>
+        )}
       </View>
       {!cities ? (
         <Spinner/>

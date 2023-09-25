@@ -93,7 +93,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       name: 'Healthcare & insurance', 
       imageSource: 'heartbeat',
       navigate: () => {
-        setIncomingCategory('Healthcare & insurance')
+        setIncomingCategory('Healthcare & Insurance')
       } },
     { 
       name: 'Employment', 
@@ -104,11 +104,15 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
   ];
 
 
+  console.log(subCategories?.image_url)
   return (
     <View style={styles.container}>
-      {subCategories && subCategories[0] && (
-        <Image style={styles.image} transition={1000} priority={'high'} source={{ uri: subCategories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
-      )}
+      {subCategories && (
+        <View style={styles.image}>
+          {
+            subCategories.image_url && <Image style={styles.imageinside}  transition={1000} priority={'high'} source={{ uri: subCategories?.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
+          }
+        </View>)}
       <View style={styles.upperButtonContainer}>
         {categories.map((categoryItem) => (
           <CategoryButton
@@ -121,7 +125,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       </View>
       <View style={styles.arrowButtonContainer}>
         <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
-          <AntDesign name="left" size={21} color="black" />
+          <AntDesign name="left" size={23} color="black" />
         </TouchableOpacity>
         <View style={styles.subCategoriesTextContainer}>
           <Text style={styles.subCategoryTitle}>{t(incomingCategory)}</Text>
@@ -129,7 +133,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       </View>
       <View style={styles.flatlistContainer}>
         <FlatList 
-          data={subCategories}
+          data={subCategories?.subcategories}
           renderItem={({ item, index }) => {
               const showAsSubscribed = userInfos?.isSubscribed || index < 3;
               return (
@@ -141,7 +145,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                             cityName: cityName,
                             category: incomingCategory,
                             subcategory: item.title,
-                            image: subCategories[0].image,})
+                            image: subCategories.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")})
                           : () => setIsSubscribed(true)}
                             style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                   >
@@ -176,8 +180,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   image: {
-    resizeMode: 'cover',
     height: '19%'
+  },
+  imageinside: {
+    resizeMode: 'cover',
+    height: '100%'
   },
   upperButton: {
     alignItems: 'center',

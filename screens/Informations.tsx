@@ -9,6 +9,7 @@ import CustomToaster from '../components/shared/CustomToaster';
 import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT } from '../components/endpoints';
 import { Image } from 'expo-image';
+import { Fontisto } from '@expo/vector-icons';
 
 type InformationsProps = {
   navigation: any;
@@ -22,7 +23,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   const [successToast, setSuccessToast] = useState<boolean>(false)
   const {userInfos} = useContext(AuthContext)
 
-  const { data: information, error } = useSWR(
+  const { data: information } = useSWR(
     `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfos?.citizenship}-${userInfos?.status}-${subcategory}/`,
   );
 
@@ -59,7 +60,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         category: category,
         title: subcategory,
         description: information?.description,
-        image: image.replace("https://middleware-information-b3a171d27812.herokuapp.com", ""),
+        image: image,
         requiredDocuments: information?.requiredDocuments,
         saved: true,
         uniqueTitle: information?.title
@@ -84,14 +85,17 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     await mutateBookmark()
   },[bookmarkSaved?.uniqueTitle])
 
+
   return (
     <View style={styles.container}>
       {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
-      <Image style={styles.image} priority={'high'} source={{ uri: image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
+      <View  style={styles.image}>
+        <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
+      </View>
       <View>
         <View style={styles.arrowButtonContainer}>
           <TouchableOpacity onPress={handleNavigationBack}>
-            <AntDesign name="left" size={21} color="black" />
+            <AntDesign name="left" size={24} color="black" />
           </TouchableOpacity>
           <View>
             <Text style={styles.subCategoryTitle}>{t(subcategory)}</Text>
@@ -115,7 +119,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
           </View>
           <View style={[styles.closeRequiredContainer, {display: openRequiredDoc ? 'flex' : 'none'}]}>
             <TouchableOpacity onPress={handleCloseDocs}>
-              <Text style={styles.closeText}>X</Text>
+              <Fontisto name="close-a" size={16} color="white" />
             </TouchableOpacity>
           </View>
           <View style={styles.requiredDocs}>
@@ -148,8 +152,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   image: {
-    resizeMode: 'stretch',
     height: '19%'
+  },
+  imageinside: {
+    resizeMode: 'stretch',
+    height: '100%'
   },
   iconArrow:{
     height: 18,

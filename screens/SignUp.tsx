@@ -214,7 +214,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
         </View>
         <View style={styles.emailandpasswordContainer}>
           <View style={styles.inner}>
-            <View style={[styles.input, { width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
+            <View style={styles.input}>
               <Text style={styles.inputTextEmail}>Email</Text>
                 {
                   email !== '' ?  
@@ -369,8 +369,7 @@ const styles = ScaledSheet.create({
       alignItems: 'center',
     },
     inner: {
-         justifyContent: 'center',
-         backgroundColor: 'r'
+         width: '91%'
     },
     inputContainer: {
       flexDirection: 'row',
@@ -393,7 +392,8 @@ const styles = ScaledSheet.create({
       borderRadius: 18,
       marginBottom: 15,
       backgroundColor: 'white',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      width:'100%'
     },
     languageText: {
       fontSize: 14,

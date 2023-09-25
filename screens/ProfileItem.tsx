@@ -10,8 +10,7 @@ import { statusList } from '../assets/statuslist/statusList';
 import CustomToaster from '../components/shared/CustomToaster';
 import { Entypo } from '@expo/vector-icons';
 import { languages } from '../assets/languages';
-import { Image } from 'expo-image';
-
+import { Fontisto } from '@expo/vector-icons';
 
 type ProfileItemProps = {
     route: any
@@ -198,7 +197,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                             <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
                                 <Text style={styles.dropdownText} className='text-blackCustom font-medium'>{t('pageOnboardingSelectCoutnry')}</Text>
                                 <TouchableOpacity onPress={closePopup}>
-                                    <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                                  <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
                                 </TouchableOpacity>
                             </View>
                             <Dropdown
@@ -244,8 +243,8 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                         <View style={styles.popup}>
                             <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
                                 <Text style={styles.dropdownText} className='text-blackCustom font-medium'>{t('Selectyourlanuage')}</Text>
-                                <TouchableOpacity onPress={closePopupLanguage}>
-                                    <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                                <TouchableOpacity  onPress={closePopupLanguage}>
+                                  <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
                                 </TouchableOpacity>
                             </View>
                             <Dropdown
@@ -291,8 +290,8 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                     <View style={styles.popup}>
                         <View className='flex justify-center flex-row  items-center pt-4'>
                             <Text style={styles.dropdownText} className='text-blackCustom font-medium'>{t('pageOnboardingSelectStatus')}</Text>
-                            <TouchableOpacity onPress={closePopupStatus}>
-                                <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                            <TouchableOpacity  onPress={closePopupStatus}>
+                              <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.popupFlatlist}>
@@ -435,10 +434,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         justifyContent: 'center',
         width: '80%',
-        borderWidth: 0.5,
-        borderRadius: 18,
-        borderColor: '#F8F9FC',
-        backgroundColor:'#F8F9FC',
         height: 50,
         paddingVertical: 15,
         paddingHorizontal: 15.5
@@ -459,11 +454,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         paddingHorizontal: 8,
       },
+      deleteButton: {
+      
+      },
       deleteIcon: {
-        width: 14,
-        height: 14,
         position: 'absolute',
-        right: -35,
+        right: -40,
         top: -5
       },
     selectStatus: {

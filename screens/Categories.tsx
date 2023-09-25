@@ -27,10 +27,12 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      {categories && categories[0] && <Image style={styles.image} priority={'high'} transition={1000} source={{uri: categories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}}></Image>}
+      <View style={styles.image}>
+        {categories && categories[0]  && <Image style={styles.imageInner}   source={{uri: categories[0].image.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}}></Image>}
+      </View>
       <View>
         <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
-          <AntDesign name="left" size={21} color="black" />
+          <AntDesign name="left" size={24} color="black" />
         </TouchableOpacity>
       </View>
       <View style={styles.flatlistContainer}>
@@ -45,7 +47,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
               })}
              style={styles.categoryContainer}
             >
-              <View>
+              <View style={{width: 300}}>
                 <Text style={styles.title}>{t(item.name)}</Text>
                 <Text style={styles.subTitle}>{t(item.description)}</Text>
               </View>
@@ -73,6 +75,9 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     height: '27.3%',
   },
+  imageInner: {
+    height: '100%'
+  },
   iconArrowButton: {
     marginLeft: 20,
     marginBottom: 5,
@@ -93,10 +98,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf:'center',
     width: '90%',
-    height: 86,
+    height: 100,
     borderRadius: 20,
     paddingTop: 15,
-    marginBottom: '7%',
+    marginBottom: '6%',
     backgroundColor: '#F8F9FC'
   },
   icon: {

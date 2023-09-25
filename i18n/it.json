@@ -19,17 +19,6 @@
     "pageSignInCreateAccount": "Create your account",
     "pageWelcomeTitle": "Selezionare il cantone in cui ci si trasferisce",
     "pageWelcomeSubtitle": "Ciascuno dei cantoni e dei semicantoni ha una propria costituzione, un proprio organo legislativo, esecutivo e giudiziario.",
-    "Legal System & Immigration": "Sistema giuridico e immigrazione",
-    "Money & Banking": "Denaro e banche",
-    "immigration, legal, support, police": "immigrazione,legale,supporto,polizia",
-    "open a bank account, filling taxes": "aprire un conto bancario, compilare le tasse",
-    "Healthcare & insurance": "Assistenza sanitaria e assicurazioni",
-    "medical system, find a doctor": "sistema medico, trovare un medico",
-    "Employment": "Occupazione",
-    "finding a job, working in Switzerland": "trovare lavoro, lavorare in Svizzera",
-    "Housing": "Alloggiamento",
-    "finding a place to rent or buy": "trovare un posto in affitto o in acquisto",
-    "Open a bank account": "Aprire un conto bancario",
     "descriptionOfInformation": "L'apertura di un conto bancario in Svizzera da parte di uno studente dell'UE/AELS comporta la scelta di una banca, la raccolta dei documenti necessari, la partecipazione a un appuntamento, la fornitura di informazioni personali, la compilazione di moduli di richiesta, il deposito di fondi, la verifica dei termini e delle condizioni, la firma del contratto e la ricezione dei dettagli del conto.",
     "openBankAccountEmployeeEU": "L'apertura di un conto bancario in Svizzera in qualità di dipendente dell'UE-AELS comporta la scelta di una banca, la raccolta dei documenti necessari, la partecipazione a un appuntamento, la fornitura di informazioni personali, la compilazione di moduli di richiesta, il deposito di fondi, la verifica dei termini e delle condizioni, la firma del contratto e la ricezione dei dettagli del conto.",
     "Valid Passport or National Identity Card": "Passaporto valido o carta d'identità nazionale",
@@ -45,7 +34,6 @@
     "Yourbookmarks": "I vostri segnalibri",
     "Nobookmarks": "Non sono stati salvati segnalibri",
     "in": "in",
-    "How to do your taxes": "Come fare le tasse",
     "yourProfile": "Il tuo profilo",
     "yourProfileSubtitle": "Compila il tuo profilo per ottenere informazioni personalizzate",
     "name": "Nome",
@@ -83,6 +71,28 @@
     "GoPremiumPageTextOne": "Effettua l'upgrade per avere accesso a tutti i contenuti personalizzati in base al tuo status.",
     "GoPremiumTermsCondition": "L'abbonamento si rinnova automaticamente ogni mese. È possibile annullarlo in qualsiasi momento dalle impostazioni dell'account. Facendo clic su \"Conferma e paga\", l'utente accetta di",
     "termsAndConditions": "Termini e condizioni.",
-    "Completeyourpayment": "Completare il pagamento"
+    "Completeyourpayment": "Completare il pagamento",
+
+
+
+    "Legal System & Immigration": "Sistema legale e immigrazione",
+    "Money & Banking": "Denaro e banche",
+    "Healthcare & Insurance": "Assistenza sanitaria e assicurazioni",
+    "Employment": "Occupazione",
+    "Housing": "Alloggiamento",
+
+    "immigration, legal support, police": "immigrazione, questioni legali, servizi di supporto, polizia, ecc.",
+    "open a bank account, filling taxes": "aprire un conto bancario, compilare le tasse, ecc.",
+    "medical system, find a doctor": "sistema medico, trovare un medico, ecc.",
+    "finding a job, working in Switzerland": "trovare un lavoro, lavorare in Svizzera, ecc.",
+    "finding a place to rent or buy": "trovare un posto in affitto o in acquisto, ecc.",
+    
+    "Register as a new resident": "Registrarsi come nuovo residente",
+    "Do your taxes": "Fai le tue tasse",
+    "Obtain Health Insurance": "Ottenere l'assicurazione sanitaria",
+    "Find a job": "Trova un lavoro",
+    "Rent an apartment": "Affitta un appartamento",
+    "Open a bank account": "Apri un conto bancario"
+
 }
   

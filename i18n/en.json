@@ -25,17 +25,6 @@
     "pageSignInCreateAccountSubtitle": "Find solutions for all aspects of relocation for your specific needs. Get consultation from experts.",
     "pageWelcomeTitle": "Select the canton you are moving in",
     "pageWelcomeSubtitle": "Each of the cantons and half cantons has its own constitution, legislature, executive, and judiciary.",
-    "Legal System & Immigration": "Legal System & Immigration",
-    "Money & Banking": "Money & Banking",
-    "Immigration, legal, support, police": "immigration,legal,support,police",
-    "open a bank account, filling taxes": "open a bank account, filling taxes",
-    "Healthcare & insurance": "Healthcare & insurance",
-    "medical system, find a doctor": "medical system, find a doctor",
-    "Employment": "Employment",
-    "finding a job, working in Switzerland": "finding a job, working in Switzerland",
-    "Housing": "Housing",
-    "finding a place to rent or buy": "finding a place to rent or buy",
-    "Open a bank account": "Open a bank account",
     "descriptionOfInformation": "Opening a bank account in Switzerland as an Student from EU-EFTA involves selecting a bank, gathering necessary documents, attending an appointment, providing personal information, completing application forms, depositing funds, reviewing terms and conditions, signing the agreement, and receiving account details.",
     "openBankAccountEmployeeEU": "As an EU citizen employed and aiming to open a bank account in Zurich, Switzerland, start by picking a suitable bank. Most banks will require an appointment, which you can set up online or over the phone. Having proof of employment and residence, either in Switzerland or the EU, is crucial for many banks. Arrive on time for your appointment, as Swiss culture values punctuality. At the bank, you'll fill out application forms, after which the bank will verify your details, a process that can take a few hours to days. Once verified, your account gets activated. Note that an initial deposit might be needed for some banks.For a detailed list of the necessary documentation, please click on the button at the bottom left of this page.",
     "Valid Passport or National Identity Card": "Valid Passport or National Identity Card",
@@ -52,7 +41,6 @@
     "Yourbookmarks": "Your bookmarks",
     "Nobookmarks": "You do not have any bookmarks saved",
     "in": "in",
-    "How to do your taxes": "How to do your taxes",
     "yourProfile": "Your Profile",
     "yourProfileSubtitle": "Fill your profile to get personalized info",
     "countryOfOrigin": "Country of Origin",
@@ -93,6 +81,24 @@
     "termsAndConditions": "Terms and Conditions.",
     "Completeyourpayment": "Complete your payment",
 
-    "eu/eftastudentHowToOpenBankAccount" : "Opening a bank account in Switzerland as an European Student from EU-EFTA involves selecting a bank, gathering necessary documents, attending an appointment, providing personal information, completing application forms, depositing funds, reviewing terms and conditions, signing the agreement, and receiving account details."
+
+    "Legal System & Immigration": "Legal System & Immigration",
+    "Money & Banking": "Money & Banking",
+    "Healthcare & Insurance": "Healthcare & insurance",
+    "Employment": "Employment",
+    "Housing": "Housing",
+
+    "immigration, legal support, police": "immigration, legal matters, support services, police, etc.",
+    "open a bank account, filling taxes": "open a bank account, filling taxes, etc.",
+    "medical system, find a doctor": "medical system, find a doctor, etc.",
+    "finding a job, working in Switzerland": "finding a job, working in Switzerland, etc.",
+    "finding a place to rent or buy": "finding a place to rent or buy, etc.",
+
+    "Register as a new resident": "How to register as a new resident",
+    "Do your taxes": "How to do your taxes",
+    "Obtain Health Insurance": "How to obtain Health Insurance",
+    "Find a job": "How to find a job",
+    "Rent an apartment": "How to rent an apartment",
+    "Open a bank account": "How to open a bank account"
 
 }
