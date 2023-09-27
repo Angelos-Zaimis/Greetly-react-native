@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import { useLanguage } from '../util/LangContext'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons';
+import { Fontisto } from '@expo/vector-icons';
 
 type GoPremiumPopUpProps = {
     handleClosePopUp: any,
@@ -18,7 +19,7 @@ const GoPremiumPopUp: FC<GoPremiumPopUpProps> = ({handleClosePopUp,handleGoPremi
       <View style={styles.subcontainer}>
         <View  style={styles.deleteContainer}>
             <TouchableOpacity onPress={handleClosePopUp}>
-                <Text style={styles.delete}>X</Text>
+                <Fontisto style={styles.delete} name="close-a" size={15} color="black" />
             </TouchableOpacity>
         </View>
         <View style={styles.textContainer}>
@@ -71,25 +72,28 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     delete: {
-        fontSize: 18,
         fontWeight: '600',
         color: '#72788D'
     },
     textContainer: {
         alignItems: 'center',
+        justifyContent: 'center',
         textAlign: 'center',
+
     },
     firstText: {
         color: '#3F465C',
         fontSize: 16,
         fontWeight: '600',
         marginBottom: 8,
-        textAlign: 'center'
+        textAlign: 'center',
+        width: '90%'
     },
     secondText: {
         color:'#72788D',
         fontSize: 16,
-        textAlign: 'center'
+        textAlign: 'center',
+        width: '90%'
     },
     line: {
         borderTopWidth: 1,
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         width: 300,
         marginTop: 17,
-        lineHeight: 26
+        lineHeight: 26,
     },
     fourthText: {
         color: '#3F465C',

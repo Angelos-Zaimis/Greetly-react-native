@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View,SafeAreaView,TouchableOpacity, Button} from 'react-native'
+import { StyleSheet, Text, View,SafeAreaView,TouchableOpacity, Image} from 'react-native'
 import React, { FC, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
 import SlideButton from '../components/shared/SlideButton';
-import { Image } from 'expo-image';
+
 
 type SelectPaymentProps = {
     navigation: any

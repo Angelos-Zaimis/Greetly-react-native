@@ -1,5 +1,5 @@
-import React, { FC, useContext, useEffect } from 'react'
-import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform} from 'react-native'
+import React, { FC, useContext, useEffect, useMemo } from 'react'
+import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform, useWindowDimensions} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
 import Spinner from '../components/shared/Spinner'
@@ -24,8 +24,27 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
   const {t} = useLanguage()
 
+  const {width: WIDTH} = useWindowDimensions();
+
+
+  const isTabletMode = useMemo(() => {
+    if(WIDTH > 700) {
+      return true
+    }
+
+    return false;
+  },[WIDTH])
+
+
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
 
+  if (isTabletMode) {
+    return(
+      <></>
+    )
+  }
+
+  console.log(cities)
   return (
     <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.header}>

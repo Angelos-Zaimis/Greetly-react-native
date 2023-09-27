@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity,Text, FlatList} from 'react-native';
 import useSWR from 'swr';
 import CategoryButton from '../components/shared/CategoryButton';
@@ -11,6 +11,7 @@ import { AuthContext } from '../hooks/auth/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
 import { Image } from 'expo-image';
+import Spinner from '../components/shared/Spinner';
 
 type SubCategoriesProps = {
   navigation: any;
@@ -90,7 +91,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
         setIncomingCategory('Housing')
       } },
     { 
-      name: 'Healthcare & insurance', 
+      name: 'Healthcare & Insurance', 
       imageSource: 'heartbeat',
       navigate: () => {
         setIncomingCategory('Healthcare & Insurance')
@@ -103,16 +104,18 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       } },
   ];
 
+  const image = useMemo(() => {
+    return subCategories?.image_url?.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")
+  },[ subCategories?.image_url])
 
-  console.log(subCategories?.image_url)
+
   return (
     <View style={styles.container}>
-      {subCategories && (
         <View style={styles.image}>
           {
-            subCategories.image_url && <Image style={styles.imageinside}  transition={1000} priority={'high'} source={{ uri: subCategories?.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")}} />
+            subCategories?.image_url && <Image style={styles.imageinside}  transition={1000} priority={'high'} source={{ uri: image }} />
           }
-        </View>)}
+        </View>
       <View style={styles.upperButtonContainer}>
         {categories.map((categoryItem) => (
           <CategoryButton
@@ -131,34 +134,37 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
           <Text style={styles.subCategoryTitle}>{t(incomingCategory)}</Text>
         </View>
       </View>
-      <View style={styles.flatlistContainer}>
-        <FlatList 
-          data={subCategories?.subcategories}
-          renderItem={({ item, index }) => {
-              const showAsSubscribed = userInfos?.isSubscribed || index < 3;
-              return (
-                  <TouchableOpacity
-                      key={item.id}
-                      onPress={
-                          showAsSubscribed 
-                          ? () => navigation.push('Informations',{
-                            cityName: cityName,
-                            category: incomingCategory,
-                            subcategory: item.title,
-                            image: subCategories.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")})
-                          : () => setIsSubscribed(true)}
-                            style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
-                  >
-                    <Text style={[styles.subcategoryText, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
-                    {showAsSubscribed 
-                    ? <Image style={styles.iconArrow} source={require('../assets/categories/right.png')} />
-                    : <MaterialIcons name="lock" size={22} color="#E3B9B0" />}
-                  </TouchableOpacity>
-                )
-              }}
-              keyExtractor={(item) => item.title.toString()}
-        />
-      </View>
+      {subCategories ? 
+        <View style={styles.flatlistContainer}>
+         <FlatList 
+           data={subCategories?.subcategories}
+           renderItem={({ item, index }) => {
+               const showAsSubscribed = userInfos?.isSubscribed || index < 3;
+               return (
+                   <TouchableOpacity
+                       key={item.id}
+                       onPress={
+                           showAsSubscribed 
+                           ? () => navigation.push('Informations',{
+                             cityName: cityName,
+                             category: incomingCategory,
+                             subcategory: item.title,
+                             image: subCategories.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")})
+                           : () => setIsSubscribed(true)}
+                             style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
+                   >
+                     <Text style={[styles.subcategoryText, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
+                     {showAsSubscribed 
+                     ? <Image style={styles.iconArrow} source={require('../assets/categories/right.png')} />
+                     : <MaterialIcons name="lock" size={22} color="#E3B9B0" />}
+                   </TouchableOpacity>
+                 )
+               }}
+               keyExtractor={(item) => item.title.toString()}
+         />
+       </View>
+       : 
+       <Spinner/>}
       {isSubscribed && (
           <Animated.View style={{ opacity: opacity }}>
             <GoPremiumPopUp 
@@ -180,7 +186,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   image: {
-    height: '19%'
+    height: '19%',
+    resizeMode: 'stretch'
   },
   imageinside: {
     resizeMode: 'cover',
