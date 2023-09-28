@@ -24,16 +24,16 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
   const {t} = useLanguage()
 
-  const {width: WIDTH} = useWindowDimensions();
+  const {width: SCREENWIDTH} = useWindowDimensions();
 
 
   const isTabletMode = useMemo(() => {
-    if(WIDTH > 700) {
+    if(SCREENWIDTH > 700) {
       return true
     }
 
     return false;
-  },[WIDTH])
+  },[SCREENWIDTH])
 
 
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];

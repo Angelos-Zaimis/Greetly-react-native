@@ -30,8 +30,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
     return categories?.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")
   },[categories])
 
-  console.log(categories?.tablet_image_url)
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.image}>
