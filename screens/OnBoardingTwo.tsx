@@ -494,9 +494,9 @@ selectStatusTablet: {
   borderColor: '#DADADC',
   borderRadius: 18,
   width: '91%',
-  paddingVertical: 22,
+  paddingVertical: 18,
   paddingHorizontal: 16,
-  marginTop: 10,
+  marginTop: 15,
 },
 buttonTextTablet: {
   fontSize: 22,

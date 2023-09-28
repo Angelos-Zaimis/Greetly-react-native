@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { FC } from "react";
 import { KeyboardAvoidingView, Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert} from "react-native";
 import signUp from "../hooks/auth/SignUp";
@@ -20,13 +20,21 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     const [password, setPassword] = useState<string>('')
     const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true)
     const {t,setLanguage, selectedLanguage} = useLanguage();
-    const {height: SCREEN_HEIGHT} = useWindowDimensions();
+    const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
     const {selectedCountry, status} = route.params;
     const [signPending, setSigninPending] = useState<boolean>(false)
 
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
     const text = t('pageOnboardingOneTitleThree').split(' ');
+
+    const isTabletMode = useMemo(() => {
+      if(SCREEN_WIDTH > 700) {
+        return true
+      }
+      return false;
+    },[SCREEN_WIDTH])
+
     
     const isValidEmail = (email: string) => {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -143,6 +151,96 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
       return false;
     },[email,password,selectedCountry,status])
 
+    if (isTabletMode) {
+      return(
+        <SafeAreaView style={[styles.container ,Platform.OS === 'android' && { paddingTop: 25}]}>
+          {signPending && <Spinner/>}
+          <View style={styles.headerTablet}>
+            <TouchableOpacity style={styles.arrowTablet} onPress={handleNavigationBack}>
+              <AntDesign name="left" size={25} color="black" />
+            </TouchableOpacity> 
+          </View>
+          <View style={{flex: 1.7}}>
+            <Text style={styles.titleTablet}>
+              {text.map((word, index) => (
+                index === 7 || index === 8 ? (
+                <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
+                ) : (
+                <Text key={index}>{word} </Text>
+              )))}
+            </Text>
+            <View>
+              <Image
+                style={[styles.imageTablet]}
+                source={require('../assets/onboarding/createaccount.png')}
+              />
+            </View>
+          </View>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.InputContainerTablet}
+            keyboardVerticalOffset={30}
+          >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <View style={styles.innerTablet}>
+                <View style={styles.inputTablet}>
+                  <Text style={styles.inputTextEmailTablet}>Email</Text>
+                  {
+                    email !== '' ?  
+                    <View style={[styles.validationTablet,{left: '99%', top: '70%'}]}>
+                    {isValidInputEmailText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
+                    </View>
+                    : 
+                    null
+                  }
+                  <TextInput
+                    style={styles.inputTextTablet}
+                    placeholderTextColor={'#AFB1B5'}
+                    placeholder="enter your email"
+                    value={email}
+                    onChangeText={handleEmailInputChange}
+                    autoCapitalize="none"
+                    keyboardType="email-address">
+                  </TextInput>
+                </View>
+                <View style={[styles.inputTablet]}>
+                  <Text style={styles.inputTextTablet}>Password</Text>
+                  <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainerTablet}>
+                    {secureTextEntry ? <Ionicons name="eye-off-outline" size={22} color="black" /> : <Ionicons name="eye-outline" size={22} color="black" />}
+                  </TouchableOpacity>
+                  {
+                    password !== '' ?  
+                    <View style={[styles.validationTablet,{left: '99%',top: '70%'}]}>
+                      {isValidInputPasswordText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
+                    </View>
+                    : 
+                      null
+                  }
+                  <TextInput
+                    placeholderTextColor={'#AFB1B5'}
+                    placeholder="enter your password"
+                    value={password}
+                    onChangeText={handlePasswordlInputChange}
+                    secureTextEntry={secureTextEntry}
+                    style={styles.inputTextTablet}
+                  >
+                  </TextInput>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </KeyboardAvoidingView>
+          <View style={styles.bottomTablet}>
+            <View  style={styles.bottomSubContainerTablet}>
+              <View style={styles.blackDotTablet} />
+              <View style={styles.blackDotTablet} />
+              <View style={styles.blackDotBackTablet} />
+            </View>
+            <CreateButton handleDisabled={handleDisabled} handleCreateAccount={handleCreateAccount}/>
+          </View>
+        </SafeAreaView>
+      )
+    }
+
     return (
       <SafeAreaView style={[styles.container ,Platform.OS === 'android' && { paddingTop: 25}]}>
         {signPending && <Spinner/>}
@@ -251,8 +349,8 @@ const styles = StyleSheet.create({
       marginTop: 19
     },
     inner: {
-         justifyContent: 'center',
-         alignItems: 'center'
+        width:'100%',
+        alignItems: 'center'
     },
     header: {
       flexDirection: 'row',
@@ -270,7 +368,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     input: {
-        width: 360,
+        width: '91%',
         paddingHorizontal: 13,
         justifyContent: 'center',
         height: 83,
@@ -347,6 +445,120 @@ bottomSubContainer: {
 validation: {
   position: 'absolute',
   top: '120%',
+
+},
+
+//TABLET STYLES
+
+InputContainerTablet: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'white'
+ },
+ arrowTablet: {
+  marginLeft: 20,
+  marginTop: 19
+},
+innerTablet: {
+  alignItems: 'center',
+  width: '100%'
+},
+headerTablet: {
+  flexDirection: 'row',
+  alignItems:  'center',
+  justifyContent: 'space-between',
+  marginBottom: 15
+},
+textInputTablet: {
+    height: 40,
+    borderColor: '#000000',
+    borderBottomWidth: 1,
+    marginBottom: 36,
+},
+btnContainerTablet: {
+    backgroundColor: 'white',
+},
+inputTablet: {
+    width: '91%',
+    paddingHorizontal: 13,
+    justifyContent: 'center',
+    height: 95,
+    borderWidth: 1,
+    borderColor: '#DADADC',
+    borderRadius: 18,
+    marginBottom: 25,
+    backgroundColor: 'white'
+},
+languageButtonStyleTablet: {
+  marginTop: 10,
+  width: 80,
+  backgroundColor: 'transparrent',
+  marginHorizontal: 7,
+},
+languageTextTablet: {
+  fontSize: 18,
+  color: '#719FFF',
+  textTransform: 'uppercase'
+},
+titleTablet: {
+  fontSize: 34,
+  width: 320,
+  marginLeft: 20,
+  marginBottom: 30,
+  fontWeight: '500'
+},
+titleOrangeTablet: {
+color: '#F06748',
+fontWeight: '600',
+width: 220,
+},
+blackDotTablet: {
+width: 10,
+height: 10,
+backgroundColor: 'transparent',
+marginHorizontal: 10,
+borderRadius: 5,
+borderWidth: 1,
+borderColor: 'black',
+},
+blackDotBackTablet: {
+width: 10,
+height: 10,
+backgroundColor: 'black',
+marginHorizontal: 10,
+borderRadius: 5,
+borderWidth: 1,
+borderColor: 'black',
+},
+imageTablet: {
+resizeMode: 'contain',
+height: 340,
+width: '100%',
+marginTop: 40
+},
+inputTextTablet: {
+fontSize: 18,
+},
+inputTextEmailTablet: {
+fontSize: 18,
+marginBottom: 20,
+},
+eyeIconContainerTablet: {
+alignSelf: 'flex-end'
+},
+bottomTablet: {
+flexDirection: 'row',
+alignItems: 'center',
+justifyContent: 'space-between',
+marginLeft: 10
+},
+bottomSubContainerTablet: {
+flexDirection: 'row'
+},
+validationTablet: {
+position: 'absolute',
+top: '120%',
 
 }
 })

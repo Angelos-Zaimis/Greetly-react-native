@@ -443,7 +443,7 @@ const styles = StyleSheet.create({
     borderColor: '#DADADC',
     borderRadius: 18,
     width: '91%',
-    paddingVertical: 22,
+    paddingVertical: 20,
     paddingHorizontal: 16,
     marginTop: 10,
   },
