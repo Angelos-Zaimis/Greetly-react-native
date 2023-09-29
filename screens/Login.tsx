@@ -1,4 +1,4 @@
-import React, { FC ,useCallback,useContext,useState } from 'react'
+import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
 import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet } from 'react-native'
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
@@ -21,7 +21,14 @@ const Login: FC = ({navigation}:any) => {
     const text = "Sign in now".split(' ');
     const subtitleCreateAccountText = "NOT A MEMBER? CREATE AN ACCOUNT".split(' ')
 
-    const {height: SCREEN_HEIGHT} = useWindowDimensions();
+    const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+
+    const isTabletMode = useMemo(() => {
+      if(SCREEN_WIDTH > 700) {
+        return true
+      }
+      return false;
+    },[SCREEN_WIDTH])
     
     const isValidEmail = (email: string) => {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -134,6 +141,102 @@ const Login: FC = ({navigation}:any) => {
       }
       setLoginPending(false)
     }
+
+  if (isTabletMode) {
+    return (
+      <>
+        <ScrollView style={[styles.container, Platform.OS === 'android' && { paddingTop: 35}]}>
+          <SafeAreaView>
+            <Text style={styles.titletablet}>
+            {text.map((word, index) => (
+              index === 2 ? (
+              <Text key={index} style={styles.titleOrangetablet}>{word} </Text>
+              ) : (
+              <Text key={index}>{word} </Text>
+            )))}
+            </Text>
+            <Text style={styles.subtitletablet}>Get customized information based on your profile.</Text>
+            <Text style={styles.subtitletablet}>Find solutions for all aspects of relocation for your specific needs.</Text>
+           <TouchableOpacity onPress={handleNavigationSignIn}>
+              <Text style={styles.subtitleThreetablet}>
+                {subtitleCreateAccountText.map((word, index) => (
+                  index === 3 ||
+                  index === 4 ||
+                  index === 5 ? (
+                <Text key={index} style={styles.titleBluetablet}>{word} </Text>
+                ) : (
+                <Text key={index}>{word} </Text>
+                )))}
+              </Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+          <View>
+            <View style={styles.inputWrappertablet}>
+              <View style={[styles.inputtablet]}>
+                <Text style={styles.inputTextEmailtablet}>Email</Text>
+                  {
+                    email !== '' ?  
+                      <View style={[styles.validationtablet,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}></View>
+                    : 
+                      null
+                  }
+                  <TextInput
+                    style={styles.inputTexttablet}
+                    placeholderTextColor={'#AFB1B5'}
+                    placeholder="enter your email"
+                    value={email}
+                    onChangeText={handleEmailInputChange}
+                    autoCapitalize="none"
+                    keyboardType="email-address">
+                  </TextInput>
+              </View>
+              <View style={styles.inputtablet}>
+                <Text  style={styles.inputTexttablet}>Password</Text>
+                <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainertablet}>
+                  {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
+                </TouchableOpacity>
+                {
+                  password !== '' ?  
+                  <View style={[styles.validationtablet,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
+                   </View>
+                   : 
+                   null
+                } 
+                <TextInput
+                    placeholderTextColor={'#AFB1B5'}
+                    placeholder="enter your password"
+                    value={password}
+                    onChangeText={handlePasswordlInputChange}
+                    secureTextEntry={secureTextEntry}
+                    style={styles.inputTexttablet}
+                  ></TextInput>
+                </View>
+               <TouchableOpacity onPress={handleForgotPassword}>
+                 <Text style={styles.passwordForgettablet}>Forgot your password?</Text>
+               </TouchableOpacity>
+            </View>
+         </View>
+         <View style={styles.buttontablet}>
+            <EnterButton isTabletMode={true} handlePress={handlePress} handleDisabled={handleDisabled}/>
+         </View>
+         {/* <View style={styles.containerLine}>
+           <View style={styles.line} />
+           <Text style={styles.text}>OR</Text>
+           < View style={styles.line} />
+           </View> */}
+        <View style={styles.bottomContainertablet}>
+          <Text style={styles.greetlytablet}>Greetly.ch</Text>
+          <Image style={styles.logotablet}source={require('../assets/welcomepage/logo.png')}/>
+        </View>
+        {/* <View style={styles.appleGoogleContainer}>
+        <LinkButton icon={'google'} text='Login with Google' color='black' handlePress={handleLoginGoogle}/>
+        <LinkButton icon={'facebook-square'} text='Login with Facebook' color='black' handlePress={handleLoginFacebook}/>
+         </View> */}
+      </ScrollView>
+      {loginPending ? <Spinner/> : null }
+    </>
+  )
+  }
     
   return (
     <>
@@ -364,6 +467,142 @@ const styles = StyleSheet.create({
   greetly: {
     color: '#F06748',
     fontSize: 22,
+    marginRight: 10
+  },
+
+
+  //TABLET STYLES
+
+  bodyTablet: {
+    alignItems:'center'
+   },
+   passwordForgettablet: {
+   color:'#2768f6',
+   fontSize: 18,
+   marginBottom: 20
+   },
+  textInputtablet: {
+      height: 40,
+      borderColor: '#000000',
+      borderBottomWidth: 1,
+      marginBottom: 36,
+  },
+  btnContainertablet: {
+      backgroundColor: 'white',
+  },
+  inputWrappertablet: {
+    marginTop: 15,
+    alignItems: 'center'
+  },
+  inputtablet: {
+      width: '91%',
+      height: 98,
+      paddingHorizontal: 16,
+      borderWidth: 1,
+      borderColor: '#DADADC',
+      borderRadius: 18,
+      marginBottom: 20,
+      backgroundColor: 'white',
+      justifyContent:'center'
+  },
+  inputTexttablet: {
+    fontSize: 18,
+   },
+   titletablet: {
+    marginTop: 10,
+    fontSize: 40,
+    width: 220,
+    marginLeft: 20,
+    marginBottom: 20,
+    color: '#3F465C',
+    fontWeight: '500',
+  },
+   titleOrangetablet: {
+    color: '#F06748',
+    fontWeight: '600',
+    width: 220,
+  },
+  titleBluetablet: {
+    color: '#719FFF',
+    fontSize: 18,
+    marginLeft: 20,
+    marginBottom: 18
+  },
+    subtitletablet: {
+        width: 320,
+        fontSize: 22,
+        marginLeft: 20,
+        color: '#72788D',
+       marginBottom: 12
+    },
+    subtitleThreetablet: {
+      width: 350,
+      fontSize: 18,
+      marginLeft: 20,
+      color: '#72788D',
+      marginBottom: 25
+  },
+  eyeIconContainertablet: {
+    alignItems: 'flex-end',
+  },
+  inputTextEmailtablet: {
+    fontSize: 18,
+    marginBottom: 20
+  },
+  buttontablet: {
+    marginTop: 30,
+    flexDirection: 'row',
+    alignItems: 'center', 
+    width: '100%', 
+    justifyContent: 'center'
+  },
+  validationtablet: {
+    position: 'absolute',
+    top: '120%',
+  },
+  orContainertablet: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  ortablet: {
+    fontSize: 16,
+    color: 'black'
+  },
+  containerLinetablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+  },
+  linetablet: {
+    flex: 1,
+    height: 1,
+    backgroundColor: '#DADADC',
+    marginHorizontal: 15
+  },
+  texttablet: {
+    marginHorizontal: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  appleGoogleContainertablet: {
+    alignItems: 'center'
+  },
+  logotablet: {
+    width: 40,
+    height: 40,
+    borderRadius: 5
+  },
+  bottomContainertablet: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent:'center',
+    marginTop: 20
+  },
+  greetlytablet: {
+    color: '#F06748',
+    fontSize: 30,
     marginRight: 10
   }
 })

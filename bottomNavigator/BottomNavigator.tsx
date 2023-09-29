@@ -6,7 +6,7 @@ import BookmarksContainer from '../navigation/booksmarksNavigator/BookmarksConta
 import HelpNavigator from '../navigation/helpNavigator/HelpContainer';
 import { MaterialIcons, Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import { Platform, StyleSheet, useWindowDimensions} from 'react-native';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
 
@@ -20,7 +20,16 @@ const Tab = createBottomTabNavigator();
 
 const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
 
-  const {height: SCREEN_HEIGHT} = useWindowDimensions();
+  const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+
+
+  const isTabletMode = useMemo(() => {
+    if(SCREEN_WIDTH > 700) {
+      return true
+    }
+
+    return false;
+  },[SCREEN_WIDTH])
 
   return (
     <>
@@ -62,7 +71,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         <Tab.Screen
           name="HelpContainer"
           options={{
-            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 0 : 60}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}],
+            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 0 : 60}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}, isTabletMode  && {width: 10}],
             tabBarStyle: styles.tabContainer,
             headerShown: false,
             title: 'Help',
