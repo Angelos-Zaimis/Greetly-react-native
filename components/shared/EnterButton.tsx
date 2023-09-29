@@ -14,7 +14,7 @@ type EnterButtonProps = {
 export const EnterButton:FC<EnterButtonProps> = ({handlePress, handleDisabled, isTabletMode}) => {
 
 
-  console.log(isTabletMode)
+
   if (isTabletMode){
     return (
       <TouchableOpacity disabled={handleDisabled()} onPress={handlePress}  style={ handleDisabled() ? [styles.buttonTablet, {opacity: 0.7}] : styles.buttonTablet }>

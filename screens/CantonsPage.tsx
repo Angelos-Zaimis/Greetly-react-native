@@ -18,14 +18,12 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
   const {getUserInfo} = useContext(AuthContext)
 
   useEffect(() => {
-    
     getUserInfo()
   },[])
 
   const {t} = useLanguage()
 
   const {width: SCREENWIDTH} = useWindowDimensions();
-
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -34,17 +32,58 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
     return false;
   },[SCREENWIDTH])
-
-
+  
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
+
 
   if (isTabletMode) {
     return(
-      <></>
+      <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
+      <View style={styles.headerTablet}>
+        <Image style={styles.logoTablet} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
+      </View>
+      <View>
+        {cities && (
+          <>
+            <Text style={styles.titleTablet}>
+              {title.map((word, index) => (
+                index === 2 ? (
+                <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
+                ) : (
+                <Text key={index}>{word} </Text>
+              )))}
+            </Text>
+            <Text style={styles.subtitleTablet}>
+              {t('pageWelcomeSubtitle')}
+            </Text>
+          </>
+        )}
+      </View>
+      {!cities ? (
+        <Spinner/>
+      ) : (
+         <View  style={styles.flatlistContainerTablet}>
+         <FlatList 
+           data={cities}
+           renderItem={({ item }) => (
+           <TouchableOpacity
+             key={item.id}
+             onPress={() => navigation.push('Categories',{
+                 cityName: item.name
+             })}
+             style={styles.imageContainerTablet}
+           >
+               <Image style={styles.imageTablet} priority={'high'} source={{ uri: item.table_image }} />
+           </TouchableOpacity>
+           )}
+            keyExtractor={(item) => item.id.toString()}
+         />
+       </View>
+      )}
+    </SafeAreaView>
     )
   }
 
-  console.log(cities)
   return (
     <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.header}>
@@ -153,6 +192,63 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
 
+
+
+  // TABLET STYLE 
+
+  headerTablet: {
+    flexDirection: 'row',
+    alignItems:  'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 18
+},
+logoTablet: {
+   width: 46,
+   height: 48,
+   borderRadius: 6,
+},
+titleTablet: {
+  fontSize: 35,
+  width: 300,
+  marginLeft: 20,
+  marginBottom: 15,
+  fontWeight: '500',
+  marginTop: 5,
+  lineHeight: 35,
+  
+},
+titleOrangeTablet: {
+   color: '#F06748',
+   fontWeight: '600',
+},
+subtitleTablet: {
+width: '80%',
+fontSize: 22,
+marginLeft: 20,
+color: '#72788D',
+lineHeight: 24,
+marginBottom: 10
+},
+flatlistContainerTablet: {
+flex: 1
+},
+imageContainerTablet: {
+paddingTop: 25,
+alignSelf: 'center',
+width: '90%',
+borderRadius: 16,
+shadowColor: '#000',
+shadowOffset: { width: 0, height: 0 },
+shadowOpacity: 0.7,
+shadowRadius: 8,
+elevation: 0,
+},
+imageTablet: {
+height: 125,
+resizeMode: 'stretch',
+borderRadius: 16,
+},
 })
 
 export default CantonsPage;
