@@ -7,11 +7,11 @@
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
     "extra": {
-      "middlewareInformationURL": "http://127.0.0.1:8000/middleware-info"
+      "middlewareInformationURL": "https://middleware-information-b3a171d27812.herokuapp.com/middleware-info"
     },
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#F06748"
     },
     "assetBundlePatterns": [

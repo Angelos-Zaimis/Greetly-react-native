@@ -1,5 +1,5 @@
 import { SafeAreaView, Text,TouchableOpacity, View, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, useWindowDimensions, Alert, Modal, FlatList } from 'react-native'
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { ScaledSheet } from 'react-native-size-matters';
 import { useLanguage } from '../components/util/LangContext';
 import signUp from '../hooks/auth/SignUp';
@@ -11,7 +11,7 @@ import CreateButtonSignIn from '../components/shared/CreateButtonSignIn';
 import { Ionicons } from '@expo/vector-icons';
 import Spinner from '../components/shared/Spinner';
 import { Image } from 'expo-image';
-
+import { Fontisto } from '@expo/vector-icons';
 type SignInProps = {
     navigation: any;
 }
@@ -33,6 +33,15 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
 
     const text = 'Create your account'.split(' ');
+
+    const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+
+    const isTabletMode = useMemo(() => {
+      if(SCREEN_WIDTH > 700) {
+        return true
+      }
+      return false;
+    },[SCREEN_WIDTH])
 
     const subtitleAlreadyAccountText = 'ALREADY A MEMBER? SIGN IN NOW'.split(' ');
 
@@ -107,8 +116,6 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
       setIsValidPasswordInput(isValid.valid);
     };
 
-    const {height: SCREEN_HEIGHT} = useWindowDimensions();
-
     const handleShowPopupSelectedCountry = useCallback(() => {
         setShowPopupSelectedCountry(true)
     },[setShowPopupSelectedCountry])
@@ -157,6 +164,19 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
       </TouchableOpacity>
     );
 
+    const renderItemTablet = (
+      { item }: { item:{ 
+        label: string;
+        value: string 
+      }}) => (
+      <TouchableOpacity
+        style={styles.renderedItemTablet}
+        onPress={() => handleStatusClick(item.value)}
+      >
+        <Text style={styles.renderedTextTablet}>{item.label}</Text>
+      </TouchableOpacity>
+    );
+
     const handleCreateAccount  = useCallback((async() => {
       setSigninPending(true)
       try {
@@ -180,6 +200,169 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
       }
       }),[email,password,selectedCountry,status])
 
+  if (isTabletMode) {
+    return(
+      <>
+      <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
+        <View style={styles.headerTablet}>
+          <Text style={styles.titleTablet}>
+            {text.map((word, index) => (
+              index === 2 ? (
+              <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
+              ) : (
+              <Text key={index}>{word} </Text>
+            )))}
+          </Text>
+          <Text style={styles.subtitleTablet}>
+            Find solutions for all aspects of relocation for your specific needs.
+          </Text>
+          <Text style={[styles.subtitleTablet]}>
+            Get consultation from experts.
+          </Text>
+          <TouchableOpacity onPress={handleNavigationSignUp}>
+            <Text style={styles.subtitleThreeTablet}>
+                {subtitleAlreadyAccountText.map((word, index) => (
+                  index === 3 ||
+                  index === 4 ||
+                  index === 5 ? (
+                <Text key={index} style={styles.titleBlueTablet}>{word} </Text>
+                ) : (
+                <Text key={index}>{word} </Text>
+                )))}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.emailandpasswordContainerTablet}>
+          <View style={styles.innerTablet}>
+            <View style={styles.inputTablet}>
+              <Text style={styles.inputTextEmailTablet}>Email</Text>
+                {
+                  email !== '' ?  
+                  <View style={[styles.validationTablet,{left: '99%'}]}>
+                  {isValidInputEmailText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
+                   </View>
+                   : 
+                   null
+                  }
+              <TextInput
+                style={styles.inputTextTablet}
+                placeholderTextColor={'#AFB1B5'}
+                placeholder="enter your email"
+                value={email}
+                onChangeText={handleEmailInputChange}
+                autoCapitalize="none"
+                keyboardType="email-address">
+              </TextInput>
+            </View>
+            <View style={styles.inputTablet}>
+              <Text style={styles.inputTextTablet}>Password</Text>
+              <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainerTablet}>
+                {secureTextEntry ? <Ionicons name="eye-off-outline" size={19} color="black" /> : <Ionicons name="eye-outline" size={19} color="black" />}
+                {
+                  password !== '' ?  
+                  <View style={[styles.validationTablet,]}>
+                  {isValidInputPasswordText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
+                   </View>
+                   : 
+                   null
+                  }
+              </TouchableOpacity>
+                <TextInput
+                  placeholderTextColor={'#AFB1B5'}
+                  placeholder="enter your password"
+                  value={password}
+                  onChangeText={handlePasswordlInputChange}
+                  secureTextEntry={secureTextEntry}
+                  style={styles.inputTextTablet}
+                >
+                </TextInput>
+              </View>
+            </View>
+        </View>
+        <View style={styles.inputCountryOccupationTablet}>
+          <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountryTablet]}>
+            <Text style={styles.buttonTextTablet}>{t('countryOfOrigin')}</Text>
+            <View style={styles.inputContainerTablet}>
+              <Text style={styles.buttonTextSelectedTablet}>{selectedCountry ? selectedCountry : t('pageOnboardingSelect')}</Text>
+              <AntDesign name="caretdown" size={16} color="#AFB1B5" />
+            </View>
+          </TouchableOpacity>
+          <Modal visible={showPopupSelectedCountry} transparent>
+            <View style={styles.overlayTablet}>
+              <View style={styles.popupTablet}>
+                <View>
+                  <Text style={styles.dropdownTextTablet}>{t('pageOnboardingSelectCoutnry')}</Text>
+                  <TouchableOpacity onPress={clozeShowPopupSelectedCountry}>
+                    <Fontisto style={styles.deleteIconTablet} name="close-a" size={18} color="black" />
+                  </TouchableOpacity>
+                </View>
+                <Dropdown
+                  style={ styles.dropdownTablet}
+                  placeholderStyle={styles.placeholderDropdownTablet}
+                  renderLeftIcon={() => (
+                    <AntDesign
+                      name="search1" 
+                      size={20} 
+                      color="#3F465C" />
+                    )}
+                  data={countries}
+                  search
+                  maxHeight={520}
+                  itemContainerStyle={styles.itemTablet}
+                  labelField={'label'}
+                  valueField="value"
+                  placeholder={!selectedCountry ? t('pageOnboardingSearch') : selectedCountry}
+                  searchPlaceholder="..."
+                  value={selectedCountry}
+                  onChange={item => {
+                    setSelectedCountry(item.value);
+                    setShowPopupSelectedCountry(false)
+                  }}
+                />
+              </View>
+            </View>
+         </Modal>
+        </View>
+        <View style={styles.inputCountryOccupationTablet}>
+          <TouchableOpacity onPress={handleShowPopup} style={[styles.selectStatusTablet]}>
+            <Text style={styles.buttonTextTablet}>{t('pageOnboardingIam')}</Text>
+            <View style={styles.inputContainerTablet}>
+                <Text style={styles.buttonTextSelectedTablet}>{status ? status : t('pageOnboardingSelect')}</Text>
+                <AntDesign name="caretdown" size={16} color="#AFB1B5" />
+            </View>
+          </TouchableOpacity>
+          <View>
+            <Modal visible={showPopup} transparent>
+              <View style={styles.overlayTablet}>
+                <View style={styles.popupOccupationTablet}>
+                  <View>
+                    <Text style={styles.dropdownTextTablet}>{t('pageOnboardingSelectStatus')}</Text>
+                    <TouchableOpacity onPress={closePopup}>
+                      <Fontisto style={styles.deleteIconTablet} name="close-a" size={18} color="black" />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.popupFlatlistOccupationTablet}>
+                    <FlatList
+                      data={statusList}
+                      renderItem={renderItemTablet}
+                      keyExtractor={(item, index) => index.toString()}
+                    />
+                  </View>
+                </View>
+              </View>
+            </Modal>
+          </View>
+        </View>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
+          <View style={{ flexDirection: 'row', marginLeft: 10 , alignItems: 'center', justifyContent: 'center'}}>
+            <CreateButtonSignIn handleDisabled={handleDisabled} handleCreateAccount={handleCreateAccount}/>
+          </View>
+        </View>
+      </SafeAreaView>
+      {signPending ? <Spinner/> : null}
+    </>
+    )
+  }
 
   return (
     <>
@@ -273,7 +456,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
                 <View>
                   <Text style={styles.dropdownText}>{t('pageOnboardingSelectStatus')}</Text>
                   <TouchableOpacity onPress={clozeShowPopupSelectedCountry}>
-                    <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                    <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
                   </TouchableOpacity>
                 </View>
                 <Dropdown
@@ -318,7 +501,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
                   <View >
                     <Text style={styles.dropdownText}>{t('pageOnboardingSelectStatus')}</Text>
                     <TouchableOpacity onPress={closePopup}>
-                      <Image style={styles.deleteIcon} source={require('../assets/onboarding/delete.png')}/>
+                      <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
                     </TouchableOpacity>
                   </View>
                   <View style={styles.popupFlatlistOccupation}>
@@ -570,4 +753,226 @@ const styles = ScaledSheet.create({
     position: 'absolute',
     top: '100%'
   },
+
+
+  //TABLET STYLES
+
+  subtitleTablet: {
+    width: 350,
+    fontSize: 24,
+    marginLeft: 20,
+    color: '#72788D',
+   marginBottom: 12
+},
+   headerTablet: {
+    marginTop: 10
+   },
+   emailandpasswordContainerTablet: {
+    marginTop: 15,
+    alignItems: 'center'
+   },
+  inputCountryOccupationTablet: {
+    alignItems: 'center',
+  },
+  innerTablet: {
+       width: '91%'
+  },
+  inputContainerTablet: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    
+  },
+  textInputTablet: {
+      borderColor: '#000000',
+      borderBottomWidth: 1,
+  },
+  btnContainerTablet: {
+      backgroundColor: 'white',
+  },
+  inputTablet: {
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: '#DADADC',
+    borderRadius: 18,
+    marginBottom: 25,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    width:'100%'
+  },
+  languageTextTablet: {
+    fontSize: 18,
+    color: '#719FFF',
+    textTransform: 'uppercase'
+  },
+  titleTablet: {
+  fontSize: 38,
+  width: 400,
+  marginLeft: 20,
+  marginBottom: 10,
+  color: '#3F465C',
+  fontWeight: '500',
+},
+titleOrangeTablet: {
+  color: '#F06748',
+  fontWeight: '600',
+  width: 220,
+},
+blackDotTablet: {
+  width: 10,
+  height: 10,
+  backgroundColor: 'transparent',
+  marginHorizontal: 10,
+  borderRadius: 5,
+  borderWidth: 1,
+  borderColor: 'black',
+},
+imageTablet: {
+  resizeMode: 'contain',
+  objectContain: 'contain',
+  width: '100%'
+},
+inputTextTablet: {
+fontSize: 20
+},
+  buttonTextTablet: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 10
+},
+overlayTablet: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+},
+popupTablet: {
+  backgroundColor: '#fff',
+  width: '80%',
+  height: '55%',
+  padding: 7,
+  borderRadius: 8,
+},
+popupFlatlistTablet: {
+  backgroundColor: '#fff',
+  width: '80%',
+  height: '45%',
+  padding: 7,
+  borderRadius: 8,
+},
+popupFlatlistOccupationTablet: {
+  height: 635,
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  backgroundColor: '#fff',
+  paddingHorizontal: 10,
+  borderRadius: 8,
+},
+placeholderDropdownTablet: {
+  flex: 1,
+  alignContent: 'center',
+  justifyContent: 'center',
+  width: '80%',
+  borderWidth: 0.5,
+  borderRadius: 18,
+  borderColor: '#F8F9FC',
+  backgroundColor:'#F8F9FC',
+  height: 55,
+  paddingVertical: 15,
+  paddingHorizontal: 15.5
+},
+dropdownTablet: {
+  position:'relative',
+  backgroundColor: '#F8F9FC',
+  borderRadius: 18,
+  paddingHorizontal: 15,
+  paddingVertical: 15
+},
+dropdownTextTablet: {
+  fontSize: 23,
+  color: '#72788D',
+  marginBottom: 20,
+  alignSelf: 'center',
+  paddingTop: 10
+},
+itemTablet: {
+  borderBottomColor: '#d8d8dc',
+  borderBottomWidth: 0.5,
+  paddingHorizontal: 10,
+},
+  deleteIconTablet: {
+    position: 'absolute',
+    right: 29,
+    top: -40
+  },
+selectCountryTablet: {
+  borderWidth: 1,
+  borderColor: '#DADADC',
+  borderRadius: 18,
+  paddingHorizontal: 16,
+  height: 90,
+  justifyContent: 'center',
+  width: '91%'
+},
+selectStatusTablet: {
+  borderWidth: 1,
+  borderColor: '#DADADC',
+  borderRadius: 18,
+  width: '91%',
+  height: 90,
+  paddingHorizontal: 16,
+  marginTop: 25,
+  justifyContent: 'center'
+},
+  buttonTextSelectedTablet: {
+  fontSize: 18,
+  textTransform: 'capitalize',
+  color: '#3F465C',
+},
+inputTextEmailTablet: {
+  fontSize: 20,
+  marginBottom: 20
+},
+renderedItemTablet: {
+  marginVertical: 12, 
+  alignItems: 'center',
+  backgroundColor: '#F4F5F8',
+  width: 640,
+  height: 64,
+  borderRadius: 10,
+  justifyContent: 'center',
+},renderedTextTablet: {
+  color: '#3F465C',
+  fontWeight: '600',
+  fontSize: 18,
+  textTransform: 'capitalize',
+},
+popupOccupationTablet: {
+  backgroundColor: '#fff',
+  width: '80%',
+  height: '60%',
+  padding: 7,
+  borderRadius: 8,
+},
+subtitleThreeTablet: {
+  width: 340,
+  fontSize:18 ,
+  marginLeft: 20,
+  color: '#72788D',
+ marginBottom: 5
+}, titleBlueTablet: {
+  color: '#719FFF',
+  fontSize: 18,
+  marginLeft: 20,
+  marginBottom: 18
+},
+eyeIconContainerTablet: {
+  alignItems: 'flex-end',
+},
+validationTablet : {
+  position: 'absolute',
+  top: '100%'
+},
 })
