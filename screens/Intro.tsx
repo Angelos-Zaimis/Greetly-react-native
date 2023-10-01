@@ -137,11 +137,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 17
   },
-
-
-
-
-
   welcomeTablet: {
     marginTop: 10,
     marginLeft: 20,

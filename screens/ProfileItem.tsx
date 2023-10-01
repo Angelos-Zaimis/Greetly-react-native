@@ -162,6 +162,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               }, 1100);
             }
         }
+        await getUserInfo()
     }
 
   return (

@@ -31,6 +31,99 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
     return false;
   },[SCREEN_WIDTH])
 
+  if (isTabletMode){
+    return (
+      <>
+      <Tab.Navigator >
+        <Tab.Screen
+          name="WecomePage"
+          options={{
+            tabBarStyle: styles.tabContainerTablet,
+            headerShown: false,
+            title: 'Home',
+            tabBarInactiveTintColor: '#3F465C',
+            tabBarActiveTintColor: '#F06748',
+            tabBarLabelStyle: styles.textTablet,
+            tabBarIcon: ({ color, size }) => (
+              <Feather name="home" size={26} color={color} />
+            )
+          }}
+        >
+          {() => <WelcomePage />}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="Translate"
+          options={{
+            tabBarStyle: styles.tabContainerTablet,
+            headerShown: false,
+            title: 'Scan',
+            tabBarInactiveTintColor: '#3F465C',
+            tabBarActiveTintColor: '#F06748',
+            tabBarLabelStyle: styles.textTablet,
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="photo-filter" size={28} color={color} />
+            )
+          }}
+        >
+          {() => <Translate />}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="HelpContainer"
+          options={{
+            tabBarStyle: styles.tabContainerTablet,
+            headerShown: false,
+            title: 'Help',
+            tabBarInactiveTintColor: '#3F465C',
+            tabBarActiveTintColor: '#F06748',
+            tabBarLabelStyle: styles.textTablet,
+            tabBarIcon: ({ color, size }) => (
+             <MaterialCommunityIcons name="message-text-outline" size={26} color={color} />
+            )
+          }}
+        >
+          {() => <HelpNavigator/> }
+        </Tab.Screen>
+
+        <Tab.Screen
+          name="BookmarksContainer"
+          options={{
+            tabBarStyle: styles.tabContainerTablet,
+            headerShown: false,
+            title: 'Bookmarks',
+            tabBarInactiveTintColor: '#3F465C',
+            tabBarActiveTintColor: '#F06748',
+            tabBarLabelStyle: styles.textTablet,
+            tabBarIcon: ({ color, size }) => (
+              <Feather name="heart" size={26} color={color} />
+            )
+          }}
+        >
+          {() => <BookmarksContainer />}
+        </Tab.Screen>
+    
+        <Tab.Screen
+          name="ProfileContainer"
+          options={{
+            tabBarStyle: styles.tabContainerTablet,
+            headerShown: false,
+            title: 'Profile',
+            tabBarLabelStyle: styles.textTablet,
+            tabBarInactiveTintColor: '#3F465C',
+            tabBarActiveTintColor: '#F06748',
+            tabBarIcon: ({ color, size }) => (
+              <Octicons name="person" size={26} color={color} />
+            )
+          }}
+        >
+          {() => <ProfileContainer />}
+        </Tab.Screen>
+      </Tab.Navigator>
+    </>
+    )
+  }
+
   return (
     <>
       <Tab.Navigator >
@@ -157,5 +250,38 @@ export default BottomNavigator;
     },
     scanText: {
       fontSize: 12,
-    }
+    },
+
+    //TABLET STYLE
+
+   tabContainerTablet: {
+    backgroundColor: '#F5F8FD',
+  },
+  helpTapTablet: {
+    position: 'relative',
+    paddingVertical: 7,
+    top: '-2%',
+    backgroundColor: '#F06748', 
+    borderRadius: 35,
+    elevation: 6, 
+    shadowColor: '#F06748',
+    shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.6,
+  shadowRadius: 6,
+  },
+  textTablet:{
+    fontSize: 16,
+  },
+  bookTextTablet:{
+  },
+  helpTextTablet: {
+    color: 'white',
+    fontSize: 16
+  },
+  scanTextTablet: {
+    fontSize: 16,
+  }
   })

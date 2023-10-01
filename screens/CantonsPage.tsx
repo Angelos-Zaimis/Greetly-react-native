@@ -15,11 +15,11 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
   const {cities} = useCities();
   
-  const {getUserInfo} = useContext(AuthContext)
+  const {userInfos, user,getUserInfo} = useContext(AuthContext)
 
   useEffect(() => {
     getUserInfo()
-  },[])
+  },[userInfos, user])
 
   const {t} = useLanguage()
 

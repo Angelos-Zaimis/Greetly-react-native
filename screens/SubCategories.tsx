@@ -129,12 +129,13 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
             selected={categoryItem.name === incomingCategory}
             imageSource={categoryItem.imageSource}
             handlePress={categoryItem.navigate}
+            tabletMode={true}
           />
         ))}
       </View>
       <View style={styles.arrowButtonContainerTablet}>
         <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
-          <AntDesign name="left" size={23} color="black" />
+          <AntDesign name="left" size={30} color="black" />
         </TouchableOpacity>
         <View style={styles.subCategoriesTextContainerTablet}>
           <Text style={styles.subCategoryTitleTablet}>{t(incomingCategory)}</Text>
@@ -155,7 +156,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                            cityName: cityName,
                            category: incomingCategory,
                            subcategory: item.title,
-                           image: subCategories.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")})
+                           image: subCategories?.tablet_image_url})
                          : () => setIsSubscribed(true)}
                            style={[styles.categoryContainerTablet, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                  >
@@ -224,7 +225,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                              cityName: cityName,
                              category: incomingCategory,
                              subcategory: item.title,
-                             image: subCategories.image_url.replace("https://middleware-information-b3a171d27812.herokuapp.com", "")})
+                             image: subCategories?.image_url})
                            : () => setIsSubscribed(true)}
                              style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                    >
@@ -332,7 +333,7 @@ const styles = StyleSheet.create({
   // TABLET STYLES
 
   imageTablet: {
-    height: '21%',
+    height: '18%',
     resizeMode: 'stretch'
   },
   imageinsideTablet: {
@@ -353,7 +354,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   upperButtonContainerTablet: {
-    marginVertical: '-8%',
+    marginVertical: '-5%',
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   arrowButtonContainerTablet: {
-    marginTop: '13%',
+    marginTop: '8%',
     marginBottom: 30
   },
   subCategoriesTextContainerTablet: {
@@ -373,7 +374,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   subCategoryTitleTablet: {
-    fontSize: 20,
+    fontSize: 26,
     color: '#3F465C',
     fontWeight: '500'
   },
@@ -387,14 +388,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf:'center',
     width: '90%',
-    height: 40,
+    height: 60,
     borderRadius: 20,
-    paddingTop: 10,
+    paddingTop: 15,
     marginBottom: '4%',
     backgroundColor: '#F8F9FC'
   },
   subcategoryTextTablet: {
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold'
   }
 })
