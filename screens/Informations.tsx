@@ -39,12 +39,6 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     navigation.goBack();
   }
 
-  console.log(information)
-
-  useEffect(() => {
-    mutateBookmark()
-  },[deleteBookmark])
-
   const {t} = useLanguage();
   
   const {width: SCREENWIDTH} = useWindowDimensions();
@@ -97,6 +91,9 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     await mutateBookmark()
   },[bookmarkSaved?.uniqueTitle])
 
+  useEffect(() => {
+    mutateBookmark()
+  },[deleteBookmark, addToBookmark])
 
   if (isTabletMode) {
     return (
