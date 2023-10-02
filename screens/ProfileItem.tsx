@@ -1,5 +1,5 @@
-import { SafeAreaView, StyleSheet, Text, View,Modal, FlatList, TouchableOpacity} from 'react-native'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import { SafeAreaView, StyleSheet, Text, View,Modal, FlatList, TouchableOpacity, useWindowDimensions} from 'react-native'
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import SaveButton from '../components/shared/SaveButton';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -34,6 +34,17 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     const [successToast, setSuccessToast] = useState<boolean>(false)
     const [toastText, setToastText] = useState<string>('')
     const {user,getUserInfo, userInfos, updateUserInfo} = useContext(AuthContext);
+
+
+    const {width: SCREENWIDTH} = useWindowDimensions();
+  
+    const isTabletMode = useMemo(() => {
+      if(SCREENWIDTH > 700) {
+        return true
+      }
+  
+      return false;
+    },[SCREENWIDTH])
 
     const handleNavigationBack = () => {
         navigation.goBack();
@@ -91,6 +102,20 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
           <Text style={styles.renderedText}>{item.label}</Text>
         </TouchableOpacity>
       );
+
+    const renderItemTablet = (
+      { item 
+      }: { item:{ 
+          label: string;
+          value: string }
+      }) => (
+        <TouchableOpacity
+          style={styles.renderedItem}
+          onPress={() => handleStatus(item.value)}
+        >
+          <Text style={styles.renderedText}>{item.label}</Text>
+        </TouchableOpacity>
+    );
 
     const handleChange = async() => {
 
@@ -164,6 +189,161 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
         }
         await getUserInfo()
     }
+
+  if (isTabletMode) {
+    return(
+    <SafeAreaView style={styles.container}>
+      <View style={styles.headerTablet}>
+        <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
+            <AntDesign name="left" size={29} color="black" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.bodyTablet}>
+        <View style={styles.mainContainerTablet}>
+            <View style={styles.iconContainerTablet}>
+                <Entypo name="edit" size={70} color="black"  />
+            </View>
+            <View style={styles.titleContainerTablet}>
+                {language && <Text style={styles.titleTablet}>{t('changeLanguage')}</Text>}
+                {status && <Text style={styles.titleTablet}>{t('changeOccupation')}</Text>}
+                {country && <Text style={styles.titleTablet}>{t('changethecountryoforigin')}</Text>}
+            </View>
+            {country  && 
+              <TouchableOpacity onPress={handleShowPopup} style={styles.inputContainerTablet}>
+                <View>
+                    <Text style={styles.inputTitleTablet}>{t('country')}</Text>
+                    <Text style={styles.inputTextTablet}>{selectedCountry ? selectedCountry : country }</Text>
+                </View>
+                <View style={styles.inputIconTablet}>
+                 <AntDesign name="caretdown" size={20} color="#AFB1B5" />
+               </View>
+               <Modal visible={showPopup} transparent>
+                    <View style={styles.overlayTablet}>
+                        <View style={styles.popupTablet}>
+                            <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
+                                <Text style={styles.dropdownTextTablet} className='text-blackCustom font-medium'>{t('pageOnboardingSelectCoutnry')}</Text>
+                                <TouchableOpacity onPress={closePopup}>
+                                  <Fontisto style={styles.deleteIconTablet} name="close-a" size={15} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <Dropdown
+                              style={ styles.dropdownTablet}
+                              placeholderStyle={styles.placeholderDropdownTablet}
+                              renderLeftIcon={() => (
+                              <AntDesign
+                                name="search1" 
+                                size={20} 
+                                color="#3F465C" />
+                               )}
+                                data={countries}
+                                search
+                                maxHeight={500}
+                                itemContainerStyle={styles.itemTablet}
+                                labelField={'label'}
+                                valueField="value"
+                                placeholder={!selectedCountry ? t('pageOnboardingSearch') : selectedCountry}
+                                searchPlaceholder="..."
+                                value={selectedCountry}
+                                onChange={item => {
+                                    setSelectedCountry(item.value);
+                                    setShowPopup(false)
+                                }}
+                            />
+                        </View>
+                    </View>
+                </Modal>
+              </TouchableOpacity>
+            }
+            {language && 
+            <>
+              <TouchableOpacity onPress={handleShowPopupLanguage} style={styles.inputContainerTablet}>
+                    <Text style={styles.inputTitleTablet}>{t('language')}</Text>
+                    <Text style={styles.inputTextTablet}>{selectedLanguage ? getCountryLanguage(selectedLanguage): getCountryLanguage(language)}</Text>
+                    <View style={styles.inputIconTablet}>
+                        <AntDesign name="caretdown" size={20} color="#AFB1B5" />
+                    </View>
+                </TouchableOpacity>
+                <View style={styles.inputIconTablet}>
+                 <Modal visible={showPopupLanguage} transparent>
+                    <View style={styles.overlayTablet}>
+                        <View style={styles.popupTablet}>
+                            <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
+                                <Text style={styles.dropdownTextTablet} className='text-blackCustom font-medium'>{t('Selectyourlanuage')}</Text>
+                                <TouchableOpacity  onPress={closePopupLanguage}>
+                                  <Fontisto style={styles.deleteIconTablet} name="close-a" size={15} color="black" />
+                                </TouchableOpacity>
+                            </View>
+                            <Dropdown
+                              style={ styles.dropdownTablet}
+                              placeholderStyle={styles.placeholderDropdownTablet}
+                              renderLeftIcon={() => (
+                              <AntDesign
+                                name="search1" 
+                                size={20} 
+                                color="#3F465C" />
+                               )}
+                                data={languages}
+                                search
+                                maxHeight={500}
+                                itemContainerStyle={styles.itemTablet}
+                                labelField={'countryLanguage'}
+                                valueField="language"
+                                placeholder={!selectedLanguage ? t('pageOnboardingSearch') : getCountryLanguage(selectedLanguage) || undefined}
+                                searchPlaceholder="..."
+                                value={selectedLanguage}
+                                onChange={item => {
+                                    setSelectedLanguage(item.language);
+                                    setShowPopupLanguage(false)
+                                }}
+                            />
+                        </View>
+                    </View>
+                </Modal>
+               </View>
+               
+            </>}
+            {status && 
+            <>
+            <TouchableOpacity onPress={handleShowPopupStatus} style={styles.inputContainerTablet}>
+                <Text style={styles.inputTitleTablet}>{t('occupation')}</Text>
+                <Text style={styles.inputTextTablet}>{selectedStatus? selectedStatus : status}</Text>
+                <View style={styles.inputIconTablet}>
+                    <AntDesign name="caretdown" size={20} color="#AFB1B5" />
+                </View>
+            </TouchableOpacity>
+            <Modal visible={showPopupStatus} transparent>
+                <View style={styles.overlayTablet}>
+                    <View style={styles.popupTablet}>
+                        <View className='flex justify-center flex-row  items-center pt-4'>
+                            <Text style={styles.dropdownTextTablet} className='text-blackCustom font-medium'>{t('pageOnboardingSelectStatus')}</Text>
+                            <TouchableOpacity  onPress={closePopupStatus}>
+                              <Fontisto style={styles.deleteIconTablet} name="close-a" size={15} color="black" />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.popupFlatlistTablet}>
+                            <FlatList
+                              data={statusList}
+                              renderItem={renderItemTablet}
+                              keyExtractor={(item, index) => index.toString()}
+                            />
+                        </View>
+                    </View>
+                </View>
+            </Modal>
+            </>}
+             <View style={styles.buttonContainerTablet}>
+                <SaveButton isTabletMode={true} handlePress={handleChange}/>
+                <TouchableOpacity onPress={handleCancel} style={styles.cancelButtonTablet}>
+                    <Text style={styles.cancelButtonTextTablet}>{t('cancel')}</Text>
+                </TouchableOpacity>
+             </View>
+        </View>
+      </View>
+      {showToastMessage ? <CustomToaster success={successToast} message={successToast ? `${toastText} Update Successful!`:`${toastText} Update failed` }/> : null}
+
+    </SafeAreaView>
+    )
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -485,13 +665,186 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F4F5F8',
         width: '100%',
-        height: 39,
+        height: 59,
         borderRadius: 10,
         justifyContent: 'center',
       },renderedText: {
         color: '#3F465C',
         fontWeight: '600',
-        fontSize: 16,
+        fontSize: 20,
+        textTransform: 'capitalize',
+      },
+
+
+    //TABLET STYLES
+
+    headerTablet: {
+    },
+    iconArrowButtonTablet: {
+        marginLeft: 20,
+        marginTop: 35
+    },
+    iconArrowTablet:{
+        height: 18,
+        width: 18,
+        resizeMode:'contain'
+    },
+    bodyTablet: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    mainContainerTablet: {
+        width: '90%',
+        height: 600,
+        backgroundColor:'white',
+        borderRadius: 24
+    }, 
+    iconContainerTablet: {
+        position: 'absolute',
+        left: '39%',
+        top: '-8%',
+        width: 120,
+        height: 105,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F8F9FC'
+    },
+    iconTablet: {
+        resizeMode: 'contain',
+        width: 40,
+        height: 50 
+    },
+    titleContainerTablet: {
+        alignItems: 'center',
+        marginTop: 20
+    },
+    titleTablet: {
+        marginTop: 50,
+        fontSize: 28,
+        fontWeight: '500',
+        color:'#3F465C',
+    },
+    inputContainerTablet: {
+        marginTop: 40,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#DADADC',
+        width: '93%',
+        height: 100,
+        justifyContent: 'space-evenly',
+        borderRadius: 16,
+        alignSelf: 'center',
+        paddingLeft: 20,
+    },
+    inputTextTablet: {
+        fontSize: 26,
+        fontWeight: '600',
+        color:'#3F465C'
+    },
+    inputTitleTablet: {
+        fontSize: 20,
+        color:'#3F465C',
+        fontWeight: '400',
+        marginBottom: 10
+    },
+    buttonContainerTablet: {
+        flex: 1,
+        alignSelf: 'center',
+        justifyContent: 'flex-end'
+    },
+    cancelButtonTablet: {
+        alignSelf: 'center',
+        marginBottom: 50
+    },
+    cancelButtonTextTablet: {
+        color:'#719FFF',
+        fontSize: 22
+    },
+    overlayTablet: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      },
+      popupTablet: {
+        backgroundColor: '#fff',
+        width: '80%',
+        height: '55%',
+        padding: 7,
+        borderRadius: 8,
+      },
+      popupFlatlistTablet: {
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '92%',
+        padding: 7,
+        borderRadius: 8,
+      }
+      ,
+      placeholderDropdownTablet: {
+        flex: 1,
+        alignContent: 'center',
+        justifyContent: 'center',
+        width: '80%',
+        height: 50,
+        paddingVertical: 15,
+        paddingHorizontal: 15.5
+     },
+      dropdownTablet: {
+        position:'relative',
+        backgroundColor: '#F8F9FC',
+        borderRadius: 18,
+        paddingHorizontal: 15,
+        paddingVertical: 20,
+      },
+       dropdownTextTablet: {
+      fontSize: 24,
+      color: '#72788D'
+    },
+      itemTablet: {
+        borderBottomColor: '#d8d8dc',
+        borderBottomWidth: 0.5,
+        paddingHorizontal: 8,
+      },
+      deleteButtonTablet: {
+      
+      },
+      deleteIconTablet: {
+        position: 'absolute',
+        right: -40,
+        top: -5
+      },
+    selectStatusTablet: {
+      marginLeft: 20,
+      borderWidth: 1,
+      borderColor: '#DADADC',
+      borderRadius: 18,
+      width: '91%',
+      paddingVertical: 12, // Equivalent to height / 2 = 90 / 2 = 45
+      paddingHorizontal: 16,
+      marginTop: 10,
+    },
+    inputIconTablet: {
+        position: 'absolute',
+        left: '96%',
+        top: '65%'
+
+    },
+    renderedItemTablet: {
+        marginVertical: 12, 
+        alignItems: 'center',
+        backgroundColor: '#F4F5F8',
+        width: '100%',
+        height: 39,
+        borderRadius: 10,
+        justifyContent: 'center',
+      },
+    renderedTextTablet: {
+        color: '#3F465C',
+        fontWeight: '600',
+        fontSize: 20,
         textTransform: 'capitalize',
       }
 })

@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform } from 'react-native'
-import React, { FC, useContext, useState } from 'react'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, useWindowDimensions } from 'react-native'
+import React, { FC, useContext, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -24,7 +24,17 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
     const {userInfos, logout, deleteAccount} = useContext(AuthContext)
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     const [showLogOutModal, setShowLogOutModal] = useState<boolean>(false);
-
+    
+    const {width: SCREENWIDTH} = useWindowDimensions();
+  
+    const isTabletMode = useMemo(() => {
+      if(SCREENWIDTH > 700) {
+        return true
+      }
+  
+      return false;
+    },[SCREENWIDTH])
+    
     const navigateToProfileItemStatus = (
         status: string | undefined
     ) => {
@@ -85,6 +95,105 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
         return language ? language.countryLanguage : null;
     }
       
+  if (isTabletMode) {
+    return (
+        <ScrollView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.headerTablet}>
+                    <Text style={styles.headerTextTablet}>{t('yourProfile')}</Text>
+                    <Text style={styles.headerSubTextTablet}>{t('yourProfileSubtitle')}</Text>
+                </View>
+                <View style={styles.inputContainerTablet}>
+                    <View style={styles.nameContainerTablet}>
+                        <View style={styles.itemContainerTablet}>
+                            <View>
+                                <Text style={styles.inputTextTablet}>Email</Text>
+                                <Text style={styles.inputEmailTextTablet}>{userInfos?.username}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+                <View style={styles.inputContainerTablet}>
+                    <TouchableOpacity onPress={navigateToChangePassword} style={styles.nameContainerTablet}>
+                        <View style={styles.itemContainerTablet}>
+                            <View>
+                                <Text style={styles.inputTextTablet}>Password</Text>
+                                <Text style={styles.inputSubTextTablet}>************</Text>
+                            </View>
+                            <View>
+                                <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF" />
+                            </View>
+                       </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.inputContainerTablet}>
+                    <TouchableOpacity onPress={() => navigateToProfileItemCountry(userInfos?.country)} style={styles.nameContainerTablet}>
+                        <View style={styles.itemContainerTablet}>
+                            <View>
+                                <Text style={styles.inputTextTablet}>{t('countryOfOrigin')}</Text>
+                                <Text style={styles.inputSubTextTablet}>{userInfos?.country}</Text>
+                            </View>
+                            <View>
+                                <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.inputContainerTablet}>
+                    <TouchableOpacity onPress={() => navigateToProfileItemStatus(userInfos?.status)} style={styles.nameContainerTablet}>
+                        <View style={styles.itemContainerTablet}>
+                            <View>
+                                <Text style={styles.inputTextTablet}>{t('occupation')}</Text>
+                                <Text style={styles.inputSubTextTablet}>{userInfos?.status}</Text>
+                            </View>
+                            <View>
+                                <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.inputContainerTablet}>
+                    <TouchableOpacity onPress={() => navigateToProfileItemLanguage(userInfos?.language)} style={styles.nameContainerTablet}>
+                        <View style={styles.itemContainerTablet}>
+                            <View>
+                                <Text style={styles.inputTextTablet}>{t('language')}</Text>
+                                <Text style={styles.inputSubTextTablet}>{getCountryLanguage(userInfos?.language)}</Text>
+                            </View>
+                            <View>
+                                <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.deleteContainerTablet}>
+                    <TouchableOpacity onPress={openLogoutModal} style={styles.signoutTablet}>
+                        <ConfirmModal visible={showLogOutModal} onCancel={closeLogoutModal} imageSource='sign-out-alt' onConfirm={handleLogout} subText={''} text={'wantToLogout'}/>
+                        <Ionicons name="log-out-outline" size={24} color="black" />
+                        <Text style={styles.signoutTextTablet}>{t('signout')}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={openConfirmModal} style={styles.deleteTablet}>
+                        <ConfirmModal visible={showConfirmModal} onCancel={closeConfirmModal} imageSource='user-times' onConfirm={handleDeleteAccount} subText={'deleteSubText'} text={'deleteAccountForEver'}/>
+                        <Feather name="x" size={22} color="#E12847"/>
+                        <Text style={styles.deleteTextTablet}>{t('deleteAccount')}</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.lineTablet}></View>
+                <View style={styles.termsContainerTablet}>
+                    <Text style={styles.termsTextTablet}>{t('aboutTheApp')}</Text>
+                    <MaterialIcons name="chevron-right" size={29} color="black" /> 
+                </View>
+                <View style={styles.termsContainerTablet}>
+                    <Text style={styles.termsTextTablet}>{t('termsOfService')}</Text>
+                    <MaterialIcons name="chevron-right" size={29} color="black" />
+                </View>
+                <View style={styles.termsContainerTablet}>
+                    <Text style={styles.termsTextTablet}>{t('Privacy Policy')}</Text>
+                    <MaterialIcons name="chevron-right" size={29} color="black" />
+                </View>
+            </SafeAreaView>
+        </ScrollView>
+    )
+  }
 
   return (
   <ScrollView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
@@ -169,7 +278,7 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
         </View>
         <View style={styles.line}></View>
         <View style={styles.termsContainer}>
-            <Text>{t('aboutTheApp')}</Text>
+            <Text style={styles.termsText}>{t('aboutTheApp')}</Text>
             <MaterialIcons name="chevron-right" size={24} color="black" /> 
         </View>
         <View style={styles.termsContainer}>
@@ -291,6 +400,112 @@ const styles = StyleSheet.create({
     },
     termsText: {
         fontSize: 14,
+        color: '#3F465C',
+        fontWeight: '500'
+    },
+
+
+    //TABLET STYLES
+
+    headerTablet: {
+        alignItems: 'center',
+        marginTop: 10,
+        color: '#3F465C',
+
+    },
+    headerTextTablet: {
+        color: '#3F465C',
+        fontSize: 26,
+        fontWeight: '600',
+        lineHeight: 42
+    },
+    headerSubTextTablet: {
+        color: '#72788D',
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    iconArrowTablet:{
+        height: 18,
+        width: 18,
+        resizeMode:'contain',
+        marginTop: 15
+    },
+    nameContainerTablet: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#DADADC',
+        width: '93%',
+        height: 105,
+        justifyContent: 'center',
+        borderRadius: 16,
+    },
+    inputContainerTablet: {
+        alignItems: 'center',
+        marginTop: '3%'
+    },
+    inputTextTablet: {
+        color: '#3F465C',
+        fontSize: 19,
+        fontWeight: '600',
+        marginBottom: 18,
+        textTransform: 'capitalize'
+    },
+    inputSubTextTablet: {
+        color: '#3F465C',
+        fontSize: 20,
+        textTransform: 'capitalize'
+
+    },
+    inputEmailTextTablet: {
+        color: '#3F465C',
+        fontSize: 20,
+    },
+    itemContainerTablet: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'space-between',
+        paddingHorizontal: 20
+    },
+    deleteContainerTablet: {
+        alignItems: 'center',
+        marginTop: '3%'
+    },
+    signoutTablet:{
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    deleteTablet: {
+        marginTop: 30,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    signoutTextTablet: {
+        marginLeft: 10,
+        color: '#3F465C',
+        fontWeight: '600',
+        fontSize: 19,
+    },
+    deleteTextTablet: {
+        color: '#E12847',
+        fontWeight: '600',
+        fontSize: 18,
+        marginLeft: 10
+    },
+    lineTablet: {
+        borderTopWidth: 1,
+        borderTopColor: '#DADADC',
+        marginTop: 35,
+        marginBottom: 35
+    },
+    termsContainerTablet: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        marginTop: 20,
+    },
+    termsTextTablet: {
+        fontSize: 18,
         color: '#3F465C',
         fontWeight: '500'
     }

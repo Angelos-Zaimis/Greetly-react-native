@@ -256,6 +256,7 @@ export default BottomNavigator;
 
    tabContainerTablet: {
     backgroundColor: '#F5F8FD',
+    height: 80
   },
   helpTapTablet: {
     position: 'relative',
@@ -273,7 +274,7 @@ export default BottomNavigator;
   shadowRadius: 6,
   },
   textTablet:{
-    fontSize: 16,
+    fontSize: 18,
   },
   bookTextTablet:{
   },
