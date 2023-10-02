@@ -5,6 +5,7 @@ import { useCities } from '../components/util/useCities'
 import Spinner from '../components/shared/Spinner'
 import { Image } from 'expo-image'
 import { AuthContext } from '../hooks/auth/AuthContext'
+import { FontAwesome } from '@expo/vector-icons';
 
 type CantonsPageProps = {
     navigation: any
@@ -35,12 +36,16 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
   
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
 
+  const handleGoToNewsPage = () => {
+    navigation.push('NewsPage')
+  }
 
   if (isTabletMode) {
     return(
       <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.headerTablet}>
         <Image style={styles.logoTablet} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
+        <FontAwesome onPress={handleGoToNewsPage} name="newspaper-o" size={30} color="black" />
       </View>
       <View>
         {cities && (
@@ -88,6 +93,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
     <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.header}>
         <Image style={styles.logo} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
+        <FontAwesome onPress={handleGoToNewsPage} name="newspaper-o" size={25} color="black" />
       </View>
       <View>
         {cities && (
