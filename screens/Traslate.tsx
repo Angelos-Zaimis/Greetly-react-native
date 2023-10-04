@@ -177,7 +177,6 @@ const Traslate: FC = () => {
              buttonTextAfterSelection={rowTextForSelection} 
              rowTextForSelection={rowTextForSelection} 
              defaultValue={language} 
-             onSelect={handleLanguage}
              search
              searchPlaceHolder={t('pageOnboardingSearch')}
              searchInputStyle={styles.search}

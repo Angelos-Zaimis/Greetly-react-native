@@ -177,6 +177,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
           <GoPremiumPopUp 
             handleClosePopUp={handleClosePopUp} 
             handleGoPremium={handleGoPremium} 
+            isTabletMode={true}
           />
         </Animated.View>
       )}

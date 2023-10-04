@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View , SafeAreaView, Image} from 'react-native'
-import React, { FC } from 'react'
+import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions} from 'react-native'
+import React, { FC, useMemo } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
@@ -14,10 +14,19 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
     
     const {t} = useLanguage();
 
+    const {width: SCREENWIDTH} = useWindowDimensions();
+    
+    const isTabletMode = useMemo(() => {
+        if(SCREENWIDTH > 700) {
+          return true
+        }
+    
+        return false;
+      },[SCREENWIDTH])
+
     const handleGoBack = () => {
         navigation.goBack();
     }
-
     const showTermsAndConditions = () => {
 
     }
@@ -25,7 +34,36 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
     const handleGoToSelectPayment = () => {
         navigation.push("SelectPayment")
     }
-    
+
+  if (isTabletMode){
+    return (
+        <SafeAreaView style={styles.container}>
+            <View style={styles.goBackContainerTablet}>
+                <TouchableOpacity onPress={handleGoBack}>
+                    <AntDesign name="left" size={21} color="black" />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.goPremiumTextTablet}>
+                <Text style={styles.titleTablet}>Go Premium</Text>
+            </View>
+            <View>
+                <Image style={styles.imageTablet} source={require('../assets/goPremium/gopremium.png')} />
+            </View>
+            <View>
+                <Text style={styles.firstTextTablet}>{t("goPremiumPopUpThirdText")}</Text>
+                <Text style={styles.fourthTextTablet}>{t("withOnyFive")}</Text>
+                <Text style={styles.fifthTextTablet}>{t("VatIncluded")}</Text>
+                <Text style={styles.sixthTextTablet}>{t("GoPremiumTermsCondition")}</Text>
+                <TouchableOpacity onPress={showTermsAndConditions}>
+                    <Text style={styles.termsTextTablet}>{t("termsAndConditions")}</Text>
+                </TouchableOpacity>
+                <View style={styles.buttonContainerTablet}>
+                    <ConfirmButton isTabletMode={true} text='Confirm and Pay' handlePress={handleGoToSelectPayment}/></View>
+                </View>
+        </SafeAreaView>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.goBackContainer}>
@@ -126,5 +164,73 @@ const styles = StyleSheet.create({
     buttonContainer: {
         alignItems: 'center',
         marginTop: 40
+    },
+
+
+    //TABLET STYLES
+
+    imageTablet: {
+        resizeMode: 'contain',
+        height: 300,
+        marginTop: 12
+    },
+    goPremiumTextTablet:{
+        justifyContent:'center'
+    },
+    titleTablet: {
+        color:'#3F465C',
+        fontWeight: '600',
+        fontSize: 26
+    },
+    goBackContainerTablet: {
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        marginLeft: 24,
+        marginTop: 30
+    },
+    deleteTablet: {
+        color: 'black',
+        fontSize: 20,
+    }, 
+    firstTextTablet: {
+        fontSize: 22,
+        color: '#3F465C',
+        fontWeight: '600',
+        textAlign: 'center',
+        width: 400,
+        marginTop: 30,
+        lineHeight: 32
+    },
+    fourthTextTablet: {
+        color: '#3F465C',
+        fontSize: 20,
+        fontWeight: '600',
+        marginTop: 15,
+        textAlign: 'center'
+    },
+    fifthTextTablet: {
+        color: "#72788D",
+        fontSize: 18,
+        marginTop: 15,
+        textAlign: 'center'
+    },
+    sixthTextTablet: {
+        color: "#72788D",
+        fontSize: 18,
+        marginTop: 20,
+        textAlign: 'center',
+        width: 400,
+        lineHeight: 26
+    },
+    termsTextTablet: {
+        fontSize: 18,
+        color: '#719FFF',
+        alignSelf: 'center',
+        marginTop: 12,
+        textDecorationLine:'underline'
+    },
+    buttonContainerTablet: {
+        alignItems: 'center',
+        marginTop: 70
     }
 })

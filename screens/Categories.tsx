@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   //TABLET STYLES
 
   imageTablet: {
-    height: '21%',
+    height: '21.4%',
   },
   imageInnerTablet: {
     height: '100%',
