@@ -105,7 +105,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
             <Text style={styles.subTitle}>{t(item.description)}</Text>
           </View>
           <View style={{justifyContent: 'center'}}>
-            <FontAwesome5 name={item.icon} size={22} color="#719FFF" />
+            <FontAwesome5 name={item.icon} size={21} color="#719FFF" />
           </View>
         </TouchableOpacity>
         )}  

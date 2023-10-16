@@ -88,6 +88,7 @@
     "Healthcare & Insurance": "Здравоохранение и страхование",
     "Employment": "Занятость",
     "Housing": "Жилье",
+    "Education": "Образование",
 
     "immigration, legal support, police": "иммиграция, юридические вопросы, службы поддержки, полиция и т.д.",
     "open a bank account, filling taxes": "открытие банковского счета, заполнение налоговых деклараций и т.д.",
@@ -95,6 +96,8 @@
     "finding a job, working in Switzerland": "поиск работы, работа в Швейцарии и т.д.",
     "finding a place to rent or buy": "поиск жилья для аренды или покупки и т.д.",
     "How to register as a new resident": "Как зарегистрироваться как новый резидент",
+    "schools, universities": "система образования, школы, вузы и т.д.",
+
 
     "Register as a new resident": "Зарегистрироваться как новый резидент",
     "Do your taxes": "Сделать налоги",

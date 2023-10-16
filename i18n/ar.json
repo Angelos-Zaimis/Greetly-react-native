@@ -87,12 +87,15 @@
     "Healthcare & Insurance": "الرعاية الصحية والتأمين",
     "Employment": "التوظيف",
     "Housing": "الإسكان",
+    "Education": "تعليم",
 
     "immigration, legal support, police": "الهجرة، قانوني، دعم، شرطة",
     "open a bank account, filling taxes": "فتح حساب مصرفي، تقديم الضرائب",
     "medical system, find a doctor": "النظام الطبي، البحث عن طبيب",
     "finding a job, working in Switzerland": "البحث عن وظيفة، العمل في سويسرا",
     "finding a place to rent or buy": "البحث عن مكان للإيجار أو للشراء",
+    "schools, universities": "تعليم, نظام التعليم, مدارس, جامعات, إلخ.",
+
     
     "Register as a new resident": "تسجيل كمقيم جديد",
     "Do your taxes": "قم بدفع ضرائبك",
