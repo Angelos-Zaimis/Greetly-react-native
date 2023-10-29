@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions} from 'react-native'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
 import ConfirmButton from '../components/shared/ConfirmButton';
-
+import { usePayments } from '../components/util/usePayments';
+import * as WebBrowser from 'expo-web-browser';
+import { AuthContext } from '../hooks/auth/AuthContext';
 
 type GoPremiumProps = {
     navigation: any
@@ -13,6 +15,10 @@ type GoPremiumProps = {
 const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
     
     const {t} = useLanguage();
+
+    const {createCheackoutSession} = usePayments();
+    const {getUserInfo} = useContext(AuthContext)
+
 
     const {width: SCREENWIDTH} = useWindowDimensions();
     
@@ -30,10 +36,14 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
     const showTermsAndConditions = () => {
 
     }
+    const handleCreateSession = async(priceId: string) => {
+        const checkoutURL = createCheackoutSession(priceId)
 
-    const handleGoToSelectPayment = () => {
-        navigation.push("SelectPayment")
-    }
+        await WebBrowser.openBrowserAsync(await checkoutURL)
+        await getUserInfo();
+
+        handleGoBack()
+    };
 
   if (isTabletMode){
     return (
@@ -58,7 +68,7 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
                     <Text style={styles.termsTextTablet}>{t("termsAndConditions")}</Text>
                 </TouchableOpacity>
                 <View style={styles.buttonContainerTablet}>
-                    <ConfirmButton isTabletMode={true} text='Confirm and Pay' handlePress={handleGoToSelectPayment}/></View>
+                    <ConfirmButton isTabletMode={true} text='Confirm and Pay' handlePress={() => handleCreateSession('')}/></View>
                 </View>
         </SafeAreaView>
     )
@@ -86,7 +96,7 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
             <Text style={styles.termsText}>{t("termsAndConditions")}</Text>
         </TouchableOpacity>
         <View style={styles.buttonContainer}>
-            <ConfirmButton text='Confirm and Pay' handlePress={handleGoToSelectPayment}/>
+            <ConfirmButton text='Checkout' handlePress={() => handleCreateSession('price_1Nv3XhJ0qxeuDWlJABed3nQa')}/>
         </View>
         </View>
     </SafeAreaView>

@@ -1,4 +1,3 @@
-import useSWR from 'swr';
 import axios from 'axios';
 import AppURLS from '../appURLS';
 import { TRANSLATE_IMAGE_ENDPOINT } from '../endpoints';
@@ -8,7 +7,6 @@ const translationEndpoint = `${AppURLS.middlewareInformationURL}/${TRANSLATE_IMA
 
 export const useImageTranslation = () => {
 
-  const { data: translatedImage, error, mutate } = useSWR(null);
 
   const translateImage = async (imageData: { uri: string; }, targetLanguage: string) => {
 
@@ -26,10 +24,8 @@ export const useImageTranslation = () => {
         'Content-Type': 'multipart/form-data',
       },
     });
-    mutate()
 
-    console.log(response.data)
-    return response.data;
+    return response?.config?.url;
  
   } catch (error) {
     console.error('Error uploading image:', error);
@@ -38,8 +34,6 @@ export const useImageTranslation = () => {
   };
 
   return {
-    translatedImage,
-    error,
     translateImage,
   };
 };

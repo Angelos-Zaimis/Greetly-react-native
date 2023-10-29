@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, ActivityIndicator, TouchableOpacity, Platform} from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, ActivityIndicator, TouchableOpacity, Platform, Button} from 'react-native'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,6 +10,7 @@ import CameraButton from '../components/shared/CameraButton';
 import { useImageTranslation } from '../components/util/useTranslateImage';
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import * as ImagePicker from 'expo-image-picker';
 
 type CameraRefProps = {
   takePictureAsync: () => Promise<any>; // Adjust the return type accordingly
@@ -30,9 +31,10 @@ const Traslate: FC = () => {
   const [flash, setFlash] = useState<any>(FlashMode.off)
   const cameraRef = useRef<CameraRefProps>(null)
   const [showCamera, setShowCamera] = useState<boolean>(false)
-  const { translatedImage, error, translateImage } = useImageTranslation();
+  const {translateImage } = useImageTranslation();
   const [isTranslating, setIsTranslating] = useState(false);
 
+  const [translatedImage, setTranslatedImage] = useState<string>()
   const [borderError, setBoarderError] = useState<boolean>(false)
 
   useEffect(() => {
@@ -42,12 +44,6 @@ const Traslate: FC = () => {
       setHasCameraPermissions(cameraStatus.status === 'granted')
     })();
   },[])
-
-
-  const getCountryLanguage = (languageCode: string) => {
-    const language = languages.find(l => l.language === languageCode);
-    return language ? language.countryLanguage : null;
-  }
 
   const rowTextForSelection = (item: { countryLanguage: string }) => item.countryLanguage;
 
@@ -98,16 +94,35 @@ const Traslate: FC = () => {
     }
   }
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    setImageToTranslate(result)
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
   const handleTranslateImage = async () => {
     setIsTranslating(true)
     try {
       const translatedImageBase = await translateImage(imageToTranslate, language);
-      console.log(translatedImageBase)
+      
+      setTranslatedImage(translatedImageBase)
     } catch (error) {
       console.error('Error:', error);
     }
     setIsTranslating(false)
   };
+
 
   return (
     <>
@@ -122,7 +137,6 @@ const Traslate: FC = () => {
                 flashMode={flash}
                 ref={cameraRef}
               >
-               
                 <View style={styles.cameraButtonContainer}>
                   <View style={styles.closeCameraContainer}>
                     <TouchableOpacity onPress={() => setShowCamera(false)}>
@@ -135,8 +149,8 @@ const Traslate: FC = () => {
             :
             <View style={styles.imageContainer}>
               <View  style={styles.deleteImage}>
-              </View>
-              {imageToTranslate ? <Image style={styles.image} source={{uri: imageToTranslate.uri}}/> : <Image style={styles.image} source={{uri: image}}/>}
+              </View> 
+             <Image style={styles.image} source={{uri: translatedImage}}/>
               <View style={styles.cameraButtonContainer}>
                 <View style={styles.retakeButtonsContainer}>
                   <CameraButton text='Retake' name='retweet' onPress={handleDeleteImage} />
@@ -190,6 +204,33 @@ const Traslate: FC = () => {
            /> 
           </View>
         </View>
+           <View style={[styles.changeLanguage, {borderColor: borderError ? 'red' : '#fd68463e'}]}>
+          <View style={styles.translateAndText}>
+            <MaterialIcons name="translate" size={22} color="#F06748" />
+            <SelectDropdown data={languages} 
+             onSelect={handleLanguage}
+             buttonTextAfterSelection={rowTextForSelection} 
+             rowTextForSelection={rowTextForSelection} 
+             defaultValue={language} 
+             search
+             searchPlaceHolder={t('pageOnboardingSearch')}
+             searchInputStyle={styles.search}
+             searchPlaceHolderColor="#F06748"
+             buttonStyle={styles.languageButtonStyle}
+             searchInputTxtStyle={styles.searchText}
+             defaultButtonText={t('selectLanguage')}
+             buttonTextStyle={styles.languageText}
+             rowStyle={styles.rowStyle}
+             rowTextStyle={styles.rowText}
+           /> 
+          </View>
+        </View>
+      </View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 10 }} />}
+      {translatedImage && <Image source={{ uri: translatedImage }} style={{ width: 300, height: 300 }} />}
+      <TouchableOpacity onPress={handleTranslateImage}><Text>Send</Text></TouchableOpacity>
       </View>
       <View style={styles.mainContainer}>
         <View style={styles.photoContainer}>
@@ -334,7 +375,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '80%',
     marginTop:  60,
-    backgroundColor: 'black',
+
   },
   imageContainer: {
     flex: 1,

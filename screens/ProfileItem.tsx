@@ -22,6 +22,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
 
     const { status, language, country } = route.params;
 
+
     const {t} = useLanguage();
 
     const [selectedCountry, setSelectedCountry] = useState<string>('');
@@ -33,7 +34,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     const [showToastMessage, setShowToastMessage] = useState<boolean>(false)
     const [successToast, setSuccessToast] = useState<boolean>(false)
     const [toastText, setToastText] = useState<string>('')
-    const {user,getUserInfo, userInfos, updateUserInfo} = useContext(AuthContext);
+    const {getUserInfo, userInfos, updateUserInfo} = useContext(AuthContext);
 
 
     const {width: SCREENWIDTH} = useWindowDimensions();
@@ -128,6 +129,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               setToastText('Country')
               setShowToastMessage(true);
               setSuccessToast(true);
+              await getUserInfo();
               setTimeout(() => {
                 setShowToastMessage(false);
                 navigation.goBack();
@@ -151,6 +153,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               setToastText('Language')
               setShowToastMessage(true);
               setSuccessToast(true);
+              await getUserInfo();
               setTimeout(() => {
                 setShowToastMessage(false);
                 navigation.goBack();
@@ -174,6 +177,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               setToastText('Occupation')
               setShowToastMessage(true);
               setSuccessToast(true);
+              await getUserInfo();
               setTimeout(() => {
                 setShowToastMessage(false);
                 navigation.goBack();

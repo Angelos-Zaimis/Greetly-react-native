@@ -62,6 +62,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const handleGoPremium = () => {
     navigation.push("GoPremium")
+    setIsSubscribed(false)
   }
 
   useEffect(() => {

@@ -12,7 +12,17 @@ interface AuthContextType {
     exp: string;
     user_id: string;
   };
-  userInfos: any;
+  userInfos: {
+    user: string;
+    message: string;
+    username: string;
+    first_login: boolean | undefined;
+    status: string;
+    citizenship: string;
+    language: string;
+    country: string;
+    isSubscribed: boolean | undefined;
+  };
   login: (body: LoginProps) => Promise<any>;
   logout: () => void;
   changePassword: (email: string | undefined) => Promise<{ data: string }>;
@@ -34,7 +44,17 @@ const initialAuthContextValue: AuthContextType = {
     exp: '',
     user_id: '',
   },
-  userInfos: null,
+  userInfos: {
+    user: '',
+    message: '',
+    username: '',
+    first_login: undefined,
+    status: '',
+    citizenship: '',
+    language: '',
+    country: '',
+    isSubscribed: undefined
+  },
   isUpdated: false,
   login: function (body: LoginProps): Promise<any> {
     throw new Error('Function not implemented.');
@@ -80,13 +100,24 @@ type UpdateTokenProps = {
   refreshToken: string;
 }
 
+interface UserInfo {
+  id: number;
+  user: string;
+  message: string;
+  username: string;
+  first_login: boolean;
+  status: string;
+  citizenship: string;
+  language: string;
+  country: string;
+  isSubscribed: boolean;
+}
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
  
 
   const [authTokens, setAuthTokens] = useState<{ access: string, refresh: string } | null>(null);
   const [user, setUser] = useState<{ email: string, exp: string, user_id: string } | null | any>(null);
-  const [userInfos, setUserInfos] = useState(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [userInfos, setUserInfos] = useState<UserInfo | null>(null);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
   useEffect(() => {
@@ -95,15 +126,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const authTokens = await AsyncStorage.getItem('authTokens');
         const decodedUser = authTokens ? jwt_decode(authTokens) : null;
         setUser(decodedUser);
-  
+
         const savedUserInfos = await AsyncStorage.getItem('userInfos');
         if (savedUserInfos) {
           setUserInfos(JSON.parse(savedUserInfos));
         }
       } catch (error) {
         // Handle any errors that occurred during data fetching
-      } finally {
-        setLoading(false);
       }
     };
   
@@ -126,13 +155,39 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           },
         }
       );
-  
+
+       // Create a new object with the desired properties
+       const userInfoToSave = {
+        id: response.data.id,
+        user: response.data.user,
+        message: response.data.message,
+        username: response.data.username,
+        first_login: response.data.first_login,
+        status: response.data.status,
+        citizenship: response.data.citizenship,
+        language: response.data.language,
+        country: response.data.country,
+        isSubscribed: response.data.isSubscribed,
+      };
+
+      AsyncStorage.setItem('authTokens', JSON.stringify(response.data.tokens));
+      AsyncStorage.setItem('userInfos', JSON.stringify(userInfoToSave));
       setAuthTokens(response.data.tokens);
       setUser(response.data.tokens.access);
-      AsyncStorage.setItem('authTokens', JSON.stringify(response.data.tokens));
-      AsyncStorage.setItem('userInfos', JSON.stringify(response.data));
-      setUserInfos(response.data)
+      setUserInfos({
+        id: response.data.id,
+        user: response.data.user,
+        message: response.data.message,
+        username: response.data.username,
+        first_login: response.data.first_login,
+        status: response.data.status,
+        citizenship: response.data.citizenship,
+        language: response.data.language,
+        country: response.data.country,
+        isSubscribed: response.data.isSubscribed,
+      })
 
+      
     } catch (error: any) {
       return error.response;
     }
@@ -147,6 +202,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       });
   
+      setIsUpdated(true);
       await getUserInfo()
       return response;
     } catch (error: any) {
@@ -154,18 +210,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const getUserInfo = async() => {
 
+  const getUserInfo = async() => {
+    console.log(userInfos?.user)
     try {
 
-      const response =  await axios.get(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/?email=${userInfos?.username}`,
+      const response =  await axios.get(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/?email=${userInfos?.user}`,
         {
           headers: {
             'Content-Type': 'application/json'
           }
         })
 
-      setUserInfos(response.data)
+        setUserInfos({
+          id: response.data.id,
+          user: response.data.user,
+          message: response.data.message,
+          username: response.data.username,
+          first_login: response.data.first_login,
+          status: response.data.status,
+          citizenship: response.data.citizenship,
+          language: response.data.language,
+          country: response.data.country,
+          isSubscribed: response.data.isSubscribed,
+        })
+  
       return response;
     } catch (error: any) {
       return error.response;
@@ -212,7 +281,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null)
     setUserInfos(null)
     AsyncStorage.removeItem('authTokens')
-
+    AsyncStorage.removeItem('userInfos');
   }
 
   const deleteAccount = async (email: string) => {
