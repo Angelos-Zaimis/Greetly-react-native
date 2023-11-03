@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, useWindowDimensions} from 'react-native'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
 import { FontAwesome5} from '@expo/vector-icons';
@@ -31,10 +31,10 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
   },[SCREENWIDTH])
   
   const {t} = useLanguage();
-  
-  const handleNavigationBack = () => {
+
+  const handleNavigationBack = useCallback(() => {
     navigation.goBack();
-  }
+  }, [navigation]);
 
   if (isTabletMode){
     return (

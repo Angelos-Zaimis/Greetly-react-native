@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, useWindowDimensions} from 'react-native'
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import useSWR from 'swr';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
@@ -28,13 +28,14 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
     return false;
   },[SCREEN_WIDTH])
 
-  const handleNavigationBack = () => {
+  const handleNavigationBack = useCallback(() => {
     navigation.goBack();
-  }
-
+  }, [navigation]);
+  
   const handleOpenDocs = () => {
     setOpenRequiredDoc(true)
   }
+  
   const  handleCloseDocs = () => {
     setOpenRequiredDoc(false)
   }

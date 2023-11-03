@@ -55,10 +55,10 @@ const ChangePassword: FC<changePasswordProps> = ({navigation, route}) => {
         setLoading(true)
         try {
             const response = await changePasswordVerify({email,code,password});
-            if(response.message === 'Password changed successfully.') {
+            if(response?.message === 'Password changed successfully.') {
                 navigation.push('Login')
     
-              }
+            }
             setLoading(false)
             return response;
         } catch (error) {

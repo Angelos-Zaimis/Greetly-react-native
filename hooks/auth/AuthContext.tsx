@@ -13,28 +13,12 @@ interface AuthContextType {
     user_id: string;
   };
   userInfos: {
-    user: string;
-    message: string;
     username: string;
-    first_login: boolean | undefined;
-    status: string;
-    citizenship: string;
-    language: string;
-    country: string;
-    isSubscribed: boolean | undefined;
   };
   login: (body: LoginProps) => Promise<any>;
   logout: () => void;
   changePassword: (email: string | undefined) => Promise<{ data: string }>;
   changePasswordVerify: (body: {email: string, code: string, password: string}) => Promise<void>;
-  getUserInfo: () => Promise<{
-    language: string;
-    country: string;
-    status?: string;
-    isSubscribed: boolean | null;
-  }>;
-  updateUserInfo: (body: { email: string; language?: string , country?:string, status?: string}) => void; // Updated type
-  isUpdated: boolean;
   deleteAccount: (email: string) => void;
 }
 
@@ -45,24 +29,12 @@ const initialAuthContextValue: AuthContextType = {
     user_id: '',
   },
   userInfos: {
-    user: '',
-    message: '',
     username: '',
-    first_login: undefined,
-    status: '',
-    citizenship: '',
-    language: '',
-    country: '',
-    isSubscribed: undefined
   },
-  isUpdated: false,
   login: function (body: LoginProps): Promise<any> {
     throw new Error('Function not implemented.');
   },
   logout: function (): void {
-    throw new Error('Function not implemented.');
-  },
-  updateUserInfo: function (): void {
     throw new Error('Function not implemented.');
   },
   changePassword: function (): Promise<{data: string}> {
@@ -70,14 +42,6 @@ const initialAuthContextValue: AuthContextType = {
   },
   changePasswordVerify: function (body: {email: string, code: string, password: string}): Promise<void> {
     throw new Error('Function not implemented.');
-  },
-  getUserInfo: async () => {
-    return {
-      language: '',
-      country: '',
-      status: '',
-      isSubscribed: null
-    };
   },
   deleteAccount: function (emai: string): void {
     throw new Error('Function not implemented.');
@@ -101,24 +65,15 @@ type UpdateTokenProps = {
 }
 
 interface UserInfo {
-  id: number;
-  user: string;
-  message: string;
   username: string;
-  first_login: boolean;
-  status: string;
-  citizenship: string;
-  language: string;
-  country: string;
-  isSubscribed: boolean;
 }
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
  
 
   const [authTokens, setAuthTokens] = useState<{ access: string, refresh: string } | null>(null);
   const [user, setUser] = useState<{ email: string, exp: string, user_id: string } | null | any>(null);
   const [userInfos, setUserInfos] = useState<UserInfo | null>(null);
-  const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -156,18 +111,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       );
 
-       // Create a new object with the desired properties
        const userInfoToSave = {
-        id: response.data.id,
-        user: response.data.user,
-        message: response.data.message,
         username: response.data.username,
-        first_login: response.data.first_login,
-        status: response.data.status,
-        citizenship: response.data.citizenship,
-        language: response.data.language,
-        country: response.data.country,
-        isSubscribed: response.data.isSubscribed,
       };
 
       AsyncStorage.setItem('authTokens', JSON.stringify(response.data.tokens));
@@ -175,71 +120,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setAuthTokens(response.data.tokens);
       setUser(response.data.tokens.access);
       setUserInfos({
-        id: response.data.id,
-        user: response.data.user,
-        message: response.data.message,
         username: response.data.username,
-        first_login: response.data.first_login,
-        status: response.data.status,
-        citizenship: response.data.citizenship,
-        language: response.data.language,
-        country: response.data.country,
-        isSubscribed: response.data.isSubscribed,
-      })
+})
 
       
     } catch (error: any) {
       return error.response;
     }
-  }
-
-
-  const updateUserInfo = async (body: { email: string; language: string, country: string, status: string}) => {
-    try {
-      const response = await axios.put(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/`, body, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      setIsUpdated(true);
-      await getUserInfo()
-      return response;
-    } catch (error: any) {
-      return error.response;
-    }
-  };
-
-
-  const getUserInfo = async() => {
-    console.log(userInfos?.user)
-    try {
-
-      const response =  await axios.get(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/?email=${userInfos?.user}`,
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-
-        setUserInfos({
-          id: response.data.id,
-          user: response.data.user,
-          message: response.data.message,
-          username: response.data.username,
-          first_login: response.data.first_login,
-          status: response.data.status,
-          citizenship: response.data.citizenship,
-          language: response.data.language,
-          country: response.data.country,
-          isSubscribed: response.data.isSubscribed,
-        })
-  
-      return response;
-    } catch (error: any) {
-      return error.response;
-    }
-
   }
 
   const changePassword = async( email:string) => {
@@ -347,9 +234,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     login,
     logout,
-    updateUserInfo,
-    isUpdated,
-    getUserInfo,
     deleteAccount,
     changePassword,
     changePasswordVerify,

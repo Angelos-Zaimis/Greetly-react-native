@@ -11,6 +11,7 @@ import CustomToaster from '../components/shared/CustomToaster';
 import { Entypo } from '@expo/vector-icons';
 import { languages } from '../assets/languages';
 import { Fontisto } from '@expo/vector-icons';
+import { useUserInfo } from '../components/util/useUserInfos';
 
 type ProfileItemProps = {
     route: any
@@ -34,8 +35,9 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     const [showToastMessage, setShowToastMessage] = useState<boolean>(false)
     const [successToast, setSuccessToast] = useState<boolean>(false)
     const [toastText, setToastText] = useState<string>('')
-    const {getUserInfo, userInfos, updateUserInfo} = useContext(AuthContext);
+    
 
+    const {mutate, userInfo, updateUserInfo} = useUserInfo();
 
     const {width: SCREENWIDTH} = useWindowDimensions();
   
@@ -48,7 +50,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     },[SCREENWIDTH])
 
     const handleNavigationBack = () => {
-        navigation.goBack();
+      navigation.push('Profile');
     }
 
     const closePopup = () => {
@@ -123,16 +125,16 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
         if (country && country !== selectedCountry) {
             try {
               await updateUserInfo({
-                email: userInfos?.user,
+                email: userInfo?.user,
                 country: selectedCountry
               });
               setToastText('Country')
               setShowToastMessage(true);
               setSuccessToast(true);
-              await getUserInfo();
+              await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
-                navigation.goBack();
+                navigation.push('Profile');
               }, 1100);
             } catch (error) {
               setToastText('Country')
@@ -147,16 +149,16 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
         if (language && language !== selectedLanguage) {
             try {
               await updateUserInfo({
-                email: userInfos?.user,
+                email: userInfo?.user,
                 language: selectedLanguage
               });
               setToastText('Language')
               setShowToastMessage(true);
               setSuccessToast(true);
-              await getUserInfo();
+              await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
-                navigation.goBack();
+                navigation.push('Profile');
               }, 1100);
             } catch (error) {
               setToastText('Language')
@@ -171,16 +173,16 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
         if (status && status !== selectedStatus) {
             try {
               await updateUserInfo({
-                email: userInfos?.user,
+                email: userInfo?.user,
                 status: selectedStatus
               });
               setToastText('Occupation')
               setShowToastMessage(true);
               setSuccessToast(true);
-              await getUserInfo();
+              await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
-                navigation.goBack();
+                navigation.push('Profile');
               }, 1100);
             } catch (error) {
               setToastText('Occupation')
@@ -191,7 +193,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               }, 1100);
             }
         }
-        await getUserInfo()
+        await mutate()
     }
 
   if (isTabletMode) {

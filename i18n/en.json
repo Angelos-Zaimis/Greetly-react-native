@@ -79,7 +79,13 @@
     "GoPremiumTermsCondition": "Your subscription will renew automatically every month. Cancel it anytime from your account settings. By clicking \"Confirm and pay\", you agree to",
     "termsAndConditions": "Terms and Conditions.",
     "Completeyourpayment": "Complete your payment",
-
+    "premiumMember": "Premium Member",
+    "month": "month",
+    "subscriptionDetails": "Subscription Details",
+    "youSubscriptionRenew": "Your subscription is autorenewed every",
+    "cancelSubscription": "Cancel subscription",
+    "cancelSubscriptionTitle": "Are you sure that you want to cancel your subscription?",
+    "cancelSubscriptionSubTitle": "Please note that this is irreversible",
 
     "Legal System & Immigration": "Legal System & Immigration",
     "Money & Banking": "Money & Banking",

@@ -3,6 +3,7 @@ import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { AuthContext } from '../../hooks/auth/AuthContext';
 import RNLanguageDetector from '@os-team/i18next-react-native-language-detector';
+import { useUserInfo } from './useUserInfos';
 
 /**
  * GLOBAL TRANSLATION
@@ -23,19 +24,20 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 
-  const {userInfos,getUserInfo, user} = useContext(AuthContext)
-  const [selectedLanguage, setLanguage] = useState<string>('');
+  const {user} = useContext(AuthContext)
+  const {userInfo, mutate} = useUserInfo();
+  const [selectedLanguage, setLanguage] = useState<string>();
 
   useEffect(() => {
     if (user) {
-      if(selectedLanguage !== userInfos.language){
-        getUserInfo()
-        setLanguage(userInfos.language);
+      if(selectedLanguage !== userInfo?.language){
+        mutate()
+        setLanguage(userInfo?.language);
       }
     }else{
       setLanguage('en')
     }
-  }, [userInfos,selectedLanguage,userInfos?.language]);
+  }, [selectedLanguage,userInfo?.language]);
 
 
   useEffect(() => {

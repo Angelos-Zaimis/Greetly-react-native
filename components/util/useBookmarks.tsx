@@ -4,23 +4,24 @@ import useSWR from 'swr';
 import { AuthContext } from '../../hooks/auth/AuthContext';
 import AppURLS from '../appURLS';
 import { BOOKMARKS_ENDPOINT } from '../endpoints';
+import { useUserInfo } from './useUserInfos';
 
 const apiUrl = `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/`;
 
 export const useBookmarks = (informationTitle?: string) => {
 
-  const {user,userInfos} = useContext(AuthContext)
-
-  const { data: bookmarks, error, mutate } = useSWR(`${apiUrl}?user_email=${userInfos?.user}`); // replace fetcher with your own function
+  const {userInfo} = useUserInfo();
+ 
+  const { data: bookmarks, error, mutate } = useSWR(`${apiUrl}?user_email=${userInfo?.user}`); // replace fetcher with your own function
  
   const { data: bookmarkSaved, mutate: mutateBookmark } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/${informationTitle}/?user_email=${userInfos?.user}`,
+    `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/${informationTitle}/?user_email=${userInfo?.user}`,
   );
 
   const createBookmark = async (postData: any) => {
     try {
       // Perform the POST request
-      const response = await fetch(`${apiUrl}?user_email=${userInfos?.user}`, {
+      const response = await fetch(`${apiUrl}?user_email=${userInfo?.user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ export const useBookmarks = (informationTitle?: string) => {
 
   const deleteBookmark = async (uniqueTitle: string) => {
     try {
-      const url = `${apiUrl}${uniqueTitle}/?user_email=${userInfos?.user}`;
+      const url = `${apiUrl}${uniqueTitle}/?user_email=${userInfo?.user}`;
       // Perform the DELETE request
       const response = await fetch(url, {
         method: 'DELETE',

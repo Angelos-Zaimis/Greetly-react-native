@@ -12,6 +12,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
 import { Image } from 'expo-image';
 import Spinner from '../components/shared/Spinner';
+import { useUserInfo } from '../components/util/useUserInfos';
 
 type SubCategoriesProps = {
   navigation: any;
@@ -32,7 +33,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
-  const {userInfos} = useContext(AuthContext)
+  const {userInfo} = useUserInfo();
 
   const {width: SCREENWIDTH} = useWindowDimensions();
 
@@ -147,7 +148,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
           <FlatList 
             data={subCategories?.subcategories}
             renderItem={({ item, index }) => {
-              const showAsSubscribed = userInfos?.isSubscribed || index < 3;
+              const showAsSubscribed = userInfo?.isSubscribed || index < 3;
               return (
                  <TouchableOpacity
                      key={item.id}
@@ -217,7 +218,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
          <FlatList 
            data={subCategories?.subcategories}
            renderItem={({ item, index }) => {
-               const showAsSubscribed = userInfos?.isSubscribed || index < 3;
+               const showAsSubscribed = userInfo?.isSubscribed || index < 3;
                return (
                    <TouchableOpacity
                        key={item.id}

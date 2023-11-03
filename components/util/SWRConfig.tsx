@@ -9,7 +9,7 @@ const SWRConfigProvider = ({ children }: SWRConfigProps) => {
   const swrConfig = {
     // Specify your global SWR configuration options here
     // For example, you can set the cache timeout, polling interval, etc.
-    revalidateOnFocus: false, // Disable automatic revalidation on window focus
+
     fetcher: (url: string) => fetch(url).then((res) => res.json()),
   };
 

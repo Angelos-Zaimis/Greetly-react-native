@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useMemo } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useMemo } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform, useWindowDimensions} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
@@ -6,6 +6,8 @@ import Spinner from '../components/shared/Spinner'
 import { Image } from 'expo-image'
 import { AuthContext } from '../hooks/auth/AuthContext'
 import { FontAwesome } from '@expo/vector-icons';
+import { useUserInfo } from '../components/util/useUserInfos'
+
 
 type CantonsPageProps = {
     navigation: any
@@ -15,16 +17,13 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
 
   const {cities} = useCities();
+  const {mutate} = useUserInfo();
   
-  const {getUserInfo,userInfos} = useContext(AuthContext)
+  const {t} = useLanguage()
 
   useEffect(() => {
-    if (userInfos?.username){
-      getUserInfo()
-    }
+    mutate()
   },[])
-
-  const {t} = useLanguage()
 
   const {width: SCREENWIDTH} = useWindowDimensions();
 
@@ -38,9 +37,9 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
   
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
 
-  const handleGoToNewsPage = () => {
-    navigation.push('NewsPage')
-  }
+  const handleGoToNewsPage = useCallback(() => {
+    navigation.push('NewsPage');
+  }, [navigation]);
 
   if (isTabletMode) {
     return(

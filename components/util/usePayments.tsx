@@ -1,13 +1,15 @@
 
 import { useContext } from 'react';
 import AppURLS from '../appURLS';
-import { CREATE_CHECKOUT_SESSION, PAYMENTS } from '../endpoints';
+import { CANCEL_SUBSCRIPTION, CREATE_CHECKOUT_SESSION, PAYMENTS } from '../endpoints';
 import { AuthContext } from '../../hooks/auth/AuthContext';
+import { useUserInfo } from './useUserInfos';
 
 export const usePayments = () => {
 
-  const {userInfos} = useContext(AuthContext)
 
+  const {userInfo} = useUserInfo();
+  
   const createCheackoutSession = async (priceId: string) => {
     try {
       const url = `${AppURLS.middlewareInformationURL}/${PAYMENTS}/${CREATE_CHECKOUT_SESSION}`
@@ -19,7 +21,7 @@ export const usePayments = () => {
         },
         body: JSON.stringify({ 
           priceId: priceId,
-          user_email: userInfos?.username
+          user_email: userInfo?.username
          }),
       });
 
@@ -39,7 +41,30 @@ export const usePayments = () => {
     }
   };
 
+  const cancelSubscription = async (subscription_id: string, email: string) => {
+    try {
+      const url = `${AppURLS.middlewareInformationURL}/${PAYMENTS}/${CANCEL_SUBSCRIPTION}`
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email : email,
+          subscription_id: subscription_id
+        })
+      })
+
+      return response;
+
+    } catch (error) {
+      
+    }
+  }
+
   return {
-    createCheackoutSession
+    createCheackoutSession,
+    cancelSubscription
   };
 };

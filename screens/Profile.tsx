@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, useWindowDimensions } from 'react-native'
-import React, { FC, useContext, useMemo, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { Ionicons } from '@expo/vector-icons'; 
@@ -9,6 +9,7 @@ import { Entypo } from '@expo/vector-icons';
 import ConfirmModal from '../components/shared/ConfirmModal';
 import { ScrollView } from 'react-native-gesture-handler';
 import { languages } from '../assets/languages';
+import { useUserInfo } from '../components/util/useUserInfos';
 
 
 type ProfileProps = {
@@ -19,9 +20,8 @@ type ProfileProps = {
 const Profile: FC<ProfileProps> = ({navigation, route}) => {
 
     const {t} = useLanguage();
-   
-
-    const {userInfos, logout, deleteAccount} = useContext(AuthContext)
+    const {logout, deleteAccount} = useContext(AuthContext)
+    const {userInfo} = useUserInfo();
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     const [showLogOutModal, setShowLogOutModal] = useState<boolean>(false);
     
@@ -35,42 +35,45 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
       return false;
     },[SCREENWIDTH])
     
-    const navigateToProfileItemStatus = (
-        status: string | undefined
-    ) => {
-        navigation.push('ProfileItem',{
-            status: status
-        })
-    }
+    const navigateToProfileItemStatus = useCallback(
+        (status: string | undefined) => {
+          navigation.push('ProfileItem', {
+            status: status,
+          });
+        },
+        [navigation]
+      );
       
-    const navigateToProfileItemLanguage = (
-        language: string | undefined
-    ) => {
-        navigation.push('ProfileItem',{
-            language: language
-        })
-    }
-
-    const navigateToProfileItemCountry = (
-        country: string | undefined
-    ) => {
-        navigation.push('ProfileItem',{
-            country: country
-        })
-    }
-
-    const navigateToChangePassword = () => {
-        navigation.push('ChangePassword',{
-            inApp: true
-        })
-    }
+      const navigateToProfileItemLanguage = useCallback(
+        (language: string | undefined) => {
+          navigation.push('ProfileItem', {
+            language: language,
+          });
+        },
+        [navigation]
+      );
+      
+      const navigateToProfileItemCountry = useCallback(
+        (country: string | undefined) => {
+          navigation.push('ProfileItem', {
+            country: country,
+          });
+        },
+        [navigation]
+      );
+      
+      const navigateToChangePassword = useCallback(() => {
+        navigation.push('ChangePassword', {
+          inApp: true,
+        });
+      }, [navigation]);
 
     const handleLogout = async() => {
         await logout()
     }
 
     const handleDeleteAccount = async () => {
-        await deleteAccount(userInfos?.user);
+        await deleteAccount(userInfo?.user ?? '');
         await logout()
     };
 
@@ -90,6 +93,18 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
         setShowLogOutModal(true)
     }
 
+    const handleGetSubscriptionDetails = useCallback(() => {
+        navigation.push('SubscriptionDetails')
+    },[navigation])
+
+    const handleGoPremium = useCallback(() => {
+        navigation.push('GoPremium')
+    },[navigation])
+
+    const price = useMemo(() => {
+        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '10'
+    },[userInfo?.product_details?.subscription_price])
+
     const getCountryLanguage = (languageCode: string) => {
         const language = languages.find(l => l.language === languageCode);
         return language ? language.countryLanguage : null;
@@ -101,14 +116,13 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
             <SafeAreaView style={styles.container}>
                 <View style={styles.headerTablet}>
                     <Text style={styles.headerTextTablet}>{t('yourProfile')}</Text>
-                    <Text style={styles.headerSubTextTablet}>{t('yourProfileSubtitle')}</Text>
                 </View>
                 <View style={styles.inputContainerTablet}>
                     <View style={styles.nameContainerTablet}>
                         <View style={styles.itemContainerTablet}>
                             <View>
                                 <Text style={styles.inputTextTablet}>Email</Text>
-                                <Text style={styles.inputEmailTextTablet}>{userInfos?.username}</Text>
+                                <Text style={styles.inputEmailTextTablet}>{userInfo?.username}</Text>
                             </View>
                         </View>
                     </View>
@@ -127,11 +141,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.inputContainerTablet}>
-                    <TouchableOpacity onPress={() => navigateToProfileItemCountry(userInfos?.country)} style={styles.nameContainerTablet}>
+                    <TouchableOpacity onPress={() => navigateToProfileItemCountry(userInfo?.country)} style={styles.nameContainerTablet}>
                         <View style={styles.itemContainerTablet}>
                             <View>
                                 <Text style={styles.inputTextTablet}>{t('countryOfOrigin')}</Text>
-                                <Text style={styles.inputSubTextTablet}>{userInfos?.country}</Text>
+                                <Text style={styles.inputSubTextTablet}>{userInfo?.country}</Text>
                             </View>
                             <View>
                                 <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
@@ -140,11 +154,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.inputContainerTablet}>
-                    <TouchableOpacity onPress={() => navigateToProfileItemStatus(userInfos?.status)} style={styles.nameContainerTablet}>
+                    <TouchableOpacity onPress={() => navigateToProfileItemStatus(userInfo?.status)} style={styles.nameContainerTablet}>
                         <View style={styles.itemContainerTablet}>
                             <View>
                                 <Text style={styles.inputTextTablet}>{t('occupation')}</Text>
-                                <Text style={styles.inputSubTextTablet}>{userInfos?.status}</Text>
+                                <Text style={styles.inputSubTextTablet}>{userInfo?.status}</Text>
                             </View>
                             <View>
                                 <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
@@ -153,11 +167,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.inputContainerTablet}>
-                    <TouchableOpacity onPress={() => navigateToProfileItemLanguage(userInfos?.language)} style={styles.nameContainerTablet}>
+                    <TouchableOpacity onPress={() => navigateToProfileItemLanguage(userInfo?.language)} style={styles.nameContainerTablet}>
                         <View style={styles.itemContainerTablet}>
                             <View>
                                 <Text style={styles.inputTextTablet}>{t('language')}</Text>
-                                <Text style={styles.inputSubTextTablet}>{getCountryLanguage(userInfos?.language)}</Text>
+                                <Text style={styles.inputSubTextTablet}>{getCountryLanguage(userInfo?.language ?? '')}</Text>
                             </View>
                             <View>
                                 <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
@@ -200,14 +214,28 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerText}>{t('yourProfile')}</Text>
-            <Text style={styles.headerSubText}>{t('yourProfileSubtitle')}</Text>
+            {userInfo?.isSubscribed ?
+                <TouchableOpacity onPress={handleGetSubscriptionDetails} style={styles.PremioumBox}>
+                    <Text style={styles.topText}>{t('Premium Member')}</Text>
+                    <View style={styles.bottomContainer}>
+                        <Text style={styles.bottomText}>{price} /  {t(userInfo?.product_details?.subscription_currency.toUpperCase())}  {t(userInfo?.product_details?.subscription_plan)}</Text>
+                        <Text style={styles.bottomText}>{t('Subscription Details')}</Text>
+                    </View>
+                </TouchableOpacity> :
+                <TouchableOpacity onPress={handleGoPremium} style={styles.PremioumBoxNoPremioum}>
+                    <Text style={styles.topTextNoPremioum}>{t('goPremiumPopUpFirstText')}</Text>
+                    <View style={styles.bottomContaineNoPremioumr}>
+                        <Text style={styles.bottomTextNoPremioum}>{t('GoPremium')}</Text>
+                    </View>
+                </TouchableOpacity>
+            }
         </View>
         <View style={styles.inputContainer}>
             <View style={styles.nameContainer}>
                 <View style={styles.itemContainer}>
                    <View>
                      <Text style={styles.inputText}>Email</Text>
-                     <Text style={styles.inputEmailText}>{userInfos?.username}</Text>
+                     <Text style={styles.inputEmailText}>{userInfo?.username}</Text>
                    </View>
                 </View>
             </View>
@@ -226,11 +254,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
             </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
-            <TouchableOpacity onPress={() => navigateToProfileItemCountry(userInfos?.country)} style={styles.nameContainer}>
+            <TouchableOpacity onPress={() => navigateToProfileItemCountry(userInfo?.country)} style={styles.nameContainer}>
                 <View style={styles.itemContainer}>
                     <View>
                         <Text style={styles.inputText}>{t('countryOfOrigin')}</Text>
-                        <Text style={styles.inputSubText}>{userInfos?.country}</Text>
+                        <Text style={styles.inputSubText}>{userInfo?.country}</Text>
                     </View>
                     <View>
                         <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
@@ -239,11 +267,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
             </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
-            <TouchableOpacity onPress={() => navigateToProfileItemStatus(userInfos?.status)} style={styles.nameContainer}>
+            <TouchableOpacity onPress={() => navigateToProfileItemStatus(userInfo?.status)} style={styles.nameContainer}>
                 <View style={styles.itemContainer}>
                     <View>
                         <Text style={styles.inputText}>{t('occupation')}</Text>
-                        <Text style={styles.inputSubText}>{userInfos?.status}</Text>
+                        <Text style={styles.inputSubText}>{userInfo?.status}</Text>
                     </View>
                     <View>
                         <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
@@ -252,11 +280,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
             </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
-            <TouchableOpacity onPress={() => navigateToProfileItemLanguage(userInfos?.language)} style={styles.nameContainer}>
+            <TouchableOpacity onPress={() => navigateToProfileItemLanguage(userInfo?.language)} style={styles.nameContainer}>
                 <View style={styles.itemContainer}>
                     <View>
                         <Text style={styles.inputText}>{t('language')}</Text>
-                        <Text style={styles.inputSubText}>{getCountryLanguage(userInfos?.language)}</Text>
+                        <Text style={styles.inputSubText}>{getCountryLanguage(userInfo?.language ?? '')}</Text>
                     </View>
                     <View>
                        <Entypo style={{paddingTop: 28}} name="edit" size={24} color="#719FFF"  />
@@ -403,8 +431,59 @@ const styles = StyleSheet.create({
         color: '#3F465C',
         fontWeight: '500'
     },
-
-
+      PremioumBox: {
+        width: '95%',
+        backgroundColor: '#3E6DCF',
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: 90
+      },
+      topText: {
+        color: 'white',
+        fontSize: 19,
+        marginTop: 15
+      },
+      bottomContainer: {
+        flexDirection: 'row',
+        width: '100%',
+        paddingHorizontal: 25,
+        justifyContent:'space-between'
+      },
+      bottomText: {
+        color: 'white',
+        fontSize: 16,
+        marginBottom: 10,
+      },
+      PremioumBoxNoPremioum: {
+        width: '95%',
+        backgroundColor: '#3E6DCF',
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: 90
+      },
+      topTextNoPremioum: {
+        color: 'white',
+        fontSize: 16,
+        textAlign: 'center',
+        width: '80%',
+        marginTop: 15
+      },
+      bottomContaineNoPremioumr: {
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: 20
+      },
+      bottomTextNoPremioum: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold'
+        
+      },
+      
     //TABLET STYLES
 
     headerTablet: {

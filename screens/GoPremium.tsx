@@ -1,49 +1,54 @@
 import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions} from 'react-native'
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
 import ConfirmButton from '../components/shared/ConfirmButton';
 import { usePayments } from '../components/util/usePayments';
 import * as WebBrowser from 'expo-web-browser';
-import { AuthContext } from '../hooks/auth/AuthContext';
+import { useUserInfo } from '../components/util/useUserInfos';
 
 type GoPremiumProps = {
-    navigation: any
+    navigation: any,
+    route: any
 }
 
-const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
+const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
     
     const {t} = useLanguage();
-
+    
+    const isWelcomePageStack = route.params?.isWelcomePageStack;
+    
     const {createCheackoutSession} = usePayments();
-    const {getUserInfo} = useContext(AuthContext)
 
+    const {mutate} = useUserInfo();
 
     const {width: SCREENWIDTH} = useWindowDimensions();
     
     const isTabletMode = useMemo(() => {
         if(SCREENWIDTH > 700) {
-          return true
+          return true       
         }
     
         return false;
       },[SCREENWIDTH])
-
-    const handleGoBack = () => {
-        navigation.goBack();
-    }
-    const showTermsAndConditions = () => {
-
-    }
-    const handleCreateSession = async(priceId: string) => {
-        const checkoutURL = createCheackoutSession(priceId)
-
-        await WebBrowser.openBrowserAsync(await checkoutURL)
-        await getUserInfo();
-
-        handleGoBack()
-    };
+ 
+    const handleGoBack = useCallback(async () => {
+        await mutate()
+        if (isWelcomePageStack){
+            navigation.push('CantonsPage');
+        }else{
+            navigation.push('Profile');
+        }
+      }, [mutate, navigation]);
+    
+    const handleCreateSession = useCallback( async (priceId: string) => {
+        const checkoutURL = createCheackoutSession(priceId);
+    
+        await WebBrowser.openBrowserAsync(await checkoutURL);
+    
+        await handleGoBack();
+    }, [WebBrowser]);
 
   if (isTabletMode){
     return (
@@ -64,9 +69,9 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
                 <Text style={styles.fourthTextTablet}>{t("withOnyFive")}</Text>
                 <Text style={styles.fifthTextTablet}>{t("VatIncluded")}</Text>
                 <Text style={styles.sixthTextTablet}>{t("GoPremiumTermsCondition")}</Text>
-                <TouchableOpacity onPress={showTermsAndConditions}>
+                {/* <TouchableOpacity onPress={showTermsAndConditions}>
                     <Text style={styles.termsTextTablet}>{t("termsAndConditions")}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                 <View style={styles.buttonContainerTablet}>
                     <ConfirmButton isTabletMode={true} text='Confirm and Pay' handlePress={() => handleCreateSession('')}/></View>
                 </View>
@@ -92,9 +97,9 @@ const GoPremium: FC<GoPremiumProps> = ({navigation}) => {
         <Text style={styles.fourthText}>{t("withOnyFive")}</Text>
         <Text style={styles.fifthText}>{t("VatIncluded")}</Text>
         <Text style={styles.sixthText}>{t("GoPremiumTermsCondition")}</Text>
-        <TouchableOpacity onPress={showTermsAndConditions}>
+        {/* <TouchableOpacity onPress={showTermsAndConditions}>
             <Text style={styles.termsText}>{t("termsAndConditions")}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.buttonContainer}>
             <ConfirmButton text='Checkout' handlePress={() => handleCreateSession('price_1Nv3XhJ0qxeuDWlJABed3nQa')}/>
         </View>

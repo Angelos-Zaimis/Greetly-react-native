@@ -10,6 +10,7 @@ import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT } from '../components/endpoints';
 import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons';
+import { useUserInfo } from '../components/util/useUserInfos';
 
 type InformationsProps = {
   navigation: any;
@@ -21,10 +22,10 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   const {cityName, category,subcategory,image} = route.params ?? {}
   const [showToastMessage, setShowToastMessage] = useState<boolean>(false)
   const [successToast, setSuccessToast] = useState<boolean>(false)
-  const {userInfos} = useContext(AuthContext)
+  const {userInfo} = useUserInfo();
 
   const { data: information } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfos?.citizenship}-${userInfos?.status}-${subcategory}/`,
+    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfo?.citizenship}-${userInfo?.status}-${subcategory}/`,
   );
 
   const {
@@ -35,9 +36,10 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     
   const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false)
 
-  const handleNavigationBack = () => {
+
+  const handleNavigationBack = useCallback( async() => {
     navigation.goBack();
-  }
+  }, [mutate, navigation]);
 
   const {t} = useLanguage();
   
