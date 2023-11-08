@@ -67,11 +67,21 @@
     "goPremiumPopUpThirdText": "Effettua l'upgrade per avere accesso a tutti i contenuti personalizzati in base al tuo status.",
     "withOnyFive": "con soli 5€ / mese",
     "VatIncluded": "VAT inclusa",
-    "GoPremium": "VAI AL PREMIUM",
+    "GoPremium": "GO PREMIUM",
     "GoPremiumPageTextOne": "Effettua l'upgrade per avere accesso a tutti i contenuti personalizzati in base al tuo status.",
-    "GoPremiumTermsCondition": "L'abbonamento si rinnova automaticamente ogni mese. È possibile annullarlo in qualsiasi momento dalle impostazioni dell'account. Facendo clic su \"Conferma e paga\", l'utente accetta di",
+    "GoPremiumTermsCondition": "L'abbonamento si rinnova automaticamente. È possibile annullarlo in qualsiasi momento dalle impostazioni dell'account. Facendo clic su \"Conferma e paga\", l'utente accetta di",
     "termsAndConditions": "Termini e condizioni.",
     "Completeyourpayment": "Completare il pagamento",
+    "premiumMember": "Premium Member",
+    "month": "mese",
+    "year": "anno",
+    "subscriptionDetails": "Dettagli dell'abbonamento",
+    "youSubscriptionRenew": "L'abbonamento si rinnova automaticamente ogni",
+    "cancelSubscription": "Annullamento dell'abbonamento",
+    "cancelSubscriptionTitle": "È sicuro di voler annullare l'abbonamento?",
+    "cancelSubscriptionSubTitle": "Si noti che questa misura è irreversibile",
+    "chooseYourPlan": "Scegliete il vostro piano:",
+
 
 
 

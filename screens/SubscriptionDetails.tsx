@@ -23,7 +23,7 @@ const SubscriptionDetails: FC<SubscroptionDetailsProps> = ({navigation}) => {
 
     const price = useMemo(() => {
     
-        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '10' 
+        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '55' 
     },[userInfo?.product_details?.subscription_price])
 
 
@@ -55,10 +55,9 @@ const SubscriptionDetails: FC<SubscroptionDetailsProps> = ({navigation}) => {
       </View>
       <View style={styles.body}>
         <View style={styles.detailsBox}>
-            <Text style={styles.topText}>{price} / {t(userInfo?.product_details?.subscription_currency?.toUpperCase() ?? '')} {t(userInfo?.product_details?.subscription_plan ?? '')}</Text>
+            <Text style={styles.topText}>{price} {t(userInfo?.product_details?.subscription_currency?.toUpperCase() ?? '')} / {t(userInfo?.product_details?.subscription_plan ?? '')}</Text>
             <View style={styles.bottomTextContainer}>
-                <Text style={styles.bottomTextFirst}>{t(`youSubscriptionRenew`)}</Text>
-                <Text style={styles.bottomTextSecond}>{t(userInfo?.product_details?.subscription_plan ?? '')}</Text>
+                <Text style={styles.bottomTextFirst}>{`${t("youSubscriptionRenew")} ${t(userInfo?.product_details?.subscription_plan ?? '')}`}</Text>
             </View>
         </View>
         
@@ -105,12 +104,15 @@ const styles = StyleSheet.create({
     bottomTextContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 19
+        marginTop: 19,
+        width: '94%',
     },
     bottomTextFirst:  {
         color: '#72788D',
         fontSize: 16,
-        fontWeight: '500'
+        fontWeight: '500',
+        textAlign: 'center',
+        width: '100%'
     },
     bottomTextSecond: {
         color: '#72788D',

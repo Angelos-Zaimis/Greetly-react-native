@@ -31,7 +31,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const [incomingCategory, setIncomingCategory] = useState(category);
 
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+  const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
 
   const {userInfo} = useUserInfo();
 
@@ -58,16 +58,16 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
   const [opacity,] = useState(new Animated.Value(0));
 
   const handleClosePopUp = useCallback(() => {
-    setIsSubscribed(false)
-  },[setIsSubscribed,isSubscribed])
+    setIsNotSubscribed(false)
+  },[setIsNotSubscribed,isNotSubscribed])
 
   const handleGoPremium = () => {
     navigation.push("GoPremium")
-    setIsSubscribed(false)
+    setIsNotSubscribed(false)
   }
 
   useEffect(() => {
-    if (isSubscribed) {
+    if (isNotSubscribed) {
       Animated.timing(opacity, {
         toValue: 1,
         duration: 500, 
@@ -80,7 +80,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
         useNativeDriver: true,
       }).start();
     }
-  }, [isSubscribed]);
+  }, [isNotSubscribed]);
 
   const categories: Category[] = [
     {
@@ -159,7 +159,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                            category: incomingCategory,
                            subcategory: item.title,
                            image: subCategories?.tablet_image_url})
-                         : () => setIsSubscribed(true)}
+                         : () => setIsNotSubscribed(true)}
                            style={[styles.categoryContainerTablet, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                  >
                    <Text style={[styles.subcategoryTextTablet, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
@@ -174,7 +174,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
         </View>
       : 
         <Spinner/>}
-      {isSubscribed && (
+      {isNotSubscribed && (
         <Animated.View style={{ opacity: opacity }}>
           <GoPremiumPopUp 
             handleClosePopUp={handleClosePopUp} 
@@ -229,7 +229,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                              category: incomingCategory,
                              subcategory: item.title,
                              image: subCategories?.image_url})
-                           : () => setIsSubscribed(true)}
+                           : () => setIsNotSubscribed(true)}
                              style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                    >
                      <Text style={[styles.subcategoryText, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
@@ -244,7 +244,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
        </View>
        : 
        <Spinner/>}
-      {isSubscribed && (
+      {isNotSubscribed && (
           <Animated.View style={{ opacity: opacity }}>
             <GoPremiumPopUp 
               handleClosePopUp={handleClosePopUp} 

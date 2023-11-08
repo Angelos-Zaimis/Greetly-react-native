@@ -6,20 +6,21 @@ type ConfirmButtonProps = {
     handlePress: () => void;
     text: string;
     isTabletMode?: boolean;
+    disabled?: boolean
   };
   
 
-const ConfirmButton: FC<ConfirmButtonProps> = ({handlePress, text, isTabletMode}) => {
+const ConfirmButton: FC<ConfirmButtonProps> = ({handlePress, text, isTabletMode, disabled}) => {
 
   if (isTabletMode) {
     return (
-      <TouchableOpacity onPress={handlePress}  style={styles.buttonTablet }>
+      <TouchableOpacity onPress={handlePress} disabled={disabled}  style={styles.buttonTablet }>
         <Text style={styles.buttonTextTablet}>{text}</Text>
       </TouchableOpacity> 
     )
   }
   return (
-    <TouchableOpacity onPress={handlePress}  style={styles.button }>
+    <TouchableOpacity disabled={disabled} onPress={handlePress}  style={[styles.button, {opacity: disabled ? 0.5 : 1} ]}>
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity> 
   )

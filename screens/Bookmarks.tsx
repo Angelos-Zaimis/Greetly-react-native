@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { useBookmarks } from '../components/util/useBookmarks';
 import { AntDesign } from '@expo/vector-icons';
+import { useUserInfo } from '../components/util/useUserInfos';
+import { Animated } from 'react-native';
+import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
 
 type bookmarksProps = {
   navigation: any
@@ -11,6 +14,9 @@ type bookmarksProps = {
 const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
 
   const {bookmarks, deleteBookmark} = useBookmarks();
+  const {userInfo} = useUserInfo();
+  const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
+  const [opacity,] = useState(new Animated.Value(0));
 
   const {t} = useLanguage();
 
@@ -19,6 +25,15 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
     ) => {
    await deleteBookmark(bookmark);
   }
+
+  const handleGoPremium = () => {
+    navigation.push("GoPremium")
+    setIsNotSubscribed(false)
+  }
+
+  const handleClosePopUp = useCallback(() => {
+    setIsNotSubscribed(false)
+  },[setIsNotSubscribed,isNotSubscribed])
 
   const {width: SCREENWIDTH} = useWindowDimensions();
 
@@ -45,6 +60,23 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
       requiredDocuments: requiredDocuments
     })
   }
+
+  useEffect(() => {
+    if (isNotSubscribed) {
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 500, 
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isNotSubscribed]);
+
 
   if (isTabletMode) {
     return (
@@ -93,6 +125,14 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
             {t('Nobookmarks')}
           </Text>
         </View>}
+          {isNotSubscribed && (
+          <Animated.View style={{ opacity: opacity }}>
+            <GoPremiumPopUp 
+              handleClosePopUp={handleClosePopUp} 
+              handleGoPremium={handleGoPremium} 
+            />
+          </Animated.View>
+      )}
     </SafeAreaView>
     )
   }
@@ -113,14 +153,15 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
           >
             <View style={styles.bookmarkSubcontainer}>
               <Text style={styles.categoryText}>{t('in')} {t(item?.category)}</Text>
-              <View style={styles.bookmark}>
-                <TouchableOpacity onPress={ () => handleShowBookmark(
+              <View style={[styles.bookmark, {opacity: !userInfo?.isSubscribed ? 0.5 : 1}]}>
+                <TouchableOpacity onPress={ userInfo?.isSubscribed ? () => handleShowBookmark(
                   item?.canton,
                   item?.title,
                   item?.description,
                   item?.image,
                   item?.requiredDocuments
-                  )} 
+                  ) : 
+                  () => setIsNotSubscribed(true)} 
                   style={styles.cantonAndTitle}>
                   <Text style={styles.canton}>{item?.canton}</Text>
                   <View style={styles.titleIcon}>
@@ -142,6 +183,14 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
             {t('Nobookmarks')}
           </Text>
         </View>}
+        {isNotSubscribed && (
+          <Animated.View style={{ opacity: opacity }}>
+            <GoPremiumPopUp 
+              handleClosePopUp={handleClosePopUp} 
+              handleGoPremium={handleGoPremium} 
+            />
+          </Animated.View>
+        )}
     </SafeAreaView>
   )
 }

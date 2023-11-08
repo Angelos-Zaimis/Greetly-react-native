@@ -18,7 +18,8 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
     const {t} = useLanguage();
     
     const isWelcomePageStack = route.params?.isWelcomePageStack;
-    
+    const [priceForSession, setPriceForSession] = useState<string>('');
+
     const {createCheackoutSession} = usePayments();
 
     const {mutate} = useUserInfo();
@@ -37,8 +38,10 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
         await mutate()
         if (isWelcomePageStack){
             navigation.push('CantonsPage');
-        }else{
+        }else if(isWelcomePageStack === false){
             navigation.push('Profile');
+        }else{
+            navigation.push('Bookmarks')
         }
       }, [mutate, navigation]);
     
@@ -49,6 +52,10 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
     
         await handleGoBack();
     }, [WebBrowser]);
+
+    const showTermsAndConditions = () => {
+
+    }
 
   if (isTabletMode){
     return (
@@ -89,20 +96,41 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
         <View style={styles.goPremiumText}>
             <Text style={styles.title}>Go Premium</Text>
         </View>
-        <View>
-            <Image style={styles.image} source={require('../assets/goPremium/gopremium.png')} />
-        </View>
-        <View>
+
         <Text style={styles.firstText}>{t("goPremiumPopUpThirdText")}</Text>
-        <Text style={styles.fourthText}>{t("withOnyFive")}</Text>
-        <Text style={styles.fifthText}>{t("VatIncluded")}</Text>
-        <Text style={styles.sixthText}>{t("GoPremiumTermsCondition")}</Text>
-        {/* <TouchableOpacity onPress={showTermsAndConditions}>
-            <Text style={styles.termsText}>{t("termsAndConditions")}</Text>
-        </TouchableOpacity> */}
-        <View style={styles.buttonContainer}>
-            <ConfirmButton text='Checkout' handlePress={() => handleCreateSession('price_1Nv3XhJ0qxeuDWlJABed3nQa')}/>
+        <Text style={styles.firstText}>{t("chooseYourPlan")}</Text>
+
+        <View style={styles.subContainer}>
+            <TouchableOpacity
+                style={[
+                    styles.subButton,
+                    priceForSession === 'price_1Nv3XhJ0qxeuDWlJABed3nQa' && styles.selectedButton,
+                ]}
+                onPress={() => setPriceForSession('price_1Nv3XhJ0qxeuDWlJABed3nQa')}
+            >
+                <Text style={[styles.priceTextBox, priceForSession === 'price_1Nv3XhJ0qxeuDWlJABed3nQa' && styles.priceTextBoxSelected]}>{`5 CHF / ${t('month')} `}</Text>
+                <Text style={[styles.textBox, priceForSession === 'price_1Nv3XhJ0qxeuDWlJABed3nQa' && styles.textBoxSelected]}>{t("VatIncluded")}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+                style={[
+                    styles.subButton,
+                    priceForSession === 'price_1O8jO0J0qxeuDWlJ3WoxrPfT' && styles.selectedButton,
+                ]}
+                onPress={() => setPriceForSession('price_1O8jO0J0qxeuDWlJ3WoxrPfT')}
+            >
+                <Text style={[styles.priceTextBox,  priceForSession === 'price_1O8jO0J0qxeuDWlJ3WoxrPfT' && styles.priceTextBoxSelected,]}>{`55 CHF / ${t('year')} `}</Text>
+                <Text style={[styles.textBox, priceForSession === 'price_1O8jO0J0qxeuDWlJ3WoxrPfT' && styles.textBoxSelected,]}>{t("VatIncluded")}</Text>
+            </TouchableOpacity>
         </View>
+            <Text style={styles.sixthText}>{t("GoPremiumTermsCondition")}</Text>
+        <TouchableOpacity onPress={showTermsAndConditions}>
+            <Text style={styles.termsText}>{t("termsAndConditions")}</Text>
+        </TouchableOpacity>
+        <View>
+            <View style={styles.buttonContainer}>
+                <ConfirmButton text='Checkout' disabled={!priceForSession} handlePress={() => handleCreateSession(priceForSession)}/>
+            </View>
         </View>
     </SafeAreaView>
   )
@@ -127,7 +155,7 @@ const styles = StyleSheet.create({
     title: {
         color:'#3F465C',
         fontWeight: '600',
-        fontSize: 18
+        fontSize: 22
     },
     goBackContainer: {
         alignSelf: 'flex-start',
@@ -145,7 +173,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         textAlign: 'center',
         width: 300,
-        marginTop: 5,
+        marginVertical: 15,
         lineHeight: 24
     },
     fourthText: {
@@ -156,10 +184,36 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     fifthText: {
-        color: "#72788D",
+        color: "white",
         fontSize: 13,
         marginTop: 4,
         textAlign: 'center'
+    },
+    textBox: {
+        color: "black",
+        fontSize: 13,
+        marginTop: 4,
+        textAlign: 'center'
+    },
+    textBoxSelected:{
+        color: "white",
+        fontSize: 13,
+        marginTop: 4,
+        textAlign: 'center',
+        fontWeight: '500'
+    },
+    priceTextBox: {
+        color: "black",
+        fontSize: 21,
+        marginTop: 4,
+        textAlign: 'center'
+    },
+    priceTextBoxSelected: {
+        color: "white",
+        fontSize: 21,
+        marginTop: 4,
+        textAlign: 'center',
+        fontWeight: '700'
     },
     sixthText: {
         color: "#72788D",
@@ -180,6 +234,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 40
     },
+    subContainer: {
+        width: '95%',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 10
+    },
+    subButton: {
+        width: 150,
+        height: 160,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#F8F9FC',
+        backgroundColor: '#F8F9FC',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    selectedButton: {
+        width: 150,
+        height: 160,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#F06748',
+        backgroundColor: '#F06748'
+    },
+
 
 
     //TABLET STYLES

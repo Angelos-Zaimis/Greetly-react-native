@@ -77,12 +77,20 @@
     "goPremiumPopUpThirdText": "Aktualisieren Sie, um Zugriff auf alle Inhalte zu erhalten, die an Ihren Status angepasst sind.",
     "withOnyFive": "nur 5€ / Monat",
     "VatIncluded": "inklusive MwSt.",
-    "GoPremium": "PREMIUM WERDEN",
+    "GoPremium": "GO PREMIUM",
     "GoPremiumPageTextOne": "Aktualisieren Sie, um Zugriff auf alle Inhalte zu erhalten, die an Ihren Status angepasst sind.",
-    "GoPremiumTermsCondition": "Ihr Abonnement wird automatisch jeden Monat verlängert. Sie können es jederzeit in Ihren Kontoeinstellungen kündigen. Durch Klicken auf \"Bestätigen und zahlen\" stimmen Sie den",
+    "GoPremiumTermsCondition": "Ihr Abonnement wird automatisch verlängert. Sie können es jederzeit in Ihren Kontoeinstellungen kündigen. Durch Klicken auf \"Bestätigen und zahlen\" stimmen Sie den",
     "termsAndConditions": "Allgemeinen Geschäftsbedingungen zu.",
     "Completeyourpayment": "Zahlung abschließen",
-    
+    "premiumMember": "Premium Member",
+    "month": "monat",
+    "year": "jahr",
+    "subscriptionDetails": "Abonnementdaten",
+    "youSubscriptionRenew": "Ihr Abonnement wird automatisch verlängert,jedes / jeden",
+    "cancelSubscription": "Abonnement kündigen",
+    "cancelSubscriptionTitle": "Sind Sie sicher, dass Sie Ihr Abonnement kündigen möchten?",
+    "cancelSubscriptionSubTitle": "Bitte beachten Sie, dass diese Maßnahme unumkehrbar ist.",
+    "chooseYourPlan": "Wählen Sie Ihren Plan:",    
 
 
     "Legal System & Immigration": "Rechtssystem und Einwanderung",

@@ -75,11 +75,20 @@
     "goPremiumPopUpThirdText": "שדרגו כדי לקבל גישה לכל התוכן המותאם אישית למצבכם.",
     "withOnyFive": "בתשלום של רק 5€ / חודש",
     "VatIncluded": "כולל מעמ",
-    "GoPremium": "שדרגו לגישה מתקדמת",
+    "GoPremium": "GO PREMIUM",
     "GoPremiumPageTextOne": "שדרגו כדי לקבל גישה לכל התוכן המותאם אישית למצבכם.",
-    "GoPremiumTermsCondition": "המנוי שלכם יחודש אוטומטית בכל חודש. תוכלו לבטל אותו בכל עת מההגדרות של החשבון שלכם. בלחיצה על \"אישור ותשלום\", אתם מסכימים ל",
+    "GoPremiumTermsCondition": "המנוי שלכם יתחדש אוטומטית. תוכלו לבטל אותו בכל עת מההגדרות של החשבון שלכם. בלחיצה על 'אישור ותשלום', אתם מסכימים ל",
     "termsAndConditions": "תנאים והגבלות.",
     "Completeyourpayment": "השלמו את התשלום שלכם",
+    "premiumMember": "חבר משובח",
+    "month": "חודש",
+    "year": "שנה",
+    "subscriptionDetails": "פרטי מינוי",
+    "youSubscriptionRenew": "המינוי שלך מתחדש אוטומטית כל",
+    "cancelSubscription": "ביטול מינוי",
+    "cancelSubscriptionTitle": "האם אתה בטוח שברצונך לבטל את המינוי שלך?",
+    "cancelSubscriptionSubTitle": "שים לב שפעולה זו אינה הפיכה",
+    "chooseYourPlan": "בחר את התוכנית שלך:",
 
 
 

@@ -102,7 +102,7 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
     },[navigation])
 
     const price = useMemo(() => {
-        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '10'
+        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '55'
     },[userInfo?.product_details?.subscription_price])
 
     const getCountryLanguage = (languageCode: string) => {
@@ -218,8 +218,8 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
                 <TouchableOpacity onPress={handleGetSubscriptionDetails} style={styles.PremioumBox}>
                     <Text style={styles.topText}>{t('Premium Member')}</Text>
                     <View style={styles.bottomContainer}>
-                        <Text style={styles.bottomText}>{price} /  {t(userInfo?.product_details?.subscription_currency.toUpperCase())}  {t(userInfo?.product_details?.subscription_plan)}</Text>
-                        <Text style={styles.bottomText}>{t('Subscription Details')}</Text>
+                        <Text style={styles.bottomText}>{price} {t(userInfo?.product_details?.subscription_currency.toUpperCase())} / {t(userInfo?.product_details?.subscription_plan)}</Text>
+                        <Text style={styles.bottomText}>{t('subscriptionDetails')}</Text>
                     </View>
                 </TouchableOpacity> :
                 <TouchableOpacity onPress={handleGoPremium} style={styles.PremioumBoxNoPremioum}>
@@ -298,11 +298,6 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
                 <Ionicons name="log-out-outline" size={24} color="black" />
                 <Text style={styles.signoutText}>{t('signout')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={openConfirmModal} style={styles.delete}>
-                <ConfirmModal visible={showConfirmModal} onCancel={closeConfirmModal} imageSource='user-times' onConfirm={handleDeleteAccount} subText={'deleteSubText'} text={'deleteAccountForEver'}/>
-                <Feather name="x" size={22} color="#E12847"/>
-                <Text style={styles.deleteText}>{t('deleteAccount')}</Text>
-            </TouchableOpacity>
         </View>
         <View style={styles.line}></View>
         <View style={styles.termsContainer}>
@@ -317,6 +312,11 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
             <Text style={styles.termsText}>{t('Privacy Policy')}</Text>
             <MaterialIcons name="chevron-right" size={24} color="black" />
         </View>
+        <TouchableOpacity onPress={openConfirmModal} style={styles.delete}>
+            <ConfirmModal visible={showConfirmModal} onCancel={closeConfirmModal} imageSource='user-times' onConfirm={handleDeleteAccount} subText={'deleteSubText'} text={'deleteAccountForEver'}/>
+            <Feather name="x" size={22} color="#E12847"/>
+            <Text style={styles.deleteText}>{t('deleteAccount')}</Text>
+        </TouchableOpacity>
     </SafeAreaView>
 </ScrollView>
   )
@@ -399,7 +399,8 @@ const styles = StyleSheet.create({
     delete: {
         marginTop: 15,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     signoutText: {
         marginLeft: 10,
@@ -416,7 +417,7 @@ const styles = StyleSheet.create({
     line: {
         borderTopWidth: 1,
         borderTopColor: '#DADADC',
-        marginTop: 20,
+        marginTop: 30,
         marginBottom: 30
     },
     termsContainer: {

@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
-    height: '27.3%',
+    height: '27.5%',
   },
   imageInner: {
     height: '100%',

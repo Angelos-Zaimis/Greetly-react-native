@@ -75,11 +75,20 @@
     "goPremiumPopUpThirdText": "Actualiza para acceder a todo el contenido personalizado según tu estado.",
     "withOnyFive": "con solo 5€ al mes",
     "VatIncluded": "IVA incluido",
-    "GoPremium": "IR A PREMIUM",
+    "GoPremium": "GO PREMIUM",
     "GoPremiumPageTextOne": "Actualiza para acceder a todo el contenido personalizado según tu estado.",
-    "GoPremiumTermsCondition": "Tu suscripción se renovará automáticamente cada mes. Puedes cancelarla en cualquier momento desde la configuración de tu cuenta. Al hacer clic en \"Confirmar y pagar\", aceptas los",
+    "GoPremiumTermsCondition": "Tu suscripción se renovará automáticamente. Puedes cancelarla en cualquier momento desde la configuración de tu cuenta. Al hacer clic en \"Confirmar y pagar\", aceptas los",
     "termsAndConditions": "Términos y Condiciones.",
     "Completeyourpayment": "Completa tu pago",
+    "premiumMember": "Premium Member",
+    "month": "mes",
+    "year": "año",
+    "subscriptionDetails": "datos de suscripción",
+    "youSubscriptionRenew": "Su suscripción se renueva automáticamente cada",
+    "cancelSubscription": "Cancelar suscripción",
+    "cancelSubscriptionTitle": "¿Está seguro de que desea cancelar su suscripción?",
+    "cancelSubscriptionSubTitle": "Tenga en cuenta que esta medida es irreversible",
+    "chooseYourPlan": "Elija su plan:",
 
 
 
