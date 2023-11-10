@@ -1,11 +1,9 @@
 import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
-import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet } from 'react-native'
+import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet, ScrollView  } from 'react-native'
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
 import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { ScrollView } from 'react-native-gesture-handler';
 import { Image } from 'expo-image';
 
 const Login: FC = ({navigation}:any) => {

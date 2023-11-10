@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions} from 'react-native'
+import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity} from 'react-native'
 import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
 import ConfirmButton from '../components/shared/ConfirmButton';

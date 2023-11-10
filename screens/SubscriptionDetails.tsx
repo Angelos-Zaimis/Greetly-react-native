@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AuthContext } from '../hooks/auth/AuthContext';
-import { useLanguage } from '../components/util/LangContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useLanguage } from '../components/util/LangContext';;
 import { Feather } from '@expo/vector-icons'; 
 import ConfirmModal from '../components/shared/ConfirmModal';
 import { AntDesign } from '@expo/vector-icons'; 

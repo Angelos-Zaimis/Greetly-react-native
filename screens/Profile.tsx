@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, useWindowDimensions } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, useWindowDimensions,ScrollView  } from 'react-native'
 import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import { AuthContext } from '../hooks/auth/AuthContext';
@@ -7,7 +7,6 @@ import { Feather } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons';
 import ConfirmModal from '../components/shared/ConfirmModal';
-import { ScrollView } from 'react-native-gesture-handler';
 import { languages } from '../assets/languages';
 import { useUserInfo } from '../components/util/useUserInfos';
 
