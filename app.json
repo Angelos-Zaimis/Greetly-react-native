@@ -6,6 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
+    "experiments": {
+      "tsconfigPaths": true
+    },
     "extra": {
       "middlewareInformationURL": "http://127.0.0.1:8000/middleware-info"
     },
