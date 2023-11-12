@@ -3,22 +3,31 @@ import React, { ReactNode, createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppURLS from "../../components/appURLS";
-import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_TOKEN_ENDPOINT, USER_INFO_ENDPOINT } from "../../components/endpoints";
+import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_USER_EXISTS, USER_INFO_ENDPOINT } from "../../components/endpoints";
+import * as Google from 'expo-auth-session/providers/google'
+import { Alert } from "react-native";
 
-
+type AuthData = {
+  type: 'google' | 'normal';
+  body?: {
+    email: string
+    password: string
+  }
+};
 interface AuthContextType {
   user: {
     email: string;
     exp: string;
     user_id: string;
   };
-  userInfos: {
-    username: string;
+  authTokens: {
+    access: string, refresh: string
   };
+  promptAsync: () => void;
   login: (body: LoginProps) => Promise<any>;
   logout: () => void;
   changePassword: (email: string | undefined) => Promise<{ data: string }>;
-  changePasswordVerify: (body: {email: string, code: string, password: string}) => Promise<void>;
+  changePasswordVerify: (body: { email: string; code: string; password: string }) => Promise<void>;
   deleteAccount: (email: string) => void;
 }
 
@@ -28,26 +37,30 @@ const initialAuthContextValue: AuthContextType = {
     exp: '',
     user_id: '',
   },
-  userInfos: {
-    username: '',
+  authTokens: {
+    access: '', refresh: ''
   },
-  login: function (body: LoginProps): Promise<any> {
-    throw new Error('Function not implemented.');
+  promptAsync: () => {
+    // Your implementation here
   },
-  logout: function (): void {
-    throw new Error('Function not implemented.');
+  login: async (body) => {
+    // Your implementation here
+    return Promise.resolve(/* some result */);
   },
-  changePassword: function (): Promise<{data: string}> {
-    throw new Error('Function not implemented.');
+  logout: () => {
+    // Your implementation here
   },
-  changePasswordVerify: function (body: {email: string, code: string, password: string}): Promise<void> {
-    throw new Error('Function not implemented.');
+  changePassword: async (email) => {
+    // Your implementation here
+    return Promise.resolve({ data: 'success' });
   },
-  deleteAccount: function (emai: string): void {
-    throw new Error('Function not implemented.');
+  changePasswordVerify: async (body) => {
+    // Your implementation here
+  },
+  deleteAccount: (email) => {
+    // Your implementation here
   },
 };
-
 
 export const AuthContext = createContext<AuthContextType>(initialAuthContextValue);
 
@@ -75,13 +88,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<{ email: string, exp: string, user_id: string } | null | any>(null);
   const [userInfos, setUserInfos] = useState<UserInfo | null>(null);
 
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "751236983319-74hfbskhu222oo9jv4gas0ufg3vpm6ia.apps.googleusercontent.com",
+    iosClientId: "751236983319-ggmr1611pgttfelv9enqq64rj6iq0klc.apps.googleusercontent.com",
+    webClientId: "751236983319-kgqo51hbgmgbiojjhn1cjo346bgqd1oa.apps.googleusercontent.com",
+    expoClientId: "751236983319-kgqo51hbgmgbiojjhn1cjo346bgqd1oa.apps.googleusercontent.com"
+  },{  projectNameForProxy: "@greetly.ch/helloch"})
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const authTokens = await AsyncStorage.getItem('authTokens');
         const decodedUser = authTokens ? jwt_decode(authTokens) : null;
         setUser(decodedUser);
-
+        
         const savedUserInfos = await AsyncStorage.getItem('userInfos');
         if (savedUserInfos) {
           setUserInfos(JSON.parse(savedUserInfos));
@@ -93,6 +113,32 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   
     fetchData();
   }, []);
+
+  useEffect(() => {
+    handleGoogleLogin()
+  },[response])
+  
+//Google Login
+
+  const handleGoogleLogin = async() => {
+    try {
+      if (response.type === 'success') {
+        const decodedUser = await jwt_decode(response.authentication.idToken);
+        const userExists = await checkIfUserExists({email: decodedUser?.email});
+        if(userExists.message ===  "User doesn't exist in the database"){
+          await logout()
+          Alert.alert("User doesn't exist in the database. Please create a new profile.")
+          return;
+        }
+        await AsyncStorage.setItem('authTokens', JSON.stringify(response.authentication.idToken));
+        setAuthTokens({ access: response.authentication.idToken, refresh: response.authentication.refreshToken });
+        setUser(response.authentication.idToken);
+        await getGoogleUserInfo(response.authentication.accessToken);
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
   
   // ...
 
@@ -120,14 +166,86 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setAuthTokens(response.data.tokens);
       setUser(response.data.tokens.access);
       setUserInfos({
-        username: response.data.username,
-})
+        username: response.data.username
+      })
 
       
     } catch (error: any) {
       return error.response;
     }
   }
+
+  const logout = () => {
+    setAuthTokens(null)
+    setUser(null)
+    setUserInfos(null)
+    AsyncStorage.removeItem('authTokens')
+    AsyncStorage.removeItem('userInfos');
+  }
+
+  const getGoogleUserInfo = async (token: string) => {
+    if (!token) return;
+
+    try {
+      const response = await fetch("https://www.googleapis.com/userinfo/v2/me",
+      {
+        headers: { Authorization: `Bearer ${token}`}
+      })
+      
+      const user = await response.json()
+
+
+      setUserInfos({
+        username: user.email
+      });
+
+      const userInfoToSave = {
+        username: user.email
+      };
+      await AsyncStorage.setItem('userInfos', JSON.stringify(userInfoToSave));
+
+
+    } catch (error) {
+      
+    }
+  }
+
+  const checkIfUserExists = async(body: {email: string}) => {
+    try {
+      const response = await fetch(`${AppURLS.middlewareInformationURL}/${AUTH_USER_EXISTS}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+  
+  
+
+      const data = await response.json(); // Wait for the JSON promise to resolve
+  
+    
+      return data;
+    } catch (error) {
+
+    }
+  }
+
+  const changePasswordVerify = async(body: {email: string, code: string, password: string}) => {
+
+    try {
+      const response = await axios.patch(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT}/`, body, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return response.data; // Return the response data, assuming the server returns meaningful data upon success.
+    } catch (error) {
+      console.log(error);
+      throw error; // Rethrow the error to handle it in the calling function.
+    }
+  }
+
 
   const changePassword = async( email:string) => {
   
@@ -148,29 +266,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-  const changePasswordVerify = async(body: {email: string, code: string, password: string}) => {
-
-    try {
-      const response = await axios.patch(`${AppURLS}/${AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT}/`, body, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      return response.data; // Return the response data, assuming the server returns meaningful data upon success.
-    } catch (error) {
-      console.log(error);
-      throw error; // Rethrow the error to handle it in the calling function.
-    }
-  }
-
-  const logout = () => {
-    setAuthTokens(null)
-    setUser(null)
-    setUserInfos(null)
-    AsyncStorage.removeItem('authTokens')
-    AsyncStorage.removeItem('userInfos');
-  }
-
   const deleteAccount = async (email: string) => {
     const response = await axios.delete(`${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`, {
       headers: {
@@ -184,50 +279,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return response;
   };
 
-  /**
-   * UPDATE TOKEN NOT DONE , NEED TO BE FIXED
-   */
-  // const updateToken = async () => {
-  //   console.log('UPDATE TOKEN')
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_REFRESH}/`,
-  //       {
-  //         refresh: authTokens?.refresh
-  //       },
-  //       {
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       }
-  //     );
-
-  //     setAuthTokens(response.data.tokens)
-  //     setUser(response.data.tokens.access)
-  //     AsyncStorage.setItem('authTokens', JSON.stringify(response.data.tokens))
-     
-  //   } catch (error:any) {
-  //     logout()
-  //     return error.response
-      
-  //   }
-    
-  // }
-
-  // // useEffect(() => {
-  
-  // //   const intervalId = setInterval(() => {
-  // //     if (authTokens) {
-  // //       updateToken();
-  // //     }
-  // //   }, 2000);
-  
-  // //   return () => clearInterval(intervalId);
-  
-  // // }, [authTokens, loading]);
-
-
   const contextData = {
     userInfos,
     authTokens,
@@ -237,7 +288,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     deleteAccount,
     changePassword,
     changePasswordVerify,
-
+    promptAsync,
   };
 
   return (

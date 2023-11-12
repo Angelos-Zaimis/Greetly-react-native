@@ -1,25 +1,36 @@
-import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
+import React, { FC ,useCallback,useContext,useEffect,useMemo,useState } from 'react'
 import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet, ScrollView  } from 'react-native'
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
 import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import LinkButton from '../components/shared/LinkButton';
+import * as Google from 'expo-auth-session/providers/google'
+import * as WebBrowser from 'expo-web-browser'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwt_decode from "jwt-decode";
+
+WebBrowser.maybeCompleteAuthSession()
+
+//web 751236983319-kgqo51hbgmgbiojjhn1cjo346bgqd1oa.apps.googleusercontent.com
+// ios 751236983319-ggmr1611pgttfelv9enqq64rj6iq0klc.apps.googleusercontent.com
+// android : 751236983319-74hfbskhu222oo9jv4gas0ufg3vpm6ia.apps.googleusercontent.com
+
 
 const Login: FC = ({navigation}:any) => {
   
     const [email,setEmail] = useState<string>('');
     const [password,setPassword] = useState<string>('');
-    const [error,setError] = useState<string>('')
     const [loginPending, setLoginPending] = useState<boolean>(false)
     const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true)
-    const {login} = useContext(AuthContext);
-    const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
-    const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
+    const {promptAsync,login} = useContext(AuthContext);
     const text = "Sign in now".split(' ');
     const subtitleCreateAccountText = "NOT A MEMBER? CREATE AN ACCOUNT".split(' ')
 
+
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+  
 
     const isTabletMode = useMemo(() => {
       if(SCREEN_WIDTH > 700) {
@@ -28,75 +39,12 @@ const Login: FC = ({navigation}:any) => {
       return false;
     },[SCREEN_WIDTH])
     
-    const isValidEmail = (email: string) => {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const invalidCharsRegex = /[^\w.@+-]/;
-      const disposableDomain = "@example.com";
-      const spamDomain = "@spamdomain.com";
-      const maxLength = 254;
-    
-      if (!emailRegex.test(email)) {
-        return { valid: false };
-      }
-    
-      if (invalidCharsRegex.test(email)) {
-        return { valid: false };
-      }
-    
-      if (email.length > maxLength) {
-        return { valid: false };
-      }
-    
-      if (email.endsWith(disposableDomain)) {
-        return { valid: false };
-      }
-    
-      if (email.endsWith(spamDomain)) {
-        return { valid: false };
-      }
-    
-      return { valid: true};
-    };
-    
-    const isValidPassword = (password: string) => {
-      const minLength = 8;
-      const digitRegex = /\d/;
-      const uppercaseRegex = /[A-Z]/;
-      const lowercaseRegex = /[a-z]/;
-  
-    
-      if (password.length < minLength) {
-        return { valid: false};
-      }
-    
-      if (!digitRegex.test(password)) {
-        return { valid: false};
-      }
-    
-      if (!uppercaseRegex.test(password)) {
-        return { valid: false };
-      }
-    
-      if (!lowercaseRegex.test(password)) {
-        return { valid: false};
-      }
-    
-    
-      return { valid: true};
-    };
-
     const handleEmailInputChange = (text: string) => {
       setEmail(text);
-
-      const isValid = isValidEmail(text);
-      setIsValidEmailInput(isValid.valid);
     };
 
     const handlePasswordlInputChange = (text: string) => {
       setPassword(text);
-
-      const isValid = isValidPassword(text);
-      setIsValidPasswordInput(isValid.valid);
     };
 
     const handleForgotPassword = () => {
@@ -115,14 +63,6 @@ const Login: FC = ({navigation}:any) => {
       navigation.push('SignIn')
     }
 
-    const handleLoginGoogle = useCallback(() => {
-
-    },[])
-
-    const handleLoginFacebook = useCallback(() => {
-
-    },[])
-
     const handlePress =  async() => {
      setLoginPending(true)
      const response = await login({
@@ -139,6 +79,7 @@ const Login: FC = ({navigation}:any) => {
       }
       setLoginPending(false)
     }
+ 
 
   if (isTabletMode) {
     return (
@@ -217,19 +158,18 @@ const Login: FC = ({navigation}:any) => {
          <View style={styles.buttontablet}>
             <EnterButton isTabletMode={true} handlePress={handlePress} handleDisabled={handleDisabled}/>
          </View>
-         {/* <View style={styles.containerLine}>
-           <View style={styles.line} />
-           <Text style={styles.text}>OR</Text>
-           < View style={styles.line} />
-           </View> */}
+         <View style={styles.containerLine}>
+          <View style={styles.line} />
+            <Text style={styles.text}>OR</Text>
+          <View style={styles.line} />
+        </View>
+        <View style={styles.appleGoogleContainer}>
+          <LinkButton googleIcon={true} text='Login with Google' color='black' handlePress={() => promptAsync()}/>
+        </View>
         <View style={styles.bottomContainertablet}>
           <Text style={styles.greetlytablet}>Greetly.ch</Text>
           <Image style={styles.logotablet}source={require('../assets/welcomepage/logo.png')}/>
         </View>
-        {/* <View style={styles.appleGoogleContainer}>
-        <LinkButton icon={'google'} text='Login with Google' color='black' handlePress={handleLoginGoogle}/>
-        <LinkButton icon={'facebook-square'} text='Login with Facebook' color='black' handlePress={handleLoginFacebook}/>
-         </View> */}
       </ScrollView>
       {loginPending ? <Spinner/> : null }
     </>
@@ -313,19 +253,18 @@ const Login: FC = ({navigation}:any) => {
       <View style={styles.button}>
         <EnterButton handlePress={handlePress} handleDisabled={handleDisabled}/>
       </View>
-      {/* <View style={styles.containerLine}>
+      <View style={styles.containerLine}>
         <View style={styles.line} />
         <Text style={styles.text}>OR</Text>
         <View style={styles.line} />
-    </View> */}
+    </View>
+    <View style={styles.appleGoogleContainer}>
+      <LinkButton googleIcon={true} text='Login with Google' color='black' handlePress={() => promptAsync()}/>
+    </View>
     <View style={styles.bottomContainer}>
       <Text style={styles.greetly}>Greetly.ch</Text>
       <Image style={styles.logo}source={require('../assets/welcomepage/logo.png')}/>
     </View>
-    {/* <View style={styles.appleGoogleContainer}>
-      <LinkButton icon={'google'} text='Login with Google' color='black' handlePress={handleLoginGoogle}/>
-      <LinkButton icon={'facebook-square'} text='Login with Facebook' color='black' handlePress={handleLoginFacebook}/>
-    </View> */}
     </ScrollView>
     {loginPending ? <Spinner/> : null }
     </>
@@ -449,7 +388,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   appleGoogleContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   logo: {
     width: 35,
