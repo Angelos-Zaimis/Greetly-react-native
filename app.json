@@ -1,10 +1,11 @@
 {
   "expo": {
     "name": "Greetly.ch",
-    "slug": "Greetly.ch",
+    "slug": "helloch",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "scheme": "https://auth.expo.io/@greetly.ch/helloch",
     "userInterfaceStyle": "light",
     "experiments": {
       "tsconfigPaths": true
@@ -26,7 +27,12 @@
         "image": "./assets/images/splash.png",
         "resizeMode": "cover",
         "backgroundColor": "#F06748"
-      }
+      },
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
+      },
+      "bundleIdentifier": "com.greetly.ch.Greetly.ch"
     },
     "android": {
       "adaptiveIcon": {
@@ -37,33 +43,41 @@
         "image": "./assets/images/splash.png",
         "resizeMode": "cover",
         "backgroundColor": "#F06748"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_MEDIA_LOCATION"
+      ],
+      "package": "com.greetly.ch.Greetly.ch"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-localization",
-    [
-      "expo-camera",
-      {
-        "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
-      }
-    ],
-    [
-      "expo-media-library",
-      {
-        "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
-        "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
-        "isAccessMediaLocationEnabled": true
-      }
-    ],
-     [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
+      ],
+      [
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-  ]
+    ]
   }
 }

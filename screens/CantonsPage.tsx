@@ -7,6 +7,7 @@ import { Image } from 'expo-image'
 import { AuthContext } from '../hooks/auth/AuthContext'
 import { FontAwesome } from '@expo/vector-icons';
 import { useUserInfo } from '../components/util/useUserInfos'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 type CantonsPageProps = {
@@ -17,7 +18,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
 
   const {cities} = useCities();
-  const {mutate} = useUserInfo();
+  const {userInfo,mutate} = useUserInfo();
   
   const {t} = useLanguage()
 
@@ -259,3 +260,7 @@ borderRadius: 16,
 })
 
 export default CantonsPage;
+
+function jwt_decode(authTokens: Promise<string>) {
+  throw new Error('Function not implemented.')
+}
