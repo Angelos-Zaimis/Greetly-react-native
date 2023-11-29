@@ -103,12 +103,12 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
             <TouchableOpacity
                 style={[
                     styles.subButton,
-                    priceForSession === 'price_1Nv3XhJ0qxeuDWlJABed3nQa' && styles.selectedButton,
+                    priceForSession === 'price_1OC3kuJ0qxeuDWlJuMmVtY0l' && styles.selectedButton,
                 ]}
-                onPress={() => setPriceForSession('price_1Nv3XhJ0qxeuDWlJABed3nQa')}
+                onPress={() => setPriceForSession('price_1OC3kuJ0qxeuDWlJuMmVtY0l')}
             >
-                <Text style={[styles.priceTextBox, priceForSession === 'price_1Nv3XhJ0qxeuDWlJABed3nQa' && styles.priceTextBoxSelected]}>{`5 CHF / ${t('month')} `}</Text>
-                <Text style={[styles.textBox, priceForSession === 'price_1Nv3XhJ0qxeuDWlJABed3nQa' && styles.textBoxSelected]}>{t("VatIncluded")}</Text>
+                <Text style={[styles.priceTextBox, priceForSession === 'price_1OC3kuJ0qxeuDWlJuMmVtY0l' && styles.priceTextBoxSelected]}>{`5 CHF / ${t('month')} `}</Text>
+                <Text style={[styles.textBox, priceForSession === 'price_1OC3kuJ0qxeuDWlJuMmVtY0l' && styles.textBoxSelected]}>{t("VatIncluded")}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity

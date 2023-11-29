@@ -125,13 +125,65 @@
     "schools, universities": "εκπαιδευτικό σύστημα, σχολεία, πανεπιστήμια",
 
 
-    "Register as a new resident": "Eγγραφείτε ως νέος κάτοικος",
-    "Do your taxes": "Kάνετε τις φορολογικές σας δηλώσεις",
-    "Obtain Health Insurance": "Aποκτήσετε ασφάλιση υγείας",
-    "Find a job": "Bρείτε θέση εργασίας",
-    "Rent an apartment": "Ενοικιάστε ένα διαμέρισμα",
-    "Open a bank account": "Ανοίξτε έναν τραπεζικό λογαριασμό",
-    "Renewal and extension of residence": "Ανανέωση και παράταση της διαμονής",
-    "Debit & Credit Cards": "Χρεωστικές & πιστωτικές κάρτες",
-    "Buy an apartment": "Αγοράστε ένα διαμέρισμα"
+    "Open a bank account": "Ανοίξτε ένα τραπεζικό λογαριασμό",
+    "Do your taxes": "Κάντε τους φόρους σας",
+    "The Tax system": "Το φορολογικό σύστημα",
+    "Debit & Credit Cards": "Χρεωστικές και πιστωτικές κάρτες",
+    "Investment accounts and brokers": "Λογαριασμοί επενδύσεων και μεσίτες",
+    "Loan application process and eligibility": "Διαδικασία αίτησης δανείου και επιλεξιμότητα",
+    "Currency and Exchange Rates": "Νόμισμα και συναλλαγματικές ισοτιμίες",
+    "Tracking expenses": "Καταγραφή δαπανών",
+    "Digital Banking & Fintech": "Ψηφιακή Τραπεζική και Τεχνοοικονομία",
+    "Pension System": "Σύστημα συντάξεων",
+    "Setting a Budget": "Καθορισμός προϋπολογισμού",
+    "Loans & Mortgages": "Δάνεια και Υποθήκες",
+
+    
+    "Register as a new resident": "Εγγραφή ως νέος κάτοικος",
+    "Renewal and extension of residence": "Ανανέωση και επέκταση της κατοικίας",
+    "Passport Requirements": "Απαιτήσεις διαβατηρίου",
+    "Residence Permits": "Άδειες διαμονής",
+    "Dual Citizenship": "Διπλή ιθαγένεια",
+    "Consular Assistance": "Προξενική υποστήριξη",
+    "Visa Stamps and Entry": "Σήματα βίζα και είσοδος",
+    "Integration Programs": "Προγράμματα ένταξης",
+    "Legal Assistance": "Νομική υποστήριξη",
+    
+    
+    "Rent an apartment": "Ενοικίαση διαμερίσματος",
+    "Buy an apartment": "Αγορά διαμερίσματος",
+    "Rental Market": "Ενοικιαστική αγορά",
+    "Property Search": "Αναζήτηση ιδιοκτησίας",
+    "Local Regulations": "Τοπικοί κανονισμοί",
+    "Temporary Accommodations": "Προσωρινά καταλύματα",
+    "Deposit and Upfront Costs": "Κατάθεση και προκαταβολικά έξοδα",
+    "Utilities and Services": "Δημόσιες υπηρεσίες και υποδομές",
+    "Tenant Rights": "Δικαιώματα ενοικιαστή",
+    "Lease Agreements": "Συμβάσεις ενοικίασης",
+    
+    
+    "Obtain Health Insurance": "Απόκτηση ασφάλισης υγείας",
+    "Healthcare Providers": "Παροχείς υγειονομικής περίθαλψης",
+    "Healthcare System": "Σύστημα υγείας",
+    "Insurance Renewal and Updates": "Ανανέωση και ενημέρωση ασφάλισης",
+    "Public Healthcare Programs": "Δημόσια προγράμματα υγείας",
+    "Emergency Services": "Εκτάκτως Υγειονομικές Υπηρεσίες",
+    "Patient Rights": "Δικαιώματα ασθενούς",
+    "Preventive Care": "Προληπτική φροντίδα",
+    "Pharmacies": "Φαρμακεία",
+    "Premiums and Deductibles": "Προσαγωγές και αυτοεπικαλύψεις",
+    
+    
+    "Find a job": "Βρείτε μια δουλειά",
+    "Work Permits": "Άδειες εργασίας",
+    "Swiss Employment Contracts": "Συμβάσεις εργασίας στην Ελβετία",
+    "Social Insurance Contributions": "Συνεισφορές κοινωνικής ασφάλισης",
+    "Job Search and Networking": "Αναζήτηση εργασίας και δικτύωση",
+    "Recognition of Qualifications": "Αναγνώριση προσόντων",
+    "Unemployment Benefits": "Παροχές ανεργίας",
+    "Employment Protections and Rights": "Προστασία και δικαιώματα εργαζομένων",
+    "Salary and Cost of Living": "Μισθός και κόστος διαβίωσης",
+    "Health Insurance through Employment": "Ασφάλιση υγείας μέσω απασχόλησης"
+    
+
 }

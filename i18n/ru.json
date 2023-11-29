@@ -109,13 +109,65 @@
     "schools, universities": "система образования, школы, вузы и т.д.",
 
 
-    "Register as a new resident": "Зарегистрироваться как новый резидент",
-    "Do your taxes": "Сделать налоги",
-    "Obtain Health Insurance": "Получить медицинскую страховку",
-    "Find a job": "Найти работу",
-    "Rent an apartment": "Снять квартиру",
     "Open a bank account": "Открыть банковский счет",
-    "Renewal and extension of residence": "Продление и восстановление вида на жительство",
-    "Debit & Credit Cards": "Дебетовые и кредитные карты"
+    "Do your taxes": "Сделайте свои налоги",
+    "The Tax system": "Налоговая система",
+    "Debit & Credit Cards": "Дебетовые и кредитные карты",
+    "Investment accounts and brokers": "Инвестиционные счета и брокеры",
+    "Loan application process and eligibility": "Процесс подачи заявки на кредит и его доступность",
+    "Currency and Exchange Rates": "Валюта и обменные курсы",
+    "Tracking expenses": "Отслеживание расходов",
+    "Digital Banking & Fintech": "Цифровое банковское дело и финтех",
+    "Pension System": "Пенсионная система",
+    "Setting a Budget": "Установка бюджета",
+    "Loans & Mortgages": "Кредиты и ипотеки",
+    
+    
+    "Register as a new resident": "Зарегистрироваться как новый резидент",
+    "Renewal and extension of residence": "Продление и продление проживания",
+    "Passport Requirements": "Требования к паспорту",
+    "Residence Permits": "Разрешения на проживание",
+    "Dual Citizenship": "Двойное гражданство",
+    "Consular Assistance": "Консульская помощь",
+    "Visa Stamps and Entry": "Визовые штампы и въезд",
+    "Integration Programs": "Программы интеграции",
+    "Legal Assistance": "Юридическая помощь",
+    
+    "Rent an apartment": "Снять квартиру",
+    "Buy an apartment": "Купить квартиру",
+    "Rental Market": "Рынок аренды",
+    "Property Search": "Поиск недвижимости",
+    "Local Regulations": "Местные регуляции",
+    "Temporary Accommodations": "Временное проживание",
+    "Deposit and Upfront Costs": "Депозит и предварительные расходы",
+    "Utilities and Services": "Коммунальные услуги и сервисы",
+    "Tenant Rights": "Права арендатора",
+    "Lease Agreements": "Договоры аренды",
+    
+    
+    "Obtain Health Insurance": "Получить медицинскую страховку",
+    "Healthcare Providers": "Поставщики медицинских услуг",
+    "Healthcare System": "Медицинская система",
+    "Insurance Renewal and Updates": "Обновление и обновления страховки",
+    "Public Healthcare Programs": "Программы государственной медицинской помощи",
+    "Emergency Services": "Службы экстренной медицинской помощи",
+    "Patient Rights": "Права пациента",
+    "Preventive Care": "Профилактическая медицина",
+    "Pharmacies": "Аптеки",
+    "Premiums and Deductibles": "Страховые премии и вычеты",
+    
+    
+    "Find a job": "Найти работу",
+    "Work Permits": "Разрешения на работу",
+    "Swiss Employment Contracts": "Трудовые договоры в Швейцарии",
+    "Social Insurance Contributions": "Взносы по социальному страхованию",
+    "Job Search and Networking": "Поиск работы и социальные сети",
+    "Recognition of Qualifications": "Признание квалификаций",
+    "Unemployment Benefits": "Пособия по безработице",
+    "Employment Protections and Rights": "Защита и права работника",
+    "Salary and Cost of Living": "Заработная плата и стоимость жизни",
+    "Health Insurance through Employment": "Медицинская страховка через трудоустройство",
+    
+
 
 }

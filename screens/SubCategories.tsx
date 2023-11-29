@@ -66,6 +66,10 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
     setIsNotSubscribed(false)
   }
 
+  const sortedSubCategories = useMemo(() => {
+    return subCategories?.subcategories?.slice()?.sort((a, b) => a.id - b.id);
+  }, [subCategories]);
+
   useEffect(() => {
     if (isNotSubscribed) {
       Animated.timing(opacity, {
@@ -112,7 +116,15 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       imageSource: 'briefcase',
       navigate: () => {
         setIncomingCategory('Employment')
-      } },
+      } 
+    },
+    // { 
+    //   name: 'Education', 
+    //   imageSource: 'university',
+    //   navigate: () => {
+    //     setIncomingCategory('Education')
+    //   } 
+    // },
   ];
 
 
@@ -146,7 +158,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       {subCategories ? 
         <View style={styles.flatlistContainerTablet}>
           <FlatList 
-            data={subCategories?.subcategories}
+            data={sortedSubCategories ?? subCategories?.subcategories}
             renderItem={({ item, index }) => {
               const showAsSubscribed = userInfo?.isSubscribed || index < 3;
               return (
@@ -216,7 +228,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       {subCategories ? 
         <View style={styles.flatlistContainer}>
          <FlatList 
-           data={subCategories?.subcategories}
+           data={sortedSubCategories ?? subCategories?.subcategories}
            renderItem={({ item, index }) => {
                const showAsSubscribed = userInfo?.isSubscribed || index < 3;
                return (

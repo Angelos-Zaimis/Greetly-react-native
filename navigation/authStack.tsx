@@ -34,7 +34,7 @@ const AuthStack = () => {
 
   return (
     <SWRConfigProvider>
-      <NavigationContainer>
+      <NavigationContainer>      
         <Stack.Navigator>
           {
           isFirstLanchEver && (

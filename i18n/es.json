@@ -92,32 +92,79 @@
 
 
 
-
-
     "Legal System & Immigration": "Sistema jurídico e inmigración",
     "Money & Banking": "Dinero y banca",
     "Healthcare & Insurance": "Sanidad y seguros",
     "Employment": "Empleo",
     "Housing": "Vivienda",
     "Education": "Educación",
+    
+ 
+
+    "Open a bank account": "Abrir una cuenta bancaria",
+    "Do your taxes": "Hacer tus impuestos",
+    "The Tax system": "El sistema tributario",
+    "Debit & Credit Cards": "Tarjetas de débito y crédito",
+    "Investment accounts and brokers": "Cuentas de inversión y corredores",
+    "Loan application process and eligibility": "Proceso de solicitud de préstamo y elegibilidad",
+    "Currency and Exchange Rates": "Moneda y tasa de cambio",
+    "Tracking expenses": "Seguimiento de gastos",
+    "Digital Banking & Fintech": "Banca digital y tecnología financiera",
+    "Pension System": "Sistema de pensiones",
+    "Setting a Budget": "Establecer un presupuesto",
+    "Loans & Mortgages": "Préstamos e hipotecas",
+    
+    "Register as a new resident": "Registrarse como nuevo residente",
+    "Renewal and extension of residence": "Renovación y extensión de la residencia",
+    "Passport Requirements": "Requisitos de pasaporte",
+    "Residence Permits": "Permisos de residencia",
+    "Dual Citizenship": "Doble ciudadanía",
+    "Consular Assistance": "Asistencia consular",
+    "Visa Stamps and Entry": "Sellos y entrada de visa",
+    "Integration Programs": "Programas de integración",
+    "Legal Assistance": "Asistencia legal",
+    
+    "Rent an apartment": "Alquilar un apartamento",
+    "Buy an apartment": "Comprar un apartamento",
+    "Rental Market": "Mercado de alquiler",
+    "Property Search": "Búsqueda de propiedades",
+    "Local Regulations": "Regulaciones locales",
+    "Temporary Accommodations": "Alojamientos temporales",
+    "Deposit and Upfront Costs": "Depósito y costos iniciales",
+    "Utilities and Services": "Servicios públicos y servicios",
+    "Tenant Rights": "Derechos del inquilino",
+    "Lease Agreements": "Contratos de arrendamiento",
+    
+    "Obtain Health Insurance": "Obtener un seguro de salud",
+    "Healthcare Providers": "Proveedores de atención médica",
+    "Healthcare System": "Sistema de atención médica",
+    "Insurance Renewal and Updates": "Renovación y actualizaciones del seguro",
+    "Public Healthcare Programs": "Programas de atención médica pública",
+    "Emergency Services": "Servicios de emergencia",
+    "Patient Rights": "Derechos del paciente",
+    "Preventive Care": "Cuidado preventivo",
+    "Pharmacies": "Farmacias",
+    "Premiums and Deductibles": "Primas y deducibles",
+    
+    "Find a job": "Encontrar un trabajo",
+    "Work Permits": "Permisos de trabajo",
+    "Swiss Employment Contracts": "Contratos de trabajo en Suiza",
+    "Social Insurance Contributions": "Contribuciones al seguro social",
+    "Job Search and Networking": "Búsqueda de empleo y networking",
+    "Recognition of Qualifications": "Reconocimiento de cualificaciones",
+    "Unemployment Benefits": "Beneficios por desempleo",
+    "Employment Protections and Rights": "Protecciones y derechos laborales",
+    "Salary and Cost of Living": "Salario y costo de vida",
+    "Health Insurance through Employment": "Seguro de salud a través del empleo",
+    
+    
+
 
     "immigration, legal support, police": "inmigración, asuntos jurídicos, servicios de apoyo, policía, etc.",
     "open a bank account, filling taxes": "abrir una cuenta bancaria, cumplimentar los impuestos, etc.",
     "medical system, find a doctor": "sistema médico, encontrar un médico, etc.",
     "finding a job, working in Switzerland": "encontrar trabajo, trabajar en Suiza, etc.",
     "finding a place to rent or buy": "encontrar un lugar para alquilar o comprar, etc.",
-    "schools, universities": "sistema educativo, escuelas, universidades, etc.",
-
-  
-    "Register as a new resident": "Registrarse como nuevo residente",
-    "Do your taxes": "Hacer sus impuestos",
-    "Obtain Health Insurance": "Obtener seguro de salud",
-    "Find a job": "Encontrar un trabajo",
-    "Rent an apartment": "Alquilar un apartamento",
-    "Open a bank account": "Abrir una cuenta bancaria",
-    "Renewal and extension of residence": "Renovación y prórroga de la residencia",
-    "Debit & Credit Cards": "Tarjetas de débito y crédito",
-
-    "Buy an apartment": "Comprar un apartamento"
+    "schools, universities": "sistema educativo, escuelas, universidades, etc."
 
 }

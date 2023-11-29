@@ -103,17 +103,69 @@
     "medical system, find a doctor": "système médical, trouver un médecin, etc.",
     "finding a job, working in Switzerland": "trouver un emploi, travailler en Suisse, etc.",
     "finding a place to rent or buy": "la recherche d'un logement à louer ou à acheter, etc.",
-    "schools, universities": "le système éducatif, les écoles, les universités, etc.",
+    "schools, universities": "le système éducatif, les écoles, les universités, etc.",   
+
+
+    "Open a bank account": "Ouvrir un compte bancaire",
+    "Investment accounts and brokers": "Comptes d'investissement et courtiers",
+    "Loan application process and eligibility": "Processus de demande de prêt et éligibilité",
+    "Currency and Exchange Rates": "Devise et taux de change",
+    "Tracking expenses": "Suivi des dépenses",
+    "Digital Banking & Fintech": "Banque numérique et technologie financière",
+    "Pension System": "Système de retraite",
+    "Setting a Budget": "Établir un budget",
+    "Debit & Credit Cards": "Cartes de débit et de crédit",
+    "Loans & Mortgages": "Prêts et hypothèques",
+    "Do your taxes": "Faire vos impôts",
+    "The Tax system": "Le système fiscal",
 
 
     "Register as a new resident": "S'inscrire en tant que nouveau résident",
-    "Do your taxes": "Faire vos impôts",
-    "Obtain Health Insurance": "Obtenir une assurance santé",
-    "Find a job": "Trouver un emploi",
+    "Renewal and extension of residence": "Renouvellement et prolongation de la résidence",
+    "Passport Requirements": "Exigences du passeport",
+    "Residence Permits": "Permis de résidence",
+    "Dual Citizenship": "Double citoyenneté",
+    "Consular Assistance": "Assistance consulaire",
+    "Visa Stamps and Entry": "Tampons de visa et entrée",
+    "Integration Programs": "Programmes d'intégration",
+    "Legal Assistance": "Assistance juridique",
+    
     "Rent an apartment": "Louer un appartement",
-    "Open a bank account": "Ouvrir un compte bancaire",
-    "Renewal and extension of residence": "Renouvellement et prolongation du séjour",
-    "Debit & Credit Cards": "Cartes de débit et de crédit",
+    "Buy an apartment": "Acheter un appartement",
+    "Rental Market": "Marché de la location",
+    "Property Search": "Recherche de propriété",
+    "Local Regulations": "Réglementations locales",
+    "Temporary Accommodations": "Logements temporaires",
+    "Deposit and Upfront Costs": "Dépôt et frais initiaux",
+    "Utilities and Services": "Services publics et prestations",
+    "Tenant Rights": "Droits du locataire",
+    "Lease Agreements": "Contrats de location",
+    
+    "Obtain Health Insurance": "Obtenir une assurance santé",
+    "Healthcare Providers": "Fournisseurs de soins de santé",
+    "Healthcare System": "Système de santé",
+    "Insurance Renewal and Updates": "Renouvellement et mises à jour de l'assurance",
+    "Public Healthcare Programs": "Programmes de santé publique",
+    "Emergency Services": "Services d'urgence",
+    "Patient Rights": "Droits des patients",
+    "Preventive Care": "Soins préventifs",
+    "Pharmacies": "Pharmacies",
+    "Premiums and Deductibles": "Primes et franchises",
+    
+    
+    "Find a job": "Trouver un emploi",
+    "Work Permits": "Permis de travail",
+    "Swiss Employment Contracts": "Contrats de travail suisses",
+    "Social Insurance Contributions": "Cotisations d'assurance sociale",
+    "Job Search and Networking": "Recherche d'emploi et réseautage",
+    "Recognition of Qualifications": "Reconnaissance des qualifications",
+    "Unemployment Benefits": "Allocations de chômage",
+    "Employment Protections and Rights": "Protections et droits en matière d'emploi",
+    "Salary and Cost of Living": "Salaire et coût de la vie",
+    "Health Insurance through Employment": "Assurance maladie par l'emploi"
+    
+    
+    
 
-    "Buy an apartment": "Acheter un appartement"
+
 }

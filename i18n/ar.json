@@ -105,15 +105,66 @@
     "finding a place to rent or buy": "البحث عن مكان للإيجار أو للشراء",
     "schools, universities": "تعليم, نظام التعليم, مدارس, جامعات, إلخ.",
 
+
+    "Open a bank account": "فتح حساب بنكي",
+    "Do your taxes": "قم بدفع الضرائب",
+    "The Tax system": "نظام الضرائب",
+    "Debit & Credit Cards": "بطاقات الخصم والائتمان",
+    "Investment accounts and brokers": "حسابات الاستثمار والوسطاء",
+    "Loan application process and eligibility": "عملية طلب القرض والأهلية",
+    "Currency and Exchange Rates": "العملة وأسعار الصرف",
+    "Tracking expenses": "تتبع النفقات",
+    "Digital Banking & Fintech": "الخدمات المصرفية الرقمية وتكنولوجيا التمويل",
+    "Pension System": "نظام التقاعد",
+    "Setting a Budget": "تحديد ميزانية",
+    "Loans & Mortgages": "القروض والرهن العقاري",
+    
     
     "Register as a new resident": "تسجيل كمقيم جديد",
-    "Do your taxes": "قم بدفع ضرائبك",
-    "Obtain Health Insurance": "الحصول على تأمين صحي",
-    "Find a job": "البحث عن وظيفة",
+    "Renewal and extension of residence": "تجديد وتمديد التصريح بالإقامة",
+    "Passport Requirements": "متطلبات جواز السفر",
+    "Residence Permits": "تصاريح الإقامة",
+    "Dual Citizenship": "الجنسية المزدوجة",
+    "Consular Assistance": "المساعدة القنصلية",
+    "Visa Stamps and Entry": "طوابع التأشيرة والدخول",
+    "Integration Programs": "برامج الاندماج",
+    "Legal Assistance": "المساعدة القانونية",
+    
+    
     "Rent an apartment": "استئجار شقة",
-    "Open a bank account": "فتح حساب بنكي",
-    "Renewal and extension of residence": "تجديد وتمديد الإقامة",
-    "Debit & Credit Cards": "بطاقات الخصم والائتمان",
-    "Buy an apartment": "شراء شقة"
+    "Buy an apartment": "شراء شقة",
+    "Rental Market": "سوق الإيجار",
+    "Property Search": "البحث عن عقار",
+    "Local Regulations": "اللوائح المحلية",
+    "Temporary Accommodations": "إقامة مؤقتة",
+    "Deposit and Upfront Costs": "التأمين والتكاليف الأولية",
+    "Utilities and Services": "الخدمات والمرافق",
+    "Tenant Rights": "حقوق المستأجر",
+    "Lease Agreements": "اتفاقيات الإيجار",
+    
+    "Obtain Health Insurance": "الحصول على تأمين صحي",
+    "Healthcare Providers": "مقدمي الرعاية الصحية",
+    "Healthcare System": "نظام الرعاية الصحية",
+    "Insurance Renewal and Updates": "تجديد وتحديث التأمين",
+    "Public Healthcare Programs": "برامج الرعاية الصحية العامة",
+    "Emergency Services": "خدمات الطوارئ",
+    "Patient Rights": "حقوق المرضى",
+    "Preventive Care": "الرعاية الوقائية",
+    "Pharmacies": "الصيدليات",
+    "Premiums and Deductibles": "الاشتراكات والخصومات",
+    
+    "Find a job": "البحث عن وظيفة",
+    "Work Permits": "تصاريح العمل",
+    "Swiss Employment Contracts": "عقود العمل السويسرية",
+    "Social Insurance Contributions": "مساهمات التأمين الاجتماعي",
+    "Job Search and Networking": "البحث عن وظيفة والتواصل",
+    "Recognition of Qualifications": "اعتراف بالمؤهلات",
+    "Unemployment Benefits": "فوائد البطالة",
+    "Employment Protections and Rights": "حقوق وحماية العمل",
+    "Salary and Cost of Living": "الراتب وتكلفة المعيشة",
+    "Health Insurance through Employment": "تأمين الصحة من خلال العمل"
+    
+    
+
     
 }

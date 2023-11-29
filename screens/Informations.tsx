@@ -158,8 +158,8 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   }
 
   return (
+    <>
     <View style={styles.container}>
-      {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
       <View  style={styles.image}>
         <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
       </View>
@@ -212,6 +212,8 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         )
       }
     </View>
+    {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
+    </>
   )
 }
 

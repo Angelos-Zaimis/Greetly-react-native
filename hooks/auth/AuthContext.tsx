@@ -7,6 +7,13 @@ import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AU
 import * as Google from 'expo-auth-session/providers/google'
 import { Alert } from "react-native";
 
+type ProductDetails = {
+  subscription_currency: string;
+  subscription_id: string;
+  subscription_plan: string;
+  subscription_price: number;
+};
+
 type AuthData = {
   type: 'google' | 'normal';
   body?: {
@@ -14,6 +21,7 @@ type AuthData = {
     password: string
   }
 };
+
 interface AuthContextType {
   user: {
     email: string;
@@ -23,6 +31,19 @@ interface AuthContextType {
   authTokens: {
     access: string, refresh: string
   };
+  userInfos:{
+    citizenship: string;
+    country: string;
+    id: number;
+    unique_id: string;
+    isSubscribed: boolean;
+    language: string;
+    message: string;
+    product_details: ProductDetails;
+    status: string;
+    user: string;
+    username: string;
+  }
   promptAsync: () => void;
   login: (body: LoginProps) => Promise<any>;
   logout: () => void;
@@ -36,6 +57,24 @@ const initialAuthContextValue: AuthContextType = {
     email: '',
     exp: '',
     user_id: '',
+  },
+  userInfos:{
+    citizenship: '',
+    country: '',
+    id: 0,
+    unique_id: '',
+    isSubscribed: false,
+    language: '',
+    message: '',
+    product_details: {
+      subscription_currency: '',
+      subscription_id:  '',
+      subscription_plan:  '',
+      subscription_price:  0
+    },
+    status: '',
+    user: '',
+    username: '',
   },
   authTokens: {
     access: '', refresh: ''
@@ -78,6 +117,7 @@ type UpdateTokenProps = {
 }
 
 interface UserInfo {
+  unique_id?: string;
   username: string;
 }
 
@@ -160,7 +200,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
        const userInfoToSave = {
         username: response.data.username,
       };
-
       AsyncStorage.setItem('authTokens', JSON.stringify(response.data.tokens));
       AsyncStorage.setItem('userInfos', JSON.stringify(userInfoToSave));
       setAuthTokens(response.data.tokens);
@@ -193,8 +232,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       })
       
       const user = await response.json()
-
-
       setUserInfos({
         username: user.email
       });

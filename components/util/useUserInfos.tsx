@@ -17,6 +17,7 @@ type UserInfoType = {
     citizenship: string;
     country: string;
     id: number;
+    unique_id: string;
     isSubscribed: boolean;
     language: string;
     message: string;

@@ -352,6 +352,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
   }
 
   return (
+    <>
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
@@ -499,9 +500,9 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
              </View>
         </View>
       </View>
-      {showToastMessage ? <CustomToaster success={successToast} message={successToast ? `${toastText} Update Successful!`:`${toastText} Update failed` }/> : null}
-
     </SafeAreaView>
+    {showToastMessage ? <CustomToaster success={successToast} message={successToast ? `${toastText} Update Successful!`:`${toastText} Update failed` }/> : null}
+    </>
   )
 }
 

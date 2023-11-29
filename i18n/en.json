@@ -96,6 +96,56 @@
     "Housing": "Housing",
     "Education": "Education",
 
+    
+    "Register as a new resident": "Register as a new resident",
+    "Renewal and extension of residence": "Renewal and extension of residence",
+    "Passport Requirements": "Passport Requirements",
+    "Residence Permits": "Residence Permits",
+    "Dual Citizenship": "Dual Citizenship",
+    "Consular Assistance": "Consular Assistance",
+    "Visa Stamps and Entry": "Visa Stamps and Entry",
+    "Integration Programs": "Integration Programs",
+    "Legal Assistance": "Legal Assistance",
+
+
+    "Rent an apartment": "Rent an apartment",
+    "Buy an apartment": "Buy an apartment",
+    "Rental Market": "Rental Market",
+    "Property Search": "Property Search",
+    "Local Regulations": "Local Regulations",
+    "Temporary Accommodations": "Temporary Accommodations",
+    "Deposit und Upfront Costs": "Deposit und Upfront Costs",
+    "Utilities and Services": "Utilities and Services",
+    "Tenant Rights": "Tenant Rights",
+    "Lease Aggreements": "Lease Aggreements",
+
+    "Obtain Health Insurance": "Obtain Health Insurance",
+    "Healthcare Providers": "Healthcare Providers",
+    "Healthcare System": "Healthcare System",
+    "Insurance Renewal and Updates": "Insurance Renewal and Updates",
+    "Public Healthcare Programs": "Public Healthcare Programs",
+    "Emergency Services": "Emergency Services",
+    "Patient Rights": "Patient Rights",
+    "Preventive Care": "Preventive Care",
+    "Pharmacies":  "Pharmacies",
+    "Premiums and Deductibles": "Premiums & Deductibles",
+
+
+    "Open a bank account": "Open a bank account",
+    "Do your taxes": "Do your taxes",
+    "The Tax system": "The Tax system",
+    "Debit & Credit Cards": "Debit & Credit Cards",
+    "Investment accounts and brokers": "Investment accounts and brokers",
+    "Loan application process and eligibility": "Loan application process and eligibility",
+    "Currency and Exchange Rates": "Currency and Exchange Rate",
+    "Tracking expenses": "Tracking expenses",
+    "Digital Banking & Fintech": "Digital Banking & Fintech",
+    "Pension System": "Pension System",
+    "Setting a Budget": "Setting a Budget",
+    "Loans & Mortgages": "Loans & Mortgages",
+
+
+
     "immigration, legal support, police": "immigration, legal matters, support services, police, etc.",
     "open a bank account, filling taxes": "open a bank account, filling taxes, etc.",
     "medical system, find a doctor": "medical system, find a doctor, etc.",
@@ -103,16 +153,9 @@
     "finding a place to rent or buy": "finding a place to rent or buy, etc.",
     "schools, universities": "education system, schools, universities, etc.",
 
-    "Register as a new resident": "Register as a new resident",
-    "Do your taxes": "Do your taxes",
-    "Obtain Health Insurance": "Obtain Health Insurance",
-    "Find a job": "Find a job",
-    "Rent an apartment": "Rent an apartment",
-    "Open a bank account": "Open a bank account",
-    "Renewal and extension of residence": "Renewal and extension of residence",
-    "Buy an apartment": "Buy an apartment",
-    "Debit & Credit Cards": "Debit & Credit Cards",
 
 
-    "openBankAccountEmployeeEU": "As an EU citizen employed and aiming to open a bank account in Zurich, Switzerland, start by picking a suitable bank. Most banks will require an appointment, which you can set up online or over the phone. Having proof of employment and residence, either in Switzerland or the EU, is crucial for many banks. Arrive on time for your appointment, as Swiss culture values punctuality. At the bank, you'll fill out application forms, after which the bank will verify your details, a process that can take a few hours to days. Once verified, your account gets activated. Note that an initial deposit might be needed for some banks.For a detailed list of the necessary documentation, please click on the button at the bottom left of this page."
+    "openBankAccountEmployeeEU": "As an EU citizen employed and aiming to open a bank account in Zurich, Switzerland, start by picking a suitable bank. Most banks will require an appointment, which you can set up online or over the phone. Having proof of employment and residence, either in Switzerland or the EU, is crucial for many banks. Arrive on time for your appointment, as Swiss culture values punctuality. At the bank, you'll fill out application forms, after which the bank will verify your details, a process that can take a few hours to days. Once verified, your account gets activated. Note that an initial deposit might be needed for some banks.For a detailed list of the necessary documentation, please click on the button at the bottom left of this page.",
+    "openBankAccountStudentEU": "As an EU citizen and Student and aiming to open a bank account in Zurich, Switzerland, start by picking a suitable bank. Most banks will require an appointment, which you can set up online or over the phone. Having proof of employment and residence, either in Switzerland or the EU, is crucial for many banks. Arrive on time for your appointment, as Swiss culture values punctuality. At the bank, you'll fill out application forms, after which the bank will verify your details, a process that can take a few hours to days. Once verified, your account gets activated. Note that an initial deposit might be needed for some banks.For a detailed list of the necessary documentation, please click on the button at the bottom left of this page."
+
 }

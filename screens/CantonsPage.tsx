@@ -42,6 +42,11 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
     navigation.push('NewsPage');
   }, [navigation]);
 
+
+  const sortedCities = useMemo(() => {
+    return cities?.slice()?.sort((a, b) => a.id - b.id);
+  }, [cities]);
+
   if (isTabletMode) {
     return(
       <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
@@ -119,7 +124,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
       ) : (
          <View  style={styles.flatlistContainer}>
          <FlatList 
-           data={cities}
+           data={sortedCities ?? cities}
            renderItem={({ item }) => (
            <TouchableOpacity
              key={item.id}

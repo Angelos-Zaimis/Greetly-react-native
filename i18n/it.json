@@ -92,6 +92,7 @@
     "Housing": "Alloggiamento",
     "Education": "Educazione",
 
+
     "immigration, legal support, police": "immigrazione, questioni legali, servizi di supporto, polizia, ecc.",
     "open a bank account, filling taxes": "aprire un conto bancario, compilare le tasse, ecc.",
     "medical system, find a doctor": "sistema medico, trovare un medico, ecc.",
@@ -99,15 +100,68 @@
     "finding a place to rent or buy": "trovare un posto in affitto o in acquisto, ecc.",
     "schools, universities": "sistema educativo, scuole, università, ecc.",
 
-    "Register as a new resident": "Registrarsi come nuovo residente",
-    "Do your taxes": "Fai le tue tasse",
-    "Obtain Health Insurance": "Ottenere l'assicurazione sanitaria",
-    "Find a job": "Trova un lavoro",
-    "Rent an apartment": "Affitta un appartamento",
-    "Open a bank account": "Apri un conto bancario",
-    "Renewal and extension of residence": "Rinnovo e proroga della residenza",
+
+    "Open a bank account": "Aprire un conto bancario", 
+    "Do your taxes": "Fare le tasse",
+    "The Tax system": "Il sistema fiscale",
     "Debit & Credit Cards": "Carte di debito e di credito",
-    "Buy an apartment": "Acquistare un appartamento"
+    "Investment accounts and brokers": "Conti di investimento e intermediari",
+    "Loan application process and eligibility": "Processo di richiesta di prestito e idoneità",
+    "Currency and Exchange Rates": "Valuta e tassi di cambio",
+    "Tracking expenses": "Monitoraggio delle spese",
+    "Digital Banking & Fintech": "Banca digitale e tecnologia finanziaria",
+    "Pension System": "Sistema pensionistico",
+    "Setting a Budget": "Impostare un budget",
+    "Loans & Mortgages": "Prestiti e mutui",
+    
+    "Register as a new resident": "Registrarsi come nuovo residente",
+    "Renewal and extension of residence": "Rinnovo ed estensione della residenza",
+    "Passport Requirements": "Requisiti del passaporto",
+    "Residence Permits": "Permessi di soggiorno",
+    "Dual Citizenship": "Cittadinanza doppia",
+    "Consular Assistance": "Assistenza consolare",
+    "Visa Stamps and Entry": "Timbri del visto e ingresso",
+    "Integration Programs": "Programmi di integrazione",
+    "Legal Assistance": "Assistenza legale",
+    
+    "Rent an apartment": "Affittare un appartamento",
+    "Buy an apartment": "Acquistare un appartamento",
+    "Rental Market": "Mercato dell'affitto",
+    "Property Search": "Ricerca immobiliare",
+    "Local Regulations": "Regolamenti locali",
+    "Temporary Accommodations": "Alloggi temporanei",
+    "Deposit and Upfront Costs": "Deposito e spese iniziali",
+    "Utilities and Services": "Servizi e utilità",
+    "Tenant Rights": "Diritti del locatario",
+    "Lease Agreements": "Contratti di locazione",
+    
+    
+    "Obtain Health Insurance": "Ottenere un'assicurazione sanitaria",
+    "Healthcare Providers": "Fornitori di assistenza sanitaria",
+    "Healthcare System": "Sistema sanitario",
+    "Insurance Renewal and Updates": "Rinnovo e aggiornamenti dell'assicurazione",
+    "Public Healthcare Programs": "Programmi di assistenza sanitaria pubblica",
+    "Emergency Services": "Servizi di emergenza",
+    "Patient Rights": "Diritti del paziente",
+    "Preventive Care": "Cura preventiva",
+    "Pharmacies": "Farmacie",
+    "Premiums and Deductibles": "Premi e deduzioni",
+    
+    
+    "Find a job": "Trova un lavoro",
+    "Work Permits": "Permessi di lavoro",
+    "Swiss Employment Contracts": "Contratti di lavoro svizzeri",
+    "Social Insurance Contributions": "Contributi all'assicurazione sociale",
+    "Job Search and Networking": "Ricerca del lavoro e networking",
+    "Recognition of Qualifications": "Riconoscimento delle qualifiche",
+    "Unemployment Benefits": "Indennità di disoccupazione",
+    "Employment Protections and Rights": "Protezioni e diritti del lavoro",
+    "Salary and Cost of Living": "Stipendio e costo della vita",
+    "Health Insurance through Employment": "Assicurazione sanitaria tramite l'impiego"
+    
+    
+    
+
 
 }
   
