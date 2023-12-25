@@ -27,6 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
+          <string>https://auth.expo.io/@greetly.ch/helloch</string>
           <string>com.greetly.ch.Greetly.ch</string>
         </array>
       </dict>

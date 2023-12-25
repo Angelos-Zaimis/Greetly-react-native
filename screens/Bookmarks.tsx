@@ -17,6 +17,7 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
   const {userInfo} = useUserInfo();
   const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
   const [opacity,] = useState(new Animated.Value(0));
+  console.log(bookmarks)
 
   const {t} = useLanguage();
 
@@ -50,14 +51,16 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
     title: string,
     description: string,
     image: string,
-    requiredDocuments: string[]
+    requiredDocuments: string[],
+    category: string
     ) => {
     navigation.push('Bookmark',{
       canton: canton,
       title: title,
       description: description,
       image: image,
-      requiredDocuments: requiredDocuments
+      requiredDocuments: requiredDocuments,
+      category: category
     })
   }
 
@@ -101,7 +104,8 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
                     item?.title,
                     item?.description,
                     item?.image,
-                    item?.requiredDocuments
+                    item?.requiredDocuments,
+                    item?.category
                   )} 
                     style={styles.cantonAndTitleTablet}>
                     <Text style={styles.cantonTablet}>{item?.canton}</Text>
@@ -159,7 +163,8 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
                   item?.title,
                   item?.description,
                   item?.image,
-                  item?.requiredDocuments
+                  item?.requiredDocuments,
+                  item?.category
                   ) : 
                   () => setIsNotSubscribed(true)} 
                   style={styles.cantonAndTitle}>

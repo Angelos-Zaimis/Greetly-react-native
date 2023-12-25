@@ -20,7 +20,6 @@
     "pageWelcomeTitle": "Selezionare il cantone in cui ci si trasferisce",
     "pageWelcomeSubtitle": "Ciascuno dei cantoni e dei semicantoni ha una propria costituzione, un proprio organo legislativo, esecutivo e giudiziario.",
     "descriptionOfInformation": "L'apertura di un conto bancario in Svizzera da parte di uno studente dell'UE/AELS comporta la scelta di una banca, la raccolta dei documenti necessari, la partecipazione a un appuntamento, la fornitura di informazioni personali, la compilazione di moduli di richiesta, il deposito di fondi, la verifica dei termini e delle condizioni, la firma del contratto e la ricezione dei dettagli del conto.",
-    "openBankAccountEmployeeEU": "L'apertura di un conto bancario in Svizzera in qualità di dipendente dell'UE-AELS comporta la scelta di una banca, la raccolta dei documenti necessari, la partecipazione a un appuntamento, la fornitura di informazioni personali, la compilazione di moduli di richiesta, il deposito di fondi, la verifica dei termini e delle condizioni, la firma del contratto e la ricezione dei dettagli del conto.",
     "Valid Passport or National Identity Card": "Passaporto valido o carta d'identità nazionale",
     "Proof of Employment": "Prova di occupazione",
     "Proof of Residence": "Prova di residenza",
@@ -157,11 +156,52 @@
     "Unemployment Benefits": "Indennità di disoccupazione",
     "Employment Protections and Rights": "Protezioni e diritti del lavoro",
     "Salary and Cost of Living": "Stipendio e costo della vita",
-    "Health Insurance through Employment": "Assicurazione sanitaria tramite l'impiego"
+    "Health Insurance through Employment": "Assicurazione sanitaria tramite l'impiego",
     
-    
-    
+    "registerAsZurichEmployeeTitle": "Guida alla Registrazione per Cittadini dell'UE/EFTA impiegati a Zurigo",
+    "registerAsZurichEmployeeTextOne": "Questa guida dettaglia i passi necessari, i documenti richiesti e i luoghi per la residenza legale e la registrazione al lavoro.",
+    "registerAsZurichEmployeeTextTwo": "Cosa Devi Sapere",
+    "regiserAsZurichEmployeeTextThree": "La registrazione dovrebbe tipicamente essere effettuata entro 14 giorni dall'arrivo in Svizzera. Ritardare questo processo potrebbe portare a sanzioni.",
+    "registerAsZurichEmployeeTextFour": "Documenti Richiesti per la Registrazione",
+    "regiserAsZurichEmployeeTextFive": "Visita a uno dei tre uffici di registrazione",
+    "registerAsZurichEmployeeTextSix": "Ufficio di registrazione personale Zurigo Sud",
+    "registerAsZurichEmployeeTextSeven": "Ufficio di registrazione personale Zurigo Ovest",
+    "registerAsZurichEmployeeTextEight": "Ufficio di registrazione personale Zurigo Nord",
+    "registerAsZurichEmployeeTextNine": "Puoi anche registrarti online su «eUmzugCH»",
+    "registerAsZurichEmployeeTextTen": "Alcuni comuni già partecipano a",
+    "registerAsZurichEmployeeTextEleven": "eUmzugCH",
+    "registerAsZurichEmployeeTextTwelve": "Su «eUmzugCH», puoi scoprire se è possibile registrare il tuo trasferimento a Zurigo online",
+    "registerAsZurichEmployeeReqDocOne": "Passaporto valido o Carta d'Identità",
+    "regiserAsZurichEmployeeReqDocTwo": "Contratto di Lavoro",
+    "registerAsZurichEmployeeReqDocThree": "Registrazione dell'appartamento o contratto di locazione",
+    "regiserAsZurichEmployeeReqDocFour": "Tessera dell'assicurazione sanitaria (per tutti i membri della famiglia)",
+    "registerAsZurichEmployeeReqDocFive": "Documenti di stato civile (certificato di matrimonio e certificati di nascita per i figli)",
+    "registerAsZurichEmployeeReqDocSix": "CHF 40.- per adulto",
 
+
+    "registerAsZurichStudentTitle": "Guida alla Registrazione per Studenti EU/EFTA a Zurigo",
+    "registerAsZurichStudentTextOne": "Questa guida descrive i passaggi necessari, i documenti richiesti e i luoghi per la residenza legale e la registrazione degli studenti a Zurigo.",
+    "registerAsZurichStudentTextTwo": "Cosa Devi Sapere",
+    "registerAsZurichStudentTextThree": "Gli studenti dovrebbero registrarsi entro 14 giorni dall'arrivo in Svizzera per evitare penalità.",
+    "registerAsZurichStudentTextFour": "Documenti Richiesti",
+    "registerAsZurichStudentTextFive": "Dove Devi Andare",
+    "registerAsZurichStudentTextSix": "Ufficio di registrazione Zurigo Sud",
+    "registerAsZurichStudentTextSeven": "Ufficio di registrazione Zurigo Ovest",
+    "registerAsZurichStudentTextEight": "Ufficio di registrazione Zurigo Nord",
+    "registerAsZurichStudentTextNine": "Informazioni Aggiuntive",
+    "registerAsZurichStudentTextTen": "La registrazione online è disponibile tramite «eUmzugCH». Verifica se puoi registrare il tuo trasferimento a Zurigo come studente online.",
+    "registerAsZurichStudentTextEleven": "eUmzugCH",
+    "registerAsZurichStudentTextTwelve": "Contatti importanti e risorse per il supporto agli studenti",
+    "registerAsZurichStudentReqDocOne": "Passaporto valido o Carta d'Identità",
+    "registerAsZurichStudentReqDocTwo": "Certificato di Iscrizione da un'Istituzione Educativa",
+    "registerAsZurichStudentReqDocThree": "Registrazione dell'appartamento o contratto di affitto",
+    "registerAsZurichStudentReqDocFour": "Tessera dell'assicurazione sanitaria",
+    "registerAsZurichStudentReqDocFive": "Documenti di stato civile se applicabili (ad esempio, certificato di matrimonio)",
+    "registerAsZurichStudentReqDocSix": "Prova finanziaria di sostegno o dettagli della borsa di studio",
+    "registerAsZurichStudentReqDocSeven": "Tassa di registrazione CHF 40.-",
+    "registerAsZurichStudentAdditionalReqOne": "Visto studentesco se richiesto",
+    "registerAsZurichStudentAdditionalReqTwo": "Modulo di domanda per il permesso di soggiorno",
+    "registerAsZurichStudentAdditionalInfo": "Verifica con l'università per eventuali requisiti specifici aggiuntivi."
 
 }
   

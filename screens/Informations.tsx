@@ -11,6 +11,7 @@ import { CITIES_ENDPOINT } from '../components/endpoints';
 import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons';
 import { useUserInfo } from '../components/util/useUserInfos';
+import {RenderContentItem } from '../components/shared/ContentItem';
 
 type InformationsProps = {
   navigation: any;
@@ -28,6 +29,8 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfo?.citizenship}-${userInfo?.status}-${subcategory}/`,
   );
 
+  console.log(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfo?.citizenship}-${userInfo?.status}-${subcategory}/`,
+  )
   const {
     createBookmark, 
     deleteBookmark, 
@@ -176,41 +179,14 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView>
-        <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>{t(information?.description)}</Text>
+      <ScrollView style={styles.container}>
+        {information && information.content?.content.map((item, index) => (
+        <View style={styles.containerContentItem} key={index}>
+          <RenderContentItem item={item} />
         </View>
+        ))}
+
       </ScrollView>
-      {
-        information?.requiredDocuments && (
-          <View style={styles.requiredDocumentsContainer}>
-        <TouchableOpacity onPress={handleOpenDocs} style={[styles.requiredDocuments, {height: openRequiredDoc ? 280 : 70, width: openRequiredDoc ? '100%' : 80, borderTopRightRadius: openRequiredDoc ? 0 : 19}]}>
-          <View style={[styles.textRequired, {marginTop: openRequiredDoc ? 0 : 24}]}>
-            {openRequiredDoc ?  <Text style={styles.requiredDocumentsText}>{t('Required Documents')}</Text> : <AntDesign name="infocirlceo" size={26} color="white" /> }
-          </View>
-          <View style={[styles.closeRequiredContainer, {display: openRequiredDoc ? 'flex' : 'none'}]}>
-            <TouchableOpacity onPress={handleCloseDocs}>
-              <Fontisto name="close-a" size={16} color="white" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.requiredDocs}>
-            {
-              information?.requiredDocuments? (
-                information?.requiredDocuments.map((item: string, index: number) => {
-                  return (
-                    <View style={styles.requiredDocumentsTextsContainers} key={index}>
-                      <AntDesign name="rightcircleo" size={11} color="white" />
-                      <Text style={styles.requiredDocsTexts}>{t(item)}</Text>
-                    </View>
-                  )
-                })
-              ): ''
-            }
-          </View>
-        </TouchableOpacity>
-      </View>
-        )
-      }
     </View>
     {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
     </>
@@ -225,7 +201,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   image: {
-    height: '19%'
+    height: '19%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
   },
   imageinside: {
     resizeMode: 'stretch',
@@ -242,24 +223,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 25,
     marginVertical: 15
-
   },
   subCategoryTitle: {
     fontSize: 20,
     color: '#3F465C',
-    fontWeight: '500',
+    fontWeight: '600',
     textAlign: 'center',
-    width: 270
-  },
-  descriptionContainer: {
-    alignItems: 'center',
-    marginTop: 20
-  },
-  descriptionText: {
-    width: '90%',
-    textAlign: 'center',
-    lineHeight: 30,
-    fontSize: 18,
+    width: 270,
 
   },
   requiredDocumentsContainer: {
@@ -298,7 +268,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   requiredDocsTexts: {
-    color:'#F8F9FC',
+    color:'black',
     fontSize: 16,
     marginLeft: 10
   },
@@ -308,10 +278,19 @@ const styles = StyleSheet.create({
     marginBottom: 15
 
   },
+  containerContentItem: {
+    flex: 1,
+    marginHorizontal: 12
+  },
 
   //TABLET STYLES
   imageTablet: {
-    height: '19%'
+    height: '19%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
   },
   imageinsideTablet: {
     resizeMode: 'stretch',

@@ -3,11 +3,16 @@ import { Text, View } from 'react-native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { useFonts } from 'expo-font';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function useSplashScreen() {
   const [appIsReady, setAppIsReady] = useState<boolean>(false);
+
+  const [fontsLoaded, fontError] = useFonts({
+    'Inter-Black': require('../assets/fonts/Inter-Black.otf'),
+  });
 
   useEffect(() => {
     async function prepare() {

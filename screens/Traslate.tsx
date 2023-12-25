@@ -116,6 +116,7 @@ const Traslate: FC = () => {
     try {
       const translatedImageBase = await translateImage(imageToTranslate, language);
       
+      console.log(translatedImageBase)
       setTranslatedImage(translatedImageBase)
     } catch (error) {
       console.error('Error:', error);

@@ -10,8 +10,9 @@ export const useImageTranslation = () => {
 
   const translateImage = async (imageData: { uri: string; }, targetLanguage: string) => {
 
+
     const formData = new FormData();
-    formData.append('translatedImage', {
+    formData.append('picture', {
       uri: imageData.uri,
       type: 'image/jpeg', // Adjust the type accordingly if your image is not a JPEG.
       name: 'image.jpg',
@@ -24,8 +25,9 @@ export const useImageTranslation = () => {
         'Content-Type': 'multipart/form-data',
       },
     });
-
-    return response?.config?.url;
+    const modifiedImageUrl = response.data.image_url; // Assuming the key is 'image_url'
+    console.log(modifiedImageUrl)
+    return modifiedImageUrl;
  
   } catch (error) {
     console.error('Error uploading image:', error);

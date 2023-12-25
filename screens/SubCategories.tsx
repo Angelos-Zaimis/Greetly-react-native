@@ -278,7 +278,12 @@ const styles = StyleSheet.create({
   },
   image: {
     height: '19%',
-    resizeMode: 'stretch'
+    resizeMode: 'stretch',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
   },
   imageinside: {
     resizeMode: 'cover',
@@ -349,7 +354,11 @@ const styles = StyleSheet.create({
 
   imageTablet: {
     height: '18%',
-    resizeMode: 'stretch'
+    resizeMode: 'stretch',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
   },
   imageinsideTablet: {
     resizeMode: 'cover',

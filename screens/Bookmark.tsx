@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View, TouchableOpacity, useWindowDimensions} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, useWindowDimensions, ScrollView} from 'react-native'
 import React, { FC, useCallback, useMemo, useState } from 'react'
 import useSWR from 'swr';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-
+import { RenderContentItem } from '../components/shared/ContentItem';
+import { CITIES_ENDPOINT } from '../components/endpoints';
+import AppURLS from '../components/appURLS';
+import { useUserInfo } from '../components/util/useUserInfos';
 
 type BookMarkProps = {
   route: any,
@@ -13,11 +16,16 @@ type BookMarkProps = {
 
 const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
 
-  const {canton, title, description, image,requiredDocuments} = route.params ?? {}
+  const {canton, title, description, image,requiredDocuments, category} = route.params ?? {}
   const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false)
 
+  const {userInfo} = useUserInfo();
   const {t} = useLanguage();
 
+  const { data: information } = useSWR(
+    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${canton}/${category}/${title}/${userInfo?.citizenship}-${userInfo?.status}-${title}/`,
+  );
+  
   const {width: SCREEN_WIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
@@ -83,14 +91,16 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
      </View>
     )
   }
-  
+
   return (
     <View style={styles.container}>
-      <Image style={styles.image} priority={'high'} source={{ uri: image}} />
+      <View style={styles.imageContainer}>
+          <Image style={styles.image} priority={'high'} source={{ uri: image}} />
+      </View>
       <View>
         <View style={styles.arrowButtonContainer}>
           <TouchableOpacity onPress={handleNavigationBack}>
-            <AntDesign name="left" size={23} color="black" />
+            <AntDesign name="left" size={24} color="black" />
           </TouchableOpacity>
           <View>
             <Text style={styles.subCategoryTitle}>{t(title)}</Text>
@@ -98,31 +108,14 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
           <View></View>
         </View>
       </View>
-      <View style={styles.descriptionContainer}>
-        <Text style={styles.descriptionText}>{t(description)}</Text>
-      </View>
-      <View style={styles.requiredDocumentsContainer}>
-        <TouchableOpacity onPress={handleOpenDocs} style={[styles.requiredDocuments, {height: openRequiredDoc ? 280 : 70, width: openRequiredDoc ? '100%' : 80, borderTopRightRadius: openRequiredDoc ? 0 : 19}]}>
-          <View  style={[styles.textRequired, {marginTop: openRequiredDoc ? 0 : 24}]}>
-            {openRequiredDoc ?  <Text style={styles.requiredDocumentsText}>{t('Required Documents')}</Text> : <AntDesign name="infocirlceo" size={26} color="white" /> }
+      <ScrollView style={styles.container}>
+        {
+          information && information.content?.content.map((item, index) => (
+          <View style={styles.containerContentItem} key={index}>
+            <RenderContentItem item={item} />
           </View>
-          <View style={[styles.closeRequiredContainer, {display: openRequiredDoc ? 'flex' : 'none'}]}>
-            <TouchableOpacity onPress={handleCloseDocs}>
-              <Text style={styles.closeText}>X</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.requiredDocs}>
-            {
-            requiredDocuments.map((item: string, index: number) => {
-              return (
-                <View style={styles.requiredDocumentsTextsContainers} key={index}>
-                  <AntDesign name="rightcircleo" size={11} color="white" />
-                    <Text style={styles.requiredDocsTexts}>{t(item)}</Text>
-                  </View>
-                ) })}
-          </View>
-        </TouchableOpacity>
-      </View>
+        ))}
+      </ScrollView>
     </View>
   )
 }
@@ -134,9 +127,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
-  image: {
+  imageContainer: {
+    height: '19%',
     resizeMode: 'stretch',
-    height: '19%'
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  image: {
+    resizeMode: 'cover',
+    height: '100%'
   },
   iconArrow:{
     height: 18,
@@ -189,6 +191,10 @@ const styles = StyleSheet.create({
   closeText: {
     color: 'white',
     fontSize: 18
+  },
+  containerContentItem: {
+    flex: 1,
+    marginHorizontal: 12
   },
   textRequired: {
     alignItems: 'center'

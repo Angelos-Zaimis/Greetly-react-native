@@ -125,6 +125,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   image: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
     height: '27.5%',
   },
   imageInner: {
@@ -178,6 +183,11 @@ const styles = StyleSheet.create({
 
   imageTablet: {
     height: '21.4%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 4,
   },
   imageInnerTablet: {
     height: '100%',
