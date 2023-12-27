@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Platform, StyleSheet, TouchableOpacity, FlatList, useWindowDimensions } from 'react-native'
+import { View, Text, SafeAreaView, Platform, StyleSheet, TouchableOpacity, FlatList, useWindowDimensions, Linking } from 'react-native'
 import React, { FC, useMemo } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
@@ -35,9 +35,19 @@ const News: FC<NewsProps> = ({navigation}) => {
       return false;
     },[SCREENWIDTH])
 
+    const openURL = (url: string) => {
+      Linking.canOpenURL(url).then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          console.log("Don't know how to open URI: " + url);
+        }
+      }).catch((err) => console.error('An error occurred', err));
+    };
+
     const renderItem = ({ item }: { item: NewsItem }) => (
-        <View style={styles.articleContainer}>
-            <TouchableOpacity style={styles.article}>
+        <View style={styles.articleContainer} >
+            <TouchableOpacity onPress={() => openURL(item.url)} style={styles.article}>
             <Image source={item.urlToImage} style={styles.articleImage} />
             <View style={styles.articleContent}>
                 <Text style={styles.articleTitle}>{item.title}</Text>
@@ -45,6 +55,7 @@ const News: FC<NewsProps> = ({navigation}) => {
                     <Text style={styles.articleSubtitle}>{item.publishedAt}</Text>
                 </View>
                 <Text style={styles.articleDescription}>{item.description}</Text>
+                <Text style={styles.articleSubtitle}>{item.source.name}</Text>
             </View>
         </TouchableOpacity>
         </View>
@@ -53,7 +64,7 @@ const News: FC<NewsProps> = ({navigation}) => {
 
     const renderItemTablet = ({ item }: { item: NewsItem }) => (
         <View style={styles.articleContainerTablet}>
-            <TouchableOpacity style={styles.articleTablet}>
+            <TouchableOpacity onPress={() => openURL(item.url)} style={styles.articleTablet}>
             <Image source={item.urlToImage} style={styles.articleImageTablet} />
             <View style={styles.articleContentTablet}>
                 <Text style={styles.articleTitleTablet}>{item.title}</Text>
@@ -73,10 +84,10 @@ const News: FC<NewsProps> = ({navigation}) => {
           description: 'If your payment for Swiss health insurance will exceed 8 percent of your income in 2024, you can have your premium reduced.',
           urlToImage: require('../assets/welcomepage/doc.jpeg'),
           source: {
-            name: 'Lorem Ipsum Source 1',
+            name: 'theLocal.ch',
           },
-          publishedAt: '', // Example date and time, adjust as needed
-          url: 'https://example.com/article1',
+          publishedAt: '22.03.2024', // Example date and time, adjust as needed
+          url: 'https://www.thelocal.ch/20231227/today-in-switzerland-a-roundup-of-the-latest-news-on-wednesday-120',
         },
         {
           id: 2,
@@ -84,10 +95,10 @@ const News: FC<NewsProps> = ({navigation}) => {
           description: 'Housing is expensive in Switzerland, but the declining real estate prices are making home ownership just a tad more affordable.',
           urlToImage: require('../assets/welcomepage/house.jpeg'),
           source: {
-            name: 'Lorem Ipsum Source 2',
+            name: 'theLocal.ch',
           },
-          publishedAt: '', // Example date and time, adjust as needed
-          url: 'https://example.com/article2',
+          publishedAt: '22.03.2024', // Example date and time, adjust as needed
+          url: 'https://www.thelocal.ch/20231227/today-in-switzerland-a-roundup-of-the-latest-news-on-wednesday-120',
         },
     ];
 
@@ -208,6 +219,7 @@ const styles = StyleSheet.create({
       },
       articleSubtitle: {
         fontSize: 12,
+        marginVertical: 8,
         color: '#888',
       },
       articleDescription: {

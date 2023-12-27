@@ -13,7 +13,6 @@ const WelcomePage: FC = () => {
       <Stack.Screen name="SubCategories" options={{ headerShown: false }} component={SubCategories} />
       <Stack.Screen name="Informations" options={{ headerShown: false }} component={Informations} />
       <Stack.Screen name="GoPremium" options={{headerShown: false}} component={GoPremium} initialParams={{ isWelcomePageStack: true }}/>
-      <Stack.Screen name="NewsPage" options={{headerShown: false}} component={NewsPage}/>
     </Stack.Navigator>
   )
 }

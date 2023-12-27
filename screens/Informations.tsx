@@ -182,7 +182,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
       <ScrollView style={styles.container}>
         {information && information.content?.content.map((item, index) => (
         <View style={styles.containerContentItem} key={index}>
-          <RenderContentItem item={item} />
+          <RenderContentItem navigation={navigation} item={item} />
         </View>
         ))}
 

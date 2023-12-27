@@ -15,9 +15,10 @@ type ExpandableLinkProps = {
   items: Item[];
   iconDown: string;
   children?: React.ReactNode;
+  navigation?: any;
 };
 
-const ExpandableLink: FC<ExpandableLinkProps> = ({ title, items, iconDown, text}) => {
+const ExpandableLink: FC<ExpandableLinkProps> = ({ title, items, iconDown, text, navigation}) => {
   const [expanded, setExpanded] = useState(false);
   const {t} = useLanguage();
 
@@ -25,14 +26,23 @@ const ExpandableLink: FC<ExpandableLinkProps> = ({ title, items, iconDown, text}
     setExpanded(!expanded);
   };
 
+  const isValidUrl = (string) => {
+    const regex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    return regex.test(string);
+  }
+
   const openURL = (url: string) => {
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
-      }
-    }).catch((err) => console.error('An error occurred', err));
+    if (isValidUrl(url)){
+      Linking.canOpenURL(url).then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          console.log("Don't know how to open URI: " + url);
+        }
+      }).catch((err) => console.error('An error occurred', err)); 
+    }else{
+      navigation.navigate(url)
+    }
   };
 
   return (

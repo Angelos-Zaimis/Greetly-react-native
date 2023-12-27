@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {Translate} from '../screens';
+import {NewsPage, Translate} from '../screens';
 import WelcomePage from '../navigation/welcomePageNavigator/WelcomePage';
 import ProfileContainer from '../navigation/profileNavigator/ProfileContainer';
 import BookmarksContainer from '../navigation/booksmarksNavigator/BookmarksContainer';
@@ -9,7 +9,7 @@ import { Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import { FC, useMemo } from 'react';
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
-
+import { FontAwesome } from '@expo/vector-icons';
 
 type BottomNavigatorProps = {
   navigation?: any;
@@ -53,7 +53,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         </Tab.Screen>
 
         <Tab.Screen
-          name="Translate"
+          name="News"
           options={{
             tabBarStyle: styles.tabContainerTablet,
             headerShown: false,
@@ -62,11 +62,11 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
             tabBarActiveTintColor: '#F06748',
             tabBarLabelStyle: styles.textTablet,
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="photo-filter" size={28} color={color} />
+              <FontAwesome name="newspaper-o" size={23} color={color} />
             )
           }}
         >
-          {() => <Translate />}
+          {() => <NewsPage navigation={navigation} />}
         </Tab.Screen>
 
         <Tab.Screen
@@ -128,7 +128,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
     <>
       <Tab.Navigator >
         <Tab.Screen
-          name="WecomePage"
+          name="WelcomePage"
           options={{
             tabBarStyle: styles.tabContainer,
             headerShown: false,
@@ -145,20 +145,21 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         </Tab.Screen>
 
         <Tab.Screen
-          name="Translate"
+          name="News"
           options={{
             tabBarStyle: styles.tabContainer,
             headerShown: false,
-            title: 'Scan',
+            title: 'News',
             tabBarInactiveTintColor: '#3F465C',
             tabBarActiveTintColor: '#F06748',
             tabBarLabelStyle: styles.scanText,
             tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="photo-filter" size={27} color={color} />
+              <FontAwesome name="newspaper-o" size={23} color={color} />
             )
           }}
         >
-          {() => <Translate />}
+ 
+          {() => <NewsPage navigation={navigation} />}
         </Tab.Screen>
 
         <Tab.Screen

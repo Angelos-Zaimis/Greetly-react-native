@@ -29,7 +29,7 @@
     "Valid Passport or National Identity Card": "Valid Passport or National Identity Card",
     "Proof of Employment": "Proof of Employment",
     "Proof of Residence": "Proof of Residence",
-    "Required Documents": "Required Documents",
+    "RequiredDocuments": "Required Documents",
     "HelpPageTitle": "Get an Expert's advice. Schedule your first appointment for free.",
     "HelpPageSubTitle": "A dedicated team ready to provide updated guidance and information to ensure successful immigration.",
     "TeamMemberOurTeam": "Our team",
@@ -88,6 +88,7 @@
     "cancelSubscriptionTitle": "Are you sure that you want to cancel your subscription?",
     "cancelSubscriptionSubTitle": "Please note that this is irreversible",
     "chooseYourPlan": "Choose your plan:",
+    "advertismentText": "Our Top Picks for You",
 
     "Legal System & Immigration": "Legal System & Immigration",
     "Money & Banking": "Money & Banking",
@@ -195,6 +196,25 @@
     "registerAsZurichStudentReqDocSeven": "CHF 40.- registration fee",
     "registerAsZurichStudentAdditionalReqOne": "Student Visa if required",
     "registerAsZurichStudentAdditionalReqTwo": "Residence Permit application form",
-    "registerAsZurichStudentAdditionalInfo": "Check with the university for any additional specific requirements."
+    "registerAsZurichStudentAdditionalInfo": "Check with the university for any additional specific requirements.",
 
+
+
+    "HealthInsuranceObtainZETTitle": "Obtain Health Insurance for EU/EFTA Citizen in Zurich",
+    "HealthInsuranceObtainZETXTOne": "Health insurance coverage is compulsory for anyone residing in the country for more than three months",
+    "HealthInsuranceObtainZETXTTwo": "What You Need to Know",
+    "HealthInsuranceObtainZETXTThree": "As an EU/EFTA employee in Zurich, you must choose from about 60 Swiss health insurers, with your coverage starting from the first day of employment. If living in a neighboring country, you may opt for home country insurance but must apply for exemption within three months. It's vital to comply promptly to ensure continuous coverage and avoid penalties",
+
+    "HealthInsuranceObtainZETXTFour": "Discover Top Insurance Agents",
+    "HealthInsuranceObtainZETXTFive": "Click below to seamlessly connect with our skilled insurance agents tailored to your needs and secure your coverage effortlessly",
+    "HealthInsuranceObtainZETXTSix": "Explore our Insurance agents",
+    "HealthInsuranceObtainZETXTSeven": "Top Insurance Companies for You",
+    "HealthInsuranceObtainZETXTEight": "Select and explore our carefully chosen array of esteemed insurance companies. Secure the protection you require with the reliability and peace of mind you value",
+
+    "HealthInsuranceObtainRQDOCOne": "Employment Contract",
+    "HealthInsuranceObtainRQDOCTwo": "Residence Permit",
+    "HealthInsuranceObtainRQDOCThree": "Proof of Income",
+    "HealthInsuranceObtainRQDOCFour": "Proof of Residence"
+
+ 
 }

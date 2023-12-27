@@ -6,14 +6,16 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import ExpandableSection from './ExpandableSection';
 import ExpandableSectionList from './ExpandableList';
 import ExpandableLink from './ExpandableLink';
+import { ExpandableAdvertisment } from './ExpandableAdvertisment';
 
-export const RenderContentItem = ({ item }) => {
+export const RenderContentItem = ({ item, navigation }) => {
     const {t} = useLanguage();
 
     if (!item) {
         return null;
     }
-
+    
+    console.log(item)
     return (
         <React.Fragment>
 
@@ -26,8 +28,22 @@ export const RenderContentItem = ({ item }) => {
             }
 
             {
+                item.type === 'orangeText' && (
+                    <View style={styles.orangeTextContainer}>
+                        <Text style={styles.orangeText}>{t(item.content)}</Text>
+                    </View>
+                )
+            }
+
+            {
+                item.type === 'advertisment' && (
+                    <ExpandableAdvertisment title={item.title} iconDown={item.iconDown} text={item.text} listOfCompanies={item.listOfCompanies}/>
+                )
+            }
+
+            {
                 item.type === 'expandable' && (
-                    <ExpandableSection title={t(item.title)} content={item.content}  iconDown={item.iconDown} textLink={item.textLink}>
+                    <ExpandableSection title={t(item.title)} content={item.content} iconDown={item.iconDown} textLink={item.textLink} children={''}>
                     </ExpandableSection>
                 )
             }
@@ -44,66 +60,12 @@ export const RenderContentItem = ({ item }) => {
 
             {
                 item.type === 'expandableLink' && (
-                    <ExpandableLink title={t(item.title)} items={item.items} text={item.text} iconDown={item.iconDown}>
+                    <ExpandableLink title={t(item.title)} items={item.items} text={item.text} navigation={navigation} iconDown={item.iconDown}>
                        
                     </ExpandableLink>
                 )
             }
 
-            {
-                item.type === 'title' && (
-                    <View>
-                        <Text style={styles.title}>{t(item.content)}</Text>
-                    </View>
-                )
-            }
-
-            {
-                item.type === 'text' && (
-                    <View style={styles.textContainer}>
-                        <Text style={styles.text}>{t(item.content)}</Text>
-                    </View>
-                )
-            }
-
-            {
-                item.type === 'orangeText' && (
-                    <View style={styles.orangeTextContainer}>
-                        <Text style={styles.orangeText}>{t(item.content)}</Text>
-                    </View>
-                )
-            }
-
-            {
-                item.type === 'list' && (
-                    <View style={styles.list}>
-                        {item.items.map((listItem, index) => (
-                            <Text key={index} style={styles.listItem}>- {t(listItem)}</Text>
-                        ))}
-                    </View>
-                )
-            }
-
-            {   
-                item.type === 'link' && (
-                    <View style={styles.linkContainer}>
-                        <Text
-                            style={styles.link}
-                            onPress={() => Linking.openURL(item.url)}
-                        >
-                            {t(item.text)}
-                        </Text>
-
-                        {
-                           item.icon && (
-                                <TouchableOpacity onPress={() => Linking.openURL(item.url)}>
-                                    <FontAwesome5 name={item.icon}size={14} color="#0090F5" />
-                                </TouchableOpacity>
-                            )
-                        }
-                    </View>
-                )
-            }
         </React.Fragment>
     );
 };

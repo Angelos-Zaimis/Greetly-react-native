@@ -52,7 +52,6 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
       <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.headerTablet}>
         <Image style={styles.logoTablet} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
-        <FontAwesome onPress={handleGoToNewsPage} name="newspaper-o" size={30} color="black" />
       </View>
       <View>
         {cities && (
@@ -100,7 +99,6 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
     <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
       <View style={styles.header}>
         <Image style={styles.logo} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
-        <FontAwesome onPress={handleGoToNewsPage} name="newspaper-o" size={25} color="black" />
       </View>
       <View>
         {cities && (
