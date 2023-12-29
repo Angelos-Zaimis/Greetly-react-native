@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Linking, useWindowDimensions, Platform } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Linking, useWindowDimensions, Platform, ScrollView } from 'react-native'
 import React, { FC, useMemo } from 'react'
-import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
-import AppURLS from '../components/appURLS';
-import { TEAM_MEMBERS_ENDPOINT } from '../components/endpoints';
 import { Image } from 'expo-image';
+import { MaterialIcons } from '@expo/vector-icons';
+import MapView from 'react-native-maps';
+
 
 type TeamMemberProps = {
     route: any
@@ -16,9 +16,16 @@ type TeamMemberProps = {
 }
 const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
 
-    const {teamMemberId} = route.params ?? {}
-
-    const { data: teamMember, error } = useSWR(`${AppURLS.middlewareInformationURL}/${TEAM_MEMBERS_ENDPOINT}/${teamMemberId}/`);
+    const {
+        name,
+        location,
+        occupation,
+        profileImage,
+        languages,
+        licensed,
+        specialization,
+        aboutMe
+    } = route.params ?? {}
 
     const {t} = useLanguage();
 
@@ -98,17 +105,22 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
             </TouchableOpacity>
         </View>
         <View style={styles.textContainer}>
-             <Text style={styles.textOurTeam}>{t(('TeamMemberOurTeam'))}</Text>
             <View style={styles.profileImageContainer}>
-                 <Image style={[styles.profileImage, {width: SCREEN_HEIGHT < 700 ? 90 :120, height: SCREEN_HEIGHT < 700 ? 90 :120}]} source={{uri: teamMember?.profileImage}}/>
+                 <Image style={[styles.profileImage, {width: SCREEN_HEIGHT < 700 ? 90 :120, height: SCREEN_HEIGHT < 700 ? 90 :120}]} source={{uri: profileImage}}/>
             </View>
-            <Text style={[styles.name, {fontSize: SCREEN_HEIGHT < 700 ? 14 : 17 }]}>{teamMember?.name}</Text>
-            <Text style={[styles.occupation,{fontSize: SCREEN_HEIGHT < 700 ? 11 : 14 }]}>{teamMember?.occupation}</Text>
-            <View style={styles.languageContainer}>
-                <Image style={[styles.languageIcon, {width: SCREEN_HEIGHT < 700 ? 18 : 20, height: SCREEN_HEIGHT < 700 ? 18 : 20}]} source={{uri: teamMember?.languageOne}}/>
-                <Image style={[styles.languageIcon, {width: SCREEN_HEIGHT < 700 ? 18 : 20, height: SCREEN_HEIGHT < 700 ? 18 : 20}]} source={{uri: teamMember?.languageTwo}}/>
-                <Image style={[styles.languageIcon, {width: SCREEN_HEIGHT < 700 ? 18 : 20, height: SCREEN_HEIGHT < 700 ? 18 : 20}]} source={{uri: teamMember?.languageThree}}/>
-                <Image style={[styles.languageIcon, {width: SCREEN_HEIGHT < 700 ? 18 : 20, height: SCREEN_HEIGHT < 700 ? 18 : 20}]} source={{uri: teamMember?.languageFour}}/>
+            <Text style={[styles.name, {fontSize: SCREEN_HEIGHT < 700 ? 14 : 17 }]}>{name}</Text>
+            <Text style={[styles.occupation,{fontSize: SCREEN_HEIGHT < 700 ? 11 : 14 }]}>{occupation}</Text>
+            <View style={styles.licensedContainer}>
+                <Text style={styles.licensed}>licensed</Text> 
+                {
+                    licensed ? <MaterialIcons name="verified" size={16} color="black" /> : null
+                }
+            </View>
+            <View style={styles.languageContainer}>{
+                    languages?.map((language) => {
+                        return <Image source={language} contentFit='contain' style={styles.languageIcon}/>
+                    })
+                }
             </View>
         </View>
         <View style={styles.lineContainer}>
@@ -117,16 +129,42 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
         <View style={styles.body}>
             <View style={styles.location}>
                 <FontAwesome name="map-pin" size={SCREEN_HEIGHT < 700 ? 10 : 14} color="#719FFF" />
-                <Text style={[styles.locationText, {fontSize: SCREEN_HEIGHT < 700 ? 11 : 13}]}>{teamMember?.location}</Text>
+                <Text style={[styles.locationText, {fontSize: SCREEN_HEIGHT < 700 ? 11 : 13}]}>{location}</Text>
             </View>
-            <View style={[styles.calendarContainer, {marginTop: SCREEN_HEIGHT < 700 ? 5 : 20, marginBottom: SCREEN_HEIGHT < 700 ? 0 : 15}]}>
-                <Feather name="calendar" size={SCREEN_HEIGHT < 700 ? 20 : 30} color="black" />
+
+            <ScrollView contentContainerStyle={styles.scrollView} >
+                {
+                    specialization && (
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>{t('Specialization')}</Text>
+                            <Text style={styles.sectionContent}>{t(specialization)}</Text>
+                        </View>
+                    )
+                }
+                
+                {
+                    aboutMe && (
+                        <View style={styles.section}>
+                            <Text style={styles.sectionTitle}>{t('AboutMe')}</Text>
+                            <Text style={styles.sectionContent}>
+                                {t(aboutMe)}
+                            </Text>
+                        </View>
+                    )
+            }
+
+            <View style={styles.map}>
+                <MapView
+                  style={{ flex: 1 , borderRadius: 10}}
+                 initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                  }}
+                />
             </View>
-            <View>
-                <Text style={[styles.scheduleText, {fontSize: SCREEN_HEIGHT < 700 ? 14 : 17}]}>{t('scheduleAppontment')}</Text>
-                <Text style={[styles.freeOfCharge, {fontSize: SCREEN_HEIGHT < 700 ? 14 : 17}]}>{t('freeofcharge')}</Text>
-                <Text style={[styles.assistText, {fontSize: SCREEN_HEIGHT < 700 ? 13 : 16}]}>{t('assist')}</Text>
-            </View>
+            </ScrollView>
             <View style={[styles.buttonsContainer, {marginTop: SCREEN_HEIGHT < 700 ? 25 : 25 }]}>
                 <TouchableOpacity  onPress={() => Linking.openURL('mailto:angelos.zaimis.dev@g.com')} style={[styles.buttonEmail, {width: SCREEN_HEIGHT < 700 ? 125 : 150}]}>
                     <FontAwesome name="send" size={18} color="white" />
@@ -181,13 +219,24 @@ const styles = StyleSheet.create({
     }, 
     languageIcon: {
         resizeMode: 'contain',
-        height: 20,
-        width: 20,
+        height: 18,
+        width: 18,
         marginRight: 10
     },
     languageContainer: {
         flexDirection: 'row',
         marginTop: 10
+    },
+    licensedContainer: {
+        marginTop: 7,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    licensed: {
+        color: '#3F465C',
+        fontWeight: '500',
+        fontSize: 16,
+        marginRight: 7,
     },
     name: {
         marginTop: 17,
@@ -220,6 +269,35 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 15
     },
+    scrollView: {
+        alignItems: 'center'
+    },
+    map: {
+        width: '90%',
+        height: 100,
+        borderRadius: 10
+    },
+ section: {
+    alignItems: 'center', // Center the items
+    width: '90%', // Set width to match design
+    backgroundColor: '#fff', // or any desired background color
+    paddingVertical: 10, // Vertical padding for breathing space
+    paddingHorizontal: 15, // Horizontal padding for text
+    marginVertical: 5, // Space between sections
+  },
+  sectionTitle: {
+    fontWeight: 'bold',
+    color: '#3F465C', // Color to match the theme
+    marginBottom: 10, // Space between title and content
+    textAlign: 'center',
+    fontSize: 18
+  },
+  sectionContent: {
+    color: '#70717E', // Subtle color for the content text
+    textAlign: 'center', // Center align text, can be adjusted
+    lineHeight: 24, // Adjust line height for readability,
+    fontWeight: '700'
+  },
     locationIcon: {
         marginRight: 5,
     },

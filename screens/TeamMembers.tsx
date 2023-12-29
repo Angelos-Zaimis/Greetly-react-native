@@ -1,24 +1,30 @@
 import React, { FC, useCallback, useMemo, useState } from 'react'
 import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
-import useSWR from 'swr';
 import { FontAwesome } from '@expo/vector-icons';
-import AppURLS from '../components/appURLS';
 import { Image } from 'expo-image';
+import { useTeamMembers } from '../components/util/useTeamMembers';
+import { AntDesign } from '@expo/vector-icons';
 
 type HelpProps = {
   navigation: any,
-
+  route: any
 }
 
 
- const Help: FC<HelpProps> = ({navigation}) => {
+ const TeamMembers: FC<HelpProps> = ({navigation, route}) => {
 
   const {t} = useLanguage();
-  
-  const text = t("HelpPageTitle").split(' ')
+
+  const { type, name} = route.params ?? {};
+
+  const text = t(name).split(' ')
 
   const {height: SCREEN_HEIGHT, width: SCREENWIDTH} = useWindowDimensions();
+
+  const handleNavigationBack = useCallback(() => {
+    navigation.goBack();
+  },[navigation])
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -28,30 +34,7 @@ type HelpProps = {
     return false;
   },[SCREENWIDTH])
 
-  const data = [
-    { key: '1', text: 'InsuranceAgents', type: "InsuranceAgent", icon: require('../assets/help/helpback.png') },
-    { key: '2', text: 'ImmigrationConsultants', icon: require('../assets/help/helpback.png') },
-    { key: '3', text: 'Lawyers', icon: require('../assets/help/helpback.png') },
-    { key: '4', text: 'Recruiters', icon: require('../assets/help/helpback.png')},
-    { key: '5', text: 'Doctors', icon: require('../assets/help/helpback.png')},
-    { key: '5', text: 'HousingSpecialists', icon:  require('../assets/help/helpback.png')},
-    // Add more items...
-  ];
-
-  const handleOpenTeamMembers = useCallback((type: string, name:string) => {
-    navigation.push('TeamMembers',{
-      name,
-      type
-    })
-  },[navigation])
-
-  // Render each item
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text)} style={styles.cell}>
-      <Image style={styles.cellImage} source={item.icon}/>
-      <Text style={styles.overlayText}>{t(item.text)}</Text>
-    </TouchableOpacity>
-  );
+  const {teamMembers} = useTeamMembers(type);
   
   if (isTabletMode) {
     return (
@@ -59,7 +42,7 @@ type HelpProps = {
         <View>
           <Text style={styles.titleTablet}>
             {text.map((word, index) => (
-              index === 2 || index === 7
+              index === 0|| index === 7
               || index === 9 ? (
               <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
               ) : (
@@ -78,7 +61,7 @@ type HelpProps = {
         </View>
         <View>
           <FlatList 
-            data={[]}
+            data={teamMembers}
             renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
@@ -117,10 +100,13 @@ type HelpProps = {
 
   return (
     <SafeAreaView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
+        <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
+          <AntDesign name="left" size={23} color="black" />
+        </TouchableOpacity>
       <View>
         <Text style={styles.title}>
           {text.map((word, index) => (
-            index === 2 || index === 7
+            index === 0 || index === 7
             || index === 9 ? (
             <Text key={index} style={styles.titleOrange}>{word} </Text>
             ) : (
@@ -129,7 +115,7 @@ type HelpProps = {
         </Text>
       </View>
       <View>
-        <Text style={[styles.subtitle, {width: SCREEN_HEIGHT < 700 ? '100%' : '63%'}]}>{t('HelpPageSubTitle')}</Text>
+        <Text style={[styles.subtitle, {width: SCREEN_HEIGHT < 700 ? '100%' : '63%'}]}>{t('TeamMembersPageSubtitle')}</Text>
       </View>
       <View>
         <Image
@@ -138,12 +124,48 @@ type HelpProps = {
         />
       </View>
       <View>
-        <FlatList
-          data={data} // Array of data to render
-          renderItem={renderItem} // Function to render each item
-          keyExtractor={item => item.key} // Unique key for each item
-          numColumns={2} // Set the number of columns
-        />
+        <FlatList 
+            data={teamMembers}
+            renderItem={({ item }) => (
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => navigation.push('TeamMember',{
+                 name: item.name,
+                 location: item.location,
+                 occupation: item.occupation,
+                 profileImage: item.profileImage,
+                 languages: item.languages,
+                 licensed: item.licensed,
+                 specialization: item.specialization,
+                 aboutMe: item.aboutMe
+              })}
+             style={styles.personContainer}
+            >
+              <View style={styles.profileImageContainer}>
+                <Image style={[styles.profileImage, {height: SCREEN_HEIGHT < 700 ? 60 : 70, width: SCREEN_HEIGHT < 700 ? 80 : 95}]} source={{uri: item.profileImage}}/>
+              </View>
+              <View style={styles.profileContainer}>
+                <View style={styles.location}>
+                  <FontAwesome name="map-pin" size={SCREEN_HEIGHT < 700 ? 10 : 12} color="#719FFF" />
+                  <Text style={[styles.textLocation, {fontSize: SCREEN_HEIGHT < 700 ? 11 : 13}]}>{item.location}</Text>
+                </View>
+                <View>
+                  <Text style={[styles.name,{fontSize: SCREEN_HEIGHT < 700 ? 13 : 16}]}>{item.name}</Text>
+                  <Text style={styles.occupation}>{item.occupation}</Text>
+                </View>
+              </View>
+              <View style={styles.languagesContainer}>
+                {
+                    item?.languages?.map((language) => {
+                        return <Image source={language} contentFit='contain' style={styles.languageIcon}/>
+                    })
+                }
+              </View>
+            </TouchableOpacity>
+            )}  
+             keyExtractor={(item) => item.name.toString()}
+          /> 
+        
       </View>
     </SafeAreaView>
   )
@@ -158,7 +180,7 @@ const styles = StyleSheet.create({
   title: {
     color: '#3F465C',
     fontWeight: '500',
-    fontSize: 22,
+    fontSize: 26,
     width: '70%',
     paddingLeft: 20,
     marginTop: '8%',
@@ -168,7 +190,7 @@ const styles = StyleSheet.create({
   titleOrange: {
     color: '#F06748',
     fontWeight: '500',
-    fontSize: 22,
+    fontSize: 26,
   },
   subtitle: {
     color: '#72788D',
@@ -212,6 +234,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 8,
     elevation: 2,
+    },
+    languageIcon: {
+        height: 18,
+        width: 18,
+        marginRight: 7,
     },
   profileContainer: {
     position: 'absolute',
@@ -291,6 +318,9 @@ const styles = StyleSheet.create({
     fontSize: 20, // Text size
     width: 165,
     fontWeight: 'bold'
+  },
+  iconArrowButton: {
+    marginLeft: 20,
   },
   //TABLET STYLES
 
@@ -397,4 +427,4 @@ const styles = StyleSheet.create({
     marginRight: 9
   }
 })
-export default Help
+export default TeamMembers

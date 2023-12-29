@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity,Text, FlatList, useWindowDimensions} from 'react-native';
 import useSWR from 'swr';
 import CategoryButton from '../components/shared/CategoryButton';
@@ -7,7 +7,6 @@ import { AntDesign } from '@expo/vector-icons';
 import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
 import AppURLS from '../components/appURLS';
 import { CITIES_ENDPOINT, SUB_CATEGORIES_ENDPOINT } from '../components/endpoints';
-import { AuthContext } from '../hooks/auth/AuthContext';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
 import { Image } from 'expo-image';
