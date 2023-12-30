@@ -124,6 +124,7 @@ type HelpProps = {
         />
       </View>
       <View>
+
         <FlatList 
             data={teamMembers}
             renderItem={({ item }) => (
@@ -137,7 +138,12 @@ type HelpProps = {
                  languages: item.languages,
                  licensed: item.licensed,
                  specialization: item.specialization,
-                 aboutMe: item.aboutMe
+                 aboutMe: item.aboutMe,
+                 longitude: item.longitude,
+                 latitude: item.latitude,
+                 latitudeDelta: item.latitudeDelta,
+                 longitudeDelta: item.longitudeDelta,
+                 linkAddress: item.linkAddress
               })}
              style={styles.personContainer}
             >

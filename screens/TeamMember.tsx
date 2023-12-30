@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Linking, useWindowDimensions, Platform, ScrollView } from 'react-native'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { useLanguage } from '../components/util/LangContext'
 import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { MaterialIcons } from '@expo/vector-icons';
-import MapView from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 type TeamMemberProps = {
@@ -24,9 +24,15 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
         languages,
         licensed,
         specialization,
-        aboutMe
+        aboutMe,
+        longitude,
+        latitude,
+        latitudeDelta,
+        longitudeDelta,
+        linkAddress
     } = route.params ?? {}
 
+    console.log(linkAddress)
     const {t} = useLanguage();
 
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
@@ -42,6 +48,25 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
     const handleNavigationBack = () => {
         navigation.goBack();
     }
+
+    const marker = [
+        {
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: latitudeDelta,
+            longitudeDelta: longitudeDelta,
+        }
+    ]
+
+    const onMarkerSelected = useCallback((url: string) => {
+        Linking.canOpenURL(url).then((supported) => {
+            if (supported) {
+                Linking.openURL(url);
+            } else {
+                console.log("Don't know how to open URI: " + url);
+            }
+        }).catch((err) => console.error('An error occurred', err));
+    },[])
 
   if (isTabletMode){ 
     return (
@@ -111,7 +136,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
             <Text style={[styles.name, {fontSize: SCREEN_HEIGHT < 700 ? 14 : 17 }]}>{name}</Text>
             <Text style={[styles.occupation,{fontSize: SCREEN_HEIGHT < 700 ? 11 : 14 }]}>{occupation}</Text>
             <View style={styles.licensedContainer}>
-                <Text style={styles.licensed}>licensed</Text> 
+                <Text style={styles.licensed}>{t('licensed')}</Text> 
                 {
                     licensed ? <MaterialIcons name="verified" size={16} color="black" /> : null
                 }
@@ -127,11 +152,6 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
             <View style={styles.line} />
         </View>
         <View style={styles.body}>
-            <View style={styles.location}>
-                <FontAwesome name="map-pin" size={SCREEN_HEIGHT < 700 ? 10 : 14} color="#719FFF" />
-                <Text style={[styles.locationText, {fontSize: SCREEN_HEIGHT < 700 ? 11 : 13}]}>{location}</Text>
-            </View>
-
             <ScrollView contentContainerStyle={styles.scrollView} >
                 {
                     specialization && (
@@ -156,16 +176,20 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
             <View style={styles.map}>
                 <MapView
                   style={{ flex: 1 , borderRadius: 10}}
-                 initialRegion={{
-                    latitude: 37.78825,
-                    longitude: -122.4324,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
+                  provider={PROVIDER_GOOGLE}
+                  showsUserLocation
+                  showsMyLocationButton
+                  initialRegion={{
+                    latitude: 47.408630,
+                    longitude: 8.577240,
+                    latitudeDelta: 0.0014,
+                    longitudeDelta: 0.0014,
                   }}
-                />
+                >  
+                    <Marker key={0} coordinate={marker[0]} onPress={() => onMarkerSelected(linkAddress)}/>
+                </MapView>
             </View>
-            </ScrollView>
-            <View style={[styles.buttonsContainer, {marginTop: SCREEN_HEIGHT < 700 ? 25 : 25 }]}>
+            <View style={styles.buttonsContainer}>
                 <TouchableOpacity  onPress={() => Linking.openURL('mailto:angelos.zaimis.dev@g.com')} style={[styles.buttonEmail, {width: SCREEN_HEIGHT < 700 ? 125 : 150}]}>
                     <FontAwesome name="send" size={18} color="white" />
                     <Text style={styles.emailText}>Email us</Text>
@@ -175,6 +199,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
                     <Text style={styles.callText}>Call us</Text>
                 </TouchableOpacity>
             </View>
+            </ScrollView>
         </View>
     </SafeAreaView>
   )
@@ -262,6 +287,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E4E8F5'
     },
     body: {
+        flex: 1,
         alignItems: 'center'
     },
     location: {
@@ -274,7 +300,7 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '90%',
-        height: 100,
+        height: 300,
         borderRadius: 10
     },
  section: {
@@ -339,7 +365,8 @@ const styles = StyleSheet.create({
     },
     buttonsContainer:{
         flexDirection: 'row',
-        marginTop: 50
+        marginTop: 30,
+        marginBottom: 50
     },
     buttonEmail: {
         flexDirection: 'row',
