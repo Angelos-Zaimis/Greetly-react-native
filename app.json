@@ -11,7 +11,10 @@
       "tsconfigPaths": true
     },
     "extra": {
-      "middlewareInformationURL": "http://127.0.0.1:8000/middleware-info"
+      "middlewareInformationURL": "http://127.0.0.1:8000/middleware-info",
+      "eas": {
+        "projectId": "348982ce-e13f-4b7e-a0cb-832c91d3c062"
+      }
     },
     "splash": {
       "image": "./assets/images/splash.png",
@@ -76,19 +79,6 @@
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
-      ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "compileSdkVersion": 31,
-            "targetSdkVersion": 31,
-            "buildToolsVersion": "31.0.0"
-          },
-          "ios": {
-            "deploymentTarget": "13.0"
-          }
         }
       ]
     ]

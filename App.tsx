@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import useSplashScreen from "./splashScreen/SplashScreen";
 import RootNavigation from "./navigation";
 import { AuthProvider } from "./hooks/auth/AuthContext";
 import { LanguageProvider } from "./components/util/LangContext";
-import * as SplashScreen from 'expo-splash-screen';
 import { LogBox } from "react-native";
 
-LogBox.ignoreAllLogs();
+LogBox.ignoreAllLogs();  // Consider reviewing this for development purposes
 
 export default function App() {
-
-  /**
-   * Use splash screen
-   */
-
   const { appIsReady, onLayoutRootView } = useSplashScreen();
+
+  // Call onLayoutRootView when appIsReady changes to true
+  useEffect(() => {
+    if (appIsReady) {
+      onLayoutRootView();
+    }
+  }, [appIsReady, onLayoutRootView]);
 
   if (!appIsReady) {
     return null;
-  } 
-  onLayoutRootView()
-  
+  }
+
   return (
     <AuthProvider>
       <LanguageProvider>
@@ -29,4 +29,3 @@ export default function App() {
     </AuthProvider>
   );
 }
-
