@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { FC } from "react";
-import { KeyboardAvoidingView, Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert} from "react-native";
+import { KeyboardAvoidingView, Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert, Modal} from "react-native";
 import signUp from "../hooks/auth/SignUp";
 import { useLanguage } from "../components/util/LangContext";
 import CreateButton from "../components/shared/CreateButton";
@@ -8,6 +8,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Spinner from "../components/shared/Spinner";
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from "expo-image";
+import Checkbox from "expo-checkbox";
+import PrivacyPolicy from "../components/shared/PrivacyPolicy";
 
 type OnboardingThreeProps = {
     navigation: any;
@@ -23,7 +25,8 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
     const {selectedCountry, status} = route.params;
     const [signPending, setSigninPending] = useState<boolean>(false)
-
+    const [isChecked, setChecked] = useState<boolean>(false);
+    const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
     const text = t('pageOnboardingOneTitleThree').split(' ');
@@ -144,12 +147,12 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     }),[email,password,selectedCountry,status])
 
     const handleDisabled = useCallback(()=> {
-      if(email === '' || password === '' || selectedCountry === '' || status === ''){
+      if(email === '' || password === '' || selectedCountry === '' || status === '' || isChecked === false){
         return true;
       }
 
       return false;
-    },[email,password,selectedCountry,status])
+    },[email,password,selectedCountry,status, isChecked])
 
     if (isTabletMode) {
       return(
@@ -176,6 +179,24 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
               />
             </View>
           </View>
+          <View style={styles.privacyContainer}>
+          <View style={styles.privacySubContainer}>
+            <View style={styles.checkboxContainer}>
+            <Checkbox style={styles.checkbox}  value={isChecked} onValueChange={setChecked} />
+            <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
+            </View>
+            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>Terms of use and privacy notice</Text>
+          </View>
+        </View>
+        {
+          <Modal visible={showPrivacyModal} transparent>
+          <View style={styles.overlay}>
+            <View style={styles.popup}>
+              <PrivacyPolicy handleClose={() => setShowPrivacyModal(false)} />
+            </View>
+          </View>
+        </Modal>
+        }
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.InputContainerTablet}
@@ -265,6 +286,24 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
             />
           </View>
         </View>
+        <View style={styles.privacyContainer}>
+          <View style={styles.privacySubContainer}>
+            <View style={styles.checkboxContainer}>
+            <Checkbox style={styles.checkbox}  value={isChecked} onValueChange={setChecked} />
+            <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
+            </View>
+            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>Terms of use and privacy notice</Text>
+          </View>
+        </View>
+        {
+          <Modal visible={showPrivacyModal} transparent>
+          <View style={styles.overlay}>
+            <View style={styles.popup}>
+              <PrivacyPolicy handleClose={() => setShowPrivacyModal(false)} />
+            </View>
+          </View>
+        </Modal>
+        }
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.InputContainer}
@@ -299,7 +338,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
                 </TouchableOpacity>
                 {
                   password !== '' ?  
-                  <View style={[styles.validation,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
+                  <View style={[styles.validation,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '65%'}]}>
                   {isValidInputPasswordText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
                    </View>
                    : 
@@ -395,6 +434,47 @@ const styles = StyleSheet.create({
       marginLeft: 20,
       marginBottom: 25,
       fontWeight: '500'
+  },
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+  },
+  popup: {
+    backgroundColor: '#fff',
+    width: '80%',
+    height: '55%',
+    padding: 7,
+    borderRadius: 8,
+  },
+  checkboxContainer: {
+    width: '80%',
+    marginBottom: 8,
+    flexDirection: 'row'
+  },
+  privacyContainer: {
+    alignItems: 'center',
+    marginBottom: 10
+  },
+  privacySubContainer: {
+    alignSelf:'flex-start',
+    paddingHorizontal: 25,
+    marginTop: 10
+  },
+  checkbox: {
+    margin: 2,
+    marginRight: 10
+  },
+  termsOfUse: {
+    color: '#3F465C',
+    fontWeight: '800',
+    fontSize: 13
+  },
+  termsOfUseBlue: {
+    color:'#719FFF',
+    fontWeight: 'bold',
+    textDecorationLine:'underline',
   },
   titleOrange: {
     color: '#F06748',

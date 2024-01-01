@@ -8,8 +8,7 @@
     "InsuranceAgents": "Insurance  Agents",
     "TeamMembersPageTitle":"Explore the best professionals for you",
     "TeamMembersPageSubtitle":"Find your ideal professional by exploring profiles to discover the perfect match",
-    "peterSchweizerSpecialization": "Life Insurance, Property Insurance, Health Insurance",
-    "peterSchweizerAboutMe": "With over 10 years of experience, I provide tailored insurance solutions. I'm committed to ensuring your peace of mind with comprehensive coverage.",
+
     "ImmigrationConsultants": "Immigration consultants",
     "Specialization": "Specialization",
     "AboutMe": "About Me",
@@ -227,7 +226,12 @@
     "HealthInsuranceObtainRQDOCOne": "Employment Contract",
     "HealthInsuranceObtainRQDOCTwo": "Residence Permit",
     "HealthInsuranceObtainRQDOCThree": "Proof of Income",
-    "HealthInsuranceObtainRQDOCFour": "Proof of Residence"
+    "HealthInsuranceObtainRQDOCFour": "Proof of Residence",
 
  
+    "peterSchweizerSpecialization": "Life Insurance, Property Insurance, Health Insurance",
+    "peterSchweizerAboutMe": "With over 10 years of experience, I provide tailored insurance solutions. I'm committed to ensuring your peace of mind with comprehensive coverage.",
+ 
+    "chrisWannerSpecialization": "Specializes in visa applications, residency, citizenship, and work permits, catering to individual, family, and business needs",
+    "chrisWannerAboutMe":"As an immigration consultant, I offer expert guidance and support throughout the complex immigration process, aiming to make your journey to a new country seamless and successful"
 }

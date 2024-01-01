@@ -55,7 +55,8 @@
     "react-native-select-dropdown": "^3.3.3",
     "react-native-size-matters": "^0.4.0",
     "react-native-web": "~0.19.6",
-    "swr": "^2.2.2"
+    "swr": "^2.2.2",
+    "expo-checkbox": "~2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

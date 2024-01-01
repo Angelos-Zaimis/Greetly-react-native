@@ -1,5 +1,6 @@
-import { SafeAreaView, Text,TouchableOpacity, View, TextInput, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform, useWindowDimensions, Alert, Modal, FlatList } from 'react-native'
+import { SafeAreaView, Text,TouchableOpacity, View, TextInput ,Platform, useWindowDimensions, Alert, Modal, FlatList } from 'react-native'
 import React, { FC, useCallback, useMemo, useState } from 'react'
+import Checkbox from 'expo-checkbox';
 import { ScaledSheet } from 'react-native-size-matters';
 import { useLanguage } from '../components/util/LangContext';
 import signUp from '../hooks/auth/SignUp';
@@ -12,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Spinner from '../components/shared/Spinner';
 import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons';
+import PrivacyPolicy from '../components/shared/PrivacyPolicy';
 type SignInProps = {
     navigation: any;
 }
@@ -31,7 +33,8 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
     const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true)
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
-
+    const [isChecked, setChecked] = useState<boolean>(false);
+    const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
     const text = 'Create your account'.split(' ');
 
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
@@ -144,12 +147,12 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
     },[setShowPopup])
     
     const handleDisabled = useCallback(()=> {
-      if(email === '' || password === '' || selectedCountry === '' || status === ''){
+      if(email === '' || password === '' || selectedCountry === '' || status === '' || isChecked === false){
         return true;
       }
 
       return false;
-    },[email,password,selectedCountry,status])
+    },[email,password,selectedCountry,status, isChecked])
 
     const renderItem = (
       { item }: { item:{ 
@@ -353,6 +356,24 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
             </Modal>
           </View>
         </View>
+        <View style={styles.privacyContainer}>
+          <View style={styles.privacySubContainer}>
+            <View style={styles.checkboxContainer}>
+            <Checkbox style={styles.checkbox}  value={isChecked} onValueChange={setChecked} />
+            <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
+            </View>
+            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>Terms of use and privacy notice</Text>
+          </View>
+        </View>
+        {
+          <Modal visible={showPrivacyModal} transparent>
+          <View style={styles.overlay}>
+            <View style={styles.popupOccupation}>
+              <PrivacyPolicy handleClose={() => setShowPrivacyModal(false)} />
+            </View>
+          </View>
+        </Modal>
+        }
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
           <View style={{ flexDirection: 'row', marginLeft: 10 , alignItems: 'center', justifyContent: 'center'}}>
             <CreateButtonSignIn handleDisabled={handleDisabled} handleCreateAccount={handleCreateAccount}/>
@@ -516,6 +537,24 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
             </Modal>
           </View>
         </View>
+        <View style={styles.privacyContainer}>
+          <View style={styles.privacySubContainer}>
+            <View style={styles.checkboxContainer}>
+            <Checkbox style={styles.checkbox}  value={isChecked} onValueChange={setChecked} />
+            <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
+            </View>
+            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>Terms of use and privacy notice</Text>
+          </View>
+        </View>
+        {
+          <Modal visible={showPrivacyModal} transparent>
+          <View style={styles.overlay}>
+            <View style={styles.popupOccupation}>
+              <PrivacyPolicy handleClose={() => setShowPrivacyModal(false)} />
+            </View>
+          </View>
+        </Modal>
+        }
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
           <View style={{ flexDirection: 'row', marginLeft: 10 , alignItems: 'center', justifyContent: 'center'}}>
             <CreateButtonSignIn handleDisabled={handleDisabled} handleCreateAccount={handleCreateAccount}/>
@@ -647,6 +686,34 @@ const styles = ScaledSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     borderRadius: 8,
+  },
+  checkboxContainer: {
+    width: '80%',
+    marginBottom: 8,
+    flexDirection: 'row'
+  },
+  privacyContainer: {
+    alignItems: 'center',
+    marginTop: 8
+  },
+  privacySubContainer: {
+    alignSelf:'flex-start',
+    paddingHorizontal: 25,
+    marginTop: 10
+  },
+  checkbox: {
+    margin: 2,
+    marginRight: 10
+  },
+  termsOfUse: {
+    color: '#3F465C',
+    fontWeight: '800',
+    fontSize: 13
+  },
+  termsOfUseBlue: {
+    color:'#719FFF',
+    fontWeight: 'bold',
+    textDecorationLine:'underline',
   },
   placeholderDropdown: {
     flex: 1,

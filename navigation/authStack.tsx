@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
     
-  const [isFirstLanchEver, setIsFirstLanchEver] = useState<boolean>(false);
+  const [isFirstLaunchEver, setIsFirstLaunchEver] = useState<boolean>(false);
 
   /**
    * Check if first time ever 
@@ -24,9 +24,9 @@ const AuthStack = () => {
       const value = await AsyncStorage.getItem('alreadyLaunched');
       if (value === null){
         AsyncStorage.setItem('alreadyLaunched', 'true');
-        setIsFirstLanchEver(true);
+        setIsFirstLaunchEver(true);
       }else{
-        setIsFirstLanchEver(false);
+        setIsFirstLaunchEver(false);
       }
     }
     checkIsFirstLaunchEver();
@@ -37,7 +37,7 @@ const AuthStack = () => {
       <NavigationContainer>      
         <Stack.Navigator>
           {
-          isFirstLanchEver && (
+          !isFirstLaunchEver && (
           <>
           <Stack.Screen name="Intro" options={{headerShown: false}} component={Intro} />
           <Stack.Screen name="OnboardingOne" options={{headerShown: false}}  component={OnboardingOne}/>

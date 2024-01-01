@@ -30,7 +30,7 @@ type HelpProps = {
 
   const data = [
     { key: '1', text: 'InsuranceAgents', type: "InsuranceAgent", icon: require('../assets/help/helpback.png') },
-    { key: '2', text: 'ImmigrationConsultants', icon: require('../assets/help/helpback.png') },
+    { key: '2', text: 'ImmigrationConsultants', type: "ImmigrationConsultant", icon: require('../assets/help/helpback.png') },
     { key: '3', text: 'Lawyers', icon: require('../assets/help/helpback.png') },
     { key: '4', text: 'Recruiters', icon: require('../assets/help/helpback.png')},
     { key: '5', text: 'Doctors', icon: require('../assets/help/helpback.png')},
