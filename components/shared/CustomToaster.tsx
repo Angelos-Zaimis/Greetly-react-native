@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { Text, View, StyleSheet, Animated } from 'react-native';
+import React, { FC } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 
 type CustomToasterProps = {
   message: string

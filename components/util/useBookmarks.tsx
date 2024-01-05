@@ -1,7 +1,4 @@
-
-import { useContext } from 'react';
 import useSWR from 'swr';
-import { AuthContext } from '../../hooks/auth/AuthContext';
 import AppURLS from '../appURLS';
 import { BOOKMARKS_ENDPOINT } from '../endpoints';
 import { useUserInfo } from './useUserInfos';

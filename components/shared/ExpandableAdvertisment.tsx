@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Linking, FlatList, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useLanguage } from '../util/LangContext';
 import CompanyProfile from './CompanyProfile';

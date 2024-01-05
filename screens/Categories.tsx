@@ -1,30 +1,31 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, useWindowDimensions} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, useWindowDimensions} from 'react-native'
 import React, { FC, useCallback, useMemo } from 'react'
-import useSWR from 'swr'
 import { useLanguage } from '../components/util/LangContext'
 import { FontAwesome5} from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import AppURLS from '../components/appURLS';
-import { CATEGORIES_ENDPOINT, CITIES_ENDPOINT } from '../components/endpoints';
 import { Image } from 'expo-image';
 import Spinner from '../components/shared/Spinner';
+import { useCategories } from '../components/util/useCategories';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type CategoriesProps = {
-  navigation: any,
-  route: any
+  navigation: NavigationProp<any>;
+  route?: RouteProp<{params: { cityName: string}}>;
 }
 
 const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   const {cityName} = route.params ?? {};
 
-  const { data: categories, error } = useSWR(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${CATEGORIES_ENDPOINT}/`)
- 
+  const {categories} = useCategories(
+    cityName
+  );
+
   const {width: SCREENWIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
@@ -54,7 +55,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
             renderItem={({ item }) => (
               <TouchableOpacity
                 key={item.id}
-                onPress={() => navigation.push('SubCategories',{
+                onPress={() => navigation.navigate('SubCategories',{
                   cityName: cityName,
                   category: item.name
                 })}
@@ -94,7 +95,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => navigation.push('SubCategories',{
+              onPress={() => navigation.navigate('SubCategories',{
                 cityName: cityName,
                 category: item.name
               })}

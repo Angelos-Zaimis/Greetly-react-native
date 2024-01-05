@@ -1,18 +1,15 @@
-import React, { FC, useCallback, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
-import useSWR from 'swr';
 import { FontAwesome } from '@expo/vector-icons';
-import AppURLS from '../components/appURLS';
 import { Image } from 'expo-image';
+import { NavigationProp } from '@react-navigation/native';
 
 type HelpProps = {
-  navigation: any,
-
+  navigation: NavigationProp<any>;
 }
 
-
- const Help: FC<HelpProps> = ({navigation}) => {
+const Help: FC<HelpProps> = ({navigation}) => {
 
   const {t} = useLanguage();
   
@@ -22,7 +19,7 @@ type HelpProps = {
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
@@ -35,17 +32,16 @@ type HelpProps = {
     { key: '4', text: 'Recruiters', icon: require('../assets/help/helpback.png')},
     { key: '5', text: 'Doctors', icon: require('../assets/help/helpback.png')},
     { key: '5', text: 'HousingSpecialists', icon:  require('../assets/help/helpback.png')},
-    // Add more items...
   ];
 
-  const handleOpenTeamMembers = useCallback((type: string, name:string) => {
-    navigation.push('TeamMembers',{
-      name,
-      type
-    })
-  },[navigation])
+  const handleOpenTeamMembers = useCallback(
+    (type: string, name:string) => {
+      navigation.navigate('TeamMembers',{
+        name,
+        type
+      })
+  },[navigation]);
 
-  // Render each item
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text)} style={styles.cell}>
       <Image style={styles.cellImage} source={item.icon}/>
@@ -82,7 +78,7 @@ type HelpProps = {
             renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => navigation.push('TeamMember',{
+              onPress={() => navigation.navigate('TeamMember',{
                 teamMemberId: item.id
               })}
              style={styles.personContainerTablet}

@@ -1,7 +1,6 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { FC } from "react";
 import { KeyboardAvoidingView, Platform, SafeAreaView, View ,StyleSheet, Text,TextInput,TouchableOpacity, TouchableWithoutFeedback, Keyboard, Button, useWindowDimensions, Alert, Modal} from "react-native";
-import signUp from "../hooks/auth/SignUp";
 import { useLanguage } from "../components/util/LangContext";
 import CreateButton from "../components/shared/CreateButton";
 import { Ionicons } from '@expo/vector-icons';
@@ -10,36 +9,37 @@ import { AntDesign } from '@expo/vector-icons';
 import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
 import PrivacyPolicy from "../components/shared/PrivacyPolicy";
+import { NavigationProp, RouteProp } from "@react-navigation/native";
+import { AuthContext } from "../hooks/auth/AuthContext";
 
 type OnboardingThreeProps = {
-    navigation: any;
-    route: any;
+    navigation: NavigationProp<any>;
+    route: RouteProp<{params: { selectedCountry: string, status: string}}>;
 }
 
 const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
-
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true)
-    const {t,setLanguage, selectedLanguage} = useLanguage();
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
+    const {t} = useLanguage();
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
     const {selectedCountry, status} = route.params;
-    const [signPending, setSigninPending] = useState<boolean>(false)
+    const [signPending, setSigninPending] = useState<boolean>(false);
     const [isChecked, setChecked] = useState<boolean>(false);
     const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
+    const {signUp} = useContext(AuthContext);
     const text = t('pageOnboardingOneTitleThree').split(' ');
 
     const isTabletMode = useMemo(() => {
       if(SCREEN_WIDTH > 700) {
-        return true
+        return true;
       }
       return false;
     },[SCREEN_WIDTH])
 
-    
-    const isValidEmail = (email: string) => {
+    const isValidEmail = useCallback((email: string) => {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       const invalidCharsRegex = /[^\w.@+-]/;
       const disposableDomain = "@example.com";
@@ -67,9 +67,9 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
       }
     
       return { valid: true};
-    };
+    },[email]);
     
-    const isValidPassword = (password: string) => {
+    const isValidPassword = useCallback((password: string) => {
       const minLength = 8;
       const digitRegex = /\d/;
       const uppercaseRegex = /[A-Z]/;
@@ -94,37 +94,29 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     
     
       return { valid: true};
-    };
+    },[password]);
     
-    const handleEmailInputChange = (text: string) => {
+    const handleEmailInputChange = useCallback((text: string) => {
       setEmail(text);
 
       const isValid = isValidEmail(text);
       setIsValidEmailInput(isValid.valid);
-    };
+    },[email, setEmail]);
 
-    const handlePasswordlInputChange = (text: string) => {
+    const handlePasswordlInputChange = useCallback((text: string) => {
       setPassword(text);
 
       const isValid = isValidPassword(text);
       setIsValidPasswordInput(isValid.valid);
-    };
+    },[password, setPassword]);
   
-  
-    const handleNavigationBack = () => {
-      navigation.push('OnboardingOne')
-    }
+    const handleNavigationBack = useCallback(() => {
+      navigation.navigate('OnboardingOne');
+    },[navigation])
 
-    const handleLanguage = useCallback(
-      (language: {label: string, value: string}) => {
-      setLanguage(language.value)
-    },[setLanguage])
-    
-    const rowTextForSelection = (item: { label: string }) => item.label;
+    const handleCreateAccount  = useCallback((async() => {
+      setSigninPending(true);
 
-    const handleCreateAccount  = useCallback(
-      (async() => {
-      setSigninPending(true)
       try {
         const response = await signUp(
             {
@@ -136,15 +128,14 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
         )
 
         if(response.status >= 200 || response.status < 300) {
-          navigation.push('Login')
-          setSigninPending(false)
+          navigation.navigate('Login');
+          setSigninPending(false);
         }
       } catch (e) {
-       
-        Alert.alert('Something went wrong, please try again.') 
-        setSigninPending(false)
+        Alert.alert('Something went wrong, please try again.');
+        setSigninPending(false);
       }
-    }),[email,password,selectedCountry,status])
+      }),[email,password,selectedCountry,status])
 
     const handleDisabled = useCallback(()=> {
       if(email === '' || password === '' || selectedCountry === '' || status === '' || isChecked === false){
@@ -280,36 +271,6 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
             )))}
           </Text>
           <View>
-            <Image
-              style={[styles.image, { height: SCREEN_HEIGHT < 700 ? 160 : 190}]}
-              source={require('../assets/onboarding/createaccount.png')}
-            />
-          </View>
-        </View>
-        <View style={styles.privacyContainer}>
-          <View style={styles.privacySubContainer}>
-            <View style={styles.checkboxContainer}>
-            <Checkbox style={styles.checkbox}  value={isChecked} onValueChange={setChecked} />
-            <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
-            </View>
-            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>Terms of use and privacy notice</Text>
-          </View>
-        </View>
-        {
-          <Modal visible={showPrivacyModal} transparent>
-          <View style={styles.overlay}>
-            <View style={styles.popup}>
-              <PrivacyPolicy handleClose={() => setShowPrivacyModal(false)} />
-            </View>
-          </View>
-        </Modal>
-        }
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={styles.InputContainer}
-          keyboardVerticalOffset={30}
-          >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
               <View style={[styles.input, { height:SCREEN_HEIGHT <= 700 ? 75 : 83, width: SCREEN_HEIGHT < 700 ? 340 : 360}]}>
                 <Text style={styles.inputTextEmail}>Email</Text>
@@ -354,9 +315,31 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
                 >
                 </TextInput>
               </View>
+          </View>
+          <View style={styles.privacyContainer}>
+          <View style={styles.privacySubContainer}>
+            <View style={styles.checkboxContainer}>
+            <Checkbox style={styles.checkbox}  value={isChecked} onValueChange={setChecked} />
+            <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
             </View>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>Terms of use and privacy notice</Text>
+          </View>
+        </View>
+        {
+          <Modal visible={showPrivacyModal} transparent>
+          <View style={styles.overlay}>
+            <View style={styles.popup}>
+              <PrivacyPolicy handleClose={() => setShowPrivacyModal(false)} />
+            </View>
+          </View>
+        </Modal>
+        }
+        </View>
+          <View style={styles.bottomContainer}>
+          <Text style={styles.greetly}>Greetly.ch</Text>
+          <Image style={styles.logo}source={require('../assets/welcomepage/logo.png')}/>
+        </View>
+        </View>
         <View style={styles.bottom}>
           <View  style={styles.bottomSubContainer}>
             <View style={styles.blackDot} />
@@ -373,57 +356,74 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
 export default OnboardingThree
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    },
-    InputContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+  container: {
+    flex: 1,
       backgroundColor: 'white'
-     },
-     arrow: {
-      marginLeft: 20,
-      marginTop: 19
+  },
+  InputContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  arrow: {
+    marginLeft: 20,
+    marginTop: 19
+  },
+  inner: {
+    width:'100%',
+    alignItems: 'center'
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems:  'center',
+    justifyContent: 'space-between',
+    marginBottom: 30
+  },
+  textInput: {
+    height: 40,
+    borderColor: '#000000',
+    borderBottomWidth: 1,
+    marginBottom: 36,
+  },
+  btnContainer: {
+    backgroundColor: 'white',
+  },
+  logo: {
+    width: 35,
+    height: 35,
+    borderRadius: 5
+  },
+  bottomContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent:'center',
+    marginTop: 20
+  },
+  greetly: {
+    color: '#F06748',
+    fontSize: 22,
+    marginRight: 10
+  },
+  input: {
+    width: '91%',
+    paddingHorizontal: 13,
+    justifyContent: 'center',
+    height: 83,
+    borderWidth: 1,
+    borderColor: '#DADADC',
+    borderRadius: 18,
+    marginBottom: 25,
+    marginTop: 20,
+    backgroundColor: 'white'
     },
-    inner: {
-        width:'100%',
-        alignItems: 'center'
-    },
-    header: {
-      flexDirection: 'row',
-      alignItems:  'center',
-      justifyContent: 'space-between',
-      marginBottom: 15
-    },
-    textInput: {
-        height: 40,
-        borderColor: '#000000',
-        borderBottomWidth: 1,
-        marginBottom: 36,
-    },
-    btnContainer: {
-        backgroundColor: 'white',
-    },
-    input: {
-        width: '91%',
-        paddingHorizontal: 13,
-        justifyContent: 'center',
-        height: 83,
-        borderWidth: 1,
-        borderColor: '#DADADC',
-        borderRadius: 18,
-        marginBottom: 20,
-        backgroundColor: 'white'
-    },
-    languageButtonStyle: {
-      marginTop: 10,
-      width: 80,
-      backgroundColor: 'transparrent',
-      marginHorizontal: 7,
-    },
-    languageText: {
+  languageButtonStyle: {
+    marginTop: 10,
+    width: 80,
+    backgroundColor: 'transparrent',
+    marginHorizontal: 7,
+  },
+  languageText: {
       fontSize: 18,
       color: '#719FFF',
       textTransform: 'uppercase'
@@ -502,64 +502,63 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain',
     width: '100%'
-},
- inputText: {
-  fontSize: 15,
- },
- inputTextEmail: {
-  fontSize: 15,
-  marginBottom: 20
- },
- eyeIconContainer: {
-  alignSelf: 'flex-end'
-},
-bottom: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginLeft: 10
-},
-bottomSubContainer: {
-  flexDirection: 'row'
-},
-validation: {
-  position: 'absolute',
-  top: '120%',
-
-},
+  },
+  inputText: {
+    fontSize: 15,
+  },
+  inputTextEmail: {
+    fontSize: 15,
+    marginBottom: 20
+  },
+  eyeIconContainer: {
+    alignSelf: 'flex-end'
+  },
+  bottom: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 10
+  },
+  bottomSubContainer: {
+    flexDirection: 'row'
+  },
+  validation: {
+    position: 'absolute',
+    top: '120%',
+  },
 
 //TABLET STYLES
 
-InputContainerTablet: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'white'
- },
- arrowTablet: {
-  marginLeft: 20,
-  marginTop: 19
-},
-innerTablet: {
-  alignItems: 'center',
-  width: '100%'
-},
-headerTablet: {
-  flexDirection: 'row',
-  alignItems:  'center',
-  justifyContent: 'space-between',
-  marginBottom: 15
-},
-textInputTablet: {
+  InputContainerTablet: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  arrowTablet: {
+    marginLeft: 20,
+    marginTop: 19
+  },
+  innerTablet: {
+    alignItems: 'center',
+    width: '100%'
+  },
+  headerTablet: {
+    flexDirection: 'row',
+    alignItems:  'center',
+    justifyContent: 'space-between',
+    marginBottom: 15
+  },
+  textInputTablet: {
     height: 40,
     borderColor: '#000000',
     borderBottomWidth: 1,
     marginBottom: 36,
-},
-btnContainerTablet: {
+  },
+  btnContainerTablet: {
     backgroundColor: 'white',
-},
-inputTablet: {
+  },
+  inputTablet: {
     width: '91%',
     paddingHorizontal: 13,
     justifyContent: 'center',
@@ -569,76 +568,75 @@ inputTablet: {
     borderRadius: 18,
     marginBottom: 25,
     backgroundColor: 'white'
-},
-languageButtonStyleTablet: {
-  marginTop: 10,
-  width: 80,
-  backgroundColor: 'transparrent',
-  marginHorizontal: 7,
-},
-languageTextTablet: {
-  fontSize: 18,
-  color: '#719FFF',
-  textTransform: 'uppercase'
-},
-titleTablet: {
-  fontSize: 34,
-  width: 320,
-  marginLeft: 20,
-  marginBottom: 30,
-  fontWeight: '500'
-},
-titleOrangeTablet: {
-color: '#F06748',
-fontWeight: '600',
-width: 220,
-},
-blackDotTablet: {
-width: 10,
-height: 10,
-backgroundColor: 'transparent',
-marginHorizontal: 10,
-borderRadius: 5,
-borderWidth: 1,
-borderColor: 'black',
-},
-blackDotBackTablet: {
-width: 10,
-height: 10,
-backgroundColor: 'black',
-marginHorizontal: 10,
-borderRadius: 5,
-borderWidth: 1,
-borderColor: 'black',
-},
-imageTablet: {
-resizeMode: 'contain',
-height: 340,
-width: '100%',
-marginTop: 40
-},
-inputTextTablet: {
-fontSize: 18,
-},
-inputTextEmailTablet: {
-fontSize: 18,
-marginBottom: 20,
-},
-eyeIconContainerTablet: {
-alignSelf: 'flex-end'
-},
-bottomTablet: {
-flexDirection: 'row',
-alignItems: 'center',
-justifyContent: 'space-between',
-marginLeft: 10
-},
-bottomSubContainerTablet: {
-flexDirection: 'row'
-},
-validationTablet: {
-position: 'absolute',
-top: '120%',
-
-}
+  },
+  languageButtonStyleTablet: {
+    marginTop: 10,
+    width: 80,
+    backgroundColor: 'transparrent',
+    marginHorizontal: 7,
+  },
+  languageTextTablet: {
+    fontSize: 18,
+    color: '#719FFF',
+    textTransform: 'uppercase'
+  },
+  titleTablet: {
+    fontSize: 34,
+    width: 320,
+    marginLeft: 20,
+    marginBottom: 30,
+    fontWeight: '500'
+  },
+  titleOrangeTablet: {
+    color: '#F06748',
+    fontWeight: '600',
+    width: 220,
+  },
+  blackDotTablet: {
+    width: 10,
+    height: 10,
+    backgroundColor: 'transparent',
+    marginHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  blackDotBackTablet: {
+    width: 10,
+    height: 10,
+    backgroundColor: 'black',
+    marginHorizontal: 10,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  imageTablet: {
+    resizeMode: 'contain',
+    height: 340,
+    width: '100%',
+    marginTop: 40
+  },
+  inputTextTablet: {
+    fontSize: 18,
+  },
+  inputTextEmailTablet: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  eyeIconContainerTablet: {
+    alignSelf: 'flex-end'
+  },
+  bottomTablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginLeft: 10
+  },
+  bottomSubContainerTablet: {
+    flexDirection: 'row'
+  },
+  validationTablet: {
+    position: 'absolute',
+    top: '120%',
+  }
 })

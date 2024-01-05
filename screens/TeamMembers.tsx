@@ -1,34 +1,32 @@
-import React, { FC, useCallback, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
 import { FontAwesome } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { useTeamMembers } from '../components/util/useTeamMembers';
 import { AntDesign } from '@expo/vector-icons';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type HelpProps = {
-  navigation: any,
-  route: any
+  navigation: NavigationProp<any>;
+  route?: RouteProp<{params: {type: string, name: string}}>;
 }
 
 
  const TeamMembers: FC<HelpProps> = ({navigation, route}) => {
 
   const {t} = useLanguage();
-
   const { type, name} = route.params ?? {};
-
-  const text = t(name).split(' ')
-
+  const text = t(name).split(' ');
   const {height: SCREEN_HEIGHT, width: SCREENWIDTH} = useWindowDimensions();
 
   const handleNavigationBack = useCallback(() => {
     navigation.goBack();
-  },[navigation])
+  },[navigation]);
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
@@ -65,7 +63,7 @@ type HelpProps = {
             renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => navigation.push('TeamMember',{
+              onPress={() => navigation.navigate('TeamMember',{
                 teamMemberId: item.id
               })}
              style={styles.personContainerTablet}
@@ -130,7 +128,7 @@ type HelpProps = {
             renderItem={({ item }) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => navigation.push('TeamMember',{
+              onPress={() => navigation.navigate('TeamMember',{
                  name: item.name,
                  location: item.location,
                  occupation: item.occupation,

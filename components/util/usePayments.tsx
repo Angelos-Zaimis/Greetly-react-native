@@ -1,8 +1,5 @@
-
-import { useContext } from 'react';
 import AppURLS from '../appURLS';
 import { CANCEL_SUBSCRIPTION, CREATE_CHECKOUT_SESSION, PAYMENTS } from '../endpoints';
-import { AuthContext } from '../../hooks/auth/AuthContext';
 import { useUserInfo } from './useUserInfos';
 
 export const usePayments = () => {

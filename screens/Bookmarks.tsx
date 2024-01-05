@@ -6,9 +6,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { useUserInfo } from '../components/util/useUserInfos';
 import { Animated } from 'react-native';
 import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
+import { NavigationProp } from '@react-navigation/native';
 
 type bookmarksProps = {
-  navigation: any
+  navigation: NavigationProp<any>;
 }
 
 const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
@@ -17,36 +18,35 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
   const {userInfo} = useUserInfo();
   const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
   const [opacity,] = useState(new Animated.Value(0));
-  console.log(bookmarks)
 
   const {t} = useLanguage();
 
-  const deleteToBoomark = async(
-    bookmark: string
-    ) => {
-   await deleteBookmark(bookmark);
-  }
+  const deleteToBoomark  = useCallback(async(bookmark: string) => {
+    await deleteBookmark(bookmark);
+  },[bookmarks, deleteBookmark])
 
-  const handleGoPremium = () => {
-    navigation.push("GoPremium")
-    setIsNotSubscribed(false)
-  }
+
+
+  const handleGoPremium = useCallback(() => {
+    navigation.navigate("GoPremium");
+    setIsNotSubscribed(false);
+  },[navigation, setIsNotSubscribed])
 
   const handleClosePopUp = useCallback(() => {
-    setIsNotSubscribed(false)
+    setIsNotSubscribed(false);
   },[setIsNotSubscribed,isNotSubscribed])
 
   const {width: SCREENWIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
   },[SCREENWIDTH])
 
-  const handleShowBookmark = (
+  const handleShowBookmark = useCallback((
     canton: string,
     title: string,
     description: string,
@@ -54,15 +54,15 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
     requiredDocuments: string[],
     category: string
     ) => {
-    navigation.push('Bookmark',{
-      canton: canton,
-      title: title,
-      description: description,
-      image: image,
-      requiredDocuments: requiredDocuments,
-      category: category
+      navigation.navigate('Bookmark',{
+        canton: canton,
+        title: title,
+        description: description,
+        image: image,
+        requiredDocuments: requiredDocuments,
+        category: category
     })
-  }
+  },[navigation])
 
   useEffect(() => {
     if (isNotSubscribed) {
@@ -147,7 +147,7 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
         <Text style={styles.headerText}>{t('Yourbookmarks')}</Text>
       </View>
       {bookmarks && bookmarks?.length > 0 ? (
-        <View style={styles.flatlistContainer}>
+      <View style={styles.flatlistContainer}>
         <FlatList 
           data={bookmarks}
           renderItem={({ item }) => (
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     borderColor: '#F8F9FC',
-    marginLeft: 15
+    paddingLeft: 10,
   },
   icon: {
     marginLeft: 27,

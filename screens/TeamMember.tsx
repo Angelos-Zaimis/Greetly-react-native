@@ -5,14 +5,25 @@ import { Feather } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Zocial } from '@expo/vector-icons';
-import { Image } from 'expo-image';
+import { Image, ImageSource } from 'expo-image';
 import { MaterialIcons } from '@expo/vector-icons';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type TeamMemberProps = {
-    route: any
-    navigation: any
+    navigation: NavigationProp<any>;
+    route?: RouteProp<{params: { name: string,
+        location: string,
+        occupation: string,
+        profileImage: string,
+        languages: string[],
+        licensed: string,
+        specialization: string,
+        aboutMe: string,
+        longitude: string,
+        latitude: string,
+        latitudeDelta: string,
+        longitudeDelta: string,linkAddress: string}}>;
 }
 const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
 
@@ -30,24 +41,22 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
         latitudeDelta,
         longitudeDelta,
         linkAddress
-    } = route.params ?? {}
+    } = route.params ?? {};
 
-    console.log(linkAddress)
     const {t} = useLanguage();
-
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
 
     const isTabletMode = useMemo(() => {
         if(SCREEN_WIDTH > 700) {
-          return true
+          return true;
         }
     
         return false;
       },[SCREEN_WIDTH])
     
-    const handleNavigationBack = () => {
+    const handleNavigationBack = useCallback(() => {
         navigation.goBack();
-    }
+    }, [navigation]);
 
     const marker = [
         {
@@ -56,7 +65,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
             latitudeDelta: latitudeDelta,
             longitudeDelta: longitudeDelta,
         }
-    ]
+    ];
 
     const onMarkerSelected = useCallback((url: string) => {
         Linking.canOpenURL(url).then((supported) => {
@@ -66,7 +75,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
                 console.log("Don't know how to open URI: " + url);
             }
         }).catch((err) => console.error('An error occurred', err));
-    },[])
+    },[Linking]);
 
   if (isTabletMode){ 
     return (
@@ -142,7 +151,7 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
                 }
             </View>
             <View style={styles.languageContainer}>{
-                    languages?.map((language) => {
+                    languages?.map((language: string | number | string[] | ImageSource | ImageSource[]) => {
                         return <Image source={language} contentFit='contain' style={styles.languageIcon}/>
                     })
                 }

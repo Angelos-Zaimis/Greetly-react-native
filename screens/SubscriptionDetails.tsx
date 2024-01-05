@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React, { FC, useCallback, useMemo, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { AuthContext } from '../hooks/auth/AuthContext';
 import { useLanguage } from '../components/util/LangContext';;
 import { Feather } from '@expo/vector-icons'; 
 import ConfirmModal from '../components/shared/ConfirmModal';
 import { AntDesign } from '@expo/vector-icons'; 
 import { usePayments } from '../components/util/usePayments';
 import { useUserInfo } from '../components/util/useUserInfos';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type SubscroptionDetailsProps = {
-    route: any
-    navigation: any
+    navigation: NavigationProp<any>;
+    route?: RouteProp<{params: {}}>;
 }
 const SubscriptionDetails: FC<SubscroptionDetailsProps> = ({navigation}) => {
 
@@ -22,27 +22,27 @@ const SubscriptionDetails: FC<SubscroptionDetailsProps> = ({navigation}) => {
 
     const price = useMemo(() => {
     
-        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '55' 
+        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '55' ;
     },[userInfo?.product_details?.subscription_price])
 
 
-    const closeConfirmModal = () => {
-        setShowConfirmModal(false)
-    }
+    const closeConfirmModal = useCallback(() => {
+        setShowConfirmModal(false);
+    }, [setShowConfirmModal]);
 
-    const openConfirmModal = () => {
-        setShowConfirmModal(true)
-    }
+    const openConfirmModal = useCallback(() => {
+        setShowConfirmModal(true);
+    }, [setShowConfirmModal]);
 
     const handleNavigationBack= useCallback(() => {
-        mutate()
-        navigation.push('Profile');
-    },[navigation])
+        mutate();
+        navigation.navigate('Profile');
+    },[navigation]);
 
     const handleCancelSubscription = useCallback(async () => {
         const response = await cancelSubscription(userInfo?.product_details?.subscription_id ?? '', userInfo?.username ?? '');
         closeConfirmModal();
-        handleNavigationBack()
+        handleNavigationBack();
     }, [cancelSubscription])
 
   return (

@@ -1,5 +1,5 @@
 import React, { FC} from 'react'
-import {CantonsPage, Categories, SubCategories, Informations, GoPremium, NewsPage, } from '../../screens/index';
+import {CantonsPage, Categories, SubCategories, Informations, GoPremium } from '../../screens/index';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();

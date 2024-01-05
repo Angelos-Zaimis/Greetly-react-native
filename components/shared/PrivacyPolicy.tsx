@@ -45,7 +45,7 @@ const PrivacyPolicy:FC<PrivacyPolicyProps> = ({handleClose}) => {
   
         <Text style={styles.header}>Contact Us:</Text>
         <Text style={styles.text}>
-          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at www.greetly.ch.
+          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at greetly.ch@gmail.com.
         </Text>
       </ScrollView>
     );

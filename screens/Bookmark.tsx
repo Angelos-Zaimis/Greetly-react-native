@@ -1,36 +1,40 @@
 import { StyleSheet, Text, View, TouchableOpacity, useWindowDimensions, ScrollView} from 'react-native'
 import React, { FC, useCallback, useMemo, useState } from 'react'
-import useSWR from 'swr';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { RenderContentItem } from '../components/shared/ContentItem';
-import { CITIES_ENDPOINT } from '../components/endpoints';
-import AppURLS from '../components/appURLS';
-import { useUserInfo } from '../components/util/useUserInfos';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { useInformation } from '../components/util/useInformation';
 
 type BookMarkProps = {
-  route: any,
-  navigation: any
+  route: RouteProp<{params: { 
+    canton: string,
+    title: string, 
+    description: string, 
+    image: string,
+    requiredDocuments: string[], category: string}}>;
+  navigation: NavigationProp<any>;
 }
 
 const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
 
-  const {canton, title, description, image,requiredDocuments, category} = route.params ?? {}
-  const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false)
+  const {canton, title, description, image,requiredDocuments, category} = route.params ?? {};
+  const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false);
 
-  const {userInfo} = useUserInfo();
   const {t} = useLanguage();
 
-  const { data: information } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${canton}/${category}/${title}/${userInfo?.citizenship}-${userInfo?.status}-${title}/`,
+  const {information} = useInformation(
+    canton,
+    category,
+    title
   );
-  
+
   const {width: SCREEN_WIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREEN_WIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
@@ -40,13 +44,13 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
     navigation.goBack();
   }, [navigation]);
   
-  const handleOpenDocs = () => {
-    setOpenRequiredDoc(true)
-  }
+  const handleOpenDocs = useCallback(() => {
+    setOpenRequiredDoc(true);
+  },[setOpenRequiredDoc, openRequiredDoc])
   
-  const  handleCloseDocs = () => {
-    setOpenRequiredDoc(false)
-  }
+  const  handleCloseDocs = useCallback(() => {
+    setOpenRequiredDoc(false);
+  },[setOpenRequiredDoc, openRequiredDoc])
 
   if (isTabletMode) {
     return (
@@ -78,7 +82,7 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
             </View>
              <View style={styles.requiredDocsTablet}>
               {
-                requiredDocuments.map((item: string, index: number) => {
+                requiredDocuments?.map((item: string, index: number) => {
                   return (
                     <View style={styles.requiredDocumentsTextsContainersTablet} key={index}>
                       <AntDesign name="rightcircleo" size={11} color="white" />
@@ -110,9 +114,9 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
       </View>
       <ScrollView style={styles.container}>
         {
-          information && information.content?.content.map((item, index) => (
+          information && information.content?.content.map((item: any, index: React.Key) => (
           <View style={styles.containerContentItem} key={index}>
-            <RenderContentItem item={item} />
+            <RenderContentItem item={item} navigation={navigation} />
           </View>
         ))}
       </ScrollView>

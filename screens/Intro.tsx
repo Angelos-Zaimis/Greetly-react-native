@@ -1,28 +1,28 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { View ,Text,SafeAreaView,TouchableOpacity,useWindowDimensions, Platform, StyleSheet} from 'react-native'
 import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons'; 
+import { NavigationProp } from '@react-navigation/core';
 
 type IntroProps = {
-  navigation: any
+  navigation: NavigationProp<any>;
 }
 
 const Intro: FC<IntroProps>= ({navigation}) => {
 
-  const handleNavigation = () => {
-    navigation.replace('OnboardingOne')
-  }
+  const handleNavigation = useCallback(() => {
+    navigation.navigate('OnboardingOne');
+  },[navigation])
 
   const {height: SCREEN_HEIGHT} = useWindowDimensions();
   const {width: SCREEN_WIDTH} = useWindowDimensions();
       
   const isTabletMode = useMemo(() => {
     if(SCREEN_WIDTH > 700) {
-      return true
+      return true;
     }
     return false;
   },[SCREEN_WIDTH])
-
 
   if (isTabletMode){
     return(
@@ -32,24 +32,25 @@ const Intro: FC<IntroProps>= ({navigation}) => {
           <Text style={styles.welcomeTwoTablet}>Switzerland</Text>
         </View>
         <View>
-          <Image style={[styles.imageTeablet]} source={require('../assets/intro/zurich.png')}/>
+          <Image  contentFit='contain' style={[styles.imageTeablet]} source={require('../assets/intro/zurich.png')}/>
         </View>
         <View>
           <Text  style={styles.titleTablet}>Ease your move with Greetly.ch</Text>
           <Text style={styles.subtitleTablet}>Find solutions for all aspects of relocation based on your origin and occupation.</Text>
           <Text style={styles.subtitleTablet}>Get consultation from experts.</Text>
         </View>
-        <View style={styles.buttonContainerTablet} className='flex items-center'>
-          <TouchableOpacity onPress={handleNavigation} style={styles.buttonTablet} className='flex-row space-x-2 bg-orangeCustom items-center justify-center  rounded-round18 '>
-            <Text style={styles.buttonTextTablet} className='text-font17 text-white'>Get started</Text>
-            <View className='flex-row'>
+        <View style={styles.buttonContainerTablet}>
+          <TouchableOpacity onPress={handleNavigation} style={styles.buttonTablet}>
+            <Text style={styles.buttonTextTablet}>Get started</Text>
+            <View style={styles.arrowContainer}>
               <Fontisto name="angle-right" style={{marginRight: -4}} size={15} color="#ffffff33" />
               <Fontisto name="angle-right"  style={{marginRight: 0}} size={15} color="#ffffff80" />
               <Fontisto name="angle-right"  style={{marginLeft: -4}} size={15} color="#FFFFFF" />
             </View>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>)
+      </SafeAreaView>
+    )
   }
 
   return (
@@ -59,17 +60,17 @@ const Intro: FC<IntroProps>= ({navigation}) => {
         <Text style={[styles.welcomeTwo,  {fontSize: SCREEN_HEIGHT < 700 ? 40 : 45}]}>Switzerland</Text>
       </View>
       <View>
-        <Image style={[styles.image]} source={require('../assets/intro/zurich.png')}/>
+        <Image contentFit='contain' style={[styles.image]} source={require('../assets/intro/zurich.png')}/>
       </View>
       <View>
         <Text  style={styles.title}>Ease your move with Greetly.ch</Text>
         <Text style={styles.subtitle}>Find solutions for all aspects of relocation based on your origin and occupation.</Text>
         <Text style={styles.subtitle}>Get consultation from experts.</Text>
       </View>
-      <View style={[styles.buttonContainer, {marginTop: SCREEN_HEIGHT < 700 ? 18 : 28}]} className='flex items-center'>
-        <TouchableOpacity onPress={handleNavigation} style={styles.button} className='flex-row space-x-2 bg-orangeCustom items-center justify-center  rounded-round18 '>
-          <Text style={styles.buttonText} className='text-font17 text-white'>Get started</Text>
-          <View className='flex-row'>
+      <View style={[styles.buttonContainer, {marginTop: SCREEN_HEIGHT < 700 ? 18 : 28}]} >
+        <TouchableOpacity onPress={handleNavigation} style={styles.button} >
+          <Text style={styles.buttonText}>Get started</Text>
+          <View style={styles.arrowContainer}>
             <Fontisto name="angle-right" style={{marginRight: -4}} size={13} color="#ffffff33" />
             <Fontisto name="angle-right"  style={{marginRight: 0}} size={13} color="#ffffff80" />
             <Fontisto name="angle-right"  style={{marginLeft: -4}} size={13} color="#FFFFFF" />
@@ -100,15 +101,14 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   },
   image: {
-    resizeMode: 'contain',
     width: '100%',
     height: 350
   },
   title: {
-   marginLeft: 20,
-   fontSize: 18,
-   color: '#3F465C',
-   fontWeight: '500'
+    marginLeft: 20,
+    fontSize: 18,
+    color: '#3F465C',
+    fontWeight: '500'
   },
   subtitle: {
     fontSize: 16,
@@ -120,11 +120,13 @@ const styles = StyleSheet.create({
     lineHeight: 25
   },
   buttonContainer: {
-    marginTop: 18
+    marginTop: 18,
+    alignItems: 'center'
   },
   button: {
     width: 200,
     height: 56,
+    borderRadius:12,
     shadowColor: '#FD684685',
     shadowOffset: {
       width: 0,
@@ -133,9 +135,15 @@ const styles = StyleSheet.create({
     shadowRadius: 14,
     shadowOpacity: 1,
     elevation: 6,
+    backgroundColor: '#F06748',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   buttonText: {
-    fontSize: 17
+    fontSize: 17,
+    color: 'white',
+    marginRight: 10
   },
   welcomeTablet: {
     marginTop: 10,
@@ -150,17 +158,19 @@ const styles = StyleSheet.create({
     color: '#F06748',
     fontWeight: '500'
   },
+  arrowContainer: {
+    flexDirection: 'row'
+  },
   imageTeablet: {
-    resizeMode: 'stretch',
     width: '100%',
     height: 550
   },
   titleTablet: {
-   marginLeft: 20,
-   fontSize: 26,
-   color: '#3F465C',
-   fontWeight: '500',
-   marginTop: 10
+    marginLeft: 20,
+    fontSize: 26,
+    color: '#3F465C',
+    fontWeight: '500',
+    marginTop: 10
   },
   subtitleTablet: {
     fontSize: 20,
@@ -172,7 +182,8 @@ const styles = StyleSheet.create({
     lineHeight: 25
   },
   buttonContainerTablet: {
-    marginTop: 26
+    marginTop: 26,
+    alignItems: 'center'
   },
   buttonTablet: {
     width: 280,
@@ -185,11 +196,16 @@ const styles = StyleSheet.create({
     shadowRadius: 14,
     shadowOpacity: 1,
     elevation: 6,
+    backgroundColor: '#F06748',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   buttonTextTablet: {
-    fontSize: 22
+    fontSize: 22,
+    marginRight: 10,
+    color: 'white'
   },
 })
 
-
-export default Intro
+export default Intro;

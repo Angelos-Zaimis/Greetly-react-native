@@ -1,47 +1,40 @@
-import React, { FC, useCallback, useContext, useEffect, useMemo } from 'react'
+import React, { FC, useEffect, useMemo } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform, useWindowDimensions} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
 import Spinner from '../components/shared/Spinner'
 import { Image } from 'expo-image'
-import { AuthContext } from '../hooks/auth/AuthContext'
-import { FontAwesome } from '@expo/vector-icons';
 import { useUserInfo } from '../components/util/useUserInfos'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { NavigationProp } from '@react-navigation/native'
+
 
 
 type CantonsPageProps = {
-    navigation: any
+  navigation: NavigationProp<any>;
 }
 
 const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
 
-
   const {cities} = useCities();
-  const {userInfo,mutate} = useUserInfo();
+  const {mutate} = useUserInfo();
   
-  const {t} = useLanguage()
+  const {t} = useLanguage();
 
   useEffect(() => {
-    mutate()
+    mutate();
   },[])
 
   const {width: SCREENWIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
   },[SCREENWIDTH])
   
   const title = typeof t('pageWelcomeTitle') === 'string' ? t('pageWelcomeTitle').split(' ') : [];
-
-  const handleGoToNewsPage = useCallback(() => {
-    navigation.push('NewsPage');
-  }, [navigation]);
-
 
   const sortedCities = useMemo(() => {
     return cities?.slice()?.sort((a, b) => a.id - b.id);
@@ -79,7 +72,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
            renderItem={({ item }) => (
            <TouchableOpacity
              key={item.id}
-             onPress={() => navigation.push('Categories',{
+             onPress={() => navigation.navigate('Categories',{
                  cityName: item.name
              })}
              style={styles.imageContainerTablet}
@@ -126,7 +119,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation}) => {
            renderItem={({ item }) => (
            <TouchableOpacity
              key={item.id}
-             onPress={() => navigation.push('Categories',{
+             onPress={() => navigation.navigate('Categories',{
                  cityName: item.name
              })}
              style={styles.imageContainer}

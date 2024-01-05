@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, TouchableOpacity} from 'react-native'
 import { Image } from 'expo-image';
 import React, { FC } from 'react'
-import { AntDesign } from '@expo/vector-icons';
 
 type linkButtonProps = {
     text: string;

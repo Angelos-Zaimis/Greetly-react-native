@@ -1,95 +1,90 @@
 import { SafeAreaView, StyleSheet, Text, View,Modal, FlatList, TouchableOpacity, useWindowDimensions} from 'react-native'
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
 import SaveButton from '../components/shared/SaveButton';
 import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../countriesAndStatus/countries';
 import { AntDesign } from '@expo/vector-icons'; 
-import { AuthContext } from '../hooks/auth/AuthContext';
 import { statusList } from '../assets/statuslist/statusList';
 import CustomToaster from '../components/shared/CustomToaster';
 import { Entypo } from '@expo/vector-icons';
 import { languages } from '../assets/languages';
 import { Fontisto } from '@expo/vector-icons';
 import { useUserInfo } from '../components/util/useUserInfos';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type ProfileItemProps = {
-    route: any
-    navigation: any
+  navigation: NavigationProp<any>;
+  route: RouteProp<{params: {status: string, language: string, country: string }}>;
 }
 
 const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
 
-
     const { status, language, country } = route.params;
-
-
     const {t} = useLanguage();
 
     const [selectedCountry, setSelectedCountry] = useState<string>('');
-    const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>()
-    const [selectedStatus, setSelectedStatus] = useState<string | undefined>()
+    const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>();
+    const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [showPopupLanguage, setShowPopupLanguage] = useState<boolean>(false);
-    const [showPopupStatus, setShowPopupStatus] = useState<boolean>(false)
-    const [showToastMessage, setShowToastMessage] = useState<boolean>(false)
-    const [successToast, setSuccessToast] = useState<boolean>(false)
-    const [toastText, setToastText] = useState<string>('')
-    
-
+    const [showPopupStatus, setShowPopupStatus] = useState<boolean>(false);
+    const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+    const [successToast, setSuccessToast] = useState<boolean>(false);
+    const [toastText, setToastText] = useState<string>('');
     const {mutate, userInfo, updateUserInfo} = useUserInfo();
 
     const {width: SCREENWIDTH} = useWindowDimensions();
   
     const isTabletMode = useMemo(() => {
       if(SCREENWIDTH > 700) {
-        return true
+        return true;
       }
   
       return false;
     },[SCREENWIDTH])
 
-    const handleNavigationBack = () => {
-      navigation.push('Profile');
-    }
+    const handleNavigationBack = useCallback(() => {
+      navigation.navigate('Profile');
+    },[navigation]);
 
-    const closePopup = () => {
-        setShowPopup(false)
-    }
+    const closePopup = useCallback(() => {
+        setShowPopup(false);
+    },[setShowPopup]);
 
-    const handleShowPopup = () => {
-        setShowPopup(true)
-    }
+    const handleShowPopup = useCallback(() => {
+        setShowPopup(true);
+    },[setShowPopup]);
 
-    const closePopupStatus = () => {
-        setShowPopupStatus(false)
-    }
+    const closePopupStatus = useCallback(() => {
+        setShowPopupStatus(false);
+    }, [setShowPopupStatus]);
 
-    const handleShowPopupStatus = () => {
-        setShowPopupStatus(true)
-    }
+    const handleShowPopupStatus = useCallback(() => {
+      setShowPopupStatus(true);
+    }, [setShowPopupStatus]);
 
-    const closePopupLanguage = () => {
-        setShowPopupLanguage(false)
-    }
+    const closePopupLanguage = useCallback(() => {
+      setShowPopupLanguage(false);
+    }, [setShowPopupLanguage]);
 
-    const handleShowPopupLanguage = () => {
-        setShowPopupLanguage(true)
-    }
+    const handleShowPopupLanguage = useCallback(() => {
+        setShowPopupLanguage(true);
+    },[setShowPopupLanguage]);
 
-    const handleCancel = () => {
+    const handleCancel = useCallback(() => {
         navigation.goBack();
-    }
+    }, [navigation]);
 
-    const handleStatus = (status: string) => {
+    const handleStatus = useCallback((status: string) => {
         setSelectedStatus(status);
         setShowPopupStatus(false);
-    };
+    }, [setSelectedStatus, setShowPopupStatus]);
 
-    const getCountryLanguage = (languageCode: string ) => {
+    const getCountryLanguage = useCallback((languageCode: string ) => {
         const language = languages.find(l => l.language === languageCode);
         return language ? language.countryLanguage : null;
-    }
+    }, [languages]);
       
     const renderItem = (
         { item 
@@ -104,7 +99,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
         >
           <Text style={styles.renderedText}>{item.label}</Text>
         </TouchableOpacity>
-      );
+    );
 
     const renderItemTablet = (
       { item 
@@ -134,7 +129,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
-                navigation.push('Profile');
+                navigation.navigate('Profile');
               }, 1100);
             } catch (error) {
               setToastText('Country')
@@ -158,7 +153,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
-                navigation.push('Profile');
+                navigation.navigate('Profile');
               }, 1100);
             } catch (error) {
               setToastText('Language')
@@ -182,7 +177,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
-                navigation.push('Profile');
+                navigation.navigate('Profile');
               }, 1100);
             } catch (error) {
               setToastText('Occupation')
@@ -226,8 +221,8 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                <Modal visible={showPopup} transparent>
                     <View style={styles.overlayTablet}>
                         <View style={styles.popupTablet}>
-                            <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
-                                <Text style={styles.dropdownTextTablet} className='text-blackCustom font-medium'>{t('pageOnboardingSelectCoutnry')}</Text>
+                            <View style={styles.titleModalContainer}>
+                                <Text style={styles.dropdownTextTablet}>{t('pageOnboardingSelectCoutnry')}</Text>
                                 <TouchableOpacity onPress={closePopup}>
                                   <Fontisto style={styles.deleteIconTablet} name="close-a" size={15} color="black" />
                                 </TouchableOpacity>
@@ -273,8 +268,8 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                  <Modal visible={showPopupLanguage} transparent>
                     <View style={styles.overlayTablet}>
                         <View style={styles.popupTablet}>
-                            <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
-                                <Text style={styles.dropdownTextTablet} className='text-blackCustom font-medium'>{t('Selectyourlanuage')}</Text>
+                            <View style={styles.titleModalContainer}>
+                                <Text style={styles.dropdownTextTablet}>{t('Selectyourlanuage')}</Text>
                                 <TouchableOpacity  onPress={closePopupLanguage}>
                                   <Fontisto style={styles.deleteIconTablet} name="close-a" size={15} color="black" />
                                 </TouchableOpacity>
@@ -320,8 +315,8 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
             <Modal visible={showPopupStatus} transparent>
                 <View style={styles.overlayTablet}>
                     <View style={styles.popupTablet}>
-                        <View className='flex justify-center flex-row  items-center pt-4'>
-                            <Text style={styles.dropdownTextTablet} className='text-blackCustom font-medium'>{t('pageOnboardingSelectStatus')}</Text>
+                        <View style={styles.titleModalContainer}>
+                            <Text style={styles.dropdownTextTablet}>{t('pageOnboardingSelectStatus')}</Text>
                             <TouchableOpacity  onPress={closePopupStatus}>
                               <Fontisto style={styles.deleteIconTablet} name="close-a" size={15} color="black" />
                             </TouchableOpacity>
@@ -381,10 +376,10 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                <Modal visible={showPopup} transparent>
                     <View style={styles.overlay}>
                         <View style={styles.popup}>
-                            <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
-                                <Text style={styles.dropdownText} className='text-blackCustom font-medium'>{t('pageOnboardingSelectCoutnry')}</Text>
+                            <View style={styles.titleModalContainer}>
+                                <Text style={styles.dropdownText}>{t('pageOnboardingSelectCoutnry')}</Text>
                                 <TouchableOpacity onPress={closePopup}>
-                                  <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
+                                  <Fontisto style={styles.deleteIcon} name="close-a" size={17} color="black" />
                                 </TouchableOpacity>
                             </View>
                             <Dropdown
@@ -428,10 +423,10 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
                  <Modal visible={showPopupLanguage} transparent>
                     <View style={styles.overlay}>
                         <View style={styles.popup}>
-                            <View className='flex justify-center flex-row  items-center mb-4 pt-4'>
-                                <Text style={styles.dropdownText} className='text-blackCustom font-medium'>{t('Selectyourlanuage')}</Text>
+                            <View style={styles.titleModalContainer}>
+                                <Text style={styles.dropdownText}>{t('Selectyourlanuage')}</Text>
                                 <TouchableOpacity  onPress={closePopupLanguage}>
-                                  <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
+                                  <Fontisto style={styles.deleteIcon} name="close-a" size={17} color="black" />
                                 </TouchableOpacity>
                             </View>
                             <Dropdown
@@ -475,10 +470,10 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
             <Modal visible={showPopupStatus} transparent>
                 <View style={styles.overlay}>
                     <View style={styles.popup}>
-                        <View className='flex justify-center flex-row  items-center pt-4'>
-                            <Text style={styles.dropdownText} className='text-blackCustom font-medium'>{t('pageOnboardingSelectStatus')}</Text>
+                        <View style={styles.titleModalContainer}>
+                            <Text style={styles.dropdownText}>{t('pageOnboardingSelectStatus')}</Text>
                             <TouchableOpacity  onPress={closePopupStatus}>
-                              <Fontisto style={styles.deleteIcon} name="close-a" size={15} color="black" />
+                              <Fontisto style={styles.deleteIcon} name="close-a" size={17} color="black" />
                             </TouchableOpacity>
                         </View>
                         <View style={styles.popupFlatlist}>
@@ -573,6 +568,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         paddingLeft: 20,
     },
+    titleModalContainer: {
+      justifyContent: 'center', 
+      flexDirection: 'row', 
+      alignItems: 'center',
+      paddingTop: 8, 
+      paddingBottom: 5,
+    },
     inputText: {
         fontSize: 20,
         fontWeight: '600',
@@ -635,8 +637,9 @@ const styles = StyleSheet.create({
         paddingVertical: 3
       },
        dropdownText: {
-      fontSize: 16,
-      color: '#72788D'
+      fontSize: 18,
+      color: '#72788D',
+      fontWeight:'bold'
     },
       item: {
         borderBottomColor: '#d8d8dc',
@@ -648,7 +651,7 @@ const styles = StyleSheet.create({
       },
       deleteIcon: {
         position: 'absolute',
-        right: -40,
+        right: -30,
         top: -5
       },
     selectStatus: {

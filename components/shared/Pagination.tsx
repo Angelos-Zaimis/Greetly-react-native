@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { FC, RefObject } from 'react' 
+import { View } from 'react-native'
+import React, { FC } from 'react' 
 import { ScaledSheet } from 'react-native-size-matters'
-import { NextButton } from './NextButton';
+
 
 type PaginationProps = {
     data: any[];

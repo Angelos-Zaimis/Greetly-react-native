@@ -3,7 +3,7 @@ import React, { ReactNode, createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppURLS from "../../components/appURLS";
-import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_USER_EXISTS, USER_INFO_ENDPOINT } from "../../components/endpoints";
+import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_REGISTRATION_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_USER_EXISTS, USER_INFO_ENDPOINT } from "../../components/endpoints";
 import * as Google from 'expo-auth-session/providers/google'
 import { Alert } from "react-native";
 
@@ -13,6 +13,13 @@ type ProductDetails = {
   subscription_plan: string;
   subscription_price: number;
 };
+
+type SignUpProps = {
+  email: string;
+  password: string;
+  selectedCountry: string
+  status: string
+}
 
 type AuthData = {
   type: 'google' | 'normal';
@@ -46,6 +53,7 @@ interface AuthContextType {
   }
   promptAsync: () => void;
   login: (body: LoginProps) => Promise<any>;
+  signUp: (body: SignUpProps) => Promise<any>;
   logout: () => void;
   changePassword: (email: string | undefined) => Promise<{ data: string }>;
   changePasswordVerify: (body: { email: string; code: string; password: string }) => Promise<void>;
@@ -78,6 +86,10 @@ const initialAuthContextValue: AuthContextType = {
   },
   authTokens: {
     access: '', refresh: ''
+  },
+  signUp: async (body) => {
+    return Promise.resolve(/* some result */);
+
   },
   promptAsync: () => {
     // Your implementation here
@@ -303,6 +315,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
+  const signUp = async(body: SignUpProps) => {
+
+
+    try {
+      const response = await axios.post(
+        `${AppURLS.middlewareInformationURL}/${AUTH_REGISTRATION_ENDPOINT}/`,
+        body,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+        );
+        
+        return response
+        
+      } catch (error: any) {
+        return error.response.data
+      }
+
+
+  }
+
   const deleteAccount = async (email: string) => {
     const response = await axios.delete(`${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_ENDPOINT}/`, {
       headers: {
@@ -326,6 +361,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     changePassword,
     changePasswordVerify,
     promptAsync,
+    signUp
   };
 
   return (

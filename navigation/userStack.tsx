@@ -4,15 +4,10 @@ import React from 'react'
 import SWRConfigProvider from '../components/util/SWRConfig';
 import BottomNavigator from '../bottomNavigator/BottomNavigator';
 
-
 const Stack = createNativeStackNavigator();
 
-
 const UserStack = () => {
-
-
   return (
-    
     <SWRConfigProvider>
       <NavigationContainer>
         <Stack.Navigator>

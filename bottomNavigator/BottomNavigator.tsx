@@ -1,19 +1,19 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {NewsPage, Translate} from '../screens';
+import {NewsPage} from '../screens';
 import WelcomePage from '../navigation/welcomePageNavigator/WelcomePage';
 import ProfileContainer from '../navigation/profileNavigator/ProfileContainer';
 import BookmarksContainer from '../navigation/booksmarksNavigator/BookmarksContainer';
 import HelpNavigator from '../navigation/helpNavigator/HelpContainer';
-import { MaterialIcons, Feather, MaterialCommunityIcons} from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import { Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import { FC, useMemo } from 'react';
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { NavigationProp } from '@react-navigation/native';
 
 type BottomNavigatorProps = {
-  navigation?: any;
-
+  navigation: NavigationProp<any>;
 };
 
 const Tab = createBottomTabNavigator();
@@ -22,10 +22,9 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
 
   const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
 
-
   const isTabletMode = useMemo(() => {
     if(SCREEN_WIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;

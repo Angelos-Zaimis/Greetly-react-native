@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useState } from 'react'
-import { Image,TouchableOpacity, Text, FlatList} from 'react-native'
+import React, { FC } from 'react'
+import { Image,TouchableOpacity, Text } from 'react-native'
 import { ScaledSheet } from 'react-native-size-matters';
 
 

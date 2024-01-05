@@ -4,16 +4,16 @@ import { AntDesign } from '@expo/vector-icons';
 import { AuthContext } from '../hooks/auth/AuthContext';
 import Spinner from '../components/shared/Spinner';
 import { Image } from 'expo-image';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type changePasswordProps = {
-    navigation: any
-    route?: any
+    navigation: NavigationProp<any>;
+    route?: RouteProp<{params: { inApp: boolean}}>;
 }
 
 const ChangePassword: FC<changePasswordProps> = ({navigation, route}) => {
 
     const {inApp} = route.params ?? {};
-
     const [email,setEmail] = useState<string>('');
     const [response, setResponse]  = useState<string>('');
     const [code, setCode] = useState<string>('');
@@ -23,54 +23,50 @@ const ChangePassword: FC<changePasswordProps> = ({navigation, route}) => {
     const {changePassword, changePasswordVerify} = useContext(AuthContext);
 
     const handleEmail = useCallback((newEmail: string) => {
-        setEmail(newEmail)
+        setEmail(newEmail);
     },[email,setEmail])
 
     const handleCode = useCallback((code: string) => {
-        setCode(code)
+        setCode(code);
     },[code,setCode])
 
-   
     const handleNewPassword = useCallback((newPassword: string) => {
-        setNewPassword(newPassword)
+        setNewPassword(newPassword);
     },[password,setNewPassword])
 
-   
-   
+
     const handleChangePassword = useCallback(async () => {
-        setLoading(true)
+        setLoading(true);
         try {
             const response = await changePassword(email);
-            setResponse(response.data)
-            Alert.alert(response.data)
+            setResponse(response.data);
+            Alert.alert(response.data);
             setLoading(false)
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
         setLoading(false)
     }, [email]); 
     
-    const handleChangePasswordVerify = async () => {
-        setLoading(true)
+    const handleChangePasswordVerify = useCallback(async() => {
+        setLoading(true);
         try {
             const response = await changePasswordVerify({email,code,password});
             if(response?.message === 'Password changed successfully.') {
-                navigation.push('Login')
+                navigation.navigate('Login');
     
             }
-            setLoading(false)
+            setLoading(false);
             return response;
         } catch (error) {
             console.log(error)
         }
-        setLoading(false)
-    };
+        setLoading(false);
+    },[changePasswordVerify, email,code,password]);
     
-
-
-    const handleNavigationBack = () => {
+    const handleNavigationBack = useCallback(() => {
         navigation.goBack();
-    }
+    },[navigation])
 
   return (
     <SafeAreaView style={[styles.container,Platform.OS === 'android' && { paddingTop: 25}]}>
@@ -195,7 +191,8 @@ const styles = StyleSheet.create({
         height: 80,
         paddingLeft: 20,
         borderRadius: 18,
-        width: '90%'
+        width: '90%',
+        fontSize: 16
     },
     inputContainer: {
         alignItems: 'center',

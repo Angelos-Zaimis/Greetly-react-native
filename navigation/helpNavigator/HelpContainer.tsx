@@ -1,4 +1,4 @@
-import React, { FC} from 'react'
+import React, { FC } from 'react'
 import {Help, TeamMember, TeamMembers} from '../../screens/index';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 

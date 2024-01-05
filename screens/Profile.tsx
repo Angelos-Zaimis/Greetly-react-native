@@ -9,17 +9,18 @@ import { Entypo } from '@expo/vector-icons';
 import ConfirmModal from '../components/shared/ConfirmModal';
 import { languages } from '../assets/languages';
 import { useUserInfo } from '../components/util/useUserInfos';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 
 type ProfileProps = {
-    navigation: any;
-    route: any;
+    navigation: NavigationProp<any>;
+    route: RouteProp<{params: {}}>;
 }
 
-const Profile: FC<ProfileProps> = ({navigation, route}) => {
+const Profile: FC<ProfileProps> = ({navigation }) => {
 
     const {t} = useLanguage();
-    const {logout, deleteAccount} = useContext(AuthContext)
+    const {logout, deleteAccount} = useContext(AuthContext);
     const {userInfo} = useUserInfo();
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     const [showLogOutModal, setShowLogOutModal] = useState<boolean>(false);
@@ -28,7 +29,7 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
   
     const isTabletMode = useMemo(() => {
       if(SCREENWIDTH > 700) {
-        return true
+        return true;
       }
   
       return false;
@@ -36,78 +37,77 @@ const Profile: FC<ProfileProps> = ({navigation, route}) => {
     
     const navigateToProfileItemStatus = useCallback(
         (status: string | undefined) => {
-          navigation.push('ProfileItem', {
+          navigation.navigate('ProfileItem', {
             status: status,
           });
         },
         [navigation]
-      );
+    );
       
-      const navigateToProfileItemLanguage = useCallback(
+    const navigateToProfileItemLanguage = useCallback(
         (language: string | undefined) => {
-          navigation.push('ProfileItem', {
-            language: language,
-          });
+            navigation.navigate('ProfileItem', {
+               language: language,
+            });
         },
         [navigation]
-      );
+    );
       
-      const navigateToProfileItemCountry = useCallback(
+    const navigateToProfileItemCountry = useCallback(
         (country: string | undefined) => {
-          navigation.push('ProfileItem', {
-            country: country,
-          });
-        },
-        [navigation]
-      );
+            navigation.navigate('ProfileItem', {
+                country: country,
+            });
+        },[navigation]
+    );
       
-      const navigateToChangePassword = useCallback(() => {
-        navigation.push('ChangePassword', {
+    const navigateToChangePassword = useCallback(() => {
+        navigation.navigate('ChangePassword', {
           inApp: true,
         });
-      }, [navigation]);
+    }, [navigation]);
 
-    const handleLogout = async() => {
-        await logout()
-    }
+    const handleLogout = useCallback(async() => {
+        await logout();
+    },[logout]);
 
-    const handleDeleteAccount = async () => {
+    const handleDeleteAccount = useCallback(async() => {
         await deleteAccount(userInfo?.user ?? '');
-        await logout()
-    };
+        await logout();
+    },[deleteAccount, logout]);
 
-    const closeConfirmModal = () => {
-        setShowConfirmModal(false)
-    }
+    const closeConfirmModal = useCallback(() => {
+        setShowConfirmModal(false);
+    }, [setShowConfirmModal]);
 
-    const openConfirmModal = () => {
-        setShowConfirmModal(true)
-    }
+    const openConfirmModal = useCallback(() => {
+        setShowConfirmModal(true);
+    }, [setShowConfirmModal]);
 
-    const closeLogoutModal = () => {
-        setShowLogOutModal(false)
-    }
+    const closeLogoutModal = useCallback(() => {
+        setShowLogOutModal(false);
+    }, [setShowLogOutModal]);
 
-    const openLogoutModal = () => {
-        setShowLogOutModal(true)
-    }
+    const openLogoutModal = useCallback(() => {
+        setShowLogOutModal(true);
+    }, [setShowLogOutModal]);
 
     const handleGetSubscriptionDetails = useCallback(() => {
-        navigation.push('SubscriptionDetails')
-    },[navigation])
+        navigation.navigate('SubscriptionDetails');
+    },[navigation]);
 
     const handleGoPremium = useCallback(() => {
-        navigation.push('GoPremium')
-    },[navigation])
+        navigation.navigate('GoPremium');
+    },[navigation]);
 
     const price = useMemo(() => {
-        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '55'
+        return userInfo?.product_details?.subscription_price ===  500 ? '5' : '55';
     },[userInfo?.product_details?.subscription_price])
 
-    const getCountryLanguage = (languageCode: string) => {
+    const getCountryLanguage = useCallback((languageCode: string) => {
         const language = languages.find(l => l.language === languageCode);
         return language ? language.countryLanguage : null;
-    }
+    },[languages])
       
   if (isTabletMode) {
     return (
@@ -397,6 +397,7 @@ const styles = StyleSheet.create({
     },
     delete: {
         marginTop: 15,
+        marginBottom: 40,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center'

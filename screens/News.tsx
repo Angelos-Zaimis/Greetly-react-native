@@ -1,10 +1,12 @@
 import { View, Text, SafeAreaView, Platform, StyleSheet, TouchableOpacity, FlatList, useWindowDimensions, Linking } from 'react-native'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useCallback, useMemo } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import { NavigationProp } from '@react-navigation/native';
+
 type NewsProps = {
-    navigation: any,
-  }
+  navigation: NavigationProp<any>;
+}
 
 type NewsItem = {
     id: number;
@@ -20,20 +22,19 @@ type NewsItem = {
 
 const News: FC<NewsProps> = ({navigation}) => {
 
-    const handleNavigationBack = () => {
+    const handleNavigationBack = useCallback(() => {
         navigation.goBack()
-    }
-
+    },[navigation])
 
     const {width: SCREENWIDTH} = useWindowDimensions();
   
     const isTabletMode = useMemo(() => {
       if(SCREENWIDTH > 700) {
-        return true
+        return true;
       }
   
       return false;
-    },[SCREENWIDTH])
+    },[SCREENWIDTH]);
 
     const openURL = (url: string) => {
       Linking.canOpenURL(url).then((supported) => {
@@ -47,24 +48,23 @@ const News: FC<NewsProps> = ({navigation}) => {
 
     const renderItem = ({ item }: { item: NewsItem }) => (
         <View style={styles.articleContainer} >
-            <TouchableOpacity onPress={() => openURL(item.url)} style={styles.article}>
+          <TouchableOpacity onPress={() => openURL(item.url)} style={styles.article}>
             <Image source={item.urlToImage} style={styles.articleImage} />
             <View style={styles.articleContent}>
-                <Text style={styles.articleTitle}>{item.title}</Text>
-                <View style={styles.articleSubtitleContainer}>
-                    <Text style={styles.articleSubtitle}>{item.publishedAt}</Text>
-                </View>
-                <Text style={styles.articleDescription}>{item.description}</Text>
-                <Text style={styles.articleSubtitle}>{item.source.name}</Text>
+              <Text style={styles.articleTitle}>{item.title}</Text>
+              <View style={styles.articleSubtitleContainer}>
+                <Text style={styles.articleSubtitle}>{item.publishedAt}</Text>
+              </View>
+              <Text style={styles.articleDescription}>{item.description}</Text>
+              <Text style={styles.articleSubtitle}>{item.source.name}</Text>
             </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
     );
 
-
     const renderItemTablet = ({ item }: { item: NewsItem }) => (
         <View style={styles.articleContainerTablet}>
-            <TouchableOpacity onPress={() => openURL(item.url)} style={styles.articleTablet}>
+          <TouchableOpacity onPress={() => openURL(item.url)} style={styles.articleTablet}>
             <Image source={item.urlToImage} style={styles.articleImageTablet} />
             <View style={styles.articleContentTablet}>
                 <Text style={styles.articleTitleTablet}>{item.title}</Text>
@@ -73,7 +73,7 @@ const News: FC<NewsProps> = ({navigation}) => {
                 </View>
                 <Text style={styles.articleDescriptionTablet}>{item.description}</Text>
             </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </View>
     );
 
@@ -105,45 +105,45 @@ const News: FC<NewsProps> = ({navigation}) => {
   if (isTabletMode) {
     return(
         <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
-            <View>
-                <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
-                    <AntDesign name="left" size={30} color="black" />
-                </TouchableOpacity>
-            </View>
-            <View style={styles.titleContainerTablet}>
-                <Text style={styles.titleTablet}>News</Text>
-            </View>
-            <View style={styles.flatListContainerTablet}>
-                <FlatList
-                    data={mockNewsData}
-                    renderItem={renderItemTablet}
-                    keyExtractor={(item) => item.id.toString()}
-                    style={styles.flatListTablet}
-                />
-            </View>
+          <View>
+            <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
+              <AntDesign name="left" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.titleContainerTablet}>
+            <Text style={styles.titleTablet}>News</Text>
+          </View>
+          <View style={styles.flatListContainerTablet}>
+            <FlatList
+              data={mockNewsData}
+              renderItem={renderItemTablet}
+              keyExtractor={(item) => item.id.toString()}
+              style={styles.flatListTablet}
+            />
+          </View>
         </SafeAreaView>
     )
   }
       
   return (
-    <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
+      <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
         <View>
-            <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
-                <AntDesign name="left" size={24} color="black" />
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
+            <AntDesign name="left" size={24} color="black" />
+          </TouchableOpacity>
         </View>
         <View style={styles.titleContainer}>
-            <Text style={styles.title}>News</Text>
+          <Text style={styles.title}>News</Text>
         </View>
         <View style={styles.flatListContainer}>
-            <FlatList
-                data={mockNewsData}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-                style={styles.flatList}
-            />
+          <FlatList
+            data={mockNewsData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id.toString()}
+            style={styles.flatList}
+          />
         </View>
-    </SafeAreaView>
+      </SafeAreaView>
   )
 }
 

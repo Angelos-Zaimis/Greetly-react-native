@@ -1,8 +1,7 @@
 
-import React, { FC } from 'react'
-import { Image,TouchableOpacity, Text, View, StyleSheet, Linking} from 'react-native'
+import React  from 'react'
+import { Text, View, StyleSheet } from 'react-native'
 import { useLanguage } from '../util/LangContext';
-import { FontAwesome5 } from '@expo/vector-icons';
 import ExpandableSection from './ExpandableSection';
 import ExpandableSectionList from './ExpandableList';
 import ExpandableLink from './ExpandableLink';
@@ -14,8 +13,7 @@ export const RenderContentItem = ({ item, navigation }) => {
     if (!item) {
         return null;
     }
-    
-    console.log(item)
+
     return (
         <React.Fragment>
 

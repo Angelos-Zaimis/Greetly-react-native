@@ -1,44 +1,43 @@
 import { StyleSheet, Text, View,TouchableOpacity,ScrollView, useWindowDimensions } from 'react-native'
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { AuthContext } from '../hooks/auth/AuthContext';
-import useSWR, { mutate } from 'swr';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { mutate } from 'swr';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import { useBookmarks } from '../components/util/useBookmarks';
 import CustomToaster from '../components/shared/CustomToaster';
-import AppURLS from '../components/appURLS';
-import { CITIES_ENDPOINT } from '../components/endpoints';
 import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons';
-import { useUserInfo } from '../components/util/useUserInfos';
 import {RenderContentItem } from '../components/shared/ContentItem';
+import { useInformation } from '../components/util/useInformation';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type InformationsProps = {
-  navigation: any;
-  route: any;
+  navigation: NavigationProp<any>;
+  route?: RouteProp<{params: {
+    cityName: string, 
+    category: string,
+    subcategory: string,image: string}}>;
 }
 
 const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
-  const {cityName, category,subcategory,image} = route.params ?? {}
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false)
-  const [successToast, setSuccessToast] = useState<boolean>(false)
-  const {userInfo} = useUserInfo();
+  const {cityName, category,subcategory,image} = route.params ?? {};
+  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+  const [successToast, setSuccessToast] = useState<boolean>(false);
 
-  const { data: information } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfo?.citizenship}-${userInfo?.status}-${subcategory}/`,
+  const {information} = useInformation(
+    cityName,
+    category,
+    subcategory
   );
 
-  console.log(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${category}/${subcategory}/${userInfo?.citizenship}-${userInfo?.status}-${subcategory}/`,
-  )
   const {
     createBookmark, 
     deleteBookmark, 
     bookmarkSaved, 
-    mutateBookmark } = useBookmarks(information?.title);
+  mutateBookmark } = useBookmarks(information?.title);
     
-  const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false)
-
+  const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false);
 
   const handleNavigationBack = useCallback( async() => {
     navigation.goBack();
@@ -50,21 +49,21 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
   },[SCREENWIDTH])
 
-  const handleOpenDocs = () => {
+  const handleOpenDocs = useCallback(() => {
     setOpenRequiredDoc(true)
-  }
-  const  handleCloseDocs = () => {
+  },[setOpenRequiredDoc, openRequiredDoc])
+
+  const  handleCloseDocs = useCallback(() => {
     setOpenRequiredDoc(false)
-  }
+  },[setOpenRequiredDoc, openRequiredDoc])
 
   const addToBookmark = useCallback( async() => {
-
     try {
       await createBookmark({
         canton: cityName,
@@ -75,7 +74,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         requiredDocuments: information?.requiredDocuments,
         saved: true,
         uniqueTitle: information?.title
-      })
+      });
       setShowToastMessage(true);
       setSuccessToast(true);
       setTimeout(() => {
@@ -88,16 +87,16 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         setShowToastMessage(false);
       }, 1100);
   }
-    await mutateBookmark()
+    await mutateBookmark();
   },[cityName,category,information?.description,image,information?.requiredDocuments])
  
   const deleteToBookmark = useCallback( async() => {
-    await deleteBookmark(bookmarkSaved?.uniqueTitle)
-    await mutateBookmark()
+    await deleteBookmark(bookmarkSaved?.uniqueTitle);
+    await mutateBookmark();
   },[bookmarkSaved?.uniqueTitle])
 
   useEffect(() => {
-    mutateBookmark()
+    mutateBookmark();
   },[deleteBookmark, addToBookmark])
 
   if (isTabletMode) {
@@ -180,7 +179,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         </View>
       </View>
       <ScrollView style={styles.container}>
-        {information && information.content?.content.map((item, index) => (
+        {information && information.content?.content.map((item: any, index: React.Key) => (
         <View style={styles.containerContentItem} key={index}>
           <RenderContentItem navigation={navigation} item={item} />
         </View>

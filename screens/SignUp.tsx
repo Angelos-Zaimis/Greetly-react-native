@@ -1,9 +1,8 @@
 import { SafeAreaView, Text,TouchableOpacity, View, TextInput ,Platform, useWindowDimensions, Alert, Modal, FlatList } from 'react-native'
-import React, { FC, useCallback, useMemo, useState } from 'react'
+import React, { FC, useCallback, useContext, useMemo, useState } from 'react'
 import Checkbox from 'expo-checkbox';
 import { ScaledSheet } from 'react-native-size-matters';
 import { useLanguage } from '../components/util/LangContext';
-import signUp from '../hooks/auth/SignUp';
 import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../countriesAndStatus/countries';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -11,29 +10,29 @@ import { statusList } from '../assets/statuslist/statusList';
 import CreateButtonSignIn from '../components/shared/CreateButtonSignIn';
 import { Ionicons } from '@expo/vector-icons';
 import Spinner from '../components/shared/Spinner';
-import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons';
 import PrivacyPolicy from '../components/shared/PrivacyPolicy';
+import { NavigationProp } from '@react-navigation/native';
+import { AuthContext } from '../hooks/auth/AuthContext';
+
 type SignInProps = {
-    navigation: any;
+  navigation: NavigationProp<any>;
 }
 
-const SignIn: FC<SignInProps> = ({navigation}) => {
-  
-
+const SignUp: FC<SignInProps> = ({navigation}) => {
     const {t} = useLanguage();
-    
-    const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [status, setStatus] = useState<string>('')
-    const [selectedCountry, setSelectedCountry] = useState<string>('')
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [status, setStatus] = useState<string>('');
+    const [selectedCountry, setSelectedCountry] = useState<string>('');
     const [showPopup, setShowPopup] = useState<boolean>(false);
-    const [signPending, setSigninPending] = useState<boolean>(false)
+    const [signPending, setSigninPending] = useState<boolean>(false);
     const [showPopupSelectedCountry, setShowPopupSelectedCountry] = useState<boolean>(false);
-    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true)
+    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
     const [isChecked, setChecked] = useState<boolean>(false);
+    const {signUp} = useContext(AuthContext);
     const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
     const text = 'Create your account'.split(' ');
 
@@ -41,7 +40,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
 
     const isTabletMode = useMemo(() => {
       if(SCREEN_WIDTH > 700) {
-        return true
+        return true;
       }
       return false;
     },[SCREEN_WIDTH])
@@ -105,46 +104,44 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
       return { valid: true};
     };
 
-    const handleEmailInputChange = (text: string) => {
+    const handleEmailInputChange = useCallback((text: string) => {
       setEmail(text);
 
       const isValid = isValidEmail(text);
       setIsValidEmailInput(isValid.valid);
-    };
+    },[email, setEmail]);
 
-    const handlePasswordlInputChange = (text: string) => {
+    const handlePasswordlInputChange = useCallback((text: string) => {
       setPassword(text);
 
       const isValid = isValidPassword(text);
       setIsValidPasswordInput(isValid.valid);
-    };
+    }, [setPassword, password]);
 
     const handleShowPopupSelectedCountry = useCallback(() => {
-        setShowPopupSelectedCountry(true)
-    },[setShowPopupSelectedCountry])
+      setShowPopupSelectedCountry(true);
+    },[setShowPopupSelectedCountry]);
 
     const clozeShowPopupSelectedCountry  = useCallback(() => {
-        setShowPopupSelectedCountry(false)
-    },[setShowPopupSelectedCountry])
+      setShowPopupSelectedCountry(false);
+    },[setShowPopupSelectedCountry]);
 
     const handleNavigationSignUp = () => {
-        navigation.push('Login')
+      navigation.navigate('Login')
     }
 
     const handleStatusClick = useCallback((status: string) => {
-        setStatus(status);
-        setShowPopup(false);
+      setStatus(status);
+      setShowPopup(false);
     },[status]);
-  
-
 
     const handleShowPopup = useCallback(() => {
-        setShowPopup(true)
-    },[setShowPopup])
+        setShowPopup(true);
+    },[setShowPopup]);
 
     const closePopup = useCallback(() => {
-        setShowPopup(false)
-    },[setShowPopup])
+        setShowPopup(false);
+    },[setShowPopup]);
     
     const handleDisabled = useCallback(()=> {
       if(email === '' || password === '' || selectedCountry === '' || status === '' || isChecked === false){
@@ -181,7 +178,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
     );
 
     const handleCreateAccount  = useCallback((async() => {
-      setSigninPending(true)
+      setSigninPending(true);
       try {
         const response = await signUp(
             {
@@ -193,13 +190,13 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
         )
 
         if(response.status >= 200 || response.status < 300) {
-          navigation.push('Login')
-          setSigninPending(false)
+          navigation.navigate('Login');
+          setSigninPending(false);
         }
       } catch (e) {
-        console.log(e)
+        console.log(e);
         Alert.alert('Something went wrong, please try again.') 
-        setSigninPending(false)
+        setSigninPending(false);
       }
       }),[email,password,selectedCountry,status])
 
@@ -566,7 +563,7 @@ const SignIn: FC<SignInProps> = ({navigation}) => {
   )
 }
 
-export default SignIn
+export default SignUp
 
 const styles = ScaledSheet.create({
     container: {

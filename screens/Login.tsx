@@ -1,4 +1,4 @@
-import React, { FC ,useCallback,useContext,useEffect,useMemo,useState } from 'react'
+import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
 import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet, ScrollView  } from 'react-native'
 import { AuthContext } from '../hooks/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
@@ -6,50 +6,44 @@ import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import LinkButton from '../components/shared/LinkButton';
-import * as Google from 'expo-auth-session/providers/google'
 import * as WebBrowser from 'expo-web-browser'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import jwt_decode from "jwt-decode";
+import { NavigationProp } from '@react-navigation/native';
+WebBrowser.maybeCompleteAuthSession();
 
-WebBrowser.maybeCompleteAuthSession()
+type LoginProps = {
+  navigation: NavigationProp<any>;
+}
 
-//web 751236983319-kgqo51hbgmgbiojjhn1cjo346bgqd1oa.apps.googleusercontent.com
-// ios 751236983319-ggmr1611pgttfelv9enqq64rj6iq0klc.apps.googleusercontent.com
-// android : 751236983319-74hfbskhu222oo9jv4gas0ufg3vpm6ia.apps.googleusercontent.com
-
-
-const Login: FC = ({navigation}:any) => {
+const Login: FC<LoginProps> = ({navigation}) => {
   
     const [email,setEmail] = useState<string>('');
     const [password,setPassword] = useState<string>('');
-    const [loginPending, setLoginPending] = useState<boolean>(false)
-    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true)
+    const [loginPending, setLoginPending] = useState<boolean>(false);
+    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
     const {promptAsync,login} = useContext(AuthContext);
     const text = "Sign in now".split(' ');
     const subtitleCreateAccountText = "NOT A MEMBER? CREATE AN ACCOUNT".split(' ')
 
-
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
-  
 
     const isTabletMode = useMemo(() => {
       if(SCREEN_WIDTH > 700) {
-        return true
+        return true;
       }
       return false;
     },[SCREEN_WIDTH])
     
-    const handleEmailInputChange = (text: string) => {
+    const handleEmailInputChange = useCallback((text: string) => {
       setEmail(text);
-    };
+    },[email, setEmail]);
 
-    const handlePasswordlInputChange = (text: string) => {
+    const handlePasswordlInputChange = useCallback((text: string) => {
       setPassword(text);
-    };
+    },[password, setPassword]);
 
-    const handleForgotPassword = () => {
-      navigation.push('ChangePassword')  
-    }
+    const handleForgotPassword = useCallback(() => {
+      navigation.navigate('ChangePassword');
+    },[navigation])
   
     const handleDisabled = useCallback(()=> {
       if(email === '' || password === ''){
@@ -59,28 +53,29 @@ const Login: FC = ({navigation}:any) => {
       return false;
     },[email,password])
 
-    const handleNavigationSignIn = () => {
-      navigation.push('SignIn')
-    }
+    const handleNavigationSignIn = useCallback(() => {
+      navigation.navigate('SignIn');
+    },[navigation])
 
     const handlePress =  async() => {
-     setLoginPending(true)
-     const response = await login({
+      setLoginPending(true);
+      
+      const response = await login({
         email,
         password
       })
   
       if(response.status >= 300){
-        setLoginPending(false)
+        setLoginPending(false);
 
         Alert.alert(response.email[1])
         Alert.alert(response.password[1])
-        setLoginPending(false)
+        setLoginPending(false);
       }
-      setLoginPending(false)
+      
+      setLoginPending(false);
     }
  
-
   if (isTabletMode) {
     return (
       <>
@@ -274,10 +269,10 @@ const Login: FC = ({navigation}:any) => {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      backgroundColor: 'white'
+    flex: 1,
+    backgroundColor: 'white'
   },
-   body: {
+  body: {
     alignItems:'center'
    },
    passwordForget: {

@@ -1,21 +1,20 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity,Text, FlatList, useWindowDimensions} from 'react-native';
-import useSWR from 'swr';
 import CategoryButton from '../components/shared/CategoryButton';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
 import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
-import AppURLS from '../components/appURLS';
-import { CITIES_ENDPOINT, SUB_CATEGORIES_ENDPOINT } from '../components/endpoints';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
 import { Image } from 'expo-image';
 import Spinner from '../components/shared/Spinner';
 import { useUserInfo } from '../components/util/useUserInfos';
+import { useSubCategories } from '../components/util/useSubCategories';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type SubCategoriesProps = {
-  navigation: any;
-  route: any;
+  navigation: NavigationProp<any>;
+  route?: RouteProp<{params: { cityName: string, category: string}}>;
 };
 
 interface Category {
@@ -25,20 +24,16 @@ interface Category {
 }
 
 const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
+
   const { cityName, category } = route.params ?? {};
-
-
-  const [incomingCategory, setIncomingCategory] = useState(category);
-
+  const [incomingCategory, setIncomingCategory] = useState<string>(category);
   const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
-
   const {userInfo} = useUserInfo();
-
   const {width: SCREENWIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
-      return true
+      return true;
     }
 
     return false;
@@ -46,27 +41,28 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
 
   const {t} = useLanguage();
   
-  const { data: subCategories, error } = useSWR(
-    `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${incomingCategory}/${SUB_CATEGORIES_ENDPOINT}/`
+  const {subCategories} = useSubCategories(
+    cityName,
+    incomingCategory
   );
 
-  const handleNavigationBack = () => {
+  const handleNavigationBack = useCallback(() => {
     navigation.goBack();
-  }
+  },[navigation]);
 
   const [opacity,] = useState(new Animated.Value(0));
 
   const handleClosePopUp = useCallback(() => {
-    setIsNotSubscribed(false)
-  },[setIsNotSubscribed,isNotSubscribed])
+    setIsNotSubscribed(false);
+  },[setIsNotSubscribed,isNotSubscribed]);
 
-  const handleGoPremium = () => {
-    navigation.push("GoPremium")
-    setIsNotSubscribed(false)
-  }
+  const handleGoPremium = useCallback(() => {
+    navigation.navigate("GoPremium");
+    setIsNotSubscribed(false);
+  }, [navigation, setIsNotSubscribed]);
 
   const sortedSubCategories = useMemo(() => {
-    return subCategories?.subcategories?.slice()?.sort((a, b) => a.id - b.id);
+    return subCategories?.subcategories?.slice()?.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
   }, [subCategories]);
 
   useEffect(() => {
@@ -165,7 +161,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                      key={item.id}
                      onPress={
                          showAsSubscribed 
-                         ? () => navigation.push('Informations',{
+                         ? () => navigation.navigate('Informations',{
                            cityName: cityName,
                            category: incomingCategory,
                            subcategory: item.title,
@@ -235,7 +231,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                        key={item.id}
                        onPress={
                            showAsSubscribed 
-                           ? () => navigation.push('Informations',{
+                           ? () => navigation.navigate('Informations',{
                              cityName: cityName,
                              category: incomingCategory,
                              subcategory: item.title,

@@ -1,46 +1,47 @@
-import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity} from 'react-native'
-import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity, Modal} from 'react-native'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
 import ConfirmButton from '../components/shared/ConfirmButton';
 import { usePayments } from '../components/util/usePayments';
 import * as WebBrowser from 'expo-web-browser';
 import { useUserInfo } from '../components/util/useUserInfos';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
+import TermsAndConditions from '../components/shared/TermsAndConditions';
 
 type GoPremiumProps = {
-    navigation: any,
-    route: any
+    navigation: NavigationProp<any>;
+    route?: RouteProp<{params: {isWelcomePageStack}}>;
 }
 
 const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
     
     const {t} = useLanguage();
     
-    const isWelcomePageStack = route.params?.isWelcomePageStack;
+    const {isWelcomePageStack} = route.params ?? {}; 
     const [priceForSession, setPriceForSession] = useState<string>('');
-
     const {createCheackoutSession} = usePayments();
-
     const {mutate} = useUserInfo();
+    const [openTermsAndConditionsModal, setOpenTermsAndConditionsModal] = useState<boolean>(false);
 
     const {width: SCREENWIDTH} = useWindowDimensions();
     
     const isTabletMode = useMemo(() => {
         if(SCREENWIDTH > 700) {
-          return true       
+          return true;
         }
     
         return false;
-      },[SCREENWIDTH])
+    },[SCREENWIDTH])
  
     const handleGoBack = useCallback(async () => {
-        await mutate()
+        await mutate();
         if (isWelcomePageStack){
-            navigation.push('CantonsPage');
+            navigation.navigate('CantonsPage');
         }else if(isWelcomePageStack === false){
-            navigation.push('Profile');
+            navigation.navigate('Profile');
         }else{
-            navigation.push('Bookmarks')
+            navigation.navigate('Bookmarks')
         }
       }, [mutate, navigation]);
     
@@ -51,10 +52,6 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
     
         await handleGoBack();
     }, [WebBrowser]);
-
-    const showTermsAndConditions = () => {
-
-    }
 
   if (isTabletMode){
     return (
@@ -123,14 +120,26 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
             </TouchableOpacity>
         </View>
             <Text style={styles.sixthText}>{t("GoPremiumTermsCondition")}</Text>
-        <TouchableOpacity onPress={showTermsAndConditions}>
+        <TouchableOpacity onPress={() => setOpenTermsAndConditionsModal(true)}>
             <Text style={styles.termsText}>{t("termsAndConditions")}</Text>
         </TouchableOpacity>
         <View>
             <View style={styles.buttonContainer}>
-                <ConfirmButton text='Checkout' disabled={!priceForSession} handlePress={() => handleCreateSession(priceForSession)}/>
+                <ConfirmButton text='Confirm & Pay' disabled={!priceForSession} handlePress={() => handleCreateSession(priceForSession)}/>
             </View>
         </View>
+
+        {
+            openTermsAndConditionsModal && (
+                <Modal visible={openTermsAndConditionsModal} transparent>
+                    <View style={styles.overlay}>
+                        <View style={styles.popup}>
+                            <TermsAndConditions handleClose={() => setOpenTermsAndConditionsModal(false)}/>
+                        </View>
+                    </View>
+                </Modal>
+            )
+        }
     </SafeAreaView>
   )
 }
@@ -228,6 +237,19 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 6,
         textDecorationLine:'underline'
+    },
+    overlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      },
+      popup: {
+        backgroundColor: '#fff',
+        width: '80%',
+        height: '55%',
+        padding: 7,
+        borderRadius: 8,
     },
     buttonContainer: {
         alignItems: 'center',
