@@ -67,7 +67,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     try {
       await createBookmark({
         canton: cityName,
-        category: category,
+        category: category, 
         title: subcategory,
         description: information?.description,
         image: image,
@@ -179,7 +179,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
         </View>
       </View>
       <ScrollView style={styles.container}>
-        {information && information.content?.content.map((item: any, index: React.Key) => (
+        {information && information.content?.content?.map((item: any, index: React.Key) => (
         <View style={styles.containerContentItem} key={index}>
           <RenderContentItem navigation={navigation} item={item} />
         </View>

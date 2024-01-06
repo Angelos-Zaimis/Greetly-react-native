@@ -9,7 +9,6 @@ export const useSubCategories = (cityName: string,incomingCategory:string) => {
         `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/${cityName}/${incomingCategory}/${SUB_CATEGORIES_ENDPOINT}/`
     );
 
-
   return {
     error,
     subCategories

@@ -26,8 +26,6 @@ export const useBookmarks = (informationTitle?: string) => {
         body: JSON.stringify(postData),
       });
 
-
-      // If the request is successful, trigger a revalidation
       mutate(apiUrl);
     } catch (error) {
       console.error('Error:', error);

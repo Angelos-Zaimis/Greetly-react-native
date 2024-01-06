@@ -212,7 +212,7 @@
 
 
 
-    "HealthInsuranceObtainZETTitle": "Obtain Health Insurance for EU/EFTA Citizen in Zurich",
+    "HealthInsuranceObtainZETTitle": "Obtain Health Insurance for EU/EFTA Employee in Zurich",
     "HealthInsuranceObtainZETXTOne": "Health insurance coverage is compulsory for anyone residing in the country for more than three months",
     "HealthInsuranceObtainZETXTTwo": "What You Need to Know",
     "HealthInsuranceObtainZETXTThree": "As an EU/EFTA employee in Zurich, you must choose from about 60 Swiss health insurers, with your coverage starting from the first day of employment. If living in a neighboring country, you may opt for home country insurance but must apply for exemption within three months. It's vital to comply promptly to ensure continuous coverage and avoid penalties",
@@ -233,5 +233,19 @@
     "peterSchweizerAboutMe": "With over 10 years of experience, I provide tailored insurance solutions. I'm committed to ensuring your peace of mind with comprehensive coverage.",
  
     "chrisWannerSpecialization": "Specializes in visa applications, residency, citizenship, and work permits, catering to individual, family, and business needs",
-    "chrisWannerAboutMe":"As an immigration consultant, I offer expert guidance and support throughout the complex immigration process, aiming to make your journey to a new country seamless and successful"
+    "chrisWannerAboutMe":"As an immigration consultant, I offer expert guidance and support throughout the complex immigration process, aiming to make your journey to a new country seamless and successful",
+
+
+
+    "HealthInsuranceObtainZSTTitle": "Obtain Health Insurance for EU/EFTA Student in Zurich",
+    "HealthInsuranceObtainZSTXTOne": "Health insurance coverage is compulsory for anyone residing in the country for more than three months",
+    "HealthInsuranceObtainZSTXTTwo": "What You Need to Know",
+    "HealthInsuranceObtainZSTXTThree": "As an EU/EFTA Student in Zurich, you must choose from about 60 Swiss health insurers, with your coverage starting from the first day of employment. If living in a neighboring country, you may opt for home country insurance but must apply for exemption within three months. It's vital to comply promptly to ensure continuous coverage and avoid penalties",
+
+    "HealthInsuranceObtainZSTXTFour": "Discover Top Insurance Agents",
+    "HealthInsuranceObtainZSTXTFive": "Click below to seamlessly connect with our skilled insurance agents tailored to your needs and secure your coverage effortlessly",
+    "HealthInsuranceObtainZSTXTSix": "Explore our Insurance agents",
+    "HealthInsuranceObtainZSTXTSeven": "Top Insurance Companies for You",
+    "HealthInsuranceObtainZSTXTEight": "Select and explore our carefully chosen array of esteemed insurance companies. Secure the protection you require with the reliability and peace of mind you value"
+
 }
