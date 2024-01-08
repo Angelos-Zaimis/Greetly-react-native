@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginVertical: 15,
         color: 'black',
-        fontFamily: 'Inter-Regular',
         textAlign: 'center',
     },
     title: {
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
       color: '#72788D',
       fontWeight: '700',
       lineHeight: 30,
-      fontFamily: 'Inter-Bold',
     },
     orangeTextContainer: {
         flex: 1, 
@@ -119,7 +117,6 @@ const styles = StyleSheet.create({
         color: '#4E0E00',
         fontWeight: '700',
         lineHeight: 28,
-        fontFamily: 'Inter-Bold',
       },
     list: {
       marginLeft: 20, // Indent for list items
@@ -130,7 +127,6 @@ const styles = StyleSheet.create({
       color: '#72788D',
       fontWeight: '700',
       lineHeight: 30,
-      fontFamily: 'Inter-Regular',
     },
     link: {
       color: '#0090F5',
@@ -140,7 +136,6 @@ const styles = StyleSheet.create({
       marginVertical: 10,
       fontSize: 17,
       fontWeight: '600',
-      fontFamily: 'Inter-Regular', 
     },
     linkContainer: {
         flexDirection: 'row',

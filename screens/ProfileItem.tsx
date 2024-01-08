@@ -126,7 +126,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               setToastText('Country')
               setShowToastMessage(true);
               setSuccessToast(true);
-              await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
                 navigation.navigate('Profile');
@@ -150,7 +149,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               setToastText('Language')
               setShowToastMessage(true);
               setSuccessToast(true);
-              await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
                 navigation.navigate('Profile');
@@ -174,7 +172,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               setToastText('Occupation')
               setShowToastMessage(true);
               setSuccessToast(true);
-              await mutate();
               setTimeout(() => {
                 setShowToastMessage(false);
                 navigation.navigate('Profile');
@@ -188,7 +185,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
               }, 1100);
             }
         }
-        await mutate()
     }
 
   if (isTabletMode) {

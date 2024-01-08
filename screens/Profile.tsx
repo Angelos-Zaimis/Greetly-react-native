@@ -21,9 +21,10 @@ const Profile: FC<ProfileProps> = ({navigation }) => {
 
     const {t} = useLanguage();
     const {logout, deleteAccount} = useContext(AuthContext);
-    const {userInfo} = useUserInfo();
+    const {userInfo, mutate} = useUserInfo();
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     const [showLogOutModal, setShowLogOutModal] = useState<boolean>(false);
+
     
     const {width: SCREENWIDTH} = useWindowDimensions();
   

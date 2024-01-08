@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     color: '#0090F5',
     fontSize: 17,
     fontWeight: '600',
-    fontFamily: 'Inter-Regular',
+
   },
   linkContainer: {
     flexDirection: 'row',
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     color: '#3F465C',
-    fontFamily: 'Inter-Regular',
+
   }
 });
 

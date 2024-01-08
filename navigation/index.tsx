@@ -6,7 +6,7 @@ import { AuthContext } from '../hooks/auth/AuthContext';
 const RootNavigation = () => {
   const { user } = useContext(AuthContext);
 
-  return user ? <UserStack /> : <AuthStack />;
+  return true ? <UserStack /> : <AuthStack />;
 };
 
 export default RootNavigation;

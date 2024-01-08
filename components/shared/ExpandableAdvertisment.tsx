@@ -89,13 +89,11 @@ const styles = StyleSheet.create({
         color: '#0090F5',
         fontSize: 17,
         fontWeight: '600',
-        fontFamily: 'Inter-Regular',
     },
     text: {
         fontSize: 17,
         fontWeight: '600',
         color: '#3F465C',
-        fontFamily: 'Inter-Regular',
         lineHeight: 24,
         paddingHorizontal: 15
     },

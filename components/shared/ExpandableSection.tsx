@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     color: '#0090F5',
     fontSize: 16,
     fontWeight: '600',
-    fontFamily: 'Inter-Regular',
     marginRight: 8
   },
   linkContainer: {

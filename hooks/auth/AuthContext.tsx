@@ -50,7 +50,7 @@ interface AuthContextType {
     status: string;
     user: string;
     username: string;
-  }
+  };
   promptAsync: () => void;
   login: (body: LoginProps) => Promise<any>;
   signUp: (body: SignUpProps) => Promise<any>;
