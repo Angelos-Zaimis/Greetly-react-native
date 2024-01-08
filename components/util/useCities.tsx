@@ -1,12 +1,11 @@
-
 import useSWR from 'swr';
 import AppURLS from '../appURLS';
 import { CITIES_ENDPOINT } from '../endpoints';
-const apiUrl = `${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/`;
 
-export const useCities = () => {
 
-  const { data: cities, error ,isLoading} = useSWR(apiUrl);
+export const useCities = (region?:string) => {
+
+  const { data: cities, error ,isLoading} = useSWR(`${AppURLS.middlewareInformationURL}/${CITIES_ENDPOINT}/region/?region=${region}`);
 
 
   return {

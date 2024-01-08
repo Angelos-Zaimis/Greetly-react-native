@@ -20,3 +20,4 @@ export {default as GoPremium} from './GoPremium';
 export {default as NewsPage} from './News';
 export {default as SubscriptionDetails} from './SubscriptionDetails';
 export {default as TeamMembers} from './TeamMembers';
+export {default as MapPage} from './MapPage'

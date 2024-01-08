@@ -33,7 +33,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
   if (isTabletMode){
     return (
       <>
-      <Tab.Navigator >
+      <Tab.Navigator>
         <Tab.Screen
           name="WecomePage"
           options={{
