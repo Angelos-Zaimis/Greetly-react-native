@@ -2,16 +2,43 @@ import React, { FC } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
 type CustomToasterProps = {
-  message: string
+  message?: string
   success: boolean
+  errorLogin?: {
+    email: string;
+    password: string;
+    message: string
+  }
 }
 
-const CustomToaster: FC<CustomToasterProps> = ({ message, success}) => {
+const CustomToaster: FC<CustomToasterProps> = ({ message, success, errorLogin}) => {
 
 
   return (
     <View style={[styles.container,{backgroundColor: success ? '#F06748' : 'red' }]}>
-      <Text style={styles.message}>{message}</Text>
+      {
+        message && (
+          <Text style={styles.message}>{message}</Text>
+        )
+      }
+
+      {
+        errorLogin && errorLogin.email && (
+          <Text style={styles.message}>{errorLogin.email}</Text>
+        )
+      }
+      
+      {
+        errorLogin && errorLogin.password && (
+          <Text style={styles.message}>{errorLogin.password}</Text>
+        )
+      }
+      
+      {
+        errorLogin && errorLogin.message && (
+          <Text style={styles.message}>{errorLogin.message}</Text>
+        )
+      }
     </View>
   );
 };

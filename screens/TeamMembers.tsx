@@ -121,8 +121,7 @@ type HelpProps = {
         source={require('../assets/help/help.png')}
         />
       </View>
-      <View>
-
+      <View style={styles.container}>
         <FlatList 
             data={teamMembers}
             renderItem={({ item }) => (

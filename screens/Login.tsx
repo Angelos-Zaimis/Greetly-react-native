@@ -8,6 +8,7 @@ import { Image } from 'expo-image';
 import LinkButton from '../components/shared/LinkButton';
 import * as WebBrowser from 'expo-web-browser'
 import { NavigationProp } from '@react-navigation/native';
+import CustomToaster from '../components/shared/CustomToaster';
 WebBrowser.maybeCompleteAuthSession();
 
 type LoginProps = {
@@ -23,6 +24,12 @@ const Login: FC<LoginProps> = ({navigation}) => {
     const {promptAsync,login} = useContext(AuthContext);
     const text = "Sign in now".split(' ');
     const subtitleCreateAccountText = "NOT A MEMBER? CREATE AN ACCOUNT".split(' ')
+    const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState({
+      email: "",
+      password: "",
+      message: ""
+    });
 
     const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
 
@@ -67,14 +74,20 @@ const Login: FC<LoginProps> = ({navigation}) => {
   
       if(response.status >= 300){
         setLoginPending(false);
-
-        Alert.alert(response.email[1])
-        Alert.alert(response.password[1])
+        setErrorMessage({
+          email: response.data.email,
+          password: response.data.password,
+          message: response.data.message
+        })
+        setShowToastMessage(true)
         setLoginPending(false);
+        setTimeout(() => {
+          setShowToastMessage(false);
+        }, 1100);
       }
-      
       setLoginPending(false);
     }
+
  
   if (isTabletMode) {
     return (
@@ -262,6 +275,8 @@ const Login: FC<LoginProps> = ({navigation}) => {
     </View>
     </ScrollView>
     {loginPending ? <Spinner/> : null }
+    {showToastMessage ? <CustomToaster errorLogin={errorMessage} success={false} /> : null}
+
     </>
   )
 }

@@ -133,7 +133,7 @@ const Help: FC<HelpProps> = ({navigation}) => {
         source={require('../assets/help/help.png')}
         />
       </View>
-      <View>
+      <View style={styles.container}>
         <FlatList
           data={data} // Array of data to render
           renderItem={renderItem} // Function to render each item

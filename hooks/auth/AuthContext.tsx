@@ -307,7 +307,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
       }
       )
-      return response;
+    
+      return response.data;
     } catch (error) {
       console.log(error)
       return error
