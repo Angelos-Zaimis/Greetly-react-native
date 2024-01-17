@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity, Modal} from 'react-native'
+import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity, Modal, ScrollView} from 'react-native'
 import React, { FC, useCallback, useMemo, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
@@ -84,16 +84,19 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.goBackContainer}>
-            <TouchableOpacity onPress={handleGoBack}>
-                <AntDesign name="left" size={21} color="black" />
-            </TouchableOpacity>
-        </View>
-        <View style={styles.goPremiumText}>
-            <Text style={styles.title}>Go Premium</Text>
-        </View>
-
-        <Text style={styles.firstText}>{t("goPremiumPopUpThirdText")}</Text>
+        <ScrollView>
+            <View style={styles.container}>
+            <View style={styles.goBackContainer}>
+                <TouchableOpacity onPress={handleGoBack}>
+                    <AntDesign name="left" size={21} color="black" />
+                </TouchableOpacity>
+            </View>
+            
+            <View style={styles.goPremiumText}>
+                <Text style={styles.title}>Go Premium</Text>
+            </View>
+            
+            <Text style={styles.firstText}>{t("goPremiumPopUpThirdText")}</Text>
         <Text style={styles.firstText}>{t("chooseYourPlan")}</Text>
 
         <View style={styles.subContainer}>
@@ -140,6 +143,8 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
                 </Modal>
             )
         }
+            </View>
+        </ScrollView>
     </SafeAreaView>
   )
 }
@@ -163,7 +168,8 @@ const styles = StyleSheet.create({
     title: {
         color:'#3F465C',
         fontWeight: '600',
-        fontSize: 22
+        fontSize: 22,
+        textAlign: 'center'
     },
     goBackContainer: {
         alignSelf: 'flex-start',
@@ -182,7 +188,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: 300,
         marginVertical: 15,
-        lineHeight: 24
+        lineHeight: 24,
+
     },
     fourthText: {
         color: '#3F465C',

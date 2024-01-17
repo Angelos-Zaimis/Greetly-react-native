@@ -164,7 +164,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         <Tab.Screen
           name="HelpContainer"
           options={{
-            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 0 : 60}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}, isTabletMode  && {width: 10}],
+            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 60 : 60}, { top: SCREEN_HEIGHT < 700 ? '-6%': '-2%'}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}, isTabletMode  && {width: 10}],
             tabBarStyle: styles.tabContainer,
             headerShown: false,
             title: 'Help',

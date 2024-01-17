@@ -394,11 +394,8 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
               <Text key={index}>{word} </Text>
             )))}
           </Text>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.subtitle, {marginBottom: SCREEN_HEIGHT < 700 ? 8 : 20}]}>
             Find solutions for all aspects of relocation for your specific needs.
-          </Text>
-          <Text style={[styles.subtitle, {marginBottom: SCREEN_HEIGHT <= 700 ? 4 : 20}]}>
-            Get consultation from experts.
           </Text>
           <TouchableOpacity onPress={handleNavigationSignUp}>
             <Text style={styles.subtitleThree}>
@@ -581,7 +578,7 @@ const styles = ScaledSheet.create({
       marginTop: 10
      },
      emailandpasswordContainer: {
-      marginTop: 15,
+      marginTop: 10,
       alignItems: 'center'
      },
     inputCountryOccupation: {
@@ -604,7 +601,7 @@ const styles = ScaledSheet.create({
         backgroundColor: 'white',
     },
     input: {
-      paddingVertical: 15,
+      paddingVertical: 10,
       paddingHorizontal: 16,
       borderWidth: 1,
       borderColor: '#DADADC',
@@ -763,7 +760,7 @@ const styles = ScaledSheet.create({
     borderColor: '#DADADC',
     borderRadius: 18,
     width: '91%',
-    height: 80,
+    height: 70,
     paddingHorizontal: 16,
     marginTop: 15,
     justifyContent: 'center'

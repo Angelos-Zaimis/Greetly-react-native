@@ -20,8 +20,8 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
   const {categories} = useCategories(
     cityName
   );
-
-  const {width: SCREENWIDTH} = useWindowDimensions();
+  
+  const {width: SCREENWIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -80,7 +80,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.image}>
+      <View style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '33%' : '27.5%'}]}>
         {categories  && <Image style={styles.imageInner} contentFit='contain'   source={{uri: categories?.image_url}}></Image>}
       </View>
       <View>
@@ -101,7 +101,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
               })}
           style={styles.categoryContainer}
         >
-          <View style={{width: 300}}>
+          <View style={{width: 240}}>
             <Text style={styles.title}>{t(item.name)}</Text>
             <Text style={styles.subTitle}>{t(item.description)}</Text>
           </View>
@@ -153,9 +153,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
     alignSelf:'center',
-    width: '90%',
+    width: '92%',
     height: 100,
     borderRadius: 20,
     paddingTop: 15,

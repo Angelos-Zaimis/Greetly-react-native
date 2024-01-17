@@ -30,7 +30,7 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
     title
   );
 
-  const {width: SCREEN_WIDTH} = useWindowDimensions();
+  const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREEN_WIDTH > 700) {
@@ -98,8 +98,8 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-          <Image style={styles.image} priority={'high'} source={{ uri: image}} />
+      <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
+        <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
       </View>
       <View>
         <View style={styles.arrowButtonContainer}>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
-  imageContainer: {
+  image: {
     height: '19%',
     resizeMode: 'stretch',
     shadowColor: '#000',
@@ -140,8 +140,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
-  image: {
-    resizeMode: 'cover',
+  imageinside: {
     height: '100%'
   },
   iconArrow:{

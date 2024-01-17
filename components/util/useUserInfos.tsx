@@ -5,6 +5,7 @@ import {USER_INFO_ENDPOINT } from '../endpoints';
 import { AuthContext } from '../../hooks/auth/AuthContext';
 import useSWR from 'swr';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ProductDetails = {
     subscription_currency: string;
@@ -29,7 +30,7 @@ type UserInfoType = {
 
 export const useUserInfo = () => {
     
-    const {userInfos} = useContext(AuthContext);
+    const {userInfos, authTokens} = useContext(AuthContext);
 
     const { data: userInfo, mutate} = useSWR<UserInfoType>(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/?email=${userInfos?.username}`)
 
@@ -37,7 +38,8 @@ export const useUserInfo = () => {
         try {
           const response = await axios.put(`${AppURLS.middlewareInformationURL}/${USER_INFO_ENDPOINT}/`, body, {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authTokens.access}`
             }
           });
           

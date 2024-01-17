@@ -276,7 +276,7 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
                 <Text style={styles.inputTextEmail}>Email</Text>
                 {
                   email !== '' ?  
-                  <View style={[styles.validation,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
+                  <View style={[styles.validation,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '65%'}]}>
                   {isValidInputEmailText ? <AntDesign name="check" size={19} color="green" /> : <AntDesign name="close" size={19} color="red" />}
                    </View>
                    : 
@@ -335,9 +335,9 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
         </Modal>
         }
         </View>
-          <View style={styles.bottomContainer}>
-          <Text style={styles.greetly}>Greetly.ch</Text>
-          <Image style={styles.logo}source={require('../assets/welcomepage/logo.png')}/>
+        <View style={styles.bottomContainer}>
+          <Text style={[styles.greetly, {fontSize: SCREEN_HEIGHT < 700 ? 18 : 22 }]}>Greetly.ch</Text>
+          <Image style={[styles.logo, {width: SCREEN_HEIGHT < 700 ? 25 : 35 }, {height: SCREEN_HEIGHT < 700 ? 25 : 35}]}source={require('../assets/welcomepage/logo.png')}/>
         </View>
         </View>
         <View style={styles.bottom}>
@@ -413,9 +413,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#DADADC',
     borderRadius: 18,
-    marginBottom: 25,
     marginTop: 20,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    fontSize: 16
     },
   languageButtonStyle: {
     marginTop: 10,
@@ -455,7 +455,7 @@ const styles = StyleSheet.create({
   },
   privacyContainer: {
     alignItems: 'center',
-    marginBottom: 10
+    marginVertical: 15
   },
   privacySubContainer: {
     alignSelf:'flex-start',

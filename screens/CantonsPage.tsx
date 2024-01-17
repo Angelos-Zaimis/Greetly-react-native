@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform, useWindowDimensions, ImageBackground, Animated} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
 import { useCities } from '../components/util/useCities'
@@ -7,6 +7,7 @@ import { Image } from 'expo-image'
 import { useUserInfo } from '../components/util/useUserInfos'
 import { NavigationProp, RouteProp } from '@react-navigation/native'
 import Map from '../components/shared/Map'
+import { AuthContext } from '../hooks/auth/AuthContext'
 type CantonsPageProps = {
   navigation: NavigationProp<any>;
   route?: RouteProp<{params: { region: string}}>;
@@ -16,7 +17,9 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
 
   const {mutate} = useUserInfo();
   const [region,setRegion] = useState<string>('')
+  const {updateToken} = useContext(AuthContext)
   
+
   const {t} = useLanguage();
   useEffect(() => {
     mutate();
@@ -28,7 +31,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
 
   const {cities} = useCities(region);
 
-  const {width: SCREENWIDTH} = useWindowDimensions();
+  const {width: SCREENWIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -42,7 +45,12 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
   const opacitySecondView = useRef(new Animated.Value(0)).current;
 
   const sortedCities = useMemo(() => {
-    return cities?.slice()?.sort((a, b) => a.id - b.id);
+    if (cities && cities.length > 0) {
+      return cities?.slice()?.sort((a, b) => a.id - b.id);
+
+    }
+
+    return null;
   }, [cities]);
 
   const toggleViews = () => {
@@ -134,7 +142,7 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
             {sortedCities ? t('pageWelcomeSubtitle') : t('mapSubtitle')}
         </Text>
         </View>
-        <Image style={styles.logo} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
+        <Image style={[styles.logo, {height: SCREEN_HEIGHT < 700 ? 30 : 40}, {width: SCREEN_HEIGHT < 700 ? 30 : 40}]} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
       </View>
         {!sortedCities ? (
           <Animated.View style={{ ...styles.flatlistContainer, opacity: opacityFirstView }}>

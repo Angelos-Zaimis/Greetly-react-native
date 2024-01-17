@@ -45,7 +45,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
   const {t} = useLanguage();
   
-  const {width: SCREENWIDTH} = useWindowDimensions();
+  const {width: SCREENWIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -162,7 +162,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
   return (
     <>
     <View style={styles.container}>
-      <View  style={styles.image}>
+      <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
         <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
       </View>
       <View>
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: '19%',
+    resizeMode: 'stretch',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
@@ -208,7 +209,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   imageinside: {
-    resizeMode: 'stretch',
     height: '100%'
   },
   iconArrow:{

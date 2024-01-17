@@ -60,7 +60,7 @@ const Intro: FC<IntroProps>= ({navigation}) => {
         <Text style={[styles.welcomeTwo,  {fontSize: SCREEN_HEIGHT < 700 ? 40 : 45}]}>Switzerland</Text>
       </View>
       <View>
-        <Image contentFit='contain' style={[styles.image]} source={require('../assets/intro/zurich.png')}/>
+        <Image contentFit='contain' style={[styles.image, {height: SCREEN_HEIGHT < 700 ? 290 : 350}]} source={require('../assets/intro/zurich.png')}/>
       </View>
       <View>
         <Text  style={styles.title}>Ease your move with Greetly.ch</Text>
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 350
+    height: 350, 
+    marginBottom: 10
   },
   title: {
     marginLeft: 20,
