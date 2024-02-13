@@ -7,7 +7,7 @@ import { Image } from 'expo-image'
 import { useUserInfo } from '../components/util/useUserInfos'
 import { NavigationProp, RouteProp } from '@react-navigation/native'
 import Map from '../components/shared/Map'
-import { AuthContext } from '../hooks/auth/AuthContext'
+import { AuthContext } from '../countriesAndStatus/auth/AuthContext'
 type CantonsPageProps = {
   navigation: NavigationProp<any>;
   route?: RouteProp<{params: { region: string}}>;
@@ -78,50 +78,78 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
   if (isTabletMode) {
     return(
       <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
-      <View style={styles.headerTablet}>
-        <Image style={styles.logoTablet} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20}}>
+        <View style={{width: 460}}>
+        <Text 
+          style={styles.titleTablet}>
+            {title.map((word, index) => (
+              index === 2 ? (
+            <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
+              ) : (
+            <Text key={index}>{word} </Text>
+          )))}
+        </Text>
+        <Text style={styles.subtitleTablet}>
+            {sortedCities ? t('pageWelcomeSubtitle') : t('mapSubtitle')}
+        </Text>
+        </View>
+        <Image style={[styles.logoTablet]} transition={1000} source={require('../assets/welcomepage/logo.png')}></Image>
       </View>
-      <View>
-        {cities && (
-          <>
-            <Text style={styles.titleTablet}>
-              {title?.map((word, index) => (
-                index === 2 ? (
-                <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
-                ) : (
-                <Text key={index}>{word} </Text>
-              )))}
-            </Text>
-            <Text style={styles.subtitleTablet}>
-              {sortedCities ? t('pageWelcomeSubtitle') : t('mapSubtitle')}
-            </Text>
-          </>
+        {!sortedCities ? (
+          <Animated.View style={{ ...styles.flatlistContainer, opacity: opacityFirstView }}>
+            <View style={styles.absoluteViewGerman}>
+              <TouchableOpacity onPress={() => handleFetchCantons('DE')} style={styles.name}>
+                <Text style={styles.textTablet}>{t('germanSpeaking')}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.absoluteViewFrench}>
+              <TouchableOpacity onPress={() => handleFetchCantons('FR')} style={styles.name}>
+                <Text style={styles.textTablet}>{t('frenchSpeaking')}</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.absoluteViewItalian}>
+              <TouchableOpacity onPress={() => handleFetchCantons('IT')} style={styles.name}>
+                <Text style={styles.textTablet}>{t('italianSpeaking')}</Text>
+              </TouchableOpacity>
+            </View>
+            <Map
+              handleOnClickFrench={() => handleFetchCantons('FR')} 
+              handleOnClickGerman={() => handleFetchCantons('DE')}
+              handleOnClickItalian={() => handleFetchCantons('IT')}
+            />
+          </Animated.View>
+        ) : (
+          <Animated.View style={{ ...styles.flatlistContainer, opacity: opacitySecondView }}>
+            <TouchableOpacity onPress={() => setRegion('')} style={styles.header}>
+              <Image style={styles.smallMapTablet} transition={1000} source={require('../assets/smallmap.png')}></Image>
+            </TouchableOpacity>
+            <FlatList 
+              data={sortedCities}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => navigation.navigate('Categories',{
+                    cityName: item.name
+                  })}
+                  style={styles.imageContainerTablet}
+                >
+                  <View style={styles.cantonIconContainer}>
+                    <Image
+                      source={item.cantons_flag} 
+                      style={styles.cantonIcon}
+                    />
+                    <View style={styles.cantonTitleContainer}>
+                      <Text style={styles.cantonTitleTablet}>{t(item.name)}</Text>
+                    </View>
+                  </View>
+                  <Image style={styles.imageTablet} priority={'high'} source={{ uri: item.table_image }} />
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          </Animated.View>
         )}
-      </View>
-      {!cities ? (
-        <Spinner/>
-      ) : (
-         <View  style={styles.flatlistContainerTablet}>
-         <FlatList 
-           data={cities}
-           renderItem={({ item }) => (
-           <TouchableOpacity
-             key={item.id}
-             onPress={() => navigation.navigate('Categories',{
-                 cityName: item.name
-             })}
-             style={styles.imageContainerTablet}
-           >
-               <Image style={styles.imageTablet} priority={'high'} source={{ uri: item.table_image }} />
-           </TouchableOpacity>
-           )}
-            keyExtractor={(item) => item.id.toString()}
-         />
-
-       </View>
-       
-      )}
-    </SafeAreaView>
+      </SafeAreaView>
     )
   }
 
@@ -187,6 +215,9 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
                       source={item.cantons_flag} 
                       style={styles.cantonIcon}
                     />
+                    <View style={styles.cantonTitleContainer}>
+                      <Text style={styles.cantonTitle}>{t(item.name)}</Text>
+                    </View>
                   </View>
                   <Image style={styles.image} priority={'high'} source={{ uri: item.image }} />
                 </TouchableOpacity>
@@ -273,7 +304,7 @@ const styles = StyleSheet.create({
     cantonIconContainer: {
       flex: 1,
       position: 'absolute',
-      top: '56%', // Adjust as needed
+      top: '53%', // Adjust as needed
       left: '4.5%', // Adjust as needed
       zIndex: 9999
     },
@@ -329,26 +360,30 @@ logoTablet: {
    borderRadius: 6,
 },
 titleTablet: {
-  fontSize: 35,
+  fontSize: 40,
   width: 300,
   marginLeft: 20,
   marginBottom: 15,
   fontWeight: '500',
-  marginTop: 5,
-  lineHeight: 35,
-  
+  lineHeight: 50,
 },
 titleOrangeTablet: {
    color: '#F06748',
    fontWeight: '600',
 },
 subtitleTablet: {
-width: '80%',
-fontSize: 22,
+fontSize: 28,
 marginLeft: 20,
 color: '#72788D',
-lineHeight: 24,
-marginBottom: 10
+lineHeight: 38
+},
+cantonTitleContainer: {
+  marginTop: 5
+},
+cantonTitle: {
+  fontSize: 30,
+  fontWeight: 'bold',
+  color: 'white'
 },
 flatlistContainerTablet: {
 flex: 1
@@ -369,6 +404,20 @@ height: 125,
 resizeMode: 'stretch',
 borderRadius: 16,
 },
+cantonTitleTablet: {
+  fontSize: 40,
+  fontWeight: 'bold',
+  color: 'white'
+},
+textTablet: {
+  fontSize: 20,
+  color: 'white',
+  fontWeight: '700'
+},
+smallMapTablet: {
+  width: 95,
+  height: 95
+}
 })
 
 export default CantonsPage;

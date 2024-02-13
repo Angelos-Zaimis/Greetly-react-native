@@ -10,7 +10,7 @@ import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
 import PrivacyPolicy from "../components/shared/PrivacyPolicy";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { AuthContext } from "../hooks/auth/AuthContext";
+import { AuthContext } from "../countriesAndStatus/auth/AuthContext";
 
 type OnboardingThreeProps = {
     navigation: NavigationProp<any>;

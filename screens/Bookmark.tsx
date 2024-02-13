@@ -13,13 +13,14 @@ type BookMarkProps = {
     title: string, 
     description: string, 
     image: string,
+    table_image: string,
     requiredDocuments: string[], category: string}}>;
   navigation: NavigationProp<any>;
 }
 
 const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
 
-  const {canton, title, description, image,requiredDocuments, category} = route.params ?? {};
+  const {canton, title, image, category, table_image} = route.params ?? {};
   const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false);
 
   const {t} = useLanguage();
@@ -54,53 +55,38 @@ const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
 
   if (isTabletMode) {
     return (
-      <View style={styles.container}>
-        <Image style={styles.imageTablet} priority={'high'} source={{ uri: image}} />
-        <View>
-          <View style={styles.arrowButtonContainerTablet}>
-            <TouchableOpacity onPress={handleNavigationBack}>
-              <AntDesign name="left" size={23} color="black" />
-            </TouchableOpacity>
-            <View>
-              <Text style={styles.subCategoryTitleTablet}>{t(title)}</Text>
-            </View>
-            <View></View>
-          </View>
+        <View style={styles.container}>
+             <View  style={[styles.imageTablet]}>
+          <Image style={styles.imageinsideTablet} priority={'high'} source={{ uri: table_image}} />
         </View>
-        <View style={styles.descriptionContainerTablet}>
-          <Text style={styles.descriptionTextTablet}>{t(description)}</Text>
-        </View>
-        <View style={styles.requiredDocumentsContainerTablet}>
-          <TouchableOpacity onPress={handleOpenDocs} style={[styles.requiredDocumentsTablet, {height: openRequiredDoc ? 280 : 70, width: openRequiredDoc ? '100%' : 80, borderTopRightRadius: openRequiredDoc ? 0 : 19}]}>
-            <View  style={[styles.textRequiredTablet, {marginTop: openRequiredDoc ? 0 : 24}]}>
-              {openRequiredDoc ?  <Text style={styles.requiredDocumentsTextTablet}>{t('Required Documents')}</Text> : <AntDesign name="infocirlceo" size={26} color="white" /> }
-            </View>
-            <View style={[styles.closeRequiredContainerTablet, {display: openRequiredDoc ? 'flex' : 'none'}]}>
-              <TouchableOpacity onPress={handleCloseDocs}>
-                <Text style={styles.closeTextTablet}>X</Text>
-              </TouchableOpacity>
-            </View>
-             <View style={styles.requiredDocsTablet}>
-              {
-                requiredDocuments?.map((item: string, index: number) => {
-                  return (
-                    <View style={styles.requiredDocumentsTextsContainersTablet} key={index}>
-                      <AntDesign name="rightcircleo" size={11} color="white" />
-                      <Text style={styles.requiredDocsTextsTablet}>{t(item)}</Text>
-                    </View>
-                  )})}
-             </View>
+      <View>
+        <View style={styles.arrowButtonContainer}>
+          <TouchableOpacity onPress={handleNavigationBack}>
+            <AntDesign name="left" size={32} color="black" />
           </TouchableOpacity>
+          <View>
+            <Text style={styles.subCategoryTitleTablet}>{t(title)}</Text>
+          </View>
+          <View></View>
         </View>
-     </View>
+      </View>
+      <ScrollView style={styles.container}>
+        {
+          information && information.content?.content.map((item: any, index: React.Key) => (
+          <View style={styles.containerContentItem} key={index}>
+            <RenderContentItem item={item} navigation={navigation} />
+          </View>
+        ))}
+      </ScrollView>
+    </View>
     )
   }
 
   return (
     <View style={styles.container}>
-      <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
-        <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
-      </View>
+         <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
+          <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
+        </View>
       <View>
         <View style={styles.arrowButtonContainer}>
           <TouchableOpacity onPress={handleNavigationBack}>
@@ -221,13 +207,17 @@ const styles = StyleSheet.create({
 
 
     //TABLET STYLES
-
   imageTablet: {
-    height: '18%'
+      height: '18%',
+      resizeMode: 'stretch',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.6,
+      shadowRadius: 8,
+      elevation: 4,
   },
   imageinsideTablet: {
-    resizeMode: 'stretch',
-    height: '100%'
+      height: '100%'
   },
   iconArrowTablet:{
     height: 18,

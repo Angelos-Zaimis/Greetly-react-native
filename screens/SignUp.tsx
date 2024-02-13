@@ -13,7 +13,7 @@ import Spinner from '../components/shared/Spinner';
 import { Fontisto } from '@expo/vector-icons';
 import PrivacyPolicy from '../components/shared/PrivacyPolicy';
 import { NavigationProp } from '@react-navigation/native';
-import { AuthContext } from '../hooks/auth/AuthContext';
+import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
 
 type SignInProps = {
   navigation: NavigationProp<any>;
@@ -412,7 +412,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
         </View>
         <View style={styles.emailandpasswordContainer}>
           <View style={styles.inner}>
-            <View style={styles.input}>
+            <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT < 70 ? 10 : 18 }]}>
               <Text style={styles.inputTextEmail}>Email</Text>
                 {
                   email !== '' ?  
@@ -432,7 +432,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
                 keyboardType="email-address">
               </TextInput>
             </View>
-            <View style={styles.input}>
+            <View style={[styles.input, {paddingVertical: SCREEN_HEIGHT < 70 ? 10 : 18 }, ]}>
               <Text style={styles.inputText}>Password</Text>
               <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainer}>
                 {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
@@ -458,7 +458,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
             </View>
         </View>
         <View style={styles.inputCountryOccupation}>
-          <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountry]}>
+          <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountry,  {height: SCREEN_HEIGHT < 700 ? 80 : 90}]}>
             <Text style={styles.buttonText}>{t('countryOfOrigin')}</Text>
             <View style={styles.inputContainer}>
               <Text style={styles.buttonTextSelected}>{selectedCountry ? selectedCountry : t('pageOnboardingSelect')}</Text>
@@ -502,7 +502,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
          </Modal>
         </View>
         <View style={styles.inputCountryOccupation}>
-          <TouchableOpacity onPress={handleShowPopup} style={[styles.selectStatus]}>
+          <TouchableOpacity onPress={handleShowPopup} style={[styles.selectStatus, {height: SCREEN_HEIGHT < 700 ? 80 : 90}]}>
             <Text style={styles.buttonText}>{t('pageOnboardingIam')}</Text>
             <View style={styles.inputContainer}>
                 <Text style={styles.buttonTextSelected}>{status ? status : t('pageOnboardingSelect')}</Text>

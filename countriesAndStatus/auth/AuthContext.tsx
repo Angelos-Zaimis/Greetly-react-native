@@ -146,7 +146,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const parseTokens = JSON.parse(authTokens)
         const decodedUser = authTokens ? jwt_decode(authTokens) : null;
         setUser(decodedUser);
-        setAuthTokens(parseTokens);
+        setAuthTokens(parseTokens); `sz`
         const savedUserInfos = await AsyncStorage.getItem('userInfos');
         if (savedUserInfos) {
           setUserInfos(JSON.parse(savedUserInfos));

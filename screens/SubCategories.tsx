@@ -122,6 +122,8 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
     // },
   ];
 
+  console.log(subCategories)
+
 
   if (isTabletMode) {
     return (
@@ -165,7 +167,8 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                            cityName: cityName,
                            category: incomingCategory,
                            subcategory: item.title,
-                           image: subCategories?.tablet_image_url})
+                           image: subCategories?.image_url,
+                           table_image: subCategories?.tablet_image_url})
                          : () => setIsNotSubscribed(true)}
                            style={[styles.categoryContainerTablet, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                  >
@@ -235,7 +238,8 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                              cityName: cityName,
                              category: incomingCategory,
                              subcategory: item.title,
-                             image: subCategories?.image_url})
+                             image: subCategories?.image_url,
+                             table_image: subCategories?.tablet_image_url})
                            : () => setIsNotSubscribed(true)}
                              style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                    >

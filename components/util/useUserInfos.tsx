@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 import AppURLS from '../appURLS';
 import {USER_INFO_ENDPOINT } from '../endpoints';
-import { AuthContext } from '../../hooks/auth/AuthContext';
+import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
 import useSWR from 'swr';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';

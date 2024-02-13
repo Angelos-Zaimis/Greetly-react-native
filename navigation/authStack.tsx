@@ -34,7 +34,7 @@ const AuthStack = () => {
       <NavigationContainer>      
         <Stack.Navigator>
           {
-          !isFirstLaunchEver && (
+          isFirstLaunchEver && (
           <>
           <Stack.Screen name="Intro" options={{headerShown: false}} component={Intro} />
           <Stack.Screen name="OnboardingOne" options={{headerShown: false}}  component={OnboardingOne}/>

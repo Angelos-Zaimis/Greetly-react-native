@@ -8,11 +8,12 @@ type linkButtonProps = {
     color: string;
     fbIcon?: boolean;
     googleIcon?: boolean; 
+    isTabletMode?: boolean;
 }
 
-const LinkButton: FC<linkButtonProps> = ({text,handlePress,fbIcon,googleIcon}) => {
+const LinkButton: FC<linkButtonProps> = ({text,handlePress,fbIcon,googleIcon, isTabletMode}) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={handlePress}>
+    <TouchableOpacity style={[styles.button, {width: isTabletMode ? '49%' : '75%', height: isTabletMode ? 70 : 55}]} onPress={handlePress}>
       {googleIcon ?
         <Image style={styles.image} source={require('../../assets/signIn/search.png')} />
         : 

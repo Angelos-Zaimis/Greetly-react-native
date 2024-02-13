@@ -3,7 +3,7 @@ import AppURLS from '../appURLS';
 import { BOOKMARKS_ENDPOINT } from '../endpoints';
 import { useUserInfo } from './useUserInfos';
 import { useContext } from 'react';
-import { AuthContext } from '../../hooks/auth/AuthContext';
+import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
 
 const apiUrl = `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/`;
 
