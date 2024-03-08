@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert,Platform, TextInput } from 'react-native'
 import React, { FC, useCallback, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { AuthContext } from '../hooks/auth/AuthContext';
+import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
 import Spinner from '../components/shared/Spinner';
 import { Image } from 'expo-image';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
@@ -39,8 +39,11 @@ const ChangePassword: FC<changePasswordProps> = ({navigation, route}) => {
         setLoading(true);
         try {
             const response = await changePassword(email);
-            setResponse(response.data);
-            Alert.alert(response.data);
+            
+            if (response.message === 'Check your emails, you have received a code to change your password'){
+                setResponse(response.message);
+            }
+            Alert.alert(response.message);
             setLoading(false)
         } catch (error) {
             console.log(error);

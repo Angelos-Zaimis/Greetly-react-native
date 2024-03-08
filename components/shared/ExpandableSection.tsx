@@ -8,6 +8,7 @@ type ExpandableSectionListProps = {
     content: string;
     children: React.ReactNode
     iconDown: string;
+    isTabletMode?: boolean;
     textLink?: {
         text: string;
         url: string;
@@ -15,7 +16,7 @@ type ExpandableSectionListProps = {
     }
 }
 
-const ExpandableSection: FC<ExpandableSectionListProps> = ({ title,content, iconDown, textLink}) => {
+const ExpandableSection: FC<ExpandableSectionListProps> = ({ title,content, iconDown, textLink, isTabletMode}) => {
   const [expanded, setExpanded] = useState(false);
   const {t} = useLanguage();
 
@@ -33,6 +34,31 @@ const ExpandableSection: FC<ExpandableSectionListProps> = ({ title,content, icon
       }
     }).catch((err) => console.error('An error occurred', err));
   };
+
+  if (isTabletMode) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={toggleExpand} style={styles.headerTablet}>
+          <Text style={styles.headerTextTablet}>{t(title)}</Text>
+          <FontAwesome5 name={iconDown} size={21} color="black" style={[styles.iconTablet,  expanded && { transform: [{ rotate: '180deg' }] }]} />
+        </TouchableOpacity>
+        {expanded && (
+          <View style={styles.content}>
+            {content && (
+              <Text style={styles.textTablet}>{t(content)}</Text>  
+            )}
+
+            {textLink && (
+                <View style={styles.linkContainerTablet}>
+                    <Text style={styles.linkTablet} onPress={() => openURL(textLink.url)}>{t(textLink.text)}</Text>
+                    <FontAwesome5 name={textLink.icon} size={18} color="#0090F5" style={styles.iconTablet}/>
+                </View>
+            )}
+      </View>
+      )}
+    </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -103,6 +129,49 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   linkContainer: {
+    flexDirection: 'row',
+    alignItems:'center',
+    marginTop: 10
+  },
+
+  //TABLET STYLES
+
+  headerTablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingBottom: 15,
+    paddingTop: 15,
+    borderBottomWidth: 1, // Border bottom to separate header from content
+    borderBottomColor: '#CCC', // Light grey border color
+    backgroundColor: 'white'
+  },
+  headerTextTablet: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#3F465C',
+  },
+  contentTablet: {
+    padding: 15, // Padding inside the content area
+    fontSize: 18
+  },
+  textTablet: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#3F465C',
+    lineHeight: 32
+  },
+  iconTablet: {
+    marginRight: 10,
+  },
+  linkTablet: {
+    color: '#0090F5',
+    fontSize: 22,
+    fontWeight: '600',
+    marginRight: 8
+  },
+  linkContainerTablet: {
     flexDirection: 'row',
     alignItems:'center',
     marginTop: 10

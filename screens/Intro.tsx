@@ -32,7 +32,7 @@ const Intro: FC<IntroProps>= ({navigation}) => {
           <Text style={styles.welcomeTwoTablet}>Switzerland</Text>
         </View>
         <View>
-          <Image  contentFit='contain' style={[styles.imageTeablet]} source={require('../assets/intro/zurich.png')}/>
+          <Image  contentFit='cover' style={[styles.imageTeablet]} source={require('../assets/intro/zurich.png')}/>
         </View>
         <View>
           <Text  style={styles.titleTablet}>Ease your move with Greetly.ch</Text>
@@ -60,7 +60,7 @@ const Intro: FC<IntroProps>= ({navigation}) => {
         <Text style={[styles.welcomeTwo,  {fontSize: SCREEN_HEIGHT < 700 ? 40 : 45}]}>Switzerland</Text>
       </View>
       <View>
-        <Image contentFit='contain' style={[styles.image]} source={require('../assets/intro/zurich.png')}/>
+        <Image contentFit='contain' style={[styles.image, {height: SCREEN_HEIGHT < 700 ? 290 : 350}]} source={require('../assets/intro/zurich.png')}/>
       </View>
       <View>
         <Text  style={styles.title}>Ease your move with Greetly.ch</Text>
@@ -102,7 +102,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 350
+    height: 350, 
+    marginBottom: 10
   },
   title: {
     marginLeft: 20,
@@ -166,11 +167,11 @@ const styles = StyleSheet.create({
     height: 550
   },
   titleTablet: {
-    marginLeft: 20,
     fontSize: 26,
+    marginTop: 10,
+    marginLeft: 20,
     color: '#3F465C',
-    fontWeight: '500',
-    marginTop: 10
+    fontWeight: '500'
   },
   subtitleTablet: {
     fontSize: 20,
@@ -178,8 +179,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 10,
     color: '#3F465C',
-    width: 380,
-    lineHeight: 25
+    width: 380
   },
   buttonContainerTablet: {
     marginTop: 26,
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
   buttonTablet: {
     width: 280,
     height: 76,
+    borderRadius:14,
     shadowColor: '#FD684685',
     shadowOffset: {
       width: 0,

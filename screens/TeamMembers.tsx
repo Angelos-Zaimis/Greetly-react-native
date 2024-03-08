@@ -37,10 +37,13 @@ type HelpProps = {
   if (isTabletMode) {
     return (
       <SafeAreaView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
+        <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
+          <AntDesign name="left" size={26} color="black" />
+        </TouchableOpacity>
         <View>
           <Text style={styles.titleTablet}>
             {text.map((word, index) => (
-              index === 0|| index === 7
+              index === 0 || index === 7
               || index === 9 ? (
               <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
               ) : (
@@ -49,49 +52,63 @@ type HelpProps = {
           </Text>
         </View>
         <View>
-          <Text style={styles.subtitleTablet}>{t('HelpPageSubTitle')}</Text>
+          <Text style={[styles.subtitleTablet, {width: SCREEN_HEIGHT < 700 ? '100%' : '63%'}]}>{t('TeamMembersPageSubtitle')}</Text>
         </View>
         <View>
           <Image
             style={styles.imageTablet}
+            contentFit='contain'
             source={require('../assets/help/help.png')}
           />
         </View>
-        <View>
+        <View style={styles.container}>
           <FlatList 
-            data={teamMembers}
-            renderItem={({ item }) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => navigation.navigate('TeamMember',{
-                teamMemberId: item.id
-              })}
-             style={styles.personContainerTablet}
+              data={teamMembers}
+              renderItem={({ item }) => (
+              <TouchableOpacity
+                key={item.id}
+                onPress={() => navigation.navigate('TeamMember',{
+                  name: item.name,
+                  location: item.location,
+                  occupation: item.occupation,
+                  profileImage: item.profileImage,
+                  languages: item.languages,
+                  licensed: item.licensed,
+                  specialization: item.specialization,
+                  aboutMe: item.aboutMe,
+                  longitude: item.longitude,
+                  latitude: item.latitude,
+                  latitudeDelta: item.latitudeDelta,
+                  longitudeDelta: item.longitudeDelta,
+                  linkAddress: item.linkAddress
+                })}
+              style={styles.personContainerTablet}
             >
               <View style={styles.profileImageContainerTablet}>
-                <Image style={[styles.profileImageTablet]} source={{uri: item.profileImage}}/>
+                <Image style={styles.profileImageTablet} source={{uri: item.profileImage}}/>
               </View>
-              <View style={styles.profileContainerTablet}>
+              <View style={styles.profileContainerTalbet}>
                 <View style={styles.locationTablet}>
                   <FontAwesome name="map-pin" size={18} color="#719FFF" />
                   <Text style={styles.textLocationTablet}>{item.location}</Text>
                 </View>
                 <View>
                   <Text style={styles.nameTablet}>{item.name}</Text>
-                  <Text style={[styles.occupationTablet]}>{item.occupation}</Text>
+                  <Text style={styles.occupationTablet}>{item.occupation}</Text>
                 </View>
               </View>
               <View style={styles.languagesContainerTablet}>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageOne}}/>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageTwo}}/>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageThree}}/>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageFour}}/>
+                {
+                    item?.languages?.map((language) => {
+                        return <Image source={language} contentFit='contain' style={styles.languageIconTablet}/>
+                    })
+                }
               </View>
             </TouchableOpacity>
             )}  
              keyExtractor={(item) => item.name.toString()}
           /> 
-        </View>
+      </View>
      </SafeAreaView>
     )
   }
@@ -168,7 +185,6 @@ type HelpProps = {
             )}  
              keyExtractor={(item) => item.name.toString()}
           /> 
-        
       </View>
     </SafeAreaView>
   )
@@ -330,49 +346,49 @@ const styles = StyleSheet.create({
   titleTablet: {
     color: '#3F465C',
     fontWeight: '500',
-    fontSize: 32,
-    width: '90%',
+    fontSize: 34,
     paddingLeft: 20,
-    marginTop: '8%',
-    lineHeight: 48,
+    marginTop: 20,
+    lineHeight: 33
+
   },
   titleOrangeTablet: {
     color: '#F06748',
     fontWeight: '500',
-    fontSize: 32,
+    fontSize: 34,
   },
   subtitleTablet: {
     color: '#72788D',
-    fontSize: 24,
-    lineHeight: 32,
+    fontSize: 26,
+    lineHeight: 34,
     paddingLeft: 20,
-    width: '74%',
-    marginTop: 8
+    width: '64%',
+    marginVertical: 8,
   },
   imageTablet: {
     resizeMode: 'contain',
     width: '100%',
-    height: 200,
-    marginVertical:  30
+    height: 230,
+    marginVertical: 19
   },
   personContainerTablet: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingHorizontal: 20,
     alignSelf:'center',
     width: '90%',
-    height: 130,
+    height: 120,
+    
     borderRadius: 20,
     paddingTop: 15,
+    marginBottom: '5%',
     backgroundColor: '#F8F9FC',
   },
   profileImageTablet: {
     marginTop: 5,
-    height: 120,
-    width: 180,
-    borderRadius: 10,
-    marginLeft: 20
+    height:95,
+    width: 135,
+    borderRadius: 10
   },
   profileImageContainerTablet: {
     position: 'absolute',
@@ -384,15 +400,20 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 2,
     },
-  profileContainerTablet: {
+    languageIconTablet: {
+        height: 24,
+        width: 26,
+        marginRight: 7,
+    },
+  profileContainerTalbet: {
     position: 'absolute',
-    left:'32%',
+    left:'22%',
     top: '15%'
   },
   locationTablet: {
     flexDirection: 'row',
     alignItems: 'center',
-    
+    marginLeft: 3
   },
   textLocationTablet: {
     marginLeft: 6,
@@ -407,14 +428,14 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '600',
     color: '#3F465C',
-    marginTop: 4,
+    marginTop: 7,
     marginLeft: 3
   },
   occupationTablet: {
     fontSize: 18,
     color: '#72788D',
     textTransform: 'uppercase',
-    marginTop: 3,
+    marginTop: 6,
     marginLeft: 3
   },
   languagesContainerTablet: {
@@ -425,9 +446,47 @@ const styles = StyleSheet.create({
   },
   languageImageTablet: {
     resizeMode: 'contain',
-    width: 26,
-    height: 26,
-    marginRight: 9
-  }
+    width: 19,
+    height: 20,
+    marginRight: 5
+  },
+  cellTablet: {
+    flex: 1, // Flex each cell to fill the space
+    margin: 10, // Space between cells
+    height: 80, // Fixed height for each cell
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+    backgroundColor: '#B9CDF659', // Background color for cells
+    borderRadius: 10, // Rounded corners
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2.4},
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 0,
+  },
+  cellImageTablet: {
+    flex: 1,
+    width: '100%',
+    borderRadius: 10,
+    // ensure the image fills the container
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  overlayTextTablet: {
+    position: 'absolute', // Absolute position to overlay on top of the image
+    top: 19, // Adjust this value to move the text up or down
+    left: 10, // Adjust this value to move the text left or right
+    color: 'white', // Text color
+    fontSize: 22, // Text size
+    width: 165,
+    fontWeight: 'bold'
+  },
+  iconArrowButtonTablet: {
+    marginLeft: 20,
+    marginTop: 15
+  },
 })
 export default TeamMembers

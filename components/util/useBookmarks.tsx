@@ -2,12 +2,15 @@ import useSWR from 'swr';
 import AppURLS from '../appURLS';
 import { BOOKMARKS_ENDPOINT } from '../endpoints';
 import { useUserInfo } from './useUserInfos';
+import { useContext } from 'react';
+import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
 
 const apiUrl = `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/`;
 
 export const useBookmarks = (informationTitle?: string) => {
 
   const {userInfo} = useUserInfo();
+  const {authTokens,} = useContext(AuthContext)
  
   const { data: bookmarks, error, mutate } = useSWR(`${apiUrl}?user_email=${userInfo?.user}`); // replace fetcher with your own function
  
@@ -22,6 +25,8 @@ export const useBookmarks = (informationTitle?: string) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authTokens.access}`
+           
         },
         body: JSON.stringify(postData),
       });
@@ -37,7 +42,12 @@ export const useBookmarks = (informationTitle?: string) => {
       const url = `${apiUrl}${uniqueTitle}/`;
 
       // Perform the GET request
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authTokens.access}`
+        }
+      });
 
 
 
@@ -57,6 +67,10 @@ export const useBookmarks = (informationTitle?: string) => {
       // Perform the DELETE request
       const response = await fetch(url, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authTokens.access}`
+        }
       });
 
       // If the request is successful, trigger a revalidation

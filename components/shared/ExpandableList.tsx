@@ -8,14 +8,34 @@ type ExpandableSectionListProps = {
     listItems: string[];
     children?: React.ReactNode;
     iconDown: string
+    isTabletMode?: boolean;
 }
 
-const ExpandableSectionList:FC<ExpandableSectionListProps> = ({ title, listItems, iconDown}) => {
+const ExpandableSectionList:FC<ExpandableSectionListProps> = ({ title, listItems, iconDown, isTabletMode}) => {
   const [expanded, setExpanded] = useState(false);
   const {t} = useLanguage();
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
+
+  if (isTabletMode) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={toggleExpand} style={styles.headerTablet}>
+          <Text style={styles.headerTextTablet}>{t(title)}</Text>
+          <FontAwesome5 name={iconDown} size={21} color="black" style={[styles.iconTablet,  expanded && { transform: [{ rotate: '180deg' }] }]} />
+        </TouchableOpacity>
+        
+        {expanded && (
+          <View style={styles.listContainerTablet}>
+            {listItems.map((item, index) => (
+              <Text key={index} style={styles.listItemTablet}>{`- ${t(item)}`}</Text>
+            ))}
+          </View>
+        )}
+      </View>
+    )
+  }
 
   return (
     <View style={styles.container}>
@@ -69,6 +89,39 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
   },
   icon: {
+    marginRight: 10,
+  },
+
+  // TABLET STYLES
+
+  headerTablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingBottom: 15,
+    paddingTop: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCC',
+  },
+  headerTextTablet: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#3F465C',
+  },
+  listContainerTablet: {
+    paddingVertical: 10,
+    paddingHorizontal: 15
+  },
+  listItemTablet: {
+    paddingTop: 5,
+    paddingBottom: 15,
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#3F465C',
+    lineHeight: 32
+  },
+  iconTablet: {
     marginRight: 10,
   },
 });

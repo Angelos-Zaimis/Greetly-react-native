@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useSplashScreen from "./splashScreen/SplashScreen";
 import RootNavigation from "./navigation";
-import { AuthProvider } from "./hooks/auth/AuthContext";
+import { AuthProvider } from "./countriesAndStatus/auth/AuthContext";
 import { LanguageProvider } from "./components/util/LangContext";
 import { LogBox } from "react-native";
 

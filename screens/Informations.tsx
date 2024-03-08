@@ -16,12 +16,13 @@ type InformationsProps = {
   route?: RouteProp<{params: {
     cityName: string, 
     category: string,
-    subcategory: string,image: string}}>;
+    subcategory: string,image: string,
+    table_image: string}}>;
 }
 
 const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
-  const {cityName, category,subcategory,image} = route.params ?? {};
+  const {cityName, category,subcategory,image, table_image} = route.params ?? {};
   const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
   const [successToast, setSuccessToast] = useState<boolean>(false);
 
@@ -45,7 +46,7 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
   const {t} = useLanguage();
   
-  const {width: SCREENWIDTH} = useWindowDimensions();
+  const {width: SCREENWIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -63,29 +64,33 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     setOpenRequiredDoc(false)
   },[setOpenRequiredDoc, openRequiredDoc])
 
+  console.log(image, table_image)
   const addToBookmark = useCallback( async() => {
-    try {
-      await createBookmark({
-        canton: cityName,
-        category: category, 
-        title: subcategory,
-        description: information?.description,
-        image: image,
-        requiredDocuments: information?.requiredDocuments,
-        saved: true,
-        uniqueTitle: information?.title
-      });
-      setShowToastMessage(true);
-      setSuccessToast(true);
-      setTimeout(() => {
-        setShowToastMessage(false);
-      }, 1100);
-    } catch (error) {
-      setShowToastMessage(true);
-      setSuccessToast(false);
-      setTimeout(() => {
-        setShowToastMessage(false);
-      }, 1100);
+    if(information?.title) {
+      try {
+        await createBookmark({
+          canton: cityName,
+          category: category, 
+          title: subcategory,
+          description: information?.description,
+          image: image,
+          table_image: table_image,
+          requiredDocuments: information?.requiredDocuments,
+          saved: true,
+          uniqueTitle: information?.title
+        });
+        setShowToastMessage(true);
+        setSuccessToast(true);
+        setTimeout(() => {
+          setShowToastMessage(false);
+        }, 1100);
+      } catch (error) {
+        setShowToastMessage(true);
+        setSuccessToast(false);
+        setTimeout(() => {
+          setShowToastMessage(false);
+        }, 1100);
+    }
   }
     await mutateBookmark();
   },[cityName,category,information?.description,image,information?.requiredDocuments])
@@ -101,13 +106,12 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
   if (isTabletMode) {
     return (
-      <>
-        <View style={styles.container}>
-          {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
-          <View  style={styles.imageTablet}>
-            <Image style={styles.imageinsideTablet} priority={'high'} source={{ uri: image}} />
-          </View>
-          <View>
+    <>
+      <View style={styles.container}>
+        <View  style={[styles.imageTablet, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
+          <Image style={styles.imageinsideTablet} priority={'high'} source={{ uri: table_image}} />
+        </View>
+        <View>
           <View style={styles.arrowButtonContainerTablet}>
             <TouchableOpacity onPress={handleNavigationBack}>
               <AntDesign name="left" size={30} color="black" />
@@ -116,53 +120,27 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
               <Text style={styles.subCategoryTitleTablet}>{t(subcategory)}</Text>
             </View>
             <TouchableOpacity onPress={bookmarkSaved?.canton ? deleteToBookmark : addToBookmark}>
-              <AntDesign name={bookmarkSaved?.canton ? 'heart' : 'hearto'}size={30} color='#F06748' />
+              <AntDesign name={bookmarkSaved?.canton ? 'heart' : 'hearto'}size={30 } color='#F06748' />
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView>
-          <View style={styles.descriptionContainerTablet}>
-            <Text style={styles.descriptionTextTablet}>{t(information?.description)}</Text>
+        <ScrollView style={styles.container}>
+          {information && information.content?.content?.map((item: any, index: React.Key) => (
+          <View style={styles.containerContentItemTablet} key={index}>
+            <RenderContentItem navigation={navigation} item={item} />
           </View>
+          ))}
         </ScrollView>
-        {
-          information?.requiredDocuments && (
-          <View style={styles.requiredDocumentsContainerTablet}>
-            <TouchableOpacity onPress={handleOpenDocs} style={[styles.requiredDocumentsTablet, {height: openRequiredDoc ? 280 : 70, width: openRequiredDoc ? '100%' : 80, borderTopRightRadius: openRequiredDoc ? 0 : 19}]}>
-              <View style={[styles.textRequiredTablet, {marginTop: openRequiredDoc ? 0 : 24}]}>
-                {openRequiredDoc ?  <Text style={styles.requiredDocumentsTextTablet}>{t('Required Documents')}</Text> : <AntDesign name="infocirlceo" size={26} color="white" /> }
-              </View>
-              <View style={[styles.closeRequiredContainerTablet, {display: openRequiredDoc ? 'flex' : 'none'}]}>
-                <TouchableOpacity onPress={handleCloseDocs}>
-                  <Fontisto name="close-a" size={16} color="white" />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.requiredDocsTablet}>
-                {
-                information?.requiredDocuments? (
-                  information?.requiredDocuments.map((item: string, index: number) => {
-                    return (
-                      <View style={styles.requiredDocumentsTextsContainersTablet} key={index}>
-                        <AntDesign name="rightcircleo" size={11} color="white" />
-                        <Text style={styles.requiredDocsTextsTablet}>{t(item)}</Text>
-                      </View>
-                    )
-                  })
-                ): ''
-                }
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
       </View>
-      </>
+      {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
+    </>
     )
   }
 
   return (
     <>
     <View style={styles.container}>
-      <View  style={styles.image}>
+      <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
         <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
       </View>
       <View>
@@ -201,6 +179,7 @@ const styles = StyleSheet.create({
   },
   image: {
     height: '19%',
+    resizeMode: 'stretch',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
@@ -208,7 +187,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   imageinside: {
-    resizeMode: 'stretch',
     height: '100%'
   },
   iconArrow:{
@@ -284,7 +262,7 @@ const styles = StyleSheet.create({
 
   //TABLET STYLES
   imageTablet: {
-    height: '19%',
+    height: '19.9%',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.6,
@@ -296,8 +274,8 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   iconArrowTablet:{
-    height: 18,
-    width: 18,
+    height: 22,
+    width: 22,
     resizeMode:'contain'
   },
   arrowButtonContainerTablet: {
@@ -309,11 +287,11 @@ const styles = StyleSheet.create({
 
   },
   subCategoryTitleTablet: {
-    fontSize: 26,
+    fontSize: 30,
+    marginTop: 15,
     color: '#3F465C',
     fontWeight: '500',
     textAlign: 'center',
-    width: 270
   },
   descriptionContainerTablet: {
     alignItems: 'center',
@@ -371,5 +349,9 @@ const styles = StyleSheet.create({
     alignItems:'center',
     marginBottom: 15
 
+  },
+  containerContentItemTablet: {
+    flex: 1,
+    marginHorizontal: 12
   }
 })

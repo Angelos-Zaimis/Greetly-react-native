@@ -26,7 +26,7 @@ export const useImageTranslation = () => {
       },
     });
     const modifiedImageUrl = response.data.image_url; // Assuming the key is 'image_url'
-    console.log(modifiedImageUrl)
+
     return modifiedImageUrl;
  
   } catch (error) {

@@ -3,7 +3,7 @@ import React, { ReactNode, createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppURLS from "../../components/appURLS";
-import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_REGISTRATION_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_USER_EXISTS, USER_INFO_ENDPOINT } from "../../components/endpoints";
+import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_REGISTRATION_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_TOKEN_REFRESH, AUTH_USER_EXISTS, USER_INFO_ENDPOINT } from "../../components/endpoints";
 import * as Google from 'expo-auth-session/providers/google'
 import { Alert } from "react-native";
 
@@ -20,14 +20,6 @@ type SignUpProps = {
   selectedCountry: string
   status: string
 }
-
-type AuthData = {
-  type: 'google' | 'normal';
-  body?: {
-    email: string
-    password: string
-  }
-};
 
 interface AuthContextType {
   user: {
@@ -58,6 +50,7 @@ interface AuthContextType {
   changePassword: (email: string | undefined) => Promise<{ data: string }>;
   changePasswordVerify: (body: { email: string; code: string; password: string }) => Promise<void>;
   deleteAccount: (email: string) => void;
+  updateToken: () => void;
 }
 
 const initialAuthContextValue: AuthContextType = {
@@ -94,6 +87,9 @@ const initialAuthContextValue: AuthContextType = {
   promptAsync: () => {
     // Your implementation here
   },
+  updateToken: () => {
+
+  },
   login: async (body) => {
     // Your implementation here
     return Promise.resolve(/* some result */);
@@ -124,10 +120,6 @@ type LoginProps = {
   password: string;
 }
 
-type UpdateTokenProps = {
-  refreshToken: string;
-}
-
 interface UserInfo {
   unique_id?: string;
   username: string;
@@ -151,9 +143,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const fetchData = async () => {
       try {
         const authTokens = await AsyncStorage.getItem('authTokens');
+        const parseTokens = JSON.parse(authTokens)
         const decodedUser = authTokens ? jwt_decode(authTokens) : null;
         setUser(decodedUser);
-        
+        setAuthTokens(parseTokens); `sz`
         const savedUserInfos = await AsyncStorage.getItem('userInfos');
         if (savedUserInfos) {
           setUserInfos(JSON.parse(savedUserInfos));
@@ -167,11 +160,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+
+  },[])
+
+  useEffect(() => {
     handleGoogleLogin()
   },[response])
-  
-//Google Login
 
+  useEffect(() => {
+    let fourMinutes = 4 * 60 * 1000;
+
+    let interval = setInterval(() => {
+
+      if (authTokens){
+        updateToken()
+      }
+      return () => clearInterval(interval);
+    }, fourMinutes)
+  },[authTokens])
+
+ 
+//Google Login
   const handleGoogleLogin = async() => {
     try {
       if (response.type === 'success') {
@@ -192,8 +201,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
   
-  // ...
-
   /*
   For logging in
   */
@@ -212,6 +219,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
        const userInfoToSave = {
         username: response.data.username,
       };
+
       AsyncStorage.setItem('authTokens', JSON.stringify(response.data.tokens));
       AsyncStorage.setItem('userInfos', JSON.stringify(userInfoToSave));
       setAuthTokens(response.data.tokens);
@@ -269,19 +277,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         body: JSON.stringify(body),
       });
   
-  
 
       const data = await response.json(); // Wait for the JSON promise to resolve
   
     
       return data;
     } catch (error) {
-
     }
   }
 
   const changePasswordVerify = async(body: {email: string, code: string, password: string}) => {
-
+  
     try {
       const response = await axios.patch(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT}/`, body, {
         headers: {
@@ -295,9 +301,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }
 
-
   const changePassword = async( email:string) => {
-  
     try {
       const response = await axios.post(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_ENDPOINT}/`,
       {email},
@@ -317,8 +321,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const signUp = async(body: SignUpProps) => {
-
-
     try {
       const response = await axios.post(
         `${AppURLS.middlewareInformationURL}/${AUTH_REGISTRATION_ENDPOINT}/`,
@@ -335,7 +337,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       } catch (error: any) {
         return error.response.data
       }
+  }
 
+  const updateToken = async () => {
+
+    try {
+      const response = await fetch(`${AppURLS.middlewareInformationURL}/${AUTH_TOKEN_REFRESH}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({'refresh': authTokens.refresh})
+      });
+    
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    
+      const data = await response.json();
+
+
+      if (response.status === 200) {
+
+        AsyncStorage.setItem('authTokens', JSON.stringify(data));
+        setAuthTokens(data);
+        setUser(data.access);
+      }else {
+        console.log("Error occured")
+        await logout()
+      }
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
 
   }
 
@@ -357,12 +390,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     authTokens,
     user,
     login,
+    updateToken,
     logout,
     deleteAccount,
     changePassword,
     changePasswordVerify,
     promptAsync,
-    signUp
+    signUp,
   };
 
   return (

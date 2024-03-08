@@ -49,64 +49,45 @@ const Help: FC<HelpProps> = ({navigation}) => {
     </TouchableOpacity>
   );
   
+
+  const renderItemTablet = ({ item }) => (
+    <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text)} style={styles.cellTablet}>
+      <Image style={styles.cellImage} source={item.icon}/>
+      <Text style={styles.overlayTextTablet}>{t(item.text)}</Text>
+    </TouchableOpacity>
+  );
+
   if (isTabletMode) {
     return (
       <SafeAreaView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25}]}>
-        <View>
-          <Text style={styles.titleTablet}>
-            {text.map((word, index) => (
-              index === 2 || index === 7
-              || index === 9 ? (
-              <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
-              ) : (
-              <Text key={index}>{word} </Text>
-            )))}
-          </Text>
-        </View>
-        <View>
-          <Text style={styles.subtitleTablet}>{t('HelpPageSubTitle')}</Text>
-        </View>
-        <View>
-          <Image
-            style={styles.imageTablet}
-            source={require('../assets/help/help.png')}
-          />
-        </View>
-        <View>
-          <FlatList 
-            data={[]}
-            renderItem={({ item }) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => navigation.navigate('TeamMember',{
-                teamMemberId: item.id
-              })}
-             style={styles.personContainerTablet}
-            >
-              <View style={styles.profileImageContainerTablet}>
-                <Image style={[styles.profileImageTablet]} source={{uri: item.profileImage}}/>
-              </View>
-              <View style={styles.profileContainerTablet}>
-                <View style={styles.locationTablet}>
-                  <FontAwesome name="map-pin" size={18} color="#719FFF" />
-                  <Text style={styles.textLocationTablet}>{item.location}</Text>
-                </View>
-                <View>
-                  <Text style={styles.nameTablet}>{item.name}</Text>
-                  <Text style={[styles.occupationTablet]}>{item.occupation}</Text>
-                </View>
-              </View>
-              <View style={styles.languagesContainerTablet}>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageOne}}/>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageTwo}}/>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageThree}}/>
-                <Image style={styles.languageImageTablet} source={{uri: item?.languageFour}}/>
-              </View>
-            </TouchableOpacity>
-            )}  
-             keyExtractor={(item) => item.name.toString()}
-          /> 
-        </View>
+         <View>
+        <Text style={styles.titleTablet}>
+          {text.map((word, index) => (
+            index === 2 || index === 7
+            || index === 9 ? (
+            <Text key={index} style={styles.titleOrangeTablet}>{word} </Text>
+            ) : (
+            <Text key={index}>{word} </Text>
+          )))}
+        </Text>
+      </View>
+      <View>
+        <Text style={[styles.subtitleTablet, {width: SCREEN_HEIGHT < 700 ? '100%' : '63%'}]}>{t('HelpPageSubTitle')}</Text>
+      </View>
+      <View>
+        <Image
+        style={styles.imageTablet}
+        source={require('../assets/help/help.png')}
+        />
+      </View>
+      <View style={styles.container}>
+        <FlatList
+          data={data} // Array of data to render
+          renderItem={renderItemTablet} // Function to render each item
+          keyExtractor={item => item.key} // Unique key for each item
+          numColumns={2} // Set the number of columns
+        />
+      </View>
      </SafeAreaView>
     )
   }
@@ -293,20 +274,20 @@ const styles = StyleSheet.create({
   titleTablet: {
     color: '#3F465C',
     fontWeight: '500',
-    fontSize: 32,
+    fontSize: 34,
     width: '90%',
     paddingLeft: 20,
-    marginTop: '8%',
+    marginTop: 10,
     lineHeight: 48,
   },
   titleOrangeTablet: {
     color: '#F06748',
     fontWeight: '500',
-    fontSize: 32,
+    fontSize: 34,
   },
   subtitleTablet: {
     color: '#72788D',
-    fontSize: 24,
+    fontSize: 26,
     lineHeight: 32,
     paddingLeft: 20,
     width: '74%',
@@ -315,7 +296,7 @@ const styles = StyleSheet.create({
   imageTablet: {
     resizeMode: 'contain',
     width: '100%',
-    height: 200,
+    height: 250,
     marginVertical:  30
   },
   personContainerTablet: {
@@ -391,6 +372,29 @@ const styles = StyleSheet.create({
     width: 26,
     height: 26,
     marginRight: 9
-  }
+  },
+  cellTablet: {
+    flex: 1, // Flex each cell to fill the space
+    margin: 10, // Space between cells
+    height: 110, // Fixed height for each cell
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+    backgroundColor: '#B9CDF659', // Background color for cells
+    borderRadius: 10, // Rounded corners
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2.4},
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 0,
+  },
+  overlayTextTablet: {
+    position: 'absolute', // Absolute position to overlay on top of the image
+    top: 19, // Adjust this value to move the text up or down
+    left: 10, // Adjust this value to move the text left or right
+    color: 'white', // Text color
+    fontSize: 28, // Text size
+    width: 165,
+    fontWeight: 'bold'
+  },
 })
 export default Help

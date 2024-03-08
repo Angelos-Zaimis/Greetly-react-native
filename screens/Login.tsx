@@ -1,6 +1,6 @@
 import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
 import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet, ScrollView  } from 'react-native'
-import { AuthContext } from '../hooks/auth/AuthContext';
+import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
 import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
@@ -172,7 +172,7 @@ const Login: FC<LoginProps> = ({navigation}) => {
           <View style={styles.line} />
         </View>
         <View style={styles.appleGoogleContainer}>
-          <LinkButton googleIcon={true} text='Login with Google' color='black' handlePress={() => promptAsync()}/>
+          <LinkButton isTabletMode googleIcon={true} text='Login with Google' color='black' handlePress={() => promptAsync()}/>
         </View>
         <View style={styles.bottomContainertablet}>
           <Text style={styles.greetlytablet}>Greetly.ch</Text>

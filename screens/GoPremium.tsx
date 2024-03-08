@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity, Modal} from 'react-native'
+import { StyleSheet, Text, View , SafeAreaView, Image, useWindowDimensions,TouchableOpacity, Modal, ScrollView} from 'react-native'
 import React, { FC, useCallback, useMemo, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { useLanguage } from '../components/util/LangContext';
@@ -62,7 +62,7 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.goPremiumTextTablet}>
-                <Text style={styles.titleTablet}>Go Premium</Text>
+                <Text>Go Premium</Text>
             </View>
             <View>
                 <Image style={styles.imageTablet} source={require('../assets/goPremium/gopremium.png')} />
@@ -84,16 +84,19 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.goBackContainer}>
-            <TouchableOpacity onPress={handleGoBack}>
-                <AntDesign name="left" size={21} color="black" />
-            </TouchableOpacity>
-        </View>
-        <View style={styles.goPremiumText}>
-            <Text style={styles.title}>Go Premium</Text>
-        </View>
-
-        <Text style={styles.firstText}>{t("goPremiumPopUpThirdText")}</Text>
+        <ScrollView>
+            <View style={styles.container}>
+            <View style={styles.goBackContainer}>
+                <TouchableOpacity onPress={handleGoBack}>
+                    <AntDesign name="left" size={21} color="black" />
+                </TouchableOpacity>
+            </View>
+            
+            <View style={styles.goPremiumText}>
+                <Text style={styles.title}>Go Premium</Text>
+            </View>
+            
+            <Text style={styles.firstText}>{t("goPremiumPopUpThirdText")}</Text>
         <Text style={styles.firstText}>{t("chooseYourPlan")}</Text>
 
         <View style={styles.subContainer}>
@@ -140,6 +143,8 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
                 </Modal>
             )
         }
+            </View>
+        </ScrollView>
     </SafeAreaView>
   )
 }
@@ -163,7 +168,8 @@ const styles = StyleSheet.create({
     title: {
         color:'#3F465C',
         fontWeight: '600',
-        fontSize: 22
+        fontSize: 22,
+        textAlign: 'center'
     },
     goBackContainer: {
         alignSelf: 'flex-start',
@@ -182,7 +188,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: 300,
         marginVertical: 15,
-        lineHeight: 24
+        lineHeight: 24,
+
     },
     fourthText: {
         color: '#3F465C',
@@ -283,69 +290,133 @@ const styles = StyleSheet.create({
 
 
     //TABLET STYLES
-
     imageTablet: {
         resizeMode: 'contain',
-        height: 300,
-        marginTop: 12
+        height: 120,
+        marginTop: 10
     },
     goPremiumTextTablet:{
         justifyContent:'center'
     },
-    titleTablet: {
+    titleTabler: {
         color:'#3F465C',
         fontWeight: '600',
-        fontSize: 26
+        fontSize: 22,
+        textAlign: 'center'
     },
     goBackContainerTablet: {
         alignSelf: 'flex-start',
         flexDirection: 'row',
         marginLeft: 24,
-        marginTop: 30
+        marginTop: 10
     },
     deleteTablet: {
         color: 'black',
         fontSize: 20,
     }, 
     firstTextTablet: {
-        fontSize: 22,
+        fontSize: 16,
         color: '#3F465C',
         fontWeight: '600',
         textAlign: 'center',
-        width: 400,
-        marginTop: 30,
-        lineHeight: 32
+        width: 300,
+        marginVertical: 15,
+        lineHeight: 24,
+
     },
     fourthTextTablet: {
         color: '#3F465C',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '600',
         marginTop: 15,
         textAlign: 'center'
     },
     fifthTextTablet: {
-        color: "#72788D",
-        fontSize: 18,
-        marginTop: 15,
+        color: "white",
+        fontSize: 13,
+        marginTop: 4,
         textAlign: 'center'
+    },
+    textBoxTablet: {
+        color: "black",
+        fontSize: 13,
+        marginTop: 4,
+        textAlign: 'center'
+    },
+    textBoxSelectedTablet:{
+        color: "white",
+        fontSize: 13,
+        marginTop: 4,
+        textAlign: 'center',
+        fontWeight: '500'
+    },
+    priceTextBoxTablet: {
+        color: "black",
+        fontSize: 21,
+        marginTop: 4,
+        textAlign: 'center'
+    },
+    priceTextBoxSelectedTablet: {
+        color: "white",
+        fontSize: 21,
+        marginTop: 4,
+        textAlign: 'center',
+        fontWeight: '700'
     },
     sixthTextTablet: {
         color: "#72788D",
-        fontSize: 18,
+        fontSize: 16,
         marginTop: 20,
         textAlign: 'center',
-        width: 400,
+        width: 300,
         lineHeight: 26
     },
     termsTextTablet: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#719FFF',
         alignSelf: 'center',
-        marginTop: 12,
+        marginTop: 6,
         textDecorationLine:'underline'
+    },
+    overlayTablet: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+      },
+      popupTablet: {
+        backgroundColor: '#fff',
+        width: '80%',
+        height: '55%',
+        padding: 7,
+        borderRadius: 8,
     },
     buttonContainerTablet: {
         alignItems: 'center',
-        marginTop: 70
-    }
+        marginTop: 40
+    },
+    subContainerTablet: {
+        width: '95%',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 10
+    },
+    subButtonTablet: {
+        width: 150,
+        height: 160,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#F8F9FC',
+        backgroundColor: '#F8F9FC',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    selectedButtonTablet: {
+        width: 150,
+        height: 160,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#F06748',
+        backgroundColor: '#F06748'
+    },
 })

@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {NewsPage} from '../screens';
-import WelcomePage from '../navigation/welcomePageNavigator/WelcomePage';
-import ProfileContainer from '../navigation/profileNavigator/ProfileContainer';
-import BookmarksContainer from '../navigation/booksmarksNavigator/BookmarksContainer';
-import HelpNavigator from '../navigation/helpNavigator/HelpContainer';
+import {NewsPage} from '../../screens';
+import WelcomePage from '../welcomePageNavigator/WelcomePage';
+import ProfileContainer from '../profileNavigator/ProfileContainer';
+import BookmarksContainer from '../booksmarksNavigator/BookmarksContainer';
+import HelpNavigator from '../helpNavigator/HelpContainer';
 import { Feather, MaterialCommunityIcons} from '@expo/vector-icons';
 import { Platform, StyleSheet, useWindowDimensions} from 'react-native';
 import { FC, useMemo } from 'react';
@@ -11,6 +11,7 @@ import React from 'react';
 import { Octicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
+import NewsNavigator from '../newsNavigator/NewsNavigator';
 
 type BottomNavigatorProps = {
   navigation: NavigationProp<any>;
@@ -83,7 +84,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
           }}
         >
           {() => <HelpNavigator/> }
-        </Tab.Screen>
+        </Tab.Screen> 
 
         <Tab.Screen
           name="BookmarksContainer"
@@ -158,13 +159,13 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
           }}
         >
  
-          {() => <NewsPage navigation={navigation} />}
+          {() => <NewsNavigator />}
         </Tab.Screen>
 
         <Tab.Screen
           name="HelpContainer"
           options={{
-            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 0 : 60}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}, isTabletMode  && {width: 10}],
+            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 60 : 60}, { top: SCREEN_HEIGHT < 700 ? '-6%': '-2%'}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}, isTabletMode  && {width: 10}],
             tabBarStyle: styles.tabContainer,
             headerShown: false,
             title: 'Help',

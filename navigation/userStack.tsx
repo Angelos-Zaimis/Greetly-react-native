@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react'
 import SWRConfigProvider from '../components/util/SWRConfig';
-import BottomNavigator from '../bottomNavigator/BottomNavigator';
+import BottomNavigator from './bottomNavigator/BottomNavigator';
 
 const Stack = createNativeStackNavigator();
 

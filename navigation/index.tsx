@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import UserStack from './userStack';
 import AuthStack from './authStack';
-import { AuthContext } from '../hooks/auth/AuthContext';
+import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
 
 const RootNavigation = () => {
   const { user } = useContext(AuthContext);

@@ -52,7 +52,8 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
     description: string,
     image: string,
     requiredDocuments: string[],
-    category: string
+    category: string,
+    table_image: string
     ) => {
       navigation.navigate('Bookmark',{
         canton: canton,
@@ -60,7 +61,8 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
         description: description,
         image: image,
         requiredDocuments: requiredDocuments,
-        category: category
+        category: category,
+        table_image: table_image
     })
   },[navigation])
 
@@ -80,7 +82,6 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
     }
   }, [isNotSubscribed]);
 
-
   if (isTabletMode) {
     return (
       <SafeAreaView style={styles.container}>
@@ -99,14 +100,16 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
               <View style={styles.bookmarkSubcontainerTablet}>
                 <Text style={styles.categoryTextTablet}>{t('in')} {t(item?.category)}</Text>
                 <View style={styles.bookmarkTablet}>
-                  <TouchableOpacity onPress={ () => handleShowBookmark(
-                    item?.canton,
-                    item?.title,
-                    item?.description,
-                    item?.image,
-                    item?.requiredDocuments,
-                    item?.category
-                  )} 
+                <TouchableOpacity onPress={ userInfo?.isSubscribed ? () => handleShowBookmark(
+                  item?.canton,
+                  item?.title,
+                  item?.description,
+                  item?.image,
+                  item?.requiredDocuments,
+                  item?.category,
+                  item?.table_image
+                  ) : 
+                  () => setIsNotSubscribed(true)} 
                     style={styles.cantonAndTitleTablet}>
                     <Text style={styles.cantonTablet}>{item?.canton}</Text>
                     <View style={styles.titleIconTablet}>
@@ -164,7 +167,8 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
                   item?.description,
                   item?.image,
                   item?.requiredDocuments,
-                  item?.category
+                  item?.category,
+                  item?.table_image
                   ) : 
                   () => setIsNotSubscribed(true)} 
                   style={styles.cantonAndTitle}>

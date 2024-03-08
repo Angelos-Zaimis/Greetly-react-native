@@ -16,9 +16,10 @@ type ExpandableLinkProps = {
   iconDown: string;
   children?: React.ReactNode;
   navigation?: any;
+  isTabletMode?: boolean;
 };
 
-const ExpandableLink: FC<ExpandableLinkProps> = ({ title, items, iconDown, text, navigation}) => {
+const ExpandableLink: FC<ExpandableLinkProps> = ({ title, items, iconDown, text, navigation, isTabletMode}) => {
   const [expanded, setExpanded] = useState(false);
   const {t} = useLanguage();
 
@@ -45,6 +46,37 @@ const ExpandableLink: FC<ExpandableLinkProps> = ({ title, items, iconDown, text,
     }
   };
 
+  if (isTabletMode) {
+    return (
+      <View style={styles.container}>
+        <TouchableOpacity onPress={toggleExpand} style={styles.headerTablet}>
+          <Text style={styles.headerTextTablet}>{title}</Text>
+          <FontAwesome5 name={iconDown} size={21} color="black" style={[styles.iconDownTablet,  expanded && { transform: [{ rotate: '180deg' }] }]} />
+        </TouchableOpacity>
+        
+        {expanded && (
+          <View>
+            {text && (
+              <View style={styles.textContainerTablet}>
+                <Text style={styles.textTablet}>{t(text)}</Text>
+              </View>
+            )}
+            
+            { items?.map((item, index) => (
+              <View style={styles.linkContainerTablet}>
+                <FontAwesome5 name={item.icon} size={16} color="#0090F5" style={styles.iconTablet} />
+                <TouchableOpacity key={index} onPress={() => openURL(item.url)}>
+                  <Text style={styles.linkTablet}>{t(item.text)}</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        )}
+      </View>
+    )
+  }
+
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleExpand} style={styles.header}>
@@ -125,7 +157,57 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: '600',
     color: '#3F465C',
+  },
 
+  //Tablet styles
+
+  headerTablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingBottom: 15,
+    paddingTop: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCC',
+    marginBottom: 10
+  },
+  headerTextTablet: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#3F465C',
+  },
+  iconTablet: {
+    paddingRight:10,
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#3F465C',
+    lineHeight: 32
+  },
+  iconDownTablet: {
+    marginRight: 10
+  },
+  linkTablet: {
+    color: '#0090F5',
+    fontSize: 22,
+    fontWeight: '600',
+
+  },
+  linkContainerTablet: {
+    flexDirection: 'row',
+    alignItems:'center',
+    marginBottom: 15,
+  },
+  textContainerTablet: {
+    paddingHorizontal: 15,
+
+    marginBottom: 20
+  },
+  textTablet: {
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#3F465C',
+    lineHeight: 32
   }
 });
 

@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { AuthContext } from '../../hooks/auth/AuthContext';
+import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
 import RNLanguageDetector from '@os-team/i18next-react-native-language-detector';
 import { useUserInfo } from './useUserInfos';
 

@@ -17,10 +17,10 @@ const CategoryButton: FC<CategoryButtonProps> = ({ selected, imageSource, handle
         onPress={handlePress}
         style={[
           styles.upperButtonTablet,
-          { marginRight: 15, backgroundColor: selected ? '#FF8064' : '#ECEFF8'}
+          { marginRight: 30, backgroundColor: selected ? '#FF8064' : '#ECEFF8'}
         ]}
       >
-        <FontAwesome5 name={imageSource} size={25} color={selected ? 'white' : '#72788D'} />
+        <FontAwesome5 name={imageSource} size={32} color={selected ? 'white' : '#72788D'} />
       </TouchableOpacity>
     )
   }
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
       upperButtonTablet: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: 65,
-        height: 64,
+        width: 75,
+        height: 74,
         borderRadius: 50,
         backgroundColor: '#ECEFF8',
       },
