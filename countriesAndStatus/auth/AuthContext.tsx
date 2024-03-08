@@ -160,6 +160,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
+
+  },[])
+
+  useEffect(() => {
     handleGoogleLogin()
   },[response])
 
@@ -283,6 +287,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   const changePasswordVerify = async(body: {email: string, code: string, password: string}) => {
+  
     try {
       const response = await axios.patch(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT}/`, body, {
         headers: {

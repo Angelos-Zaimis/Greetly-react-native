@@ -62,7 +62,7 @@ const GoPremium: FC<GoPremiumProps> = ({navigation, route}) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.goPremiumTextTablet}>
-                <Text style={styles.titleTablet}>Go Premium</Text>
+                <Text>Go Premium</Text>
             </View>
             <View>
                 <Image style={styles.imageTablet} source={require('../assets/goPremium/gopremium.png')} />

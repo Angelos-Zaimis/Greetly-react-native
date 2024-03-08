@@ -66,29 +66,31 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
 
   console.log(image, table_image)
   const addToBookmark = useCallback( async() => {
-    try {
-      await createBookmark({
-        canton: cityName,
-        category: category, 
-        title: subcategory,
-        description: information?.description,
-        image: image,
-        table_image: table_image,
-        requiredDocuments: information?.requiredDocuments,
-        saved: true,
-        uniqueTitle: information?.title
-      });
-      setShowToastMessage(true);
-      setSuccessToast(true);
-      setTimeout(() => {
-        setShowToastMessage(false);
-      }, 1100);
-    } catch (error) {
-      setShowToastMessage(true);
-      setSuccessToast(false);
-      setTimeout(() => {
-        setShowToastMessage(false);
-      }, 1100);
+    if(information?.title) {
+      try {
+        await createBookmark({
+          canton: cityName,
+          category: category, 
+          title: subcategory,
+          description: information?.description,
+          image: image,
+          table_image: table_image,
+          requiredDocuments: information?.requiredDocuments,
+          saved: true,
+          uniqueTitle: information?.title
+        });
+        setShowToastMessage(true);
+        setSuccessToast(true);
+        setTimeout(() => {
+          setShowToastMessage(false);
+        }, 1100);
+      } catch (error) {
+        setShowToastMessage(true);
+        setSuccessToast(false);
+        setTimeout(() => {
+          setShowToastMessage(false);
+        }, 1100);
+    }
   }
     await mutateBookmark();
   },[cityName,category,information?.description,image,information?.requiredDocuments])

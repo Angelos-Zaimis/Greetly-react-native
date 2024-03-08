@@ -84,7 +84,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
           }}
         >
           {() => <HelpNavigator/> }
-        </Tab.Screen>
+        </Tab.Screen> 
 
         <Tab.Screen
           name="BookmarksContainer"

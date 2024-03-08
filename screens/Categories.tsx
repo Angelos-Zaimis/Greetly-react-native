@@ -80,7 +80,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '33%' : '27.5%'}]}>
+      <View style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '33%' : '27.8%'}]}>
         {categories  && <Image style={styles.imageInner} contentFit='contain'   source={{uri: categories?.image_url}}></Image>}
       </View>
       <View>
@@ -101,7 +101,7 @@ const Categories:FC<CategoriesProps> = ({navigation, route}) => {
               })}
           style={styles.categoryContainer}
         >
-          <View style={{width: 240}}>
+          <View style={{width: 295}}>
             <Text style={styles.title}>{t(item.name)}</Text>
             <Text style={styles.subTitle}>{t(item.description)}</Text>
           </View>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.6,
     shadowRadius: 8,
     elevation: 4,
-    height: '27.5%',
+    height: '27.8%',
   },
   imageInner: {
     height: '100%',

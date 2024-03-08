@@ -138,9 +138,9 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
                       source={item.cantons_flag} 
                       style={styles.cantonIcon}
                     />
-                    <View style={styles.cantonTitleContainer}>
+                    {/* <View style={styles.cantonTitleContainer}>
                       <Text style={styles.cantonTitleTablet}>{t(item.name)}</Text>
-                    </View>
+                    </View> */}
                   </View>
                   <Image style={styles.imageTablet} priority={'high'} source={{ uri: item.table_image }} />
                 </TouchableOpacity>
@@ -215,9 +215,9 @@ const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
                       source={item.cantons_flag} 
                       style={styles.cantonIcon}
                     />
-                    <View style={styles.cantonTitleContainer}>
+                    {/* <View style={styles.cantonTitleContainer}>
                       <Text style={styles.cantonTitle}>{t(item.name)}</Text>
-                    </View>
+                    </View> */}
                   </View>
                   <Image style={styles.image} priority={'high'} source={{ uri: item.image }} />
                 </TouchableOpacity>

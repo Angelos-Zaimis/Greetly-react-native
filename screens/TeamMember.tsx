@@ -80,52 +80,87 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
   if (isTabletMode){ 
     return (
         <SafeAreaView style={[styles.container,  Platform.OS === 'android' && { paddingTop: 25} ]}>
-            <View>
-                <TouchableOpacity style={[styles.iconArrowButtonTablet]} onPress={handleNavigationBack}>
-                    <AntDesign name="left" size={30} color="black" />
+             <View>
+            <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
+                <AntDesign name="left" size={26} color="black" />
+            </TouchableOpacity>
+        </View>
+        <View style={styles.textContainerTablet}>
+            <View style={styles.profileImageContainerTablet}>
+                 <Image style={styles.profileImageTablet} source={{uri: profileImage}}/>
+            </View>
+            <Text style={styles.nameTablet}>{name}</Text>
+            <Text style={styles.occupationTablet}>{occupation}</Text>
+            <View style={styles.licensedContainerTablet}>
+                <Text style={styles.licensedTablet}>{t('licensed')}</Text> 
+                {
+                    licensed ? <MaterialIcons name="verified" size={16} color="black" /> : null
+                }
+            </View>
+            <View style={styles.languageContainerTablet}>{
+                    languages?.map((language: string | number | string[] | ImageSource | ImageSource[]) => {
+                        return <Image source={language} contentFit='contain' style={styles.languageIconTablet}/>
+                    })
+                }
+            </View>
+        </View>
+        <View style={styles.lineContainerTablet}>
+            <View style={styles.lineTablet} />
+        </View>
+        <View style={styles.body}>
+            <ScrollView contentContainerStyle={styles.scrollViewTablet} >
+
+                
+                {
+                    specialization && (
+                        <View style={styles.sectionTablet}>
+                            <Text style={styles.sectionTitleTablet}>{t('Specialization')}</Text>
+                            <Text style={styles.sectionContentTablet}>{t(specialization)}</Text>
+                        </View>
+                    )
+                }
+                
+                {
+                    aboutMe && (
+                        <View style={styles.sectionTablet}>
+                            <Text style={styles.sectionTitleTablet}>{t('AboutMe')}</Text>
+                            <Text style={styles.sectionContentTablet}>
+                                {t(aboutMe)}
+                            </Text>
+                        </View>
+                    )
+            }
+
+
+
+            <View style={styles.mapTablet}>
+                <MapView
+                  style={{ flex: 1 , borderRadius: 10}}
+                  provider={PROVIDER_GOOGLE}
+                  showsUserLocation
+                  showsMyLocationButton
+                  initialRegion={{
+                    latitude: 47.408630,
+                    longitude: 8.577240,
+                    latitudeDelta: 0.0014,
+                    longitudeDelta: 0.0014,
+                  }}
+                >  
+                    <Marker key={0} coordinate={marker[0]} onPress={() => onMarkerSelected(linkAddress)}/>
+                </MapView>
+            </View>
+            <View style={styles.buttonsContainerTablet}>
+                <TouchableOpacity  onPress={() => Linking.openURL('mailto:angelos.zaimis.dev@g.com')} style={[styles.buttonEmailTablet]}>
+                    <FontAwesome name="send" size={18} color="white" />
+                    <Text style={styles.emailTextTablet}>Email us</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Linking.openURL('tel:0763384955')} style={[styles.buttonCallTablet]}>
+                    <Zocial name="call" size={23} color="white" />
+                    <Text style={styles.callTextTablet}>Call us</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.textContainerTablet}>
-                 <Text style={styles.textOurTeamTablet}>{t(('TeamMemberOurTeam'))}</Text>
-                 <View style={styles.profileImageContainerTablet}>
-                    <Image style={[styles.profileImageTablet]} source={{uri: teamMember?.profileImage}}/>
-                </View>
-                <Text style={styles.nameTablet}>{teamMember?.name}</Text>
-                <Text style={[styles.occupationTablet]}>{teamMember?.occupation}</Text>
-                <View style={styles.languageContainerTablet}>
-                    <Image style={[styles.languageIconTablet]} source={{uri: teamMember?.languageOne}}/>
-                    <Image style={[styles.languageIconTablet]} source={{uri: teamMember?.languageTwo}}/>
-                    <Image style={[styles.languageIconTablet]} source={{uri: teamMember?.languageThree}}/>
-                    <Image style={[styles.languageIconTablet]} source={{uri: teamMember?.languageFour}}/>
-                </View>
-            </View>
-            <View style={styles.lineContainerTablet}>
-                <View style={styles.lineTablet} />
-            </View>
-            <View style={styles.bodyTablet}>
-                <View style={styles.locationTablet}>
-                    <FontAwesome name="map-pin" size={18} color="#719FFF" />
-                    <Text style={[styles.locationTextTablet]}>{teamMember?.location}</Text>
-                </View>
-                <View style={[styles.calendarContainerTablet]}>
-                    <Feather name="calendar" size={30} color="black" />
-                </View>
-                <View>
-                    <Text style={[styles.scheduleTextTablet]}>{t('scheduleAppontment')}</Text>
-                    <Text style={[styles.freeOfChargeTablet]}>{t('freeofcharge')}</Text>
-                    <Text style={[styles.assistTextTablet]}>{t('assist')}</Text>
-                </View>
-                <View style={[styles.buttonsContainerTablet]}>
-                    <TouchableOpacity  onPress={() => Linking.openURL('mailto:angelos.zaimis.dev@g.com')} style={[styles.buttonEmailTablet]}>
-                        <FontAwesome name="send" size={23} color="white" />
-                        <Text style={styles.emailTextTablet}>Email us</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => Linking.openURL('tel:0763384955')} style={[styles.buttonCallTablet]}>
-                        <Zocial name="call" size={28} color="white" />
-                        <Text style={styles.callTextTablet}>Call us</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            </ScrollView>
+        </View>
         </SafeAreaView>
     )
   }  
@@ -182,22 +217,26 @@ const TeamMember: FC<TeamMemberProps> = ({route, navigation}) => {
                     )
             }
 
-            <View style={styles.map}>
-                <MapView
-                  style={{ flex: 1 , borderRadius: 10}}
-                  provider={PROVIDER_GOOGLE}
-                  showsUserLocation
-                  showsMyLocationButton
-                  initialRegion={{
-                    latitude: 47.408630,
-                    longitude: 8.577240,
-                    latitudeDelta: 0.0014,
-                    longitudeDelta: 0.0014,
-                  }}
-                >  
-                    <Marker key={0} coordinate={marker[0]} onPress={() => onMarkerSelected(linkAddress)}/>
-                </MapView>
+            <View style={styles.section}>
+                <View style={styles.map}>
+                    <MapView
+                        style={{ flex: 1 , borderRadius: 10}}
+                        provider={PROVIDER_GOOGLE}
+                        showsUserLocation
+                        showsMyLocationButton
+                        initialRegion={{
+                            latitude: 47.408630,
+                            longitude: 8.577240,
+                            latitudeDelta: 0.0014,
+                            longitudeDelta: 0.0014,
+                        }}
+                    >  
+                        <Marker key={0} coordinate={marker[0]} onPress={() => onMarkerSelected(linkAddress)}/>
+                    </MapView>
+                </View>   
             </View>
+    
+
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity  onPress={() => Linking.openURL('mailto:angelos.zaimis.dev@g.com')} style={[styles.buttonEmail, {width: SCREEN_HEIGHT < 700 ? 125 : 150}]}>
                     <FontAwesome name="send" size={18} color="white" />
@@ -308,17 +347,18 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     map: {
-        width: '90%',
+        width: '100%',
         height: 300,
         borderRadius: 10
     },
  section: {
     alignItems: 'center', // Center the items
-    width: '90%', // Set width to match design
-    backgroundColor: '#fff', // or any desired background color
+    width: '95%', // Set width to match design
+    borderRadius: 12,
+    backgroundColor: '#B9CDF659', // or any desired background color
     paddingVertical: 10, // Vertical padding for breathing space
     paddingHorizontal: 15, // Horizontal padding for text
-    marginVertical: 5, // Space between sections
+    marginVertical: 12, // Space between sections
   },
   sectionTitle: {
     fontWeight: 'bold',
@@ -435,22 +475,19 @@ const styles = StyleSheet.create({
 
     //TABLET STYLES
 
-
     iconArrowButtonTablet: {
         marginLeft: 25,
-        marginTop: 40
+        marginTop: 25
+    },
+    iconArrowTablet:{
+        width: 9.63,
+        height: 19
     },
     textContainerTablet: {
         alignItems: 'center'
     },
-    textOurTeamTablet: {
-        color: '#3F465C',
-        fontSize: 30,
-        fontWeight: '500',
-        marginBottom: 10
-    },
     profileImageContainerTablet:{
-        marginTop: 20,
+        marginTop: 15,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.6,
@@ -458,36 +495,47 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     profileImageTablet: {
-        height: 165,
-        width: 165,
+        height: 150,
+        width: 150,
         borderRadius: 15,
     }, 
     languageIconTablet: {
         resizeMode: 'contain',
-        height: 30,
-        width: 30,
-        marginRight: 13
+        height: 23,
+        width: 23,
+        marginRight: 10
     },
     languageContainerTablet: {
         flexDirection: 'row',
-        marginTop: 14
+        marginTop: 10
+    },
+    licensedContainerTablet: {
+        marginTop: 7,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    licensedTablet: {
+        color: '#3F465C',
+        fontWeight: '500',
+        fontSize: 22,
+        marginRight: 7,
     },
     nameTablet: {
-        marginTop: 19,
+        marginTop: 17,
         color: '#3F465C',
         fontSize: 24,
         fontWeight: '500',
         textTransform: 'uppercase'
     },
     occupationTablet: {
-        marginTop: 9,
-        fontSize: 16,
+        marginTop: 4,
+        fontSize: 18,
         color: '#70717E',
         textTransform: 'uppercase'
     },
     lineContainerTablet: {
         alignItems: 'center',
-        marginTop: 24
+        marginTop: 22
     },
     lineTablet: {
         alignItems: 'center',
@@ -496,62 +544,94 @@ const styles = StyleSheet.create({
         backgroundColor: '#E4E8F5'
     },
     bodyTablet: {
+        flex: 1,
         alignItems: 'center'
     },
     locationTablet: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 15
     },
+    scrollViewTablet: {
+        alignItems: 'center'
+    },
+    mapTablet: {
+        width: '90%',
+        height: 360,
+        borderRadius: 10
+    },
+ sectionTablet: {
+    alignItems: 'center', // Center the items
+    width: '90%', // Set width to match design
+    backgroundColor: '#fff', // or any desired background color
+    paddingVertical: 10, // Vertical padding for breathing space
+    paddingHorizontal: 15, // Horizontal padding for text
+    marginVertical: 5, // Space between sections
+  },
+  sectionTitleTablet: {
+    fontWeight: 'bold',
+    color: '#3F465C', // Color to match the theme
+    marginBottom: 10, // Space between title and content
+    textAlign: 'center',
+    fontSize: 22
+  },
+  sectionContentTablet: {
+    color: '#70717E', // Subtle color for the content text
+    textAlign: 'center', // Center align text, can be adjusted
+    lineHeight: 24, // Adjust line height for readability,
+    fontWeight: '700',
+    fontSize: 18
+  },
     locationIconTablet: {
-        marginRight: 8,
+        marginRight: 5,
     },
     locationTextTablet: {
         textTransform: 'uppercase',
         color: '#719FFF',
-        fontSize: 17,
+        fontSize: 16,
         marginLeft: 8
     },
     calendarContainerTablet: {
-        marginTop: 25,
-        marginBottom: 20
+        marginTop: 20,
+        marginBottom: 15
     },
     calendarImageTablet: {
         resizeMode: 'contain',
     },
     scheduleTextTablet: {
-        fontSize: 22,
+        fontSize: 11,
         color: '#3F465C',
         fontWeight: '600',
         marginTop: 15,
         textAlign: 'center',
-        width: 500
+        width: 300
     },
     freeOfChargeTablet: {
-        fontSize: 20,
+        fontSize: 1,
         color: '#F06748',
         fontWeight: '600',
         textAlign: 'center',
-        marginTop: 6
+        marginTop: 4
     },
     assistTextTablet: {
         color: '#72788D',
-        fontSize: 20,
-        width: 500,
+        fontSize: 16,
+        width: 300,
         textAlign: 'center',
         marginTop: 15,
-        lineHeight: 34
+        lineHeight: 25
     },
     buttonsContainerTablet:{
         flexDirection: 'row',
-        marginTop: 80
+        marginTop: 30,
+        marginBottom: 50
     },
     buttonEmailTablet: {
         flexDirection: 'row',
         marginRight: 25,
         backgroundColor: '#F06748',
-        width: 230,
-        height: 70,
+        width: 170,
+        height: 56,
         borderRadius: 18,
         alignItems: 'center',
         justifyContent: 'center',
@@ -566,7 +646,7 @@ const styles = StyleSheet.create({
     },
     emailTextTablet: {
         color: '#FFFFFF',
-        fontSize: 22,
+        fontSize: 20,
         marginLeft: 10
     },
     emailIconTablet: {
@@ -576,8 +656,8 @@ const styles = StyleSheet.create({
     buttonCallTablet: {
         flexDirection: 'row',
         backgroundColor: '#4FBE8D',
-        width: 230,
-        height: 70,
+        width: 170,
+        height: 56,
         borderRadius: 18,
         alignItems: 'center',
         justifyContent: 'center',
@@ -593,11 +673,12 @@ const styles = StyleSheet.create({
     },
     callTextTablet:{
         color: '#FFFFFF',
-        fontSize: 22,
+        fontSize: 20,
         marginLeft: 5
     },
-    callIconTablet: {
+    callIconTablet : {
         resizeMode: 'contain',
         marginRight: 10
-    }
+    },
+
 })

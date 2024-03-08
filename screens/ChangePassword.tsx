@@ -39,8 +39,11 @@ const ChangePassword: FC<changePasswordProps> = ({navigation, route}) => {
         setLoading(true);
         try {
             const response = await changePassword(email);
-            setResponse(response.data);
-            Alert.alert(response.data);
+            
+            if (response.message === 'Check your emails, you have received a code to change your password'){
+                setResponse(response.message);
+            }
+            Alert.alert(response.message);
             setLoading(false)
         } catch (error) {
             console.log(error);

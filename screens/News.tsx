@@ -146,22 +146,59 @@ const News: FC<NewsProps> = ({navigation}) => {
   if (isTabletMode) {
     return(
         <SafeAreaView  style={[styles.container, Platform.OS === 'android' && { paddingTop: 25}]}>
-          <View>
-            <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
-              <AntDesign name="left" size={30} color="black" />
-            </TouchableOpacity>
+              <View style={styles.titleContainer}>
+          <Text style={styles.title}>News</Text>
+        </View>
+        <View>
+          <View style={styles.subtitleContainer}>
+            <Text style={styles.subtitle}>{t('latestNews')}</Text>
+            <Text onPress={handleGoToViewAll} style={styles.viewAllText}>{t('viewAll')}</Text>
           </View>
-          <View style={styles.titleContainerTablet}>
-            <Text style={styles.titleTablet}>News</Text>
-          </View>
-          <View style={styles.flatListContainerTablet}>
+          <View >
             <FlatList
+              refreshing
               data={mockNewsData}
-              renderItem={renderItemTablet}
+              renderItem={({ item }) => <NewsCard item={item} openURL={openURL} />}
               keyExtractor={(item) => item.id.toString()}
-              style={styles.flatListTablet}
+            
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              pagingEnabled={true} // Adjust the interval you want to snap to
+              snapToAlignment={"center"}
+              snapToInterval={SCREENWIDTH * 0.9 + 10} // Width of the card plus space between cards
+              contentContainerStyle={{
+                paddingHorizontal: SCREENWIDTH * 0.05, // Center the first and last item
+              }}
+          />
+          </View>
+          <View style={styles.buttonContainer}>
+            <FlatList
+              horizontal
+              data={data}
+              renderItem={({ item }) => (
+                <ButtonsComponent
+                  title={item.key}
+                  onPress={() => handleSelect(item.key)}
+                  isSelected={item.key === selectedKey}
+                />
+              )}
+              keyExtractor={item => item.key}
+              ItemSeparatorComponent={() => <View style={{ width: 10 }} />} // Space between items
             />
           </View>
+          <View style={styles.recommendedNewsContainer}>
+            <View style={styles.recommendedNewsTitleContainer}>
+              <Text style={styles.recommendedNewsHeader}>Recommended News</Text>
+              <Text style={styles.viewAllText} onPress={handleGoToViewAll}>{t('viewAll')}</Text>
+            </View>
+            <FlatList
+              data={newsData}
+              renderItem={({ item }) => <RecommendedNewsCard item={item}/>}
+              keyExtractor={item => item.id}
+        
+            />
+          </View>
+        </View>
         </SafeAreaView>
     )
   }

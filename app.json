@@ -1,19 +1,18 @@
 {
   "expo": {
     "name": "Greetly.ch",
-    "slug": "helloch",
+    "slug": "Greetlych",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "https://auth.expo.io/@greetly.ch/helloch",
     "userInterfaceStyle": "light",
     "experiments": {
       "tsconfigPaths": true
     },
     "extra": {
-      "middlewareInformationURL": "http://127.0.0.1:8000/middleware-info",
+      "middlewareInformationURL": "https://middleware-information-b3a171d27812.herokuapp.com/middleware-info",
       "eas": {
-        "projectId": "348982ce-e13f-4b7e-a0cb-832c91d3c062"
+        "projectId": "d09e4437-92e7-45e5-9847-7595895222b0"
       }
     },
     "splash": {
@@ -79,6 +78,14 @@
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
       ]
     ]
