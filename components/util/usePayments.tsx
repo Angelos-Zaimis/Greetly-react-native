@@ -1,20 +1,29 @@
+import { useContext } from 'react';
 import AppURLS from '../appURLS';
 import { CANCEL_SUBSCRIPTION, CREATE_CHECKOUT_SESSION, PAYMENTS } from '../endpoints';
 import { useUserInfo } from './useUserInfos';
 
-export const usePayments = () => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const usePayments =  () => {
 
 
   const {userInfo} = useUserInfo();
-  
+
+
+
   const createCheackoutSession = async (priceId: string) => {
+    const authTokensString = await AsyncStorage.getItem('authTokens');
+    const token = JSON.parse(authTokensString);
+
     try {
       const url = `${AppURLS.middlewareInformationURL}/${PAYMENTS}/${CREATE_CHECKOUT_SESSION}`
-
+      
       const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token.access}`,
         },
         body: JSON.stringify({ 
           priceId: priceId,
@@ -39,6 +48,9 @@ export const usePayments = () => {
   };
 
   const cancelSubscription = async (subscription_id: string, email: string) => {
+    const authTokensString = await AsyncStorage.getItem('authTokens');
+    const token = JSON.parse(authTokensString);
+
     try {
       const url = `${AppURLS.middlewareInformationURL}/${PAYMENTS}/${CANCEL_SUBSCRIPTION}`
 
@@ -46,6 +58,7 @@ export const usePayments = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token.access}`,
         },
         body: JSON.stringify({
           email : email,

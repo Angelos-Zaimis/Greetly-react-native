@@ -3,7 +3,7 @@ import React, { ReactNode, createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppURLS from "../../components/appURLS";
-import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_REGISTRATION_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_TOKEN_REFRESH, AUTH_USER_EXISTS, USER_INFO_ENDPOINT } from "../../components/endpoints";
+import { AUTH_CHANGE_PASSWORD_ENDPOINT, AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT, AUTH_REGISTRATION_ENDPOINT, AUTH_TOKEN_ENDPOINT, AUTH_TOKEN_REFRESH, AUTH_USER_EXISTS, GOOGLE_LOGIN_TOKEN, USER_INFO_ENDPOINT } from "../../components/endpoints";
 import * as Google from 'expo-auth-session/providers/google'
 import { Alert } from "react-native";
 
@@ -181,26 +181,50 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
  
 //Google Login
-  const handleGoogleLogin = async() => {
-    try {
-      if (response.type === 'success') {
-        const decodedUser = await jwt_decode(response.authentication.idToken);
-        const userExists = await checkIfUserExists({email: decodedUser?.email});
-        if(userExists.message ===  "User doesn't exist in the database"){
-          await logout()
-          Alert.alert("User doesn't exist in the database. Please create a new profile.")
-          return;
-        }
-        await AsyncStorage.setItem('authTokens', JSON.stringify(response.authentication.idToken));
-        setAuthTokens({ access: response.authentication.idToken, refresh: response.authentication.refreshToken });
-        setUser(response.authentication.idToken);
-        await getGoogleUserInfo(response.authentication.accessToken);
+const handleGoogleLogin = async () => {
+  try {
+    if (response.type === 'success') {
+      const decodedUser = await jwt_decode(response.authentication.idToken);
+      const userExists = await checkIfUserExists({email: decodedUser?.email});
+      
+      if(userExists.message ===  "User doesn't exist in the database"){
+        await logout()
+        Alert.alert("User doesn't exist in the database. Please create a new profile.")
+        return;
       }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+      
+      // Send Google token to server to generate JWT token
+      const jwtResponse = await fetch(`${AppURLS.middlewareInformationURL}/auth/${GOOGLE_LOGIN_TOKEN}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Send Google token in the request body
+        },
+        body: JSON.stringify({ googleToken: response.authentication.idToken, user: decodedUser?.email })
+      });
+
+      const jwtData = await jwtResponse.json();
+
+      // Store JWT token in AsyncStorage
+      const tokens = {
+        access: jwtData.accessToken,
+        refresh: jwtData.refreshToken
+      }
+
+      await AsyncStorage.setItem('authTokens', JSON.stringify(tokens));
+      
   
+      setAuthTokens({ access: jwtData.accessToken, refresh: jwtData.refreshToken });
+      setUser(jwtData.accessToken);
+      
+      console.log(user)
+      // Fetch additional data using JWT token
+      await getGoogleUserInfo(response.authentication.accessToken);
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
   /*
   For logging in
   */
@@ -252,15 +276,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       })
       
       const user = await response.json()
+      console.log(user)
       setUserInfos({
         username: user.email
       });
 
+      console.log('1')
+      console.log(user)
       const userInfoToSave = {
         username: user.email
       };
+      setUserInfos({
+        username: user.email
+      })
       await AsyncStorage.setItem('userInfos', JSON.stringify(userInfoToSave));
-
 
     } catch (error) {
       
