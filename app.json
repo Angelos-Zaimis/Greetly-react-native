@@ -88,6 +88,10 @@
           }
         }
       ]
-    ]
+    ],
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/d09e4437-92e7-45e5-9847-7595895222b0"
+    }
   }
 }
