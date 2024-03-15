@@ -1,4 +1,4 @@
-package com.greetly.ch.Greetly.ch;
+package com.greetly.ch;
 
 import android.os.Build;
 import android.os.Bundle;

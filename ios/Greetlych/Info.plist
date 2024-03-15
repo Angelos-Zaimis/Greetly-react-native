@@ -27,7 +27,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.greetly.ch.Greetly.ch</string>
+          <string>com.greetly.ch</string>
         </array>
       </dict>
     </array>

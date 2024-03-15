@@ -1,4 +1,4 @@
-package com.greetly.ch.Greetly.ch;
+package com.greetly.ch;
 
 import android.app.Application;
 import android.content.res.Configuration;

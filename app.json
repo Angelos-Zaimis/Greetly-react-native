@@ -34,7 +34,7 @@
         "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       },
-      "bundleIdentifier": "com.greetly.ch.Greetly.ch"
+      "bundleIdentifier": "com.greetly.ch"
     },
     "android": {
       "adaptiveIcon": {
@@ -53,7 +53,7 @@
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.ACCESS_MEDIA_LOCATION"
       ],
-      "package": "com.greetly.ch.Greetly.ch"
+      "package": "com.greetly.ch"
     },
     "web": {
       "favicon": "./assets/favicon.png"
