@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 export const useNews = (incomingCategory: string) => {
 
-    const {userInfo} = useUserInfo();console.log(userInfo?.language)
+    const {userInfo} = useUserInfo();
     const [category, setCategory] = useState<string>(incomingCategory ?? '');
 
     const { data: news} = useSWR(    

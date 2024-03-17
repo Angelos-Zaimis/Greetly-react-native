@@ -64,7 +64,6 @@ const Informations: FC<InformationsProps> = ({route,navigation}) => {
     setOpenRequiredDoc(false)
   },[setOpenRequiredDoc, openRequiredDoc])
 
-  console.log(image, table_image)
   const addToBookmark = useCallback( async() => {
     if(information?.title) {
       try {

@@ -121,10 +121,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
     //   } 
     // },
   ];
-
-  console.log(subCategories)
-
-
+  
   if (isTabletMode) {
     return (
       <View style={styles.container}>

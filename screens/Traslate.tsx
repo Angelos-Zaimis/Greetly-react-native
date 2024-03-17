@@ -104,7 +104,6 @@ const Traslate: FC = () => {
     });
 
     setImageToTranslate(result)
-    console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -115,8 +114,7 @@ const Traslate: FC = () => {
     setIsTranslating(true)
     try {
       const translatedImageBase = await translateImage(imageToTranslate, language);
-      
-      console.log(translatedImageBase)
+    
       setTranslatedImage(translatedImageBase)
     } catch (error) {
       console.error('Error:', error);

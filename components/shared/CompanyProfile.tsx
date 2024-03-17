@@ -10,6 +10,7 @@ type CompanyProfileProps = {
 
 const CompanyProfile:FC<CompanyProfileProps> = ({imageUrl,link,title}) => {
 
+
     const openURL = (url: string) => {
         Linking.canOpenURL(url).then((supported) => {
           if (supported) {
@@ -22,7 +23,7 @@ const CompanyProfile:FC<CompanyProfileProps> = ({imageUrl,link,title}) => {
 
   return (
     <View style={styles.container}>
-        <Text></Text>
+        <Text>{title}</Text>
         <TouchableOpacity onPress={() => openURL(link)}>
             <Image style={styles.image} priority={'high'} source={{ uri: imageUrl}} />
         </TouchableOpacity>

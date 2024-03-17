@@ -107,7 +107,7 @@
     "cancelSubscriptionTitle": "¿Está seguro de que desea cancelar su suscripción?",
     "cancelSubscriptionSubTitle": "Tenga en cuenta que esta medida es irreversible",
     "chooseYourPlan": "Elija su plan:",
-
+    "Greece": "Grecia",
 
 
     "Legal System & Immigration": "Sistema jurídico e inmigración",
@@ -174,15 +174,22 @@
     "Employment Protections and Rights": "Protecciones y derechos laborales",
     "Salary and Cost of Living": "Salario y costo de vida",
     "Health Insurance through Employment": "Seguro de salud a través del empleo",
-    
-    
-
-
     "immigration, legal support, police": "inmigración, asuntos jurídicos, servicios de apoyo, policía, etc.",
     "open a bank account, filling taxes": "abrir una cuenta bancaria, cumplimentar los impuestos, etc.",
     "medical system, find a doctor": "sistema médico, encontrar un médico, etc.",
     "finding a job, working in Switzerland": "encontrar trabajo, trabajar en Suiza, etc.",
     "finding a place to rent or buy": "encontrar un lugar para alquilar o comprar, etc.",
-    "schools, universities": "sistema educativo, escuelas, universidades, etc."
+    "schools, universities": "sistema educativo, escuelas, universidades, etc.",
+    "WhatYouNeedToKnow": "Lo que hay que saber",
+    "RequiredDocuments": "Documentos necesarios",
+    "DiscoverBestBanks": "Descubre los mejores bancos",
 
+    "openBankAccountZurichEuEfta": "Abrir una cuenta bancaria como empleado de {{country}} en Zurich",
+    "openBankAccountZurichEuEftaOrangeTxt": "Abrir una cuenta bancaria implica varios pasos y consideraciones, principalmente debido a las estrictas normas de cumplimiento de los bancos suizos.",
+    "openBankAccountZurichEuEftaWYNTKContent": "¿Se traslada de Grecia para trabajar en Zúrich y piensa abrir una cuenta bancaria? No se preocupe, es un proceso sencillo. Empiece por elegir un banco que se adapte a sus necesidades; si va a quedarse más de tres meses, asegúrese de tener en regla su permiso de residencia. Como ciudadano de la UE, tendrá que registrarse en la oficina local a su llegada.Asegúrese de tener a mano su pasaporte o documento de identidad, junto con una prueba de empleo en Suiza, como un contrato de trabajo. También tendrá que demostrar dónde vive en Suiza, así que tenga a mano una factura de servicios públicos o un contrato de alquiler. Visitar una sucursal bancaria puede ser muy útil, ya que le da la oportunidad de entender las características de la cuenta y hacer cualquier pregunta. Prepárese para hacer un depósito inicial si es necesario, y decida qué tipo de cuenta necesita, si para transacciones diarias o para ahorrar. Lea siempre la letra pequeña para conocer las posibles comisiones o normas.Tenga en cuenta que cada banco puede tener sus propios requisitos, por lo que conviene consultar su sitio web o llamar por teléfono. Viniendo de la UE, algunos pasos pueden ser un poco más fáciles gracias a los acuerdos existentes.",
+    "openBankAccountZurichEuEftaRDOne": "Un pasaporte válido como prueba de identidad",
+    "openBankAccountZurichEuEftaRDTwo": "Prueba del origen de tus ingresos",
+    "openBankAccountZurichEuEftaRDThree": "Prueba de domicilio",
+    "openBankAccountZurichEuEftaRDFour": "Permiso de residencia",
+    "openBankAccountZurichEuEftaArrayBanks": "Hemos seleccionado un conjunto de los mejores bancos en Zúrich, Suiza, que recomendamos para ti."
 }

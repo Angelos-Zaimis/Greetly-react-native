@@ -99,6 +99,7 @@
     "termsAndConditions": "Conditions générales d'utilisation.",
     "Completeyourpayment": "Finalisez votre paiement",
 
+    "Greece": "Grèce",
     "premiumMember": "Premium Member",
     "month": "mois",
     "year": "année",
@@ -180,10 +181,18 @@
     "Unemployment Benefits": "Allocations de chômage",
     "Employment Protections and Rights": "Protections et droits en matière d'emploi",
     "Salary and Cost of Living": "Salaire et coût de la vie",
-    "Health Insurance through Employment": "Assurance maladie par l'emploi"
-    
-    
-    
+    "Health Insurance through Employment": "Assurance maladie par l'emploi",
+    "WhatYouNeedToKnow": "Ce qu'il faut savoir",
+    "RequiredDocuments": "Documents requis",
+    "DiscoverBestBanks": "Découvrez les meilleures banques",
 
-
+    
+    "openBankAccountZurichEuEfta": "Ouvrir un compte bancaire en tant qu'employé de {{pays}} à Zurich",
+    "openBankAccountZurichEuEftaOrangeTxt": "L'ouverture d'un compte bancaire implique plusieurs étapes et considérations, principalement en raison des normes de conformité strictes des banques suisses.",
+    "openBankAccountZurichEuEftaWYNTKContent": "Vous quittez la Grèce pour travailler à Zurich et vous envisagez d'ouvrir un compte bancaire ? Ne vous inquiétez pas, la procédure est simple. Commencez par choisir une banque qui répond à vos besoins. Si vous restez plus de trois mois, assurez-vous d'avoir votre permis de séjour en règle. En tant que citoyen de l'UE, vous devrez vous enregistrer auprès du bureau local dès votre arrivée.Munissez-vous de votre passeport ou de votre carte d'identité, ainsi que d'une preuve d'emploi en Suisse, telle qu'un contrat de travail. Vous devrez également montrer où vous vivez en Suisse. Ayez donc une facture d'électricité ou un contrat de location à portée de main. Se rendre dans une agence bancaire peut être très utile, car cela vous permet de comprendre les caractéristiques du compte et de poser des questions. Préparez-vous à effectuer un dépôt initial, le cas échéant, et décidez du type de compte dont vous avez besoin, qu'il s'agisse de transactions quotidiennes ou d'épargne. Lisez toujours les petits caractères pour connaître les éventuels frais ou règles.N'oubliez pas que chaque banque peut avoir ses propres exigences. Il est donc conseillé de consulter son site web ou de l'appeler. Si vous venez de l'UE, certaines démarches peuvent être un peu plus faciles grâce aux accords existants.",
+    "openBankAccountZurichEuEftaRDOne": "Un passeport valide comme preuve d'identité",
+    "openBankAccountZurichEuEftaRDTwo": "Preuve de l'origine de vos revenus",
+    "openBankAccountZurichEuEftaRDThree": "Justificatif de domicile",
+    "openBankAccountZurichEuEftaRDFour": "Titre de séjour",
+    "openBankAccountZurichEuEftaArrayBanks": "Nous avons sélectionné un éventail des meilleures banques à Zurich, Suisse, que nous vous recommandons."
 }

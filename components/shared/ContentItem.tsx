@@ -2,15 +2,15 @@
 import React, { useMemo }  from 'react'
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native'
 import { useLanguage } from '../util/LangContext';
-import ExpandableSection from './ExpandableSection';
-import ExpandableSectionList from './ExpandableList';
-import ExpandableLink from './ExpandableLink';
-import { ExpandableAdvertisment } from './ExpandableAdvertisment';
+import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
+import { useUserInfo } from '../util/useUserInfos';
+import Expandable from './Expandable';
 
 export const RenderContentItem = ({ item, navigation }) => {
     const {t} = useLanguage();
 
-        
+    const {userInfo} = useUserInfo();
+
     const {width: SCREENWIDTH} = useWindowDimensions();
   
     const isTabletMode = useMemo(() => {
@@ -47,36 +47,15 @@ export const RenderContentItem = ({ item, navigation }) => {
             }
 
             {
-                item.type === 'advertisment' && (
-                    <ExpandableAdvertisment isTabletMode title={item.title} iconDown={item.iconDown} text={item.text} listOfCompanies={item.listOfCompanies}/>
-                )
-            }
-
-            {
                 item.type === 'expandable' && (
-                    <ExpandableSection isTabletMode title={t(item.title)} content={item.content} iconDown={item.iconDown} textLink={item.textLink} children={''}>
-                    </ExpandableSection>
+                   <Expandable 
+                            title={t(item.title)}
+                            iconDown={t(item.iconDown)}
+                            content={t(item.content)}
+                            listItems={item.items} items={item.items} isTabletMode={isTabletMode}
+                            textLink={item.textLink} listOfCompanies={item.listOfCompanies} text={item.text}/>
                 )
             }
-            
-            {
-                item.type === 'expandableList' && (
-                    <ExpandableSectionList isTabletMode title={item.title} listItems={item.items} iconDown={item.iconDown} >
-                        <Text>
-                            {item.content}
-                        </Text>
-                    </ExpandableSectionList>
-                )
-            }
-
-            {
-                item.type === 'expandableLink' && (
-                    <ExpandableLink isTabletMode title={t(item.title)} items={item.items} text={item.text} navigation={navigation} iconDown={item.iconDown}>
-                       
-                    </ExpandableLink>
-                )
-            }
-
         </React.Fragment>
         )
     }
@@ -87,7 +66,7 @@ export const RenderContentItem = ({ item, navigation }) => {
             {
                 item.type === 'mainTitle' && (
                    <View>
-                        <Text style={styles.mainTitle}>{t(item.content)}</Text>
+                        <Text style={styles.mainTitle}>{t('openBankAccountZurichEuEfta', { country: t(userInfo.country) })}</Text>
                    </View>
                 )
             }
@@ -99,38 +78,18 @@ export const RenderContentItem = ({ item, navigation }) => {
                     </View>
                 )
             }
-
-            {
-                item.type === 'advertisment' && (
-                    <ExpandableAdvertisment title={item.title} iconDown={item.iconDown} text={item.text} listOfCompanies={item.listOfCompanies}/>
-                )
-            }
-
-            {
-                item.type === 'expandable' && (
-                    <ExpandableSection title={t(item.title)} content={item.content} iconDown={item.iconDown} textLink={item.textLink} children={''}>
-                    </ExpandableSection>
-                )
-            }
             
             {
-                item.type === 'expandableList' && (
-                    <ExpandableSectionList title={item.title} listItems={item.items} iconDown={item.iconDown} >
-                        <Text>
-                            {item.content}
-                        </Text>
-                    </ExpandableSectionList>
+                item.type === 'expandable' && (
+                   <Expandable 
+                        title={t(item.title)}
+                        iconDown={t(item.iconDown)}
+                        content={t(item.content)}
+                        listItems={item.items} items={item.items} isTabletMode={isTabletMode}
+                        textLink={item.textLink} listOfCompanies={item.listOfCompanies} text={item.text}/>
                 )
             }
-
-            {
-                item.type === 'expandableLink' && (
-                    <ExpandableLink title={t(item.title)} items={item.items} text={item.text} navigation={navigation} iconDown={item.iconDown}>
-                       
-                    </ExpandableLink>
-                )
-            }
-
+         
         </React.Fragment>
     );
 };

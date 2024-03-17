@@ -26,6 +26,9 @@ auth0-configuration.js
 # dependencies
 node_modules/
 
+./release.keystore
+
+
 # Expo
 .expo/
 dist/

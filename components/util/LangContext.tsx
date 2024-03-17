@@ -10,7 +10,7 @@ import { useUserInfo } from './useUserInfos';
  */
 
 interface LanguageContextType {
-  t: (key: string) => string;
+  t: (key: string, options?) => string;
   setLanguage: (language: string) => void;
   selectedLanguage: string;
 }
@@ -82,7 +82,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   },[]);
 
   const contextValue: LanguageContextType = {
-    t: (key: string) => i18next.t(key, { lng: selectedLanguage ? selectedLanguage : 'en'}),
+    
+    t: (key: string, options = {} ) => i18next.t(key, { ...options, lng: selectedLanguage ? selectedLanguage : 'en'}),
     setLanguage: (language: string) => setLanguage(language),
     selectedLanguage,
   };

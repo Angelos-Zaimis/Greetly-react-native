@@ -54,7 +54,6 @@
     "Valid Passport or National Identity Card": "Valid Passport or National Identity Card",
     "Proof of Employment": "Proof of Employment",
     "Proof of Residence": "Proof of Residence",
-    "RequiredDocuments": "Required Documents",
     "HelpPageTitle": "Get an Expert's advice. Find the right expert for you.",
     "HelpPageSubTitle": "Connect with top professionals easily and confidently for quality services.",
     "TeamMemberOurTeam": "Our team",
@@ -122,6 +121,7 @@
     "Housing": "Housing",
     "Education": "Education",
 
+    "Greece": "Greece",
     
     "Register as a new resident": "Register as a new resident",
     "Renewal and extension of residence": "Renewal and extension of residence",
@@ -169,8 +169,8 @@
     "Pension System": "Pension System",
     "Setting a Budget": "Setting a Budget",
     "Loans & Mortgages": "Loans & Mortgages",
-
-
+    "WhatYouNeedToKnow": "What you need to know",
+    "RequiredDocuments": "Required Documents",
 
     "immigration, legal support, police": "immigration, legal matters, support services, police, etc.",
     "open a bank account, filling taxes": "open a bank account, filling taxes, etc.",
@@ -178,87 +178,14 @@
     "finding a job, working in Switzerland": "finding a job, working in Switzerland, etc.",
     "finding a place to rent or buy": "finding a place to rent or buy, etc.",
     "schools, universities": "education system, schools, universities, etc.",
+    "DiscoverBestBanks": "Discover the best banks",
 
-    "registerAsZurichEmployeeTitle": "Registration Guide for employed EU/EFTA Citizen in Zürich",
-    "registerAsZurichEmployeeTextOne": "This guide details the necessary steps, required documents, and locations for legal residency and work registration.",
-    "registerAsZurichEmployeeTextTwo": "What You Need to Know",
-    "regiserAsZurichEmployeeTextThree": "The registration should typically be done within 14 days of arriving in Switzerland. Delaying this process might lead to penalties.",
-    "registerAsZurichEmployeeTextFour": "Required Documents",
-    "regiserAsZurichEmployeeTextFive": "Where You Need to go",
-    "registerAsZurichEmployeeTextSix": "Personal registration office Zurich South",
-    "registerAsZurichEmployeeTextSeven": "Personal registration office Zurich West",
-    "registerAsZurichEmployeeTextEight": "Personal registration office Zurich North",
-    "registerAsZurichEmployeeTextNine": "Additional information",
-    "registerAsZurichEmployeeTextTen": "Online registration is available via «eUmzugCH». Check if you can register your move to Zurich.",
-    "registerAsZurichEmployeeTextEleven": "eUmzugCH",
-    "registerAsZurichEmployeeTextTwelve": "Select one of the three registration offices to register",
-    "registerAsZurichEmployeeReqDocOne": "Valid Passport or Identity Card",
-    "regiserAsZurichEmployeeReqDocTwo": "Employment Contract",
-    "registerAsZurichEmployeeReqDocThree": "Apartment registration or tenancy agreement",
-    "regiserAsZurichEmployeeReqDocFour": "Health insurance card (for all family members)",
-    "registerAsZurichEmployeeReqDocFive": "Civil status documents (marriage certificate and birth certificates for children)",
-    "registerAsZurichEmployeeReqDocSix": "CHF 40.- per adult",
-
-    "registerAsZurichStudentTitle": "Registration Guide for EU/EFTA Students in Zürich",
-    "registerAsZurichStudentTextOne": "This guide outlines the necessary steps, required documents, and locations for legal residency and student registration in Zürich.",
-    "registerAsZurichStudentTextTwo": "What You Need to Know",
-    "registerAsZurichStudentTextThree": "Students should register within 14 days of arriving in Switzerland to avoid penalties.",
-    "registerAsZurichStudentTextFour": "Required Documents",
-    "registerAsZurichStudentTextFive": "Where You Need to go",
-    "registerAsZurichStudentTextSix": "Registration office Zurich South",
-    "registerAsZurichStudentTextSeven": "Registration office Zurich West",
-    "registerAsZurichStudentTextEight": "Registration office Zurich North",
-    "registerAsZurichStudentTextNine": "Additional information",
-    "registerAsZurichStudentTextTen": "Online registration is available via «eUmzugCH». Check if you can register your move to Zurich as a student online.",
-    "registerAsZurichStudentTextEleven": "eUmzugCH",
-    "registerAsZurichStudentTextTwelve": "Important contacts and resources for student support",
-    "registerAsZurichStudentReqDocOne": "Valid Passport or Identity Card",
-    "registerAsZurichStudentReqDocTwo": "Proof of Enrollment from Educational Institution",
-    "registerAsZurichStudentReqDocThree": "Apartment registration or tenancy agreement",
-    "registerAsZurichStudentReqDocFour": "Health insurance card",
-    "registerAsZurichStudentReqDocFive": "Civil status documents if applicable (e.g., marriage certificate)",
-    "registerAsZurichStudentReqDocSix": "Financial proof of support or scholarship details",
-    "registerAsZurichStudentReqDocSeven": "CHF 40.- registration fee",
-    "registerAsZurichStudentAdditionalReqOne": "Student Visa if required",
-    "registerAsZurichStudentAdditionalReqTwo": "Residence Permit application form",
-    "registerAsZurichStudentAdditionalInfo": "Check with the university for any additional specific requirements.",
-
-
-
-    "HealthInsuranceObtainZETTitle": "Obtain Health Insurance for EU/EFTA Employee Zurich",
-    "HealthInsuranceObtainZETXTOne": "Health insurance coverage is compulsory for anyone residing in the country for more than three months",
-    "HealthInsuranceObtainZETXTTwo": "What You Need to Know",
-    "HealthInsuranceObtainZETXTThree": "As an EU/EFTA employee in Zurich, you must choose from about 60 Swiss health insurers, with your coverage starting from the first day of employment. If living in a neighboring country, you may opt for home country insurance but must apply for exemption within three months. It's vital to comply promptly to ensure continuous coverage and avoid penalties",
-
-    "HealthInsuranceObtainZETXTFour": "Discover Top Insurance Agents",
-    "HealthInsuranceObtainZETXTFive": "Click below to seamlessly connect with our skilled insurance agents tailored to your needs and secure your coverage effortlessly",
-    "HealthInsuranceObtainZETXTSix": "Explore our Insurance agents",
-    "HealthInsuranceObtainZETXTSeven": "Top Insurance Companies for You",
-    "HealthInsuranceObtainZETXTEight": "Select and explore our carefully chosen array of esteemed insurance companies. Secure the protection you require with the reliability and peace of mind you value",
-
-    "HealthInsuranceObtainRQDOCOne": "Employment Contract",
-    "HealthInsuranceObtainRQDOCTwo": "Residence Permit",
-    "HealthInsuranceObtainRQDOCThree": "Proof of Income",
-    "HealthInsuranceObtainRQDOCFour": "Proof of Residence",
-
- 
-    "peterSchweizerSpecialization": "Life Insurance, Property Insurance, Health Insurance",
-    "peterSchweizerAboutMe": "With over 10 years of experience, I provide tailored insurance solutions. I'm committed to ensuring your peace of mind with comprehensive coverage.",
- 
-    "chrisWannerSpecialization": "Specializes in visa applications, residency, citizenship, and work permits, catering to individual, family, and business needs",
-    "chrisWannerAboutMe":"As an immigration consultant, I offer expert guidance and support throughout the complex immigration process, aiming to make your journey to a new country seamless and successful",
-
-
-
-    "HealthInsuranceObtainZSTTitle": "Obtain Health Insurance for EU/EFTA Student Zurich",
-    "HealthInsuranceObtainZSTXTOne": "Health insurance coverage is compulsory for anyone residing in the country for more than three months",
-    "HealthInsuranceObtainZSTXTTwo": "What You Need to Know",
-    "HealthInsuranceObtainZSTXTThree": "As an EU/EFTA Student in Zurich, you must choose from about 60 Swiss health insurers, with your coverage starting from the first day of employment. If living in a neighboring country, you may opt for home country insurance but must apply for exemption within three months. It's vital to comply promptly to ensure continuous coverage and avoid penalties",
-
-    "HealthInsuranceObtainZSTXTFour": "Discover Top Insurance Agents",
-    "HealthInsuranceObtainZSTXTFive": "Click below to seamlessly connect with our skilled insurance agents tailored to your needs and secure your coverage effortlessly",
-    "HealthInsuranceObtainZSTXTSix": "Explore our Insurance agents",
-    "HealthInsuranceObtainZSTXTSeven": "Top Insurance Companies for You",
-    "HealthInsuranceObtainZSTXTEight": "Select and explore our carefully chosen array of esteemed insurance companies. Secure the protection you require with the reliability and peace of mind you value"
-
+    "openBankAccountZurichEuEfta": "Open a bank account as an employee from {{country}} in Zurich",
+    "openBankAccountZurichEuEftaOrangeTxt": "Opening a bank account involves several steps and considerations, primarily due to the strict compliance standards Swiss banks.",
+    "openBankAccountZurichEuEftaWYNTKContent": "Moving from Greece to work in Zurich and planning to open a bank account? No worries, it's a smooth process. Start by picking a bank that fits your needs; If you're staying for more than three months, ensure you have your residence permit in order. As an EU citizen, you'll need to register with the local office upon arrival.Make sure to have your passport or ID card ready, along with proof of employment in Switzerland, such as a job contract. You'll also need to show where you're living in Switzerland, so have a utility bill or rental agreement handy. Visiting a bank branch can be really helpful, as it gives you a chance to understand the account features and ask any questions. Be prepared to make an initial deposit if required, and decide what kind of account you need, whether it's for daily transactions or saving up. Always read the fine print to be aware of any fees or rules.Keep in mind that each bank might have its own set of requirements, so checking their website or calling them up is a good idea. Coming from the EU, some steps might be a bit easier thanks to existing agreements.",
+    "openBankAccountZurichEuEftaRDOne": "A valid passport as proof of identity",
+    "openBankAccountZurichEuEftaRDTwo": "Proof of the origin of your income",
+    "openBankAccountZurichEuEftaRDThree": "Proof of home address",
+    "openBankAccountZurichEuEftaRDFour": "Residence permit",
+    "openBankAccountZurichEuEftaArrayBanks": "We have selected an array of the best banks in Zurich, Switzerland, that we recommend for you."
 }

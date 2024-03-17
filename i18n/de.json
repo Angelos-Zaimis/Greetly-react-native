@@ -109,8 +109,7 @@
     "cancelSubscriptionTitle": "Sind Sie sicher, dass Sie Ihr Abonnement kündigen möchten?",
     "cancelSubscriptionSubTitle": "Bitte beachten Sie, dass diese Maßnahme unumkehrbar ist.",
     "chooseYourPlan": "Wählen Sie Ihren Plan:",    
-
-
+    "Greece": "Griechenland",
     "Legal System & Immigration": "Rechtssystem und Einwanderung",
     "Money & Banking": "Geld und Bankwesen",
     "Healthcare & Insurance": "Gesundheitswesen und Versicherung",
@@ -173,7 +172,9 @@
     "Preventive Care": "Vorbeugende Pflege",
     "Pharmacies": "Apotheken",
     "Premiums and Deductibles": "Prämien und Selbstbehalte",
-    
+    "WhatYouNeedToKnow": "Was Sie wissen sollten",
+    "RequiredDocuments": "Erforderliche Dokumente",
+
     "Find a job": "Einen Job finden",
     "Work Permits": "Arbeitserlaubnisse",
     "Swiss Employment Contracts": "Schweizer Arbeitsverträge",
@@ -183,9 +184,15 @@
     "Unemployment Benefits": "Arbeitslosenleistungen",
     "Employment Protections and Rights": "Arbeitsschutz und Rechte",
     "Salary and Cost of Living": "Gehalt und Lebenshaltungskosten",
-    "Health Insurance through Employment": "Krankenversicherung durch Beschäftigung"
-    
+    "Health Insurance through Employment": "Krankenversicherung durch Beschäftigung",
+    "DiscoverBestBanks": "Entdecken Sie die besten Banken",
 
-
-
+    "openBankAccountZurichEuEfta": "Eröffnen Sie ein Bankkonto als Arbeitnehmer aus {{country}} in Zürich",
+    "openBankAccountZurichEuEftaOrangeTxt": "Die Eröffnung eines Bankkontos erfordert mehrere Schritte und Überlegungen, vor allem aufgrund der strengen Compliance-Standards der Schweizer Banken.",
+    "openBankAccountZurichEuEftaWYNTKContent": "Sie ziehen von Griechenland nach Zürich, um dort zu arbeiten, und möchten ein Bankkonto eröffnen? Keine Sorge, das ist ein reibungsloser Prozess. Suchen Sie sich zunächst eine Bank aus, die Ihren Bedürfnissen entspricht. Wenn Sie länger als drei Monate bleiben, sollten Sie sicherstellen, dass Ihre Aufenthaltsgenehmigung in Ordnung ist. Als EU-Bürger müssen Sie sich nach Ihrer Ankunft bei der örtlichen Behörde anmelden.Halten Sie Ihren Reisepass oder Personalausweis sowie einen Nachweis über eine Beschäftigung in der Schweiz (z. B. einen Arbeitsvertrag) bereit. Sie müssen auch nachweisen, wo Sie in der Schweiz wohnen, halten Sie also eine Stromrechnung oder einen Mietvertrag bereit. Ein Besuch in einer Bankfiliale kann sehr hilfreich sein, da Sie dort die Möglichkeit haben, die Kontofunktionen zu verstehen und Fragen zu stellen. Seien Sie darauf vorbereitet, eine erste Einzahlung zu leisten, und entscheiden Sie, welche Art von Konto Sie benötigen, sei es für tägliche Transaktionen oder zum Sparen. Lesen Sie immer das Kleingedruckte, um sich über etwaige Gebühren oder Regeln zu informieren.Denken Sie daran, dass jede Bank ihre eigenen Anforderungen haben kann, daher sollten Sie sich auf der Website der Bank informieren oder dort anrufen. Wenn Sie aus der EU kommen, könnten einige Schritte dank bestehender Abkommen etwas einfacher sein.",
+    "openBankAccountZurichEuEftaRDOne": "Gültiger Reisepass als Identitätsnachweis",
+    "openBankAccountZurichEuEftaRDTwo": "Nachweis über die Herkunft Ihres Einkommens",
+    "openBankAccountZurichEuEftaRDThree": "Nachweis der Wohnadresse",
+    "openBankAccountZurichEuEftaRDFour": "Aufenthaltsgenehmigung",
+    "openBankAccountZurichEuEftaArrayBanks": "Wir haben eine Auswahl der besten Banken in Zürich, Schweiz, ausgewählt, die wir Ihnen empfehlen."
 }

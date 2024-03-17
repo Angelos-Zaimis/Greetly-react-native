@@ -217,7 +217,6 @@ const handleGoogleLogin = async () => {
       setAuthTokens({ access: jwtData.accessToken, refresh: jwtData.refreshToken });
       setUser(jwtData.accessToken);
       
-      console.log(user)
       // Fetch additional data using JWT token
       await getGoogleUserInfo(response.authentication.accessToken);
     }
@@ -276,13 +275,10 @@ const handleGoogleLogin = async () => {
       })
       
       const user = await response.json()
-      console.log(user)
       setUserInfos({
         username: user.email
       });
-
-      console.log('1')
-      console.log(user)
+      
       const userInfoToSave = {
         username: user.email
       };
