@@ -65,4 +65,4 @@ yarn-error.*
 package.json
 release.keystore
 eas.json
-app.json
+.app.json
