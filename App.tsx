@@ -6,6 +6,7 @@ import { LanguageProvider } from "./components/util/LangContext";
 import { LogBox } from "react-native";
 
 
+
 LogBox.ignoreAllLogs();  // Consider reviewing this for development purposes
 
 export default function App() {
