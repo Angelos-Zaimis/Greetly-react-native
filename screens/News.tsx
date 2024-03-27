@@ -40,6 +40,18 @@ const News: FC<NewsProps> = ({navigation}) => {
       navigation.navigate("ViewAllNews")
     }
 
+    const handleGoNewsPageSignlePage = ( newsPage: {
+      image?: string,
+      title?: string,
+      description?: string,
+      urlToImage?: string,
+      url?: string
+  }) => {
+     console.log(newsPage)
+      navigation.navigate("NewsSignlePage", {newsPage: newsPage})
+    }
+
+
     const {width: SCREENWIDTH} = useWindowDimensions();
   
     const {t} = useLanguage();
@@ -158,7 +170,7 @@ const News: FC<NewsProps> = ({navigation}) => {
             <FlatList
               refreshing
               data={mockNewsData}
-              renderItem={({ item }) => <NewsCard item={item} openURL={openURL} />}
+              renderItem={({ item }) => <NewsCard item={item} handlePress={() => handleGoNewsPageSignlePage(item)} />}
               keyExtractor={(item) => item.id.toString()}
             
               horizontal={true}
@@ -193,7 +205,7 @@ const News: FC<NewsProps> = ({navigation}) => {
             </View>
             <FlatList
               data={newsData}
-              renderItem={({ item }) => <RecommendedNewsCard item={item}/>}
+              renderItem={({ item }) => <RecommendedNewsCard handlePress={() => handleGoNewsPageSignlePage(item)} item={item}/>}
               keyExtractor={item => item.id}
         
             />
@@ -217,7 +229,7 @@ const News: FC<NewsProps> = ({navigation}) => {
             <FlatList
               refreshing
               data={mockNewsData}
-              renderItem={({ item }) => <NewsCard item={item} openURL={openURL} />}
+              renderItem={({ item }) => <NewsCard item={item} handlePress={() => handleGoNewsPageSignlePage(item)} />}
               keyExtractor={(item) => item.id.toString()}
             
               horizontal={true}
@@ -252,9 +264,8 @@ const News: FC<NewsProps> = ({navigation}) => {
             </View>
             <FlatList
               data={newsData}
-              renderItem={({ item }) => <RecommendedNewsCard item={item}/>}
+              renderItem={({ item }) => <RecommendedNewsCard handlePress={() => handleGoNewsPageSignlePage(item)} item={item}/>}
               keyExtractor={item => item.id}
-        
             />
           </View>
         </View>

@@ -22,3 +22,4 @@ export {default as SubscriptionDetails} from './SubscriptionDetails';
 export {default as TeamMembers} from './TeamMembers';
 export {default as MapPage} from './MapPage';
 export {default as ViewAllNews} from './ViewAllNews';
+export {default as NewsSignlePage} from './NewsSignlePage'

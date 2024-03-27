@@ -5,7 +5,7 @@ import { View, FlatList, Text, TouchableOpacity, StyleSheet } from 'react-native
 const ButtonsComponent = ({ title, onPress, isSelected }) => (
   <View style={styles.item}>
     <TouchableOpacity style={[styles.button, {backgroundColor: isSelected ? "#F06748" : 'transparent'}]} onPress={onPress}>
-      <Text style={[styles.buttonText, {color: isSelected ? "white" : "#F24720"}]}>{title}</Text>
+      <Text style={[styles.buttonText, {color: isSelected ? "white" : "#3F465C"}]}>{title}</Text>
     </TouchableOpacity>
   </View>
 );
@@ -20,15 +20,16 @@ const styles = StyleSheet.create({
     button: {
       width: 120,
       height: 40,
-      borderRadius: 28,
+      borderRadius: 12,
       alignItems: 'center',
       justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: '#F24720'
+      borderWidth: 0.5,
+      borderColor: 'F0F1FA'
     },
     buttonText: {
       color: '#F24720',
       fontWeight: '800',
-      fontSize: 14
+      fontSize: 14,
+      textTransform: 'capitalize'
     },
   });

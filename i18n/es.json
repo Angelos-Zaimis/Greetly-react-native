@@ -191,5 +191,18 @@
     "openBankAccountZurichEuEftaRDTwo": "Prueba del origen de tus ingresos",
     "openBankAccountZurichEuEftaRDThree": "Prueba de domicilio",
     "openBankAccountZurichEuEftaRDFour": "Permiso de residencia",
-    "openBankAccountZurichEuEftaArrayBanks": "Hemos seleccionado un conjunto de los mejores bancos en Zúrich, Suiza, que recomendamos para ti."
+    "openBankAccountZurichEuEftaArrayBanks": "Hemos seleccionado un conjunto de los mejores bancos en Zúrich, Suiza, que recomendamos para ti.",
+
+    "fabianSchneiderSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
+    "fabianSchneiderAboutMe": "Hola, soy Fabian Schneider, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga.",
+    
+    "ninaMüllerSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
+    "ninaMüllerAboutMe": "Hola, soy Nina Müller, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga.",
+
+    "efrosiniSioutiSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
+    "efrosiniSioutiAboutMe": "Hola, soy Nina Müller, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga.",
+
+    "peterSchweizerSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
+    "peterSchweizerAboutMe": "Hola, soy Nina Müller, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga."
+    
 }

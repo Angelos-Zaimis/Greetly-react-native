@@ -194,5 +194,18 @@
     "openBankAccountZurichEuEftaRDTwo": "Preuve de l'origine de vos revenus",
     "openBankAccountZurichEuEftaRDThree": "Justificatif de domicile",
     "openBankAccountZurichEuEftaRDFour": "Titre de séjour",
-    "openBankAccountZurichEuEftaArrayBanks": "Nous avons sélectionné un éventail des meilleures banques à Zurich, Suisse, que nous vous recommandons."
+    "openBankAccountZurichEuEftaArrayBanks": "Nous avons sélectionné un éventail des meilleures banques à Zurich, Suisse, que nous vous recommandons.",
+    
+    "fabianSchneiderSpecialization": "Assurance-vie, Assurance santé, Assurance auto, Assurance propriété",
+    "fabianSchneiderAboutMe": "Bonjour, je suis Fabian Schneider, votre agent d'assurance local de confiance. Avec plus de 5 ans d'expérience dans le secteur des assurances, je suis passionné par l'aide aux individus et aux familles pour sécuriser leur avenir. Mon approche est simple : écouter vos besoins, comprendre vos préoccupations et offrir des conseils et des solutions transparents sans jargon.",
+    
+    "ninaMüllerSpecialization": "Assurance-vie, Assurance santé, Assurance auto, Assurance propriété",
+    "ninaMüllerAboutMe": "Bonjour, je suis Nina Müller, votre agent d'assurance local de confiance. Avec plus de 5 ans d'expérience dans le secteur des assurances, je suis passionné par l'aide aux individus et aux familles pour sécuriser leur avenir. Mon approche est simple : écouter vos besoins, comprendre vos préoccupations et offrir des conseils et des solutions transparents sans jargon.",
+
+    "efrosiniSioutiSpecialization"    : "Assurance-vie, Assurance santé, Assurance auto, Assurance propriété",
+    "efrosiniSioutiAboutMe": "Bonjour, je suis Nina Müller, votre agent d'assurance local de confiance. Avec plus de 5 ans d'expérience dans le secteur des assurances, je suis passionné par l'aide aux individus et aux familles pour sécuriser leur avenir. Mon approche est simple : écouter vos besoins, comprendre vos préoccupations et offrir des conseils et des solutions transparents sans jargon.",
+
+    "peterSchweizerSpecialization": "Assurance-vie, Assurance santé, Assurance auto, Assurance propriété",
+    "peterSchweizerAboutMe": "Bonjour, je suis Nina Müller, votre agent d'assurance local de confiance. Avec plus de 5 ans d'expérience dans le secteur des assurances, je suis passionné par l'aide aux individus et aux familles pour sécuriser leur avenir. Mon approche est simple : écouter vos besoins, comprendre vos préoccupations et offrir des conseils et des solutions transparents sans jargon."
+    
 }

@@ -1,11 +1,21 @@
 // NewsCard.js
-import React from 'react';
+import React, { FC } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
 const SCREENWIDTH = Dimensions.get('window').width;
 
-const NewsCard = ({ item, openURL }) => (
-  <TouchableOpacity onPress={() => openURL(item.url)}>
+type NewsCardProps = {
+  item: {
+    url: string,
+    urlToImage: string
+    title: string,
+    description: string
+  },
+  handlePress: () => void;
+}
+
+const NewsCard: FC<NewsCardProps>= ({ item, handlePress }) => (
+  <TouchableOpacity onPress={handlePress}>
     <ImageBackground source={item.urlToImage} style={styles.card}>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{item.title}</Text>

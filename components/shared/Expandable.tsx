@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
   },
   headerText: {
-    fontSize: 18.5,
+    fontSize: 17,
     fontWeight: '900',
     color: '#3F465C',
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     // Text styles for mobile
     padding: 16,
     lineHeight: 26,
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '700',
     color: '#3F465C',
   },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 
     padding: 16,
     lineHeight: 26,
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '700',
     color: '#3F465C',
   },
