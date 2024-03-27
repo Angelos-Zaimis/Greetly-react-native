@@ -62,7 +62,7 @@ yarn-error.*
 
 # @end expo-cli
 
-package.json
-release.keystore
-eas.json
+.package.json
+.release.keystore
+.eas.json
 .app.json
