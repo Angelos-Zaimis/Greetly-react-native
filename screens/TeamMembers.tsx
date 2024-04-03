@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useCallback, useMemo, useState } from 'react'
 import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
 import { FontAwesome } from '@expo/vector-icons';
@@ -6,17 +6,19 @@ import { Image } from 'expo-image';
 import { useTeamMembers } from '../components/util/useTeamMembers';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import ProfessionalCard from '../components/shared/ProfessionalCard';
+
 
 type HelpProps = {
   navigation: NavigationProp<any>;
-  route?: RouteProp<{params: {type: string, name: string}}>;
+  route?: RouteProp<{params: {type: string, name: string, canton: string}}>;
 }
 
 
  const TeamMembers: FC<HelpProps> = ({navigation, route}) => {
 
   const {t} = useLanguage();
-  const { type, name} = route.params ?? {};
+  const { type, name, canton} = route.params ?? {};
   const text = t(name).split(' ');
   const {height: SCREEN_HEIGHT, width: SCREENWIDTH} = useWindowDimensions();
 
@@ -32,7 +34,7 @@ type HelpProps = {
     return false;
   },[SCREENWIDTH])
 
-  const {teamMembers} = useTeamMembers(type);
+  const {teamMembers} = useTeamMembers(type, canton);
   
   if (isTabletMode) {
     return (
@@ -62,6 +64,14 @@ type HelpProps = {
           />
         </View>
         <View style={styles.container}>
+
+          <ProfessionalCard 
+              imageUri={undefined} 
+              name={undefined} 
+              location={undefined} 
+              occupation={undefined} 
+              icons={undefined}          
+          />
           <FlatList 
               data={teamMembers}
               renderItem={({ item }) => (
@@ -138,54 +148,43 @@ type HelpProps = {
         source={require('../assets/help/help.png')}
         />
       </View>
-      <View style={styles.container}>
-        <FlatList 
-            data={teamMembers}
-            renderItem={({ item }) => (
-            <TouchableOpacity
-              key={item.id}
-              onPress={() => navigation.navigate('TeamMember',{
-                 name: item.name,
-                 location: item.location,
-                 occupation: item.occupation,
-                 profileImage: item.profileImage,
-                 languages: item.languages,
-                 licensed: item.licensed,
-                 specialization: item.specialization,
-                 aboutMe: item.aboutMe,
-                 longitude: item.longitude,
-                 latitude: item.latitude,
-                 latitudeDelta: item.latitudeDelta,
-                 longitudeDelta: item.longitudeDelta,
-                 linkAddress: item.linkAddress
-              })}
-             style={styles.personContainer}
-            >
-              <View style={styles.profileImageContainer}>
-                <Image style={[styles.profileImage, {height: SCREEN_HEIGHT < 700 ? 60 : 70, width: SCREEN_HEIGHT < 700 ? 80 : 95}]} source={{uri: item.profileImage}}/>
-              </View>
-              <View style={styles.profileContainer}>
-                <View style={styles.location}>
-                  <FontAwesome name="map-pin" size={SCREEN_HEIGHT < 700 ? 10 : 12} color="#719FFF" />
-                  <Text style={[styles.textLocation, {fontSize: SCREEN_HEIGHT < 700 ? 11 : 13}]}>{item.location}</Text>
-                </View>
-                <View>
-                  <Text style={[styles.name,{fontSize: SCREEN_HEIGHT < 700 ? 13 : 16}]}>{item.name}</Text>
-                  <Text style={styles.occupation}>{item.occupation}</Text>
-                </View>
-              </View>
-              <View style={styles.languagesContainer}>
-                {
-                    item?.languages?.map((language) => {
-                        return <Image source={language} contentFit='contain' style={styles.languageIcon}/>
-                    })
-                }
-              </View>
-            </TouchableOpacity>
-            )}  
-             keyExtractor={(item) => item.name.toString()}
-          /> 
-      </View>
+      <View style={styles.flatListContainer}>
+      <FlatList 
+        data={teamMembers}
+        numColumns={2} // This prop transforms the list into a 2-column grid
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            key={item.id}
+            onPress={() => navigation.navigate('TeamMember', {
+               name: item.name,
+               location: item.location,
+               occupation: item.occupation,
+               profileImage: item.profileImage,
+               languages: item.languages,
+               licensed: item.licensed,
+               specialization: item.specialization,
+               aboutMe: item.aboutMe,
+               longitude: item.longitude,
+               latitude: item.latitude,
+               latitudeDelta: item.latitudeDelta,
+               longitudeDelta: item.longitudeDelta,
+               linkAddress: item.linkAddress
+            })}
+            style={styles.personContainer}
+          >
+            <ProfessionalCard 
+              imageUri={item.profileImage} 
+              name={item.name} 
+              location={item.location} 
+              occupation={item.occupation} 
+              icons={item.languages}          
+            />
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id} // Using ID as key extractor
+        contentContainerStyle={styles.listContentContainer} // Adjust padding here if needed
+      /> 
+    </View>
     </SafeAreaView>
   )
 }
@@ -222,21 +221,7 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain',
     width: '100%',
-    height: 130,
-    marginBottom: 10
-  },
-  personContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    alignSelf:'center',
-    width: '90%',
-    height: 100,
-    borderRadius: 20,
-    paddingTop: 15,
-    marginBottom: '5%',
-    backgroundColor: '#F8F9FC',
+    height: 120,
   },
   profileImage: {
     marginTop: 5,
@@ -258,6 +243,22 @@ const styles = StyleSheet.create({
         height: 18,
         width: 18,
         marginRight: 7,
+    },
+    flatListContainer: {
+      flex: 1, // Ensures the FlatList occupies the full parent container
+    },
+    personContainer: {
+      flex: 1, // Allows the TouchableOpacity to fill one column
+      margin: 5, // Adds spacing between the grid items
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 0 },
+      shadowOpacity: 0.3,
+      shadowRadius: 8,
+      elevation: 0,
+    },
+    listContentContainer: {
+      paddingHorizontal: 5, // Adjusts padding around the grid
+      paddingBottom: 10, // Extra padding at the bottom
     },
   profileContainer: {
     position: 'absolute',

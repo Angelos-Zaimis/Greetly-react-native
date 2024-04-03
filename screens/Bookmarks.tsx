@@ -161,7 +161,7 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
             <View style={styles.bookmarkSubcontainer}>
               <Text style={styles.categoryText}>{t('in')} {t(item?.category)}</Text>
               <View style={[styles.bookmark, {opacity: !userInfo?.isSubscribed ? 0.5 : 1}]}>
-                <TouchableOpacity onPress={ userInfo?.isSubscribed ? () => handleShowBookmark(
+                <TouchableOpacity onPress={() => handleShowBookmark(
                   item?.canton,
                   item?.title,
                   item?.description,
@@ -169,8 +169,7 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
                   item?.requiredDocuments,
                   item?.category,
                   item?.table_image
-                  ) : 
-                  () => setIsNotSubscribed(true)} 
+                  )} 
                   style={styles.cantonAndTitle}>
                   <Text style={styles.canton}>{item?.canton}</Text>
                   <View style={styles.titleIcon}>

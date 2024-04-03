@@ -12,6 +12,7 @@ import { Octicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
 import NewsNavigator from '../newsNavigator/NewsNavigator';
+import SearchNavigator from '../searchNavigator/SearchNavigator';
 
 type BottomNavigatorProps = {
   navigation: NavigationProp<any>;
@@ -144,37 +145,36 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
           {() => <WelcomePage />}
         </Tab.Screen>
 
-        <Tab.Screen
+        
+        {/* <Tab.Screen
           name="News"
           options={{
             tabBarStyle: styles.tabContainer,
             headerShown: false,
-            title: 'News',
+            title: 'Search',
             tabBarInactiveTintColor: '#3F465C',
             tabBarActiveTintColor: '#F06748',
             tabBarLabelStyle: styles.scanText,
             tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="newspaper-o" size={23} color={color} />
+            <Feather name="search"  size={25} color={color} />
             )
           }}
         >
  
-          {() => <NewsNavigator />}
-        </Tab.Screen>
+          {() => <SearchNavigator />}
+        </Tab.Screen> */}
 
         <Tab.Screen
           name="HelpContainer"
           options={{
-            tabBarItemStyle: [styles.helpTap, { height: SCREEN_HEIGHT < 700 ? 60 : 60}, { top: SCREEN_HEIGHT < 700 ? '-6%': '-2%'}, Platform.OS === 'android' && { height: 50, width: 40, paddingVertical: 3}, isTabletMode  && {width: 10}],
-            tabBarStyle: styles.tabContainer,
             headerShown: false,
             title: 'Help',
             tabBarInactiveTintColor: '#3F465C',
             tabBarActiveTintColor: '#F06748',
             tabBarActiveBackgroundColor: 'white',
-            tabBarLabelStyle: styles.helpText,
+            tabBarLabelStyle: styles.text,
             tabBarIcon: ({ color, size }) => (
-             <MaterialCommunityIcons name="message-text-outline" size={25} color={'#Ffff'} />
+             <MaterialCommunityIcons name="message-text-outline" size={25} color={color} />
             )
           }}
         >
@@ -189,7 +189,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
             title: 'Bookmarks',
             tabBarInactiveTintColor: '#3F465C',
             tabBarActiveTintColor: '#F06748',
-            tabBarLabelStyle: styles.bookText,
+            tabBarLabelStyle: styles.text,
             tabBarIcon: ({ color, size }) => (
               <Feather name="heart" size={25} color={color} />
             )
@@ -223,7 +223,7 @@ export default BottomNavigator;
 
   const styles = StyleSheet.create({
     tabContainer: {
-        backgroundColor: '#F5F8FD',
+      backgroundColor: '#F5F8FD',
     },
     helpTap: {
       position: 'relative',
@@ -241,16 +241,16 @@ export default BottomNavigator;
     shadowRadius: 6,
     },
     text:{
-      fontSize: 12,
+      fontSize: 14,
     },
     bookText:{
     },
     helpText: {
       color: 'white',
-      fontSize: 12
+      fontSize: 14
     },
     scanText: {
-      fontSize: 12,
+      fontSize: 14,
     },
 
     //TABLET STYLE

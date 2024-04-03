@@ -1,9 +1,10 @@
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindowDimensions, Platform} from "react-native";
 import { useLanguage } from '../components/util/LangContext';
-import { FontAwesome } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { NavigationProp } from '@react-navigation/native';
+import { Dropdown } from 'react-native-element-dropdown';
+import { AntDesign } from '@expo/vector-icons'; 
 
 type HelpProps = {
   navigation: NavigationProp<any>;
@@ -16,6 +17,16 @@ const Help: FC<HelpProps> = ({navigation}) => {
   const text = t("HelpPageTitle").split(' ')
 
   const {height: SCREEN_HEIGHT, width: SCREENWIDTH} = useWindowDimensions();
+
+  const [selectedCanton, setSelectedCanton] = useState<string>();
+
+
+  const cantons = [
+    { label: 'Zurich', value: 'ZH' },
+    { label: 'Bern', value: 'BE' },
+    { label: 'Ticino', value: 'TI' },
+    { label: 'Geneva', value: 'GE' }
+  ]
 
   const isTabletMode = useMemo(() => {
     if(SCREENWIDTH > 700) {
@@ -35,15 +46,17 @@ const Help: FC<HelpProps> = ({navigation}) => {
   ];
 
   const handleOpenTeamMembers = useCallback(
-    (type: string, name:string) => {
+    (type: string, name:string, canton: string) => {
+      console.log(canton)
       navigation.navigate('TeamMembers',{
         name,
-        type
+        type,
+        canton
       })
   },[navigation]);
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text)} style={styles.cell}>
+    <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text, selectedCanton)} style={styles.cell}>
       <Image style={styles.cellImage} source={item.icon}/>
       <Text style={styles.overlayText}>{t(item.text)}</Text>
     </TouchableOpacity>
@@ -51,7 +64,7 @@ const Help: FC<HelpProps> = ({navigation}) => {
   
 
   const renderItemTablet = ({ item }) => (
-    <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text)} style={styles.cellTablet}>
+    <TouchableOpacity onPress={ () => handleOpenTeamMembers(item.type, item.text, selectedCanton)} style={styles.cellTablet}>
       <Image style={styles.cellImage} source={item.icon}/>
       <Text style={styles.overlayTextTablet}>{t(item.text)}</Text>
     </TouchableOpacity>
@@ -108,10 +121,29 @@ const Help: FC<HelpProps> = ({navigation}) => {
       <View>
         <Text style={[styles.subtitle, {width: SCREEN_HEIGHT < 700 ? '100%' : '63%'}]}>{t('HelpPageSubTitle')}</Text>
       </View>
-      <View>
-        <Image
-        style={styles.image}
-        source={require('../assets/help/help.png')}
+      <View style={styles.dropdownContainer}>
+        <Text style={styles.findText}>Find professionals in </Text>
+        <Dropdown
+          style={styles.dropdown}
+          renderLeftIcon={() => (
+            <AntDesign
+                name="search1" 
+                size={24}
+                style={{marginRight: 14}}
+                color="#060607" />
+                )}
+                data={cantons}
+                  search
+                  maxHeight={510}
+                  itemContainerStyle={styles.item}
+                  labelField={'label'}
+                  valueField="value"
+                  placeholder={!selectedCanton? 'Select canton' : selectedCanton}
+                  searchPlaceholder="..."
+                  value={selectedCanton}
+                  onChange={item => {
+                    setSelectedCanton(item.value);
+                  }}
         />
       </View>
       <View style={styles.container}>
@@ -155,6 +187,24 @@ const styles = StyleSheet.create({
     width: '64%',
     marginVertical: 8,
   },
+  dropdownContainer: {
+    marginVertical: 15,
+    flexDirection: 'row',
+    marginLeft: 20,
+    alignItems: "center"
+  },
+  dropdown: {
+    width:200,
+    backgroundColor: '#F8F9FC',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+  },
+  dropdownText: {
+    fontSize: 16,
+    color: '#72788D'
+    
+  },
   image: {
     resizeMode: 'contain',
     width: '100%',
@@ -189,6 +239,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 8,
     elevation: 2,
+    },
+    findText: {
+      color: '#3F465C',
+      fontSize: 16,
+      fontWeight: '700'
+    },
+    item: {
+      borderBottomColor: '#d8d8dc',
+      borderBottomWidth: 0.5,
+      paddingHorizontal: 8,
     },
   profileContainer: {
     position: 'absolute',

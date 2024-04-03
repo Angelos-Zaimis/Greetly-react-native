@@ -214,7 +214,7 @@ const Profile: FC<ProfileProps> = ({navigation }) => {
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerText}>{t('yourProfile')}</Text>
-            {userInfo?.isSubscribed ?
+            {/* {userInfo?.isSubscribed ?
                 <TouchableOpacity onPress={handleGetSubscriptionDetails} style={styles.PremioumBox}>
                     <Text style={styles.topText}>{t('Premium Member')}</Text>
                     <View style={styles.bottomContainer}>
@@ -228,7 +228,7 @@ const Profile: FC<ProfileProps> = ({navigation }) => {
                         <Text style={styles.bottomTextNoPremioum}>{t('GoPremium')}</Text>
                     </View>
                 </TouchableOpacity>
-            }
+            } */}
         </View>
         <View style={styles.inputContainer}>
             <View style={styles.nameContainer}>

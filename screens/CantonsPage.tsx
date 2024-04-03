@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
   flatlistContainer: {
     flex: 1
   },
-  imageContainer: {
+   imageContainer: {
     paddingTop: 25,
     alignSelf: 'center',
     width: '90%',

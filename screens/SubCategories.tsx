@@ -159,14 +159,13 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                  <TouchableOpacity
                      key={item.id}
                      onPress={
-                         showAsSubscribed 
-                         ? () => navigation.navigate('Informations',{
-                           cityName: cityName,
-                           category: incomingCategory,
-                           subcategory: item.title,
-                           image: subCategories?.image_url,
-                           table_image: subCategories?.tablet_image_url})
-                         : () => setIsNotSubscribed(true)}
+                       () => navigation.navigate('Informations',{
+                          cityName: cityName,
+                          category: incomingCategory,
+                          subcategory: item.title,
+                          image: subCategories?.image_url,
+                          table_image: subCategories?.tablet_image_url})
+                      }
                            style={[styles.categoryContainerTablet, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
                  >
                    <Text style={[styles.subcategoryTextTablet, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
@@ -230,20 +229,17 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
                    <TouchableOpacity
                        key={item.id}
                        onPress={
-                           showAsSubscribed 
-                           ? () => navigation.navigate('Informations',{
-                             cityName: cityName,
-                             category: incomingCategory,
-                             subcategory: item.title,
-                             image: subCategories?.image_url,
-                             table_image: subCategories?.tablet_image_url})
-                           : () => setIsNotSubscribed(true)}
-                             style={[styles.categoryContainer, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
+                          () => navigation.navigate('Informations',{
+                            cityName: cityName,
+                            category: incomingCategory,
+                            subcategory: item.title,
+                            image: subCategories?.image_url,
+                            table_image: subCategories?.tablet_image_url})
+                        }
+                             style={[styles.categoryContainer]}
                    >
-                     <Text style={[styles.subcategoryText, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
-                     {showAsSubscribed 
-                     ? <Image style={styles.iconArrow} source={require('../assets/categories/right.png')} />
-                     : <MaterialIcons name="lock" size={22} color="#E3B9B0" />}
+                     <Text style={[styles.subcategoryText]}>{t(item.title)}</Text>
+                      <Image style={styles.iconArrow} source={require('../assets/categories/right.png')} />
                    </TouchableOpacity>
                  )
                }}
@@ -341,7 +337,8 @@ const styles = StyleSheet.create({
   },
   subcategoryText: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: '#3F465C'
   },
 
 
