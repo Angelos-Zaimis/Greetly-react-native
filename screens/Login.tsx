@@ -1,6 +1,6 @@
 import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
 import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet, ScrollView  } from 'react-native'
-import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
+import { AuthContext } from '../components/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
 import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,7 @@ import LinkButton from '../components/shared/LinkButton';
 import * as WebBrowser from 'expo-web-browser'
 import { NavigationProp } from '@react-navigation/native';
 import CustomToaster from '../components/shared/CustomToaster';
+
 WebBrowser.maybeCompleteAuthSession();
 
 type LoginProps = {

@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Platform, useWindowDimensions,ScrollView  } from 'react-native'
 import React, { FC, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
-import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
+import { AuthContext } from '../components/auth/AuthContext';
 import { Ionicons } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons';
 import ConfirmModal from '../components/shared/ConfirmModal';
 import { languages } from '../assets/languages';
-import { useUserInfo } from '../components/util/useUserInfos';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { useSelf } from '../components/hooks/useSelf';
 
 
 type ProfileProps = {
@@ -18,14 +18,11 @@ type ProfileProps = {
 }
 
 const Profile: FC<ProfileProps> = ({navigation }) => {
-
     const {t} = useLanguage();
     const {logout, deleteAccount} = useContext(AuthContext);
-    const {userInfo, mutate} = useUserInfo();
+    const {user: userInfo} = useSelf();
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     const [showLogOutModal, setShowLogOutModal] = useState<boolean>(false);
-
-    
     const {width: SCREENWIDTH} = useWindowDimensions();
   
     const isTabletMode = useMemo(() => {
@@ -95,10 +92,6 @@ const Profile: FC<ProfileProps> = ({navigation }) => {
 
     const handleGetSubscriptionDetails = useCallback(() => {
         navigation.navigate('SubscriptionDetails');
-    },[navigation]);
-
-    const handleGoPremium = useCallback(() => {
-        navigation.navigate('GoPremium');
     },[navigation]);
 
     const price = useMemo(() => {
@@ -214,21 +207,6 @@ const Profile: FC<ProfileProps> = ({navigation }) => {
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.headerText}>{t('yourProfile')}</Text>
-            {/* {userInfo?.isSubscribed ?
-                <TouchableOpacity onPress={handleGetSubscriptionDetails} style={styles.PremioumBox}>
-                    <Text style={styles.topText}>{t('Premium Member')}</Text>
-                    <View style={styles.bottomContainer}>
-                        <Text style={styles.bottomText}>{price} {t(userInfo?.product_details?.subscription_currency.toUpperCase())} / {t(userInfo?.product_details?.subscription_plan)}</Text>
-                        <Text style={styles.bottomText}>{t('subscriptionDetails')}</Text>
-                    </View>
-                </TouchableOpacity> :
-                <TouchableOpacity onPress={handleGoPremium} style={styles.PremioumBoxNoPremioum}>
-                    <Text style={styles.topTextNoPremioum}>{t('goPremiumPopUpFirstText')}</Text>
-                    <View style={styles.bottomContaineNoPremioumr}>
-                        <Text style={styles.bottomTextNoPremioum}>{t('GoPremium')}</Text>
-                    </View>
-                </TouchableOpacity>
-            } */}
         </View>
         <View style={styles.inputContainer}>
             <View style={styles.nameContainer}>

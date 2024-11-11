@@ -5,7 +5,6 @@ export {default as OnboardingOne} from './OnBoardingOne';
 export {default as OnboardingTwo} from './OnBoardingTwo';
 export {default as OnboardingThree} from './OnboardingThree';
 export {default as SignUp} from './SignUp';
-export {default as Translate} from './Traslate';
 export {default as Bookmarks} from './Bookmarks';
 export {default as Bookmark} from './Bookmark';
 export {default as CantonsPage} from './CantonsPage';
@@ -16,10 +15,5 @@ export {default as TeamMember} from './TeamMember';
 export {default as ProfileItem} from './ProfileItem';
 export {default as Profile} from './Profile';
 export {default as ChangePassword} from './ChangePassword';
-export {default as GoPremium} from './GoPremium';
-export {default as NewsPage} from './News';
-export {default as SubscriptionDetails} from './SubscriptionDetails';
 export {default as TeamMembers} from './TeamMembers';
 export {default as MapPage} from './MapPage';
-export {default as ViewAllNews} from './ViewAllNews';
-export {default as NewsSignlePage} from './NewsSignlePage'

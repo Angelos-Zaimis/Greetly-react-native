@@ -13,8 +13,7 @@ const SWRConfigProvider = ({ children }: SWRConfigProps) => {
     const authTokensString = await AsyncStorage.getItem('authTokens');
   
     const token = JSON.parse(authTokensString);
-
-
+    
     // Set up headers with the Authorization token if it exists
     const headers = {};
 

@@ -1,15 +1,15 @@
 import useSWR from 'swr';
 import AppURLS from '../appURLS';
 import { BOOKMARKS_ENDPOINT } from '../endpoints';
-import { useUserInfo } from './useUserInfos';
 import { useContext } from 'react';
-import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
+import { AuthContext } from '../auth/AuthContext';
+import { useSelf } from './useSelf';
 
 const apiUrl = `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/`;
 
 export const useBookmarks = (informationTitle?: string) => {
 
-  const {userInfo} = useUserInfo();
+  const {user: userInfo} = useSelf();
   const {authTokens,} = useContext(AuthContext)
  
   const { data: bookmarks, error, mutate } = useSWR(`${apiUrl}?user_email=${userInfo?.user}`); // replace fetcher with your own function

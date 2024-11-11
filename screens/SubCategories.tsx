@@ -3,14 +3,13 @@ import { View, StyleSheet, TouchableOpacity,Text, FlatList, useWindowDimensions}
 import CategoryButton from '../components/shared/CategoryButton';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
-import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Animated } from 'react-native';
 import { Image } from 'expo-image';
 import Spinner from '../components/shared/Spinner';
-import { useUserInfo } from '../components/util/useUserInfos';
-import { useSubCategories } from '../components/util/useSubCategories';
+import { useSubCategories } from '../components/hooks/useSubCategories';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { useSelf } from '../components/hooks/useSelf';
 
 type SubCategoriesProps = {
   navigation: NavigationProp<any>;
@@ -28,7 +27,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
   const { cityName, category } = route.params ?? {};
   const [incomingCategory, setIncomingCategory] = useState<string>(category);
   const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
-  const {userInfo} = useUserInfo();
+  const {user: userInfo} = useSelf();
   const {width: SCREENWIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
@@ -55,11 +54,6 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
   const handleClosePopUp = useCallback(() => {
     setIsNotSubscribed(false);
   },[setIsNotSubscribed,isNotSubscribed]);
-
-  const handleGoPremium = useCallback(() => {
-    navigation.navigate("GoPremium");
-    setIsNotSubscribed(false);
-  }, [navigation, setIsNotSubscribed]);
 
   const sortedSubCategories = useMemo(() => {
     return subCategories?.subcategories?.slice()?.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
@@ -180,15 +174,6 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
         </View>
       : 
         <Spinner/>}
-      {isNotSubscribed && (
-        <Animated.View style={{ opacity: opacity }}>
-          <GoPremiumPopUp 
-            handleClosePopUp={handleClosePopUp} 
-            handleGoPremium={handleGoPremium} 
-            isTabletMode={true}
-          />
-        </Animated.View>
-      )}
     </View>
     )
   }
@@ -248,14 +233,6 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
        </View>
        : 
        <Spinner/>}
-      {isNotSubscribed && (
-          <Animated.View style={{ opacity: opacity }}>
-            <GoPremiumPopUp 
-              handleClosePopUp={handleClosePopUp} 
-              handleGoPremium={handleGoPremium} 
-            />
-          </Animated.View>
-      )}
     </View>
   );
 };

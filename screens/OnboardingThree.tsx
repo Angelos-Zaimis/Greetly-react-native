@@ -10,7 +10,8 @@ import { Image } from "expo-image";
 import Checkbox from "expo-checkbox";
 import PrivacyPolicy from "../components/shared/PrivacyPolicy";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { AuthContext } from "../countriesAndStatus/auth/AuthContext";
+import { AuthContext } from "../components/auth/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type OnboardingThreeProps = {
     navigation: NavigationProp<any>;
@@ -21,15 +22,15 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
-    const {t} = useLanguage();
-    const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
-    const {selectedCountry, status} = route.params;
+    const {selectedCountry: country, status} = route.params;
     const [signPending, setSigninPending] = useState<boolean>(false);
     const [isChecked, setChecked] = useState<boolean>(false);
     const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
     const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean| undefined>(undefined);
     const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean| undefined>(undefined);
     const {signUp} = useContext(AuthContext);
+    const {t} = useLanguage();
+    const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
     const text = t('pageOnboardingOneTitleThree').split(' ');
 
     const isTabletMode = useMemo(() => {
@@ -122,12 +123,13 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
             {
               email, 
               password, 
-              selectedCountry,
+              country,
               status
             }
         )
 
         if(response.status >= 200 || response.status < 300) {
+          handleIntroCompletion();
           navigation.navigate('Login');
           setSigninPending(false);
         }
@@ -135,15 +137,24 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({route, navigation}) => {
         Alert.alert('Something went wrong, please try again.');
         setSigninPending(false);
       }
-      }),[email,password,selectedCountry,status])
+      setSigninPending(false);
+    }),[email,password,country,status])
 
+    const handleIntroCompletion = async () => {
+      try {
+        await AsyncStorage.setItem('alreadyLaunched', 'true');
+      } catch (error) {
+        console.error('Error setting first launch flag:', error);
+      }
+    };
+  
     const handleDisabled = useCallback(()=> {
-      if(email === '' || password === '' || selectedCountry === '' || status === '' || isChecked === false){
+      if(email === '' || password === '' || country === '' || status === '' || isChecked === false){
         return true;
       }
 
       return false;
-    },[email,password,selectedCountry,status, isChecked])
+    },[email,password,country,status, isChecked])
 
     if (isTabletMode) {
       return(
@@ -464,17 +475,20 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     margin: 2,
-    marginRight: 10
+    marginRight: 10,
+    height: 15,
+    width: 15
   },
   termsOfUse: {
     color: '#3F465C',
     fontWeight: '800',
-    fontSize: 13
+    fontSize: 12
   },
   termsOfUseBlue: {
     color:'#719FFF',
     fontWeight: 'bold',
     textDecorationLine:'underline',
+    fontSize: 14
   },
   titleOrange: {
     color: '#F06748',

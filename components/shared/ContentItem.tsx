@@ -2,14 +2,13 @@
 import React, { useMemo }  from 'react'
 import { Text, View, StyleSheet, useWindowDimensions } from 'react-native'
 import { useLanguage } from '../util/LangContext';
-import { AuthContext } from '../../countriesAndStatus/auth/AuthContext';
-import { useUserInfo } from '../util/useUserInfos';
 import Expandable from './Expandable';
+import { useSelf } from '../hooks/useSelf';
 
 export const RenderContentItem = ({ item, navigation }) => {
     const {t} = useLanguage();
 
-    const {userInfo} = useUserInfo();
+    const {user: userInfo} = useSelf();
 
     const {width: SCREENWIDTH} = useWindowDimensions();
   

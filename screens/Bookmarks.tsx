@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, FlatList, TouchableOpacity, useWindowDimensions } from 'react-native'
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useLanguage } from '../components/util/LangContext';
-import { useBookmarks } from '../components/util/useBookmarks';
+import { useBookmarks } from '../components/hooks/useBookmarks';
 import { AntDesign } from '@expo/vector-icons';
-import { useUserInfo } from '../components/util/useUserInfos';
 import { Animated } from 'react-native';
-import GoPremiumPopUp from '../components/shared/GoPremiumPopUp';
 import { NavigationProp } from '@react-navigation/native';
+import { useSelf } from '../components/hooks/useSelf';
 
 type bookmarksProps = {
   navigation: NavigationProp<any>;
@@ -15,7 +14,7 @@ type bookmarksProps = {
 const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
 
   const {bookmarks, deleteBookmark} = useBookmarks();
-  const {userInfo} = useUserInfo();
+  const {user: userInfo} = useSelf();
   const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
   const [opacity,] = useState(new Animated.Value(0));
 
@@ -24,17 +23,6 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
   const deleteToBoomark  = useCallback(async(bookmark: string) => {
     await deleteBookmark(bookmark);
   },[bookmarks, deleteBookmark])
-
-
-
-  const handleGoPremium = useCallback(() => {
-    navigation.navigate("GoPremium");
-    setIsNotSubscribed(false);
-  },[navigation, setIsNotSubscribed])
-
-  const handleClosePopUp = useCallback(() => {
-    setIsNotSubscribed(false);
-  },[setIsNotSubscribed,isNotSubscribed])
 
   const {width: SCREENWIDTH} = useWindowDimensions();
 
@@ -134,10 +122,6 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
         </View>}
           {isNotSubscribed && (
           <Animated.View style={{ opacity: opacity }}>
-            <GoPremiumPopUp 
-              handleClosePopUp={handleClosePopUp} 
-              handleGoPremium={handleGoPremium} 
-            />
           </Animated.View>
       )}
     </SafeAreaView>
@@ -193,10 +177,7 @@ const Bookmarks: FC<bookmarksProps> = ({navigation}) => {
         </View>}
         {isNotSubscribed && (
           <Animated.View style={{ opacity: opacity }}>
-            <GoPremiumPopUp 
-              handleClosePopUp={handleClosePopUp} 
-              handleGoPremium={handleGoPremium} 
-            />
+        
           </Animated.View>
         )}
     </SafeAreaView>

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Alert,Platform, TextInput } from 'react-native'
 import React, { FC, useCallback, useContext, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
-import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
+import { AuthContext } from '../components/auth/AuthContext';
 import Spinner from '../components/shared/Spinner';
 import { Image } from 'expo-image';
 import { NavigationProp, RouteProp } from '@react-navigation/native';

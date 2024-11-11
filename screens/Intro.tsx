@@ -9,7 +9,6 @@ type IntroProps = {
 }
 
 const Intro: FC<IntroProps>= ({navigation}) => {
-
   const handleNavigation = useCallback(() => {
     navigation.navigate('OnboardingOne');
   },[navigation])

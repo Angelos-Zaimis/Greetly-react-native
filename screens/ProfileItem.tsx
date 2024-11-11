@@ -10,8 +10,8 @@ import CustomToaster from '../components/shared/CustomToaster';
 import { Entypo } from '@expo/vector-icons';
 import { languages } from '../assets/languages';
 import { Fontisto } from '@expo/vector-icons';
-import { useUserInfo } from '../components/util/useUserInfos';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import { useSelf } from '../components/hooks/useSelf';
 
 type ProfileItemProps = {
   navigation: NavigationProp<any>;
@@ -22,6 +22,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
 
     const { status, language, country } = route.params;
     const {t} = useLanguage();
+    const {user: userInfo, updateUserProfile} = useSelf();
 
     const [selectedCountry, setSelectedCountry] = useState<string>('');
     const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>();
@@ -32,7 +33,6 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
     const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
     const [successToast, setSuccessToast] = useState<boolean>(false);
     const [toastText, setToastText] = useState<string>('');
-    const {mutate, userInfo, updateUserInfo} = useUserInfo();
 
     const {width: SCREENWIDTH} = useWindowDimensions();
   
@@ -119,7 +119,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
 
         if (country && country !== selectedCountry) {
             try {
-              await updateUserInfo({
+              await updateUserProfile({
                 email: userInfo?.user,
                 country: selectedCountry
               });
@@ -142,7 +142,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
 
         if (language && language !== selectedLanguage) {
             try {
-              await updateUserInfo({
+              await updateUserProfile({
                 email: userInfo?.user,
                 language: selectedLanguage
               });
@@ -165,7 +165,7 @@ const ProfileItem: FC<ProfileItemProps> = ({route, navigation}) => {
 
         if (status && status !== selectedStatus) {
             try {
-              await updateUserInfo({
+              await updateUserProfile({
                 email: userInfo?.user,
                 status: selectedStatus
               });

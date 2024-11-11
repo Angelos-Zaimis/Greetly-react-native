@@ -3,7 +3,7 @@ import {Text,SafeAreaView,StyleSheet, View, FlatList, TouchableOpacity, useWindo
 import { useLanguage } from '../components/util/LangContext';
 import { FontAwesome } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { useTeamMembers } from '../components/util/useTeamMembers';
+import { useTeamMembers } from '../components/hooks/useTeamMembers';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import ProfessionalCard from '../components/shared/ProfessionalCard';
