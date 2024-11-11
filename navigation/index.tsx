@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
 import UserStack from './userStack';
 import AuthStack from './authStack';
-import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
+import { AuthContext } from '../components/auth/AuthContext';
 
 const RootNavigation = () => {
-  const { user } = useContext(AuthContext);
+  const { authTokens } = useContext(AuthContext);
 
-  return user ? <UserStack /> : <AuthStack />;
+  return authTokens ? <UserStack /> : <AuthStack />;
 };
 
 export default RootNavigation;

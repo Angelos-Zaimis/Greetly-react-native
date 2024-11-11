@@ -188,7 +188,7 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({navigation}) => {
                     )}
                 data={countries}
                 search
-                maxHeight={280}
+                maxHeight={370}
                 itemContainerStyle={styles.item}
                 labelField={'label'}
                 valueField="value"
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
   item: {
     borderBottomColor: '#d8d8dc',
     borderBottomWidth: 0.5,
-    paddingHorizontal: 8,
+    paddingHorizontal: 8
   },
   blackDot: {
     width: 10,
@@ -468,7 +468,6 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     paddingHorizontal: 25,
     paddingVertical: 15,
-
   },
   dropdownTextTablet: {
     fontSize: 22,

@@ -3,12 +3,12 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { mutate } from 'swr';
 import { useLanguage } from '../components/util/LangContext';
 import { AntDesign } from '@expo/vector-icons';
-import { useBookmarks } from '../components/util/useBookmarks';
+import { useBookmarks } from '../components/hooks/useBookmarks';
 import CustomToaster from '../components/shared/CustomToaster';
 import { Image } from 'expo-image';
 import { Fontisto } from '@expo/vector-icons';
 import {RenderContentItem } from '../components/shared/ContentItem';
-import { useInformation } from '../components/util/useInformation';
+import { useInformation } from '../components/hooks/useInformation';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type InformationsProps = {

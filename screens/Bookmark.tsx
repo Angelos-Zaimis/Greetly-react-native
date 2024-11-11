@@ -5,7 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import { RenderContentItem } from '../components/shared/ContentItem';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
-import { useInformation } from '../components/util/useInformation';
+import { useInformation } from '../components/hooks/useInformation';
 
 type BookMarkProps = {
   route: RouteProp<{params: { 

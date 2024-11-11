@@ -1,30 +1,20 @@
 import React, { FC, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { SafeAreaView, Text, TouchableOpacity, View, FlatList, StyleSheet, Platform, useWindowDimensions, ImageBackground, Animated} from 'react-native'
 import { useLanguage } from '../components/util/LangContext'
-import { useCities } from '../components/util/useCities'
-import Spinner from '../components/shared/Spinner'
+import { useCities } from '../components/hooks/useCities'
 import { Image } from 'expo-image'
-import { useUserInfo } from '../components/util/useUserInfos'
 import { NavigationProp, RouteProp } from '@react-navigation/native'
 import Map from '../components/shared/Map'
-import { AuthContext } from '../countriesAndStatus/auth/AuthContext'
+import { AuthContext } from '../components/auth/AuthContext'
+import { useSelf } from '../components/hooks/useSelf'
 type CantonsPageProps = {
   navigation: NavigationProp<any>;
   route?: RouteProp<{params: { region: string}}>;
 }
 
 const CantonsPage: FC<CantonsPageProps> = ({navigation, route}) => {
-
-  const {mutate} = useUserInfo();
-  const [region,setRegion] = useState<string>('')
-  const {updateToken} = useContext(AuthContext)
-  
-
+  const [region,setRegion] = useState<string>('')  
   const {t} = useLanguage();
-  useEffect(() => {
-    mutate();
-  },[])
-
   const handleFetchCantons = useCallback((region: string) => {
     setRegion(region)
   },[navigation])

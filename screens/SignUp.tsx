@@ -13,7 +13,7 @@ import Spinner from '../components/shared/Spinner';
 import { Fontisto } from '@expo/vector-icons';
 import PrivacyPolicy from '../components/shared/PrivacyPolicy';
 import { NavigationProp } from '@react-navigation/native';
-import { AuthContext } from '../countriesAndStatus/auth/AuthContext';
+import { AuthContext } from '../components/auth/AuthContext';
 
 type SignInProps = {
   navigation: NavigationProp<any>;
@@ -24,7 +24,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [status, setStatus] = useState<string>('');
-    const [selectedCountry, setSelectedCountry] = useState<string>('');
+    const [country, setSelectedCountry] = useState<string>('');
     const [showPopup, setShowPopup] = useState<boolean>(false);
     const [signPending, setSigninPending] = useState<boolean>(false);
     const [showPopupSelectedCountry, setShowPopupSelectedCountry] = useState<boolean>(false);
@@ -144,12 +144,12 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
     },[setShowPopup]);
     
     const handleDisabled = useCallback(()=> {
-      if(email === '' || password === '' || selectedCountry === '' || status === '' || isChecked === false){
+      if(email === '' || password === '' || country === '' || status === '' || isChecked === false){
         return true;
       }
 
       return false;
-    },[email,password,selectedCountry,status, isChecked])
+    },[email,password,country,status, isChecked])
 
     const renderItem = (
       { item }: { item:{ 
@@ -184,7 +184,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
             {
               email, 
               password, 
-              selectedCountry,
+              country,
               status
             }
         )
@@ -198,7 +198,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
         Alert.alert('Something went wrong, please try again.') 
         setSigninPending(false);
       }
-      }),[email,password,selectedCountry,status])
+      }),[email,password,country,status])
 
   if (isTabletMode) {
     return(
@@ -283,7 +283,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
           <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountryTablet]}>
             <Text style={styles.buttonTextTablet}>{t('countryOfOrigin')}</Text>
             <View style={styles.inputContainerTablet}>
-              <Text style={styles.buttonTextSelectedTablet}>{selectedCountry ? selectedCountry : t('pageOnboardingSelect')}</Text>
+              <Text style={styles.buttonTextSelectedTablet}>{country ? country : t('pageOnboardingSelect')}</Text>
               <AntDesign name="caretdown" size={16} color="#AFB1B5" />
             </View>
           </TouchableOpacity>
@@ -311,9 +311,9 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
                   itemContainerStyle={styles.itemTablet}
                   labelField={'label'}
                   valueField="value"
-                  placeholder={!selectedCountry ? t('pageOnboardingSearch') : selectedCountry}
+                  placeholder={!country ? t('pageOnboardingSearch') : country}
                   searchPlaceholder="..."
-                  value={selectedCountry}
+                  value={country}
                   onChange={item => {
                     setSelectedCountry(item.value);
                     setShowPopupSelectedCountry(false)
@@ -461,7 +461,7 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
           <TouchableOpacity onPress={handleShowPopupSelectedCountry} style={[styles.selectCountry,  {height: SCREEN_HEIGHT < 700 ? 80 : 90}]}>
             <Text style={styles.buttonText}>{t('countryOfOrigin')}</Text>
             <View style={styles.inputContainer}>
-              <Text style={styles.buttonTextSelected}>{selectedCountry ? selectedCountry : t('pageOnboardingSelect')}</Text>
+              <Text style={styles.buttonTextSelected}>{country ? country : t('pageOnboardingSelect')}</Text>
               <AntDesign name="caretdown" size={16} color="#AFB1B5" />
             </View>
           </TouchableOpacity>
@@ -489,9 +489,9 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
                   itemContainerStyle={styles.item}
                   labelField={'label'}
                   valueField="value"
-                  placeholder={!selectedCountry ? t('pageOnboardingSearch') : selectedCountry}
+                  placeholder={!country ? t('pageOnboardingSearch') : country}
                   searchPlaceholder="..."
-                  value={selectedCountry}
+                  value={country}
                   onChange={item => {
                     setSelectedCountry(item.value);
                     setShowPopupSelectedCountry(false)

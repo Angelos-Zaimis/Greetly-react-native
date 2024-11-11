@@ -5,7 +5,7 @@ import { FontAwesome5} from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Image } from 'expo-image';
 import Spinner from '../components/shared/Spinner';
-import { useCategories } from '../components/util/useCategories';
+import { useCategories } from '../components/hooks/useCategories';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 
 type CategoriesProps = {
