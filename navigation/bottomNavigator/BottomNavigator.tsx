@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {NewsPage} from '../../screens';
 import WelcomePage from '../welcomePageNavigator/WelcomePage';
 import ProfileContainer from '../profileNavigator/ProfileContainer';
 import BookmarksContainer from '../booksmarksNavigator/BookmarksContainer';
@@ -11,8 +10,7 @@ import React from 'react';
 import { Octicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
-import NewsNavigator from '../newsNavigator/NewsNavigator';
-import SearchNavigator from '../searchNavigator/SearchNavigator';
+import { useSelf } from '../../components/hooks/useSelf';
 
 type BottomNavigatorProps = {
   navigation: NavigationProp<any>;
@@ -22,7 +20,8 @@ const Tab = createBottomTabNavigator();
 
 const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
 
-  const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+  const {} = useSelf();
+  const {width: SCREEN_WIDTH} = useWindowDimensions();
 
   const isTabletMode = useMemo(() => {
     if(SCREEN_WIDTH > 700) {
@@ -51,24 +50,7 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
           }}
         >
           {() => <WelcomePage />}
-        </Tab.Screen>
-
-        <Tab.Screen
-          name="News"
-          options={{
-            tabBarStyle: styles.tabContainerTablet,
-            headerShown: false,
-            title: 'Scan',
-            tabBarInactiveTintColor: '#3F465C',
-            tabBarActiveTintColor: '#F06748',
-            tabBarLabelStyle: styles.textTablet,
-            tabBarIcon: ({ color, size }) => (
-              <FontAwesome name="newspaper-o" size={23} color={color} />
-            )
-          }}
-        >
-          {() => <NewsPage navigation={navigation} />}
-        </Tab.Screen>
+        </Tab.Screen> 
 
         <Tab.Screen
           name="HelpContainer"

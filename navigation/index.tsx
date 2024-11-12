@@ -4,9 +4,9 @@ import AuthStack from './authStack';
 import { AuthContext } from '../components/auth/AuthContext';
 
 const RootNavigation = () => {
-  const { authTokens } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
-  return authTokens ? <UserStack /> : <AuthStack />;
+  return isLoggedIn ? <UserStack /> : <AuthStack />;
 };
 
 export default RootNavigation;
