@@ -1,11 +1,10 @@
 import React, { FC ,useCallback,useContext,useMemo,useState } from 'react'
-import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, Alert, StyleSheet, ScrollView  } from 'react-native'
+import { Platform, SafeAreaView,Text, TextInput, TouchableOpacity, View, useWindowDimensions, StyleSheet, ScrollView  } from 'react-native'
 import { AuthContext } from '../components/auth/AuthContext';
 import { EnterButton } from '../components/shared/EnterButton';
 import Spinner from '../components/shared/Spinner';
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import LinkButton from '../components/shared/LinkButton';
 import * as WebBrowser from 'expo-web-browser'
 import { NavigationProp } from '@react-navigation/native';
 import CustomToaster from '../components/shared/CustomToaster';
@@ -16,271 +15,273 @@ type LoginProps = {
   navigation: NavigationProp<any>;
 }
 
-const Login: FC<LoginProps> = ({navigation}) => {
-  
-    const [email,setEmail] = useState<string>('');
-    const [password,setPassword] = useState<string>('');
-    const [loginPending, setLoginPending] = useState<boolean>(false);
-    const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
-    const {promptAsync,login} = useContext(AuthContext);
-    const text = "Sign in now".split(' ');
-    const subtitleCreateAccountText = "NOT A MEMBER? CREATE AN ACCOUNT".split(' ')
-    const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState({
-      email: "",
-      password: "",
-      message: ""
-    });
+const Login: FC<LoginProps> = ({ navigation }) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [loginPending, setLoginPending] = useState<boolean>(false);
+  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
+  const { login } = useContext(AuthContext);
+  const text = "Sign in now".split(' ');
+  const subtitleCreateAccountText = "NOT A MEMBER? CREATE AN ACCOUNT".split(' ');
+  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState({
+    email: '',
+    password: '',
+    message: ''
+  });
 
-    const {height: SCREEN_HEIGHT, width: SCREEN_WIDTH} = useWindowDimensions();
+  const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
 
-    const isTabletMode = useMemo(() => {
-      if(SCREEN_WIDTH > 700) {
-        return true;
-      }
-      return false;
-    },[SCREEN_WIDTH])
-    
-    const handleEmailInputChange = useCallback((text: string) => {
-      setEmail(text);
-    },[email, setEmail]);
+  const isTabletMode = useMemo(() => SCREEN_WIDTH > 700, [SCREEN_WIDTH]);
 
-    const handlePasswordlInputChange = useCallback((text: string) => {
-      setPassword(text);
-    },[password, setPassword]);
+  const handleEmailInputChange = useCallback((text: string) => {
+    setEmail(text);
+  }, []);
 
-    const handleForgotPassword = useCallback(() => {
-      navigation.navigate('ChangePassword');
-    },[navigation])
-  
-    const handleDisabled = useCallback(()=> {
-      if(email === '' || password === ''){
-        return true;
-      }
+  const handlePasswordInputChange = useCallback((text: string) => {
+    setPassword(text);
+  }, []);
 
-      return false;
-    },[email,password])
+  const handleForgotPassword = useCallback(() => {
+    navigation.navigate('ChangePassword');
+  }, [navigation]);
 
-    const handleNavigationSignIn = useCallback(() => {
-      navigation.navigate('SignIn');
-    },[navigation])
+  const handleDisabled = useCallback(() => {
+    return email === '' || password === '';
+  }, [email, password]);
 
-    const handlePress =  async() => {
-      setLoginPending(true);
-      
-      const response = await login({
-        email,
-        password
-      })
-  
-      if(response.status >= 300){
-        setLoginPending(false);
-        setErrorMessage({
-          email: response.data.email,
-          password: response.data.password,
-          message: response.data.message
-        })
-        setShowToastMessage(true)
-        setLoginPending(false);
-        setTimeout(() => {
-          setShowToastMessage(false);
-        }, 1100);
-      }
+  const handleNavigationSignIn = useCallback(() => {
+    navigation.navigate('SignIn');
+  }, [navigation]);
+
+  const handleLogin = async () => {
+    setLoginPending(true);
+    const response = await login({ email, password });
+
+    if (response.status >= 300) {
       setLoginPending(false);
-    }
 
- 
-  if (isTabletMode) {
-    return (
-      <>
-        <ScrollView style={[styles.container, Platform.OS === 'android' && { paddingTop: 35}]}>
-          <SafeAreaView>
-            <Text style={styles.titletablet}>
-            {text.map((word, index) => (
+      setErrorMessage({
+        email: response.data.email,
+        password: response.data.password,
+        message: response.data.message
+      });
+      setShowToastMessage(true);
+
+      setTimeout(() => {
+        setShowToastMessage(false);
+      }, 1100);
+    }
+    setLoginPending(false);
+  };
+
+  const renderTabletContent = () => (
+    <>
+      <ScrollView style={[styles.container, Platform.OS === 'android' && { paddingTop: 35 }]}>
+        <SafeAreaView>
+          <Text style={styles.titletablet}>
+            {text.map((word, index) =>
               index === 2 ? (
-              <Text key={index} style={styles.titleOrangetablet}>{word} </Text>
+                <Text key={index} style={styles.titleOrangetablet}>
+                  {word}{' '}
+                </Text>
               ) : (
-              <Text key={index}>{word} </Text>
-            )))}
-            </Text>
-            <Text style={styles.subtitletablet}>Get customized information based on your profile.</Text>
-            <Text style={styles.subtitletablet}>Find solutions for all aspects of relocation for your specific needs.</Text>
-           <TouchableOpacity onPress={handleNavigationSignIn}>
-              <Text style={styles.subtitleThreetablet}>
-                {subtitleCreateAccountText.map((word, index) => (
-                  index === 3 ||
-                  index === 4 ||
-                  index === 5 ? (
-                <Text key={index} style={styles.titleBluetablet}>{word} </Text>
-                ) : (
                 <Text key={index}>{word} </Text>
-                )))}
+              )
+            )}
+          </Text>
+          <Text style={styles.subtitletablet}>Get customized information based on your profile.</Text>
+          <Text style={styles.subtitletablet}>Find solutions for all aspects of relocation for your specific needs.</Text>
+          <TouchableOpacity onPress={handleNavigationSignIn}>
+            <Text style={styles.subtitleThreetablet}>
+              {subtitleCreateAccountText.map((word, index) =>
+                [3, 4, 5].includes(index) ? (
+                  <Text key={index} style={styles.titleBluetablet}>
+                    {word}{' '}
+                  </Text>
+                ) : (
+                  <Text key={index}>{word} </Text>
+                )
+              )}
+            </Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+        <View>
+          <View style={styles.inputWrappertablet}>
+            <View style={styles.inputtablet}>
+              <Text style={styles.inputTextEmailtablet}>Email</Text>
+              {email !== '' && (
+                <View
+                  style={[
+                    styles.validationtablet,
+                    { left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%' }
+                  ]}
+                />
+              )}
+              <TextInput
+                style={styles.inputTexttablet}
+                placeholderTextColor="#AFB1B5"
+                placeholder="enter your email"
+                value={email}
+                onChangeText={handleEmailInputChange}
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+            </View>
+            <View style={styles.inputtablet}>
+              <Text style={styles.inputTexttablet}>Password</Text>
+              <TouchableOpacity
+                onPress={() => setSecureTextEntry(!secureTextEntry)}
+                style={styles.eyeIconContainertablet}
+              >
+                {secureTextEntry ? (
+                  <Ionicons name="eye-off-outline" size={16} color="black" />
+                ) : (
+                  <Ionicons name="eye-outline" size={16} color="black" />
+                )}
+              </TouchableOpacity>
+              {password !== '' && (
+                <View
+                  style={[
+                    styles.validationtablet,
+                    { left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%' }
+                  ]}
+                />
+              )}
+              <TextInput
+                placeholderTextColor="#AFB1B5"
+                placeholder="enter your password"
+                value={password}
+                onChangeText={handlePasswordInputChange}
+                secureTextEntry={secureTextEntry}
+                style={styles.inputTexttablet}
+              />
+            </View>
+            <TouchableOpacity onPress={handleForgotPassword}>
+              <Text style={styles.passwordForgettablet}>Forgot your password?</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.buttontablet}>
+          <EnterButton isTabletMode={true} handlePress={handleLogin} handleDisabled={handleDisabled} />
+        </View>
+        <View style={styles.bottomContainertablet}>
+          <Text style={styles.greetlytablet}>Greetly.ch</Text>
+          <Image style={styles.logotablet} source={require('../assets/welcomepage/logo.png')} />
+        </View>
+      </ScrollView>
+      {loginPending && <Spinner />}
+    </>
+  );
+
+  return (
+    <>
+      {isTabletMode ? (
+        renderTabletContent()
+      ) : (
+        <ScrollView style={[styles.container, Platform.OS === 'android' && { paddingTop: 35 }]}>
+          <SafeAreaView>
+            <Text style={styles.title}>
+              {text.map((word, index) =>
+                index === 2 ? (
+                  <Text key={index} style={styles.titleOrange}>
+                    {word}{' '}
+                  </Text>
+                ) : (
+                  <Text key={index}>{word} </Text>
+                )
+              )}
+            </Text>
+            <Text style={styles.subtitle}>Get customized information based on your profile.</Text>
+            <Text style={styles.subtitle}>
+              Find solutions for all aspects of relocation for your specific needs.
+            </Text>
+            <TouchableOpacity onPress={handleNavigationSignIn}>
+              <Text style={styles.subtitleThree}>
+                {subtitleCreateAccountText.map((word, index) =>
+                  [3, 4, 5].includes(index) ? (
+                    <Text key={index} style={styles.titleBlue}>
+                      {word}{' '}
+                    </Text>
+                  ) : (
+                    <Text key={index}>{word} </Text>
+                  )
+                )}
               </Text>
             </TouchableOpacity>
           </SafeAreaView>
           <View>
-            <View style={styles.inputWrappertablet}>
-              <View style={[styles.inputtablet]}>
-                <Text style={styles.inputTextEmailtablet}>Email</Text>
-                  {
-                    email !== '' ?  
-                      <View style={[styles.validationtablet,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}></View>
-                    : 
-                      null
-                  }
-                  <TextInput
-                    style={styles.inputTexttablet}
-                    placeholderTextColor={'#AFB1B5'}
-                    placeholder="enter your email"
-                    value={email}
-                    onChangeText={handleEmailInputChange}
-                    autoCapitalize="none"
-                    keyboardType="email-address">
-                  </TextInput>
-              </View>
-              <View style={styles.inputtablet}>
-                <Text  style={styles.inputTexttablet}>Password</Text>
-                <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainertablet}>
-                  {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
-                </TouchableOpacity>
-                {
-                  password !== '' ?  
-                  <View style={[styles.validationtablet,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
-                   </View>
-                   : 
-                   null
-                } 
+            <View style={styles.inputWrapper}>
+              <View style={styles.input}>
+                <Text style={styles.inputTextEmail}>Email</Text>
+                {email !== '' && (
+                  <View
+                    style={[
+                      styles.validation,
+                      { left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%' }
+                    ]}
+                  />
+                )}
                 <TextInput
-                    placeholderTextColor={'#AFB1B5'}
-                    placeholder="enter your password"
-                    value={password}
-                    onChangeText={handlePasswordlInputChange}
-                    secureTextEntry={secureTextEntry}
-                    style={styles.inputTexttablet}
-                  ></TextInput>
-                </View>
-               <TouchableOpacity onPress={handleForgotPassword}>
-                 <Text style={styles.passwordForgettablet}>Forgot your password?</Text>
-               </TouchableOpacity>
+                  style={styles.inputText}
+                  placeholderTextColor="#AFB1B5"
+                  placeholder="enter your email"
+                  value={email}
+                  onChangeText={handleEmailInputChange}
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                />
+              </View>
+              <View style={styles.input}>
+                <Text style={styles.inputText}>Password</Text>
+                <TouchableOpacity
+                  onPress={() => setSecureTextEntry(!secureTextEntry)}
+                  style={styles.eyeIconContainer}
+                >
+                  {secureTextEntry ? (
+                    <Ionicons name="eye-off-outline" size={16} color="black" />
+                  ) : (
+                    <Ionicons name="eye-outline" size={16} color="black" />
+                  )}
+                </TouchableOpacity>
+                {password !== '' && (
+                  <View
+                    style={[
+                      styles.validation,
+                      { left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%' }
+                    ]}
+                  />
+                )}
+                <TextInput
+                  placeholderTextColor="#AFB1B5"
+                  placeholder="enter your password"
+                  value={password}
+                  onChangeText={handlePasswordInputChange}
+                  secureTextEntry={secureTextEntry}
+                  style={styles.inputText}
+                />
+              </View>
+              <TouchableOpacity onPress={handleForgotPassword}>
+                <Text style={styles.passwordForget}>Forgot your password?</Text>
+              </TouchableOpacity>
             </View>
-         </View>
-         <View style={styles.buttontablet}>
-            <EnterButton isTabletMode={true} handlePress={handlePress} handleDisabled={handleDisabled}/>
-         </View>
-         <View style={styles.containerLine}>
-          <View style={styles.line} />
-            <Text style={styles.text}>OR</Text>
-          <View style={styles.line} />
-        </View>
-        <View style={styles.appleGoogleContainer}>
-          <LinkButton isTabletMode googleIcon={true} text='Login with Google' color='black' handlePress={() => promptAsync()}/>
-        </View>
-        <View style={styles.bottomContainertablet}>
-          <Text style={styles.greetlytablet}>Greetly.ch</Text>
-          <Image style={styles.logotablet}source={require('../assets/welcomepage/logo.png')}/>
-        </View>
-      </ScrollView>
-      {loginPending ? <Spinner/> : null }
-    </>
-  )
-  }
-    
-  return (
-    <>
-    <ScrollView style={[styles.container, Platform.OS === 'android' && { paddingTop: 35}]}>
-      <SafeAreaView>
-        <Text style={styles.title}>
-          {text.map((word, index) => (
-            index === 2 ? (
-            <Text key={index} style={styles.titleOrange}>{word} </Text>
-            ) : (
-            <Text key={index}>{word} </Text>
-          )))}
-        </Text>
-        <Text style={styles.subtitle}>Get customized information based on your profile.</Text>
-        <Text style={styles.subtitle}>Find solutions for all aspects of relocation for your specific needs.</Text>
-        <TouchableOpacity onPress={handleNavigationSignIn}>
-          <Text style={styles.subtitleThree}>
-            {subtitleCreateAccountText.map((word, index) => (
-              index === 3 ||
-              index === 4 ||
-              index === 5 ? (
-            <Text key={index} style={styles.titleBlue}>{word} </Text>
-            ) : (
-            <Text key={index}>{word} </Text>
-            )))}
-          </Text>
-        </TouchableOpacity>
-      </SafeAreaView>
-      <View>
-        <View style={styles.inputWrapper}>
-          <View style={[styles.input]}>
-            <Text style={styles.inputTextEmail}>Email</Text>
-              {
-                email !== '' ?  
-                <View style={[styles.validation,{left: '99%', top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
-                   </View>
-                   : 
-                    null
-                  }
-                  <TextInput
-                    style={styles.inputText}
-                    placeholderTextColor={'#AFB1B5'}
-                    placeholder="enter your email"
-                    value={email}
-                    onChangeText={handleEmailInputChange}
-                    autoCapitalize="none"
-                    keyboardType="email-address">
-                  </TextInput>
-                </View>
-                <View style={styles.input}>
-                  <Text  style={styles.inputText}>Password</Text>
-                  <TouchableOpacity onPress={() => setSecureTextEntry(!secureTextEntry)} style={styles.eyeIconContainer}>
-                    {secureTextEntry ? <Ionicons name="eye-off-outline" size={16} color="black" /> : <Ionicons name="eye-outline" size={16} color="black" />}
-                  </TouchableOpacity>
-                  {
-                  password !== '' ?  
-                  <View style={[styles.validation,{left: '99%',top: SCREEN_HEIGHT < 700 ? '70%' : '120%'}]}>
-                   </View>
-                   : 
-                   null
-                  } 
-                  <TextInput
-                    placeholderTextColor={'#AFB1B5'}
-                    placeholder="enter your password"
-                    value={password}
-                    onChangeText={handlePasswordlInputChange}
-                    secureTextEntry={secureTextEntry}
-                    style={styles.inputText}
-                  ></TextInput>
-                </View>
-               <TouchableOpacity onPress={handleForgotPassword}>
-                 <Text style={styles.passwordForget}>Forgot your password?</Text>
-               </TouchableOpacity>
           </View>
-      </View>
-      <View style={styles.button}>
-        <EnterButton handlePress={handlePress} handleDisabled={handleDisabled}/>
-      </View>
-      <View style={styles.containerLine}>
-        <View style={styles.line} />
-        <Text style={styles.text}>OR</Text>
-        <View style={styles.line} />
-    </View>
-    <View style={styles.appleGoogleContainer}>
-      <LinkButton googleIcon={true} text='Login with Google' color='black' handlePress={() => promptAsync()}/>
-    </View>
-    <View style={styles.bottomContainer}>
-      <Text style={styles.greetly}>Greetly.ch</Text>
-      <Image style={styles.logo}source={require('../assets/welcomepage/logo.png')}/>
-    </View>
-    </ScrollView>
-    {loginPending ? <Spinner/> : null }
-    {showToastMessage ? <CustomToaster errorLogin={errorMessage} success={false} /> : null}
-
+          <View style={styles.button}>
+            <EnterButton handlePress={handleLogin} handleDisabled={handleDisabled} />
+          </View>
+          <View style={styles.bottomContainer}>
+            <Text style={styles.greetly}>Greetly.ch</Text>
+            <Image style={styles.logo} source={require('../assets/welcomepage/logo.png')} />
+          </View>
+        </ScrollView>
+      )}
+      {loginPending && <Spinner />}
+      {showToastMessage && <CustomToaster errorLogin={errorMessage} success={false} />}
     </>
-  )
-}
+  );
+};
+
+export default Login;
 
 
 const styles = StyleSheet.create({
@@ -555,4 +556,3 @@ const styles = StyleSheet.create({
     marginRight: 10
   }
 })
-export default Login

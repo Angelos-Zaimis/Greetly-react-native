@@ -22,14 +22,12 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-
-
-  const {authTokens} = useContext(AuthContext)
+  const {isLoggedIn} = useContext(AuthContext)
   const {user: userInfo} = useSelf();
   const [selectedLanguage, setLanguage] = useState<string>();
 
   useEffect(() => {
-    if (authTokens) {
+    if (isLoggedIn) {
       if(selectedLanguage !== userInfo?.language){
         setLanguage(userInfo?.language);
       }
@@ -38,10 +36,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   }, [selectedLanguage,userInfo?.language]);
 
-
   useEffect(() => {
     i18next
-      .use(RNLanguageDetector) // Add the language detector
+      .use(RNLanguageDetector)
   .use(initReactI18next)
   .init({
         resources: {

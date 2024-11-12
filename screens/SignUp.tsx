@@ -177,29 +177,29 @@ const SignUp: FC<SignInProps> = ({navigation}) => {
       </TouchableOpacity>
     );
 
-    const handleCreateAccount  = useCallback((async() => {
+    const handleCreateAccount = useCallback(async () => {
       setSigninPending(true);
       try {
-        const response = await signUp(
-            {
-              email, 
-              password, 
-              country,
-              status
-            }
-        )
-
-        if(response.status >= 200 || response.status < 300) {
+        const response = await signUp({
+          email,
+          password,
+          country,
+          status,
+        });
+    
+        if ('status' in response && response.status >= 200 && response.status < 300) {
           navigation.navigate('Login');
-          setSigninPending(false);
+        } else {
+          Alert.alert('Something went wrong, please try again.');
         }
       } catch (e) {
         console.log(e);
-        Alert.alert('Something went wrong, please try again.') 
+        Alert.alert('Something went wrong, please try again.');
+      } finally {
         setSigninPending(false);
       }
-      }),[email,password,country,status])
-
+    }, [email, password, country, status]);
+    
   if (isTabletMode) {
     return(
       <>

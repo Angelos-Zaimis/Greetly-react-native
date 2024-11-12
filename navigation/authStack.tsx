@@ -26,7 +26,7 @@ const AuthStack = () => {
         }
       } catch (error) {
         console.error('Error checking first launch:', error);
-        setIsFirstLaunchEver(false); // Fallback to default if an error occurs
+        setIsFirstLaunchEver(false);
       }
     };
 
@@ -41,7 +41,6 @@ const AuthStack = () => {
     <SWRConfigProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName={isFirstLaunchEver ? "Intro" : "Login"}>
-          {/* Onboarding Screens */}
           <Stack.Screen
             name="Intro"
             options={{ headerShown: false }}
@@ -62,8 +61,7 @@ const AuthStack = () => {
             options={{ headerShown: false }}
             component={OnboardingThree}
           />
-  
-          {/* Main App Screens */}
+
           <Stack.Screen
             name="Login"
             options={{ headerShown: false }}
