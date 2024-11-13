@@ -15,7 +15,7 @@ const Header: FC<HeaderProps> = ({ categories, handleNavigationBack, isTabletMod
     ? SCREEN_HEIGHT * 0.214 
     : SCREEN_HEIGHT < 700
     ? SCREEN_HEIGHT * 0.33
-    : SCREEN_HEIGHT * 0.278; 
+    : SCREEN_HEIGHT * 0.200; 
 
   const imageStyle = [styles.image, { height: imageHeight }];
 
@@ -29,7 +29,7 @@ const Header: FC<HeaderProps> = ({ categories, handleNavigationBack, isTabletMod
         {categories && (
           <Image
             style={styles.imageInner}
-            contentFit="contain"
+            contentFit="fill"
             source={imageSource}
           />
         )}

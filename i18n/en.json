@@ -121,6 +121,15 @@
     "Housing": "Housing",
     "Education": "Education",
 
+    "immigration, legal support, police": "immigration, legal matters, support services, police, etc.",
+    "open a bank account, filling taxes": "open a bank account, filling taxes, etc.",
+    "medical system, find a doctor": "medical system, find a doctor, etc.",
+    "finding a job, working in Switzerland": "finding a job, working in Switzerland, etc.",
+    "finding a place to rent or buy": "finding a place to rent or buy, etc.",
+    "schools, universities": "education system, schools, universities, etc.",
+    "DiscoverBestBanks": "Discover the best banks",
+
+    
     "Greece": "Greece",
     
     "Register as a new resident": "Register as a new resident",
@@ -134,6 +143,7 @@
     "Legal Assistance": "Legal Assistance",
 
 
+    
     "Rent an apartment": "Rent an apartment",
     "Buy an apartment": "Buy an apartment",
     "Rental Market": "Rental Market",
@@ -172,13 +182,6 @@
     "WhatYouNeedToKnow": "What you need to know",
     "RequiredDocuments": "Required Documents",
 
-    "immigration, legal support, police": "immigration, legal matters, support services, police, etc.",
-    "open a bank account, filling taxes": "open a bank account, filling taxes, etc.",
-    "medical system, find a doctor": "medical system, find a doctor, etc.",
-    "finding a job, working in Switzerland": "finding a job, working in Switzerland, etc.",
-    "finding a place to rent or buy": "finding a place to rent or buy, etc.",
-    "schools, universities": "education system, schools, universities, etc.",
-    "DiscoverBestBanks": "Discover the best banks",
 
     "openBankAccountZurichEuEfta": "Open a bank account as an employee from {{country}} in Zurich",
     "openBankAccountZurichEuEftaOrangeTxt": "Opening a bank account involves several steps and considerations, primarily due to the strict compliance standards Swiss banks.",
