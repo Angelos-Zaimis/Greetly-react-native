@@ -66,9 +66,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       try {
         console.log("Checking token....")
         const storedTokens = await AsyncStorage.getItem('authTokens');
-        console.log(storedTokens)
+      
         if (!storedTokens) {
           setIsLoggedIn(false);
+          logout();
           return;
         }
 
