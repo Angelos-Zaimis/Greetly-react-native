@@ -1,302 +1,56 @@
-import { StyleSheet, Text, View, TouchableOpacity, useWindowDimensions, ScrollView} from 'react-native'
-import React, { FC, useCallback, useMemo, useState } from 'react'
-import { useLanguage } from '../components/util/LangContext';
-import { AntDesign } from '@expo/vector-icons';
-import { Image } from 'expo-image';
-import { RenderContentItem } from '../components/shared/ContentItem';
+import React, { FC, useCallback, useMemo } from 'react';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useInformation } from '../components/hooks/useInformation';
+import { useLanguage } from '../components/util/LangContext';
+import ImageSection from '../components/bookmark/ImageSection';
+import Header from '../components/bookmark/Header';
+import ContentList from '../components/bookmark/ContentList';
 
-type BookMarkProps = {
-  route: RouteProp<{params: { 
-    canton: string,
-    title: string, 
-    description: string, 
-    image: string,
-    table_image: string,
-    requiredDocuments: string[], category: string}}>;
+type BookmarkProps = {
+  route: RouteProp<{
+    params: {
+      canton: string;
+      title: string;
+      description: string;
+      image: string;
+      table_image: string;
+      requiredDocuments: string[];
+      category: string;
+    };
+  }>;
   navigation: NavigationProp<any>;
-}
+};
 
-const Bookmark: FC<BookMarkProps> = ({route,navigation}) => {
+const Bookmark: FC<BookmarkProps> = ({ route, navigation }) => {
+  const { canton, title, image, category } = route.params ?? {};
 
-  const {canton, title, image, category, table_image} = route.params ?? {};
-  const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false);
+  const { t } = useLanguage();
 
-  const {t} = useLanguage();
+  const { information } = useInformation(canton, category, title);
 
-  const {information} = useInformation(
-    canton,
-    category,
-    title
-  );
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
 
-  const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
-
-  const isTabletMode = useMemo(() => {
-    if(SCREEN_WIDTH > 700) {
-      return true;
-    }
-
-    return false;
-  },[SCREEN_WIDTH])
+  const isTabletMode = useMemo(() => SCREEN_WIDTH > 700, [SCREEN_WIDTH]);
 
   const handleNavigationBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-  
-  const handleOpenDocs = useCallback(() => {
-    setOpenRequiredDoc(true);
-  },[setOpenRequiredDoc, openRequiredDoc])
-  
-  const  handleCloseDocs = useCallback(() => {
-    setOpenRequiredDoc(false);
-  },[setOpenRequiredDoc, openRequiredDoc])
-
-  if (isTabletMode) {
-    return (
-        <View style={styles.container}>
-             <View  style={[styles.imageTablet]}>
-          <Image style={styles.imageinsideTablet} priority={'high'} source={{ uri: table_image}} />
-        </View>
-      <View>
-        <View style={styles.arrowButtonContainer}>
-          <TouchableOpacity onPress={handleNavigationBack}>
-            <AntDesign name="left" size={32} color="black" />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.subCategoryTitleTablet}>{t(title)}</Text>
-          </View>
-          <View></View>
-        </View>
-      </View>
-      <ScrollView style={styles.container}>
-        {
-          information && information.content?.content.map((item: any, index: React.Key) => (
-          <View style={styles.containerContentItem} key={index}>
-            <RenderContentItem item={item} navigation={navigation} />
-          </View>
-        ))}
-      </ScrollView>
-    </View>
-    )
-  }
 
   return (
     <View style={styles.container}>
-         <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
-          <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
-        </View>
-      <View>
-        <View style={styles.arrowButtonContainer}>
-          <TouchableOpacity onPress={handleNavigationBack}>
-            <AntDesign name="left" size={24} color="black" />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.subCategoryTitle}>{t(title)}</Text>
-          </View>
-          <View></View>
-        </View>
-      </View>
-      <ScrollView style={styles.container}>
-        {
-          information && information.content?.content.map((item: any, index: React.Key) => (
-          <View style={styles.containerContentItem} key={index}>
-            <RenderContentItem item={item} navigation={navigation} />
-          </View>
-        ))}
-      </ScrollView>
+      <ImageSection imageUri={image} isTabletMode={isTabletMode} />
+      <Header title={t(title)} onBackPress={handleNavigationBack} isTabletMode={isTabletMode} />
+      <ContentList contentItems={information?.content?.content || []} navigation={navigation} />
     </View>
-  )
-}
+  );
+};
 
-export default Bookmark
+export default Bookmark;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
-  image: {
-    height: '19%',
-    resizeMode: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  imageinside: {
-    height: '100%'
-  },
-  iconArrow:{
-    height: 18,
-    width: 18,
-    resizeMode:'contain'
-  },
-  arrowButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginHorizontal: 25,
-    marginVertical: 15
-
-  },
-  subCategoryTitle: {
-    fontSize: 20,
-    color: '#3F465C',
-    fontWeight: '500'
-  },
-  descriptionContainer: {
-    alignItems: 'center',
-    marginTop: 20
-  },
-  descriptionText: {
-    width: '90%',
-    textAlign: 'center',
-    lineHeight: 25,
-    fontSize: 16
-  
-  },
-  requiredDocumentsContainer: {
-    flex: 1,
-    justifyContent: 'flex-end'
-  },
-  requiredDocuments: {
-  backgroundColor: '#4C6BAB',
-  height: 60,
-  },
-  requiredDocumentsText:{
-    color: '#B9D0FF',
-    fontSize: 18,
-    fontWeight: '500',
-    marginTop: 20,
-  },
-  closeRequiredContainer:{
-    position: 'absolute',
-    right: 50,
-    top: 20
-  },
-  closeText: {
-    color: 'white',
-    fontSize: 18
-  },
-  containerContentItem: {
-    flex: 1,
-    marginHorizontal: 12
-  },
-  textRequired: {
-    alignItems: 'center'
-  },
-  requiredDocs: {
-    marginLeft: 25,
-    marginTop: 20,
-  },
-  requiredDocsTexts: {
-    color:'#F8F9FC',
-    fontSize: 16,
-    marginLeft: 10
-  },
-  requiredDocumentsTextsContainers: {
-
-    flexDirection: 'row',
-    alignItems:'center',
-    marginBottom: 15
-
-  },
-
-
-    //TABLET STYLES
-  imageTablet: {
-      height: '18%',
-      resizeMode: 'stretch',
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 0 },
-      shadowOpacity: 0.6,
-      shadowRadius: 8,
-      elevation: 4,
-  },
-  imageinsideTablet: {
-      height: '100%'
-  },
-  iconArrowTablet:{
-    height: 18,
-    width: 18,
-    resizeMode:'contain'
-  },
-  arrowButtonContainerTablet: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginHorizontal: 25,
-    marginVertical: 15
-
-  },
-  subCategoryTitleTablet: {
-    fontSize: 32,
-    color: '#3F465C',
-    fontWeight: '500',
-    textAlign: 'center',
-    width: 400,
-    alignSelf: 'center',
-    marginTop: 10
-  },
-  descriptionContainerTablet: {
-    alignItems: 'center',
-    marginTop: 20
-  },
-  descriptionTextTablet: {
-    width: '90%',
-    textAlign: 'center',
-    lineHeight: 44,
-    fontSize: 26,
-  },
-  requiredDocumentsContainerTablet: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  requiredDocumentsTablet: {
-  backgroundColor: '#4C6BAB',
-  height: 60
-  },
-  requiredDocumentsTextTablet:{
-    color: '#B9D0FF',
-    fontSize: 18,
-    fontWeight: '500',
-    marginTop: 20,
-  },
-  closeRequiredContainerTablet:{
-    position: 'absolute',
-    right: 50,
-    top: 20
-  },
-  closeTextTablet: {
-    color: 'white',
-    fontSize: 18
-  },
-  textRequiredTablet: {
-    alignItems: 'center',
-  },
-  requiredDocsTablet: {
-    marginLeft: 25,
-    marginTop: 20,
-  },
-  requiredDocsTextsTablet: {
-    color:'#F8F9FC',
-    fontSize: 16,
-    marginLeft: 10
-  },
-  requiredDocumentsTextsContainersTablet: {
-    flexDirection: 'row',
-    alignItems:'center',
-    marginBottom: 15
-
-  }
-
-  
-})
+});
