@@ -11,7 +11,7 @@ const ImageBanner: FC<ImageBannerProps> = ({ isTabletMode }) => {
     <View>
       <Image
         style={isTabletMode ? styles.imageTablet : styles.image}
-        source={require('../assets/help/help.png')}
+        source={require('../../assets/help/help.png')}
       />
     </View>
   );
