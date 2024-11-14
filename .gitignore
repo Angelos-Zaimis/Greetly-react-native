@@ -10,7 +10,12 @@ npm-debug.*
 *.orig.*
 .env
 web-build/
-
+release.keystore
+./release.keystore
+/release.keystore
+eas.json
+/eas.json
+./eas.json
 # macOS
 .DS_Store
 
