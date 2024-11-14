@@ -1,356 +1,85 @@
-import { StyleSheet, Text, View,TouchableOpacity,ScrollView, useWindowDimensions } from 'react-native'
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react'
-import { mutate } from 'swr';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { useWindowDimensions, View } from 'react-native';
 import { useLanguage } from '../components/util/LangContext';
-import { AntDesign } from '@expo/vector-icons';
 import { useBookmarks } from '../components/hooks/useBookmarks';
-import CustomToaster from '../components/shared/CustomToaster';
-import { Image } from 'expo-image';
-import { Fontisto } from '@expo/vector-icons';
-import {RenderContentItem } from '../components/shared/ContentItem';
 import { useInformation } from '../components/hooks/useInformation';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
+import ImageSection from '../components/informations/ImageSection';
+import HeaderSection from '../components/informations/Header';
+import ContentList from '../components/informations/ContentList';
+import ToastMessage from '../components/informations/ToastMessageComponent';
 
 type InformationsProps = {
   navigation: NavigationProp<any>;
-  route?: RouteProp<{params: {
-    cityName: string, 
-    category: string,
-    subcategory: string,image: string,
-    table_image: string}}>;
-}
+  route?: RouteProp<{ params: { cityName: string; category: string; subcategory: string; image: string; table_image: string } }>;
+};
 
-const Informations: FC<InformationsProps> = ({route,navigation}) => {
+const Informations: FC<InformationsProps> = ({ route, navigation }) => {
+  const { cityName, category, subcategory, image, table_image } = route.params ?? {};
+  const [showToastMessage, setShowToastMessage] = useState(false);
+  const [successToast, setSuccessToast] = useState(false);
 
-  const {cityName, category,subcategory,image, table_image} = route.params ?? {};
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
-  const [successToast, setSuccessToast] = useState<boolean>(false);
+  const { information } = useInformation(cityName, category, subcategory);
+  const { createBookmark, deleteBookmark, bookmarkSaved, mutateBookmark } = useBookmarks(information?.title);
+  const { t } = useLanguage();
+  const { width: SCREENWIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
 
-  const {information} = useInformation(
-    cityName,
-    category,
-    subcategory
-  );
+  const isTabletMode = useMemo(() => SCREENWIDTH > 700, [SCREENWIDTH]);
 
-  const {
-    createBookmark, 
-    deleteBookmark, 
-    bookmarkSaved, 
-  mutateBookmark } = useBookmarks(information?.title);
-    
-  const [openRequiredDoc, setOpenRequiredDoc] = useState<boolean>(false);
-
-  const handleNavigationBack = useCallback( async() => {
+  const handleNavigationBack = useCallback(() => {
     navigation.goBack();
-  }, [mutate, navigation]);
+  }, [navigation]);
 
-  const {t} = useLanguage();
-  
-  const {width: SCREENWIDTH, height: SCREEN_HEIGHT} = useWindowDimensions();
-
-  const isTabletMode = useMemo(() => {
-    if(SCREENWIDTH > 700) {
-      return true;
-    }
-
-    return false;
-  },[SCREENWIDTH])
-
-  const handleOpenDocs = useCallback(() => {
-    setOpenRequiredDoc(true)
-  },[setOpenRequiredDoc, openRequiredDoc])
-
-  const  handleCloseDocs = useCallback(() => {
-    setOpenRequiredDoc(false)
-  },[setOpenRequiredDoc, openRequiredDoc])
-
-  const addToBookmark = useCallback( async() => {
-    if(information?.title) {
+  const addToBookmark = useCallback(async () => {
+    if (information?.title) {
       try {
         await createBookmark({
           canton: cityName,
-          category: category, 
+          category: category,
           title: subcategory,
           description: information?.description,
           image: image,
           table_image: table_image,
           requiredDocuments: information?.requiredDocuments,
           saved: true,
-          uniqueTitle: information?.title
+          uniqueTitle: information?.title,
         });
         setShowToastMessage(true);
         setSuccessToast(true);
-        setTimeout(() => {
-          setShowToastMessage(false);
-        }, 1100);
-      } catch (error) {
+        setTimeout(() => setShowToastMessage(false), 1100);
+      } catch {
         setShowToastMessage(true);
         setSuccessToast(false);
-        setTimeout(() => {
-          setShowToastMessage(false);
-        }, 1100);
+        setTimeout(() => setShowToastMessage(false), 1100);
+      }
+      await mutateBookmark();
     }
-  }
-    await mutateBookmark();
-  },[cityName,category,information?.description,image,information?.requiredDocuments])
- 
-  const deleteToBookmark = useCallback( async() => {
+  }, [cityName, category, subcategory, image, table_image, information, createBookmark, mutateBookmark]);
+
+  const deleteToBookmark = useCallback(async () => {
     await deleteBookmark(bookmarkSaved?.uniqueTitle);
     await mutateBookmark();
-  },[bookmarkSaved?.uniqueTitle])
+  }, [bookmarkSaved, deleteBookmark, mutateBookmark]);
 
   useEffect(() => {
     mutateBookmark();
-  },[deleteBookmark, addToBookmark])
-
-  if (isTabletMode) {
-    return (
-    <>
-      <View style={styles.container}>
-        <View  style={[styles.imageTablet, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
-          <Image style={styles.imageinsideTablet} priority={'high'} source={{ uri: table_image}} />
-        </View>
-        <View>
-          <View style={styles.arrowButtonContainerTablet}>
-            <TouchableOpacity onPress={handleNavigationBack}>
-              <AntDesign name="left" size={30} color="black" />
-            </TouchableOpacity>
-            <View>
-              <Text style={styles.subCategoryTitleTablet}>{t(subcategory)}</Text>
-            </View>
-            <TouchableOpacity onPress={bookmarkSaved?.canton ? deleteToBookmark : addToBookmark}>
-              <AntDesign name={bookmarkSaved?.canton ? 'heart' : 'hearto'}size={30 } color='#F06748' />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <ScrollView style={styles.container}>
-          {information && information.content?.content?.map((item: any, index: React.Key) => (
-          <View style={styles.containerContentItemTablet} key={index}>
-            <RenderContentItem navigation={navigation} item={item} />
-          </View>
-          ))}
-        </ScrollView>
-      </View>
-      {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
-    </>
-    )
-  }
+  }, [deleteBookmark, addToBookmark, mutateBookmark]);
 
   return (
     <>
-    <View style={styles.container}>
-      <View  style={[styles.image, {height: SCREEN_HEIGHT < 700 ? '22%' : '19%' }]}>
-        <Image style={styles.imageinside} priority={'high'} source={{ uri: image}} />
-      </View>
-      <View>
-        <View style={styles.arrowButtonContainer}>
-          <TouchableOpacity onPress={handleNavigationBack}>
-            <AntDesign name="left" size={24} color="black" />
-          </TouchableOpacity>
-          <View>
-            <Text style={styles.subCategoryTitle}>{t(subcategory)}</Text>
-          </View>
-          <TouchableOpacity onPress={bookmarkSaved?.canton ? deleteToBookmark : addToBookmark}>
-            <AntDesign name={bookmarkSaved?.canton ? 'heart' : 'hearto'}size={21} color='#F06748' />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <ScrollView style={styles.container}>
-        {information && information.content?.content?.map((item: any, index: React.Key) => (
-        <View style={styles.containerContentItem} key={index}>
-          <RenderContentItem navigation={navigation} item={item} />
-        </View>
-        ))}
-
-      </ScrollView>
-    </View>
-    {showToastMessage ? <CustomToaster message={successToast ? 'Page Added to Bookmarks!' : ' Unable to Add Page to Bookmarks'} success={successToast}/> : null}
+      <ImageSection imageUri={isTabletMode ? table_image : image} isTabletMode={isTabletMode} screenHeight={SCREEN_HEIGHT} />
+      <HeaderSection
+        onNavigateBack={handleNavigationBack}
+        onBookmarkPress={bookmarkSaved?.canton ? deleteToBookmark : addToBookmark}
+        subcategory={subcategory}
+        isBookmarked={!!bookmarkSaved?.canton}
+        isTabletMode={isTabletMode}
+        t={t}
+      />
+      <ContentList content={information?.content?.content || []} navigation={navigation} isTabletMode={isTabletMode} />
+      <ToastMessage showToast={showToastMessage} success={successToast} />
     </>
-  )
-}
+  );
+};
 
-export default Informations
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white'
-  },
-  image: {
-    height: '19%',
-    resizeMode: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  imageinside: {
-    height: '100%'
-  },
-  iconArrow:{
-    height: 18,
-    width: 18,
-    resizeMode:'contain'
-  },
-  arrowButtonContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginHorizontal: 25,
-    marginVertical: 15
-  },
-  subCategoryTitle: {
-    fontSize: 20,
-    color: '#3F465C',
-    fontWeight: '600',
-    textAlign: 'center',
-    width: 270,
-
-  },
-  requiredDocumentsContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  requiredDocuments: {
-  backgroundColor: '#4C6BAB',
-  height: 60
-  },
-  requiredDocumentsText:{
-    color: '#B9D0FF',
-    fontSize: 18,
-    fontWeight: '500',
-    marginTop: 20,
-  },
-  closeRequiredContainer:{
-    position: 'absolute',
-    right: 50,
-    top: 20
-  },
-  closeText: {
-    color: 'white',
-    fontSize: 18
-  },
-  textRequired: {
-    alignItems: 'center',
-  },
-  requiredDocs: {
-    marginLeft: 25,
-    marginTop: 20,
-  },
-  requiredDocsTexts: {
-    color:'black',
-    fontSize: 16,
-    marginLeft: 10
-  },
-  requiredDocumentsTextsContainers: {
-    flexDirection: 'row',
-    alignItems:'center',
-    marginBottom: 15
-
-  },
-  containerContentItem: {
-    flex: 1,
-    marginHorizontal: 12
-  },
-
-  //TABLET STYLES
-  imageTablet: {
-    height: '19.9%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  imageinsideTablet: {
-    resizeMode: 'stretch',
-    height: '100%'
-  },
-  iconArrowTablet:{
-    height: 22,
-    width: 22,
-    resizeMode:'contain'
-  },
-  arrowButtonContainerTablet: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginHorizontal: 25,
-    marginVertical: 15
-
-  },
-  subCategoryTitleTablet: {
-    fontSize: 30,
-    marginTop: 15,
-    color: '#3F465C',
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  descriptionContainerTablet: {
-    alignItems: 'center',
-    marginTop: 20
-  },
-  descriptionTextTablet: {
-    width: '90%',
-    textAlign: 'center',
-    lineHeight: 44,
-    fontSize: 26,
-
-  },
-  requiredDocumentsContainerTablet: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.5,
-    shadowRadius: 8,
-    elevation: 2,
-  },
-  requiredDocumentsTablet: {
-  backgroundColor: '#4C6BAB',
-  height: 60
-  },
-  requiredDocumentsTextTablet:{
-    color: '#B9D0FF',
-    fontSize: 18,
-    fontWeight: '500',
-    marginTop: 20,
-  },
-  closeRequiredContainerTablet:{
-    position: 'absolute',
-    right: 50,
-    top: 20
-  },
-  closeTextTablet: {
-    color: 'white',
-    fontSize: 18
-  },
-  textRequiredTablet: {
-    alignItems: 'center',
-  },
-  requiredDocsTablet: {
-    marginLeft: 25,
-    marginTop: 20,
-  },
-  requiredDocsTextsTablet: {
-    color:'#F8F9FC',
-    fontSize: 16,
-    marginLeft: 10
-  },
-  requiredDocumentsTextsContainersTablet: {
-    flexDirection: 'row',
-    alignItems:'center',
-    marginBottom: 15
-
-  },
-  containerContentItemTablet: {
-    flex: 1,
-    marginHorizontal: 12
-  }
-})
+export default Informations;

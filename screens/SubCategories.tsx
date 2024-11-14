@@ -1,19 +1,18 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity,Text, FlatList, useWindowDimensions} from 'react-native';
-import CategoryButton from '../components/shared/CategoryButton';
+import { View, useWindowDimensions, Animated } from 'react-native';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useLanguage } from '../components/util/LangContext';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Animated } from 'react-native';
-import { Image } from 'expo-image';
 import Spinner from '../components/shared/Spinner';
 import { useSubCategories } from '../components/hooks/useSubCategories';
-import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { useSelf } from '../components/hooks/useSelf';
+import ImageSection from '../components/subCategories/ImageSection';
+import CategoryList from '../components/subCategories/CategoryList';
+import SubCategoryList from '../components/subCategories/SubCategoryList';
+import Header from '../components/subCategories/Header';
 
 type SubCategoriesProps = {
   navigation: NavigationProp<any>;
-  route?: RouteProp<{params: { cityName: string, category: string}}>;
+  route?: RouteProp<{ params: { cityName: string; category: string } }>;
 };
 
 interface Category {
@@ -23,56 +22,34 @@ interface Category {
 }
 
 const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
-
   const { cityName, category } = route.params ?? {};
   const [incomingCategory, setIncomingCategory] = useState<string>(category);
   const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
-  const {user: userInfo} = useSelf();
-  const {width: SCREENWIDTH} = useWindowDimensions();
-
-  const isTabletMode = useMemo(() => {
-    if(SCREENWIDTH > 700) {
-      return true;
-    }
-
-    return false;
-  },[SCREENWIDTH])
-
-  const {t} = useLanguage();
-  
-  const {subCategories} = useSubCategories(
-    cityName,
-    incomingCategory
-  );
+  const { user: userInfo } = useSelf();
+  const { width: SCREENWIDTH } = useWindowDimensions();
+  const isTabletMode = useMemo(() => SCREENWIDTH > 700, [SCREENWIDTH]);
+  const { t } = useLanguage();
+  const { subCategories } = useSubCategories(cityName, incomingCategory);
+  const [opacity] = useState(new Animated.Value(0));
 
   const handleNavigationBack = useCallback(() => {
     navigation.goBack();
-  },[navigation]);
-
-  const [opacity,] = useState(new Animated.Value(0));
+  }, [navigation]);
 
   const handleClosePopUp = useCallback(() => {
     setIsNotSubscribed(false);
-  },[setIsNotSubscribed,isNotSubscribed]);
+  }, [setIsNotSubscribed, isNotSubscribed]);
 
   const sortedSubCategories = useMemo(() => {
-    return subCategories?.subcategories?.slice()?.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
+    return subCategories?.subcategories?.slice()?.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
   }, [subCategories]);
 
   useEffect(() => {
-    if (isNotSubscribed) {
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 500, 
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(opacity, {
+      toValue: isNotSubscribed ? 1 : 0,
+      duration: isNotSubscribed ? 500 : 1000,
+      useNativeDriver: true,
+    }).start();
   }, [isNotSubscribed]);
 
   const categories: Category[] = [
@@ -107,289 +84,34 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
         setIncomingCategory('Employment')
       } 
     },
-    // { 
-    //   name: 'Education', 
-    //   imageSource: 'university',
-    //   navigate: () => {
-    //     setIncomingCategory('Education')
-    //   } 
-    // },
   ];
-  
-  if (isTabletMode) {
-    return (
-      <View style={styles.container}>
-        <View style={styles.imageTablet}>
-          {
-            subCategories?.image_url && <Image style={styles.imageinsideTablet}  transition={1000} priority={'high'} source={{ uri: subCategories?.tablet_image_url }} />
-          }
-        </View>
-      <View style={styles.upperButtonContainerTablet}>
-        {categories.map((categoryItem) => (
-          <CategoryButton
-            key={categoryItem.name}
-            selected={categoryItem.name === incomingCategory}
-            imageSource={categoryItem.imageSource}
-            handlePress={categoryItem.navigate}
-            tabletMode={true}
-          />
-        ))}
-      </View>
-      <View style={styles.arrowButtonContainerTablet}>
-        <TouchableOpacity style={styles.iconArrowButtonTablet} onPress={handleNavigationBack}>
-          <AntDesign name="left" size={30} color="black" />
-        </TouchableOpacity>
-        <View style={styles.subCategoriesTextContainerTablet}>
-          <Text style={styles.subCategoryTitleTablet}>{t(incomingCategory)}</Text>
-        </View>
-      </View>
-      {subCategories ? 
-        <View style={styles.flatlistContainerTablet}>
-          <FlatList 
-            data={sortedSubCategories ?? subCategories?.subcategories}
-            renderItem={({ item, index }) => {
-              const showAsSubscribed = userInfo?.isSubscribed || index < 3;
-              return (
-                 <TouchableOpacity
-                     key={item.id}
-                     onPress={
-                       () => navigation.navigate('Informations',{
-                          cityName: cityName,
-                          category: incomingCategory,
-                          subcategory: item.title,
-                          image: subCategories?.image_url,
-                          table_image: subCategories?.tablet_image_url})
-                      }
-                           style={[styles.categoryContainerTablet, { backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B'}]}
-                 >
-                   <Text style={[styles.subcategoryTextTablet, { color: showAsSubscribed ? '#3F465C' : '#D8B3AA', fontWeight: showAsSubscribed ? '500' : '600'}]}>{t(item.title)}</Text>
-                   {showAsSubscribed 
-                   ? <Image style={styles.iconArrowTablet} source={require('../assets/categories/right.png')} />
-                   : <MaterialIcons name="lock" size={22} color="#E3B9B0" />}
-                 </TouchableOpacity>
-               )
-             }}
-             keyExtractor={(item) => item.title.toString()}
-          />
-        </View>
-      : 
-        <Spinner/>}
-    </View>
-    )
-  }
 
-  
   return (
-    <View style={styles.container}>
-        <View style={styles.image}>
-          {
-            subCategories?.image_url && <Image style={styles.imageinside}  transition={1000} priority={'high'} source={{ uri: subCategories?.image_url }} />
-          }
-        </View>
-      <View style={styles.upperButtonContainer}>
-        {categories.map((categoryItem) => (
-          <CategoryButton
-            key={categoryItem.name}
-            selected={categoryItem.name === incomingCategory}
-            imageSource={categoryItem.imageSource}
-            handlePress={categoryItem.navigate}
-          />
-        ))}
-      </View>
-      <View style={styles.arrowButtonContainer}>
-        <TouchableOpacity style={styles.iconArrowButton} onPress={handleNavigationBack}>
-          <AntDesign name="left" size={23} color="black" />
-        </TouchableOpacity>
-        <View style={styles.subCategoriesTextContainer}>
-          <Text style={styles.subCategoryTitle}>{t(incomingCategory)}</Text>
-        </View>
-      </View>
-      {subCategories ? 
-        <View style={styles.flatlistContainer}>
-         <FlatList 
-           data={sortedSubCategories ?? subCategories?.subcategories}
-           renderItem={({ item, index }) => {
-               const showAsSubscribed = userInfo?.isSubscribed || index < 3;
-               return (
-                   <TouchableOpacity
-                       key={item.id}
-                       onPress={
-                          () => navigation.navigate('Informations',{
-                            cityName: cityName,
-                            category: incomingCategory,
-                            subcategory: item.title,
-                            image: subCategories?.image_url,
-                            table_image: subCategories?.tablet_image_url})
-                        }
-                             style={[styles.categoryContainer]}
-                   >
-                     <Text style={[styles.subcategoryText]}>{t(item.title)}</Text>
-                      <Image style={styles.iconArrow} source={require('../assets/categories/right.png')} />
-                   </TouchableOpacity>
-                 )
-               }}
-               keyExtractor={(item) => item.title.toString()}
-         />
-       </View>
-       : 
-       <Spinner/>}
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <ImageSection imageUrl={isTabletMode ? subCategories?.tablet_image_url : subCategories?.image_url} />
+      <CategoryList
+        categories={categories}
+        selectedCategory={incomingCategory}
+        onSelectCategory={setIncomingCategory}
+        isTabletMode={isTabletMode}
+      />
+      <Header title={t(incomingCategory)} onBackPress={handleNavigationBack} isTabletMode={isTabletMode} />
+      {subCategories ? (
+        <SubCategoryList
+          subCategories={sortedSubCategories}
+          navigation={navigation}
+          cityName={cityName}
+          category={incomingCategory}
+          userInfo={userInfo}
+          subCategoriesData={subCategories}
+          isTabletMode={isTabletMode}
+        />
+      ) : (
+        <Spinner />
+      )}
+      {isNotSubscribed && <Animated.View style={{ opacity }} />}
     </View>
   );
 };
 
-
-export default SubCategories
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white'
-  },
-  image: {
-    height: '19%',
-    resizeMode: 'stretch',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  imageinside: {
-    resizeMode: 'cover',
-    height: '100%'
-  },
-  upperButton: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 52,
-    height: 51,
-    borderRadius: 50,
-    backgroundColor: '#ECEFF8',
-  },
-  upperButtonIcon: {
-    width: 28,
-    height: 29,
-    resizeMode: 'contain'
-  },
-  upperButtonContainer: {
-    marginVertical: '-8%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  iconArrowButton: {
-    marginLeft: 20,
-  },
-  iconArrow:{
-    height: 18,
-    resizeMode: 'contain'
-  },
-  arrowButtonContainer: {
-    marginTop: '13%',
-    marginBottom: 30
-  },
-  subCategoriesTextContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  subCategoryTitle: {
-    fontSize: 20,
-    color: '#3F465C',
-    fontWeight: '500'
-  },
-   flatlistContainer: {
-    flex: 1,
-  },
-  categoryContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    alignSelf:'center',
-    width: '90%',
-    height: 40,
-    borderRadius: 20,
-    paddingTop: 10,
-    marginBottom: '4%',
-    backgroundColor: '#F8F9FC'
-  },
-  subcategoryText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#3F465C'
-  },
-
-
-
-  // TABLET STYLES
-
-  imageTablet: {
-    height: '18%',
-    resizeMode: 'stretch',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.6,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  imageinsideTablet: {
-    resizeMode: 'cover',
-    height: '100%'
-  },
-  upperButtonTablet: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 52,
-    height: 51,
-    borderRadius: 50,
-    backgroundColor: '#ECEFF8',
-  },
-  upperButtonIconTablet: {
-    width: 28,
-    height: 29,
-    resizeMode: 'contain'
-  },
-  upperButtonContainerTablet: {
-    marginVertical: '-5%',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  iconArrowButtonTablet: {
-    marginLeft: 20,
-  },
-  iconArrowTablet:{
-    height: 18,
-    resizeMode: 'contain'
-  },
-  arrowButtonContainerTablet: {
-    marginTop: '8%',
-    marginBottom: 30
-  },
-  subCategoriesTextContainerTablet: {
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  subCategoryTitleTablet: {
-    fontSize: 26,
-    color: '#3F465C',
-    fontWeight: '500'
-  },
-   flatlistContainerTablet: {
-    flex: 1,
-  },
-  categoryContainerTablet: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    alignSelf:'center',
-    width: '90%',
-    height: 60,
-    borderRadius: 20,
-    paddingTop: 15,
-    marginBottom: '4%',
-    backgroundColor: '#F8F9FC'
-  },
-  subcategoryTextTablet: {
-    fontSize: 22,
-    fontWeight: 'bold'
-  }
-})
+export default SubCategories;

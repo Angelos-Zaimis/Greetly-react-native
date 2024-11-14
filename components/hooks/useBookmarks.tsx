@@ -10,7 +10,7 @@ const apiUrl = `${AppURLS.middlewareInformationURL}/${BOOKMARKS_ENDPOINT}/`;
 export const useBookmarks = (informationTitle?: string) => {
 
   const {user: userInfo} = useSelf();
-  const {authTokens,} = useContext(AuthContext)
+  const {accessToken} = useContext(AuthContext)
  
   const { data: bookmarks, error, mutate } = useSWR(`${apiUrl}?user_email=${userInfo?.user}`); // replace fetcher with your own function
  
@@ -25,7 +25,7 @@ export const useBookmarks = (informationTitle?: string) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authTokens.access}`
+          'Authorization': `Bearer ${accessToken}`
            
         },
         body: JSON.stringify(postData),
@@ -45,7 +45,7 @@ export const useBookmarks = (informationTitle?: string) => {
       const response = await fetch(url, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authTokens.access}`
+          'Authorization': `Bearer ${accessToken}`
         }
       });
 
@@ -69,7 +69,7 @@ export const useBookmarks = (informationTitle?: string) => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authTokens.access}`
+          'Authorization': `Bearer ${accessToken}`
         }
       });
 
