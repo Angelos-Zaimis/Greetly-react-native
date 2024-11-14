@@ -4,7 +4,7 @@ import ProfileContainer from '../profileNavigator/ProfileContainer';
 import BookmarksContainer from '../booksmarksNavigator/BookmarksContainer';
 import HelpNavigator from '../helpNavigator/HelpContainer';
 import { Feather, MaterialCommunityIcons} from '@expo/vector-icons';
-import { Platform, StyleSheet, useWindowDimensions} from 'react-native';
+import { StyleSheet, useWindowDimensions} from 'react-native';
 import { FC, useMemo } from 'react';
 import React from 'react';
 import { Octicons } from '@expo/vector-icons';
@@ -126,25 +126,6 @@ const BottomNavigator: FC<BottomNavigatorProps> = ({ navigation }) => {
         >
           {() => <WelcomePage />}
         </Tab.Screen>
-
-        
-        {/* <Tab.Screen
-          name="News"
-          options={{
-            tabBarStyle: styles.tabContainer,
-            headerShown: false,
-            title: 'Search',
-            tabBarInactiveTintColor: '#3F465C',
-            tabBarActiveTintColor: '#F06748',
-            tabBarLabelStyle: styles.scanText,
-            tabBarIcon: ({ color, size }) => (
-            <Feather name="search"  size={25} color={color} />
-            )
-          }}
-        >
- 
-          {() => <SearchNavigator />}
-        </Tab.Screen> */}
 
         <Tab.Screen
           name="HelpContainer"
