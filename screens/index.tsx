@@ -16,4 +16,3 @@ export {default as ProfileItem} from './ProfileItem';
 export {default as Profile} from './Profile';
 export {default as ChangePassword} from './ChangePassword';
 export {default as TeamMembers} from './TeamMembers';
-export {default as MapPage} from './MapPage';
