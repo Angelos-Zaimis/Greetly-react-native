@@ -1,21 +1,24 @@
 import React, { FC } from 'react';
 import { Text, StyleSheet } from 'react-native';
+import { useLanguage } from '../util/LangContext';
 
 type DescriptionSectionProps = {
   isTabletMode: boolean;
 };
 
 const DescriptionSection: FC<DescriptionSectionProps> = ({ isTabletMode }) => {
+  const {t} = useLanguage();
+  
   return (
     <>
       <Text style={isTabletMode ? styles.titleTablet : styles.title}>
-        Ease your move with Greetly.ch
+        {t('pageIntroTitle')}
       </Text>
       <Text style={isTabletMode ? styles.subtitleTablet : styles.subtitle}>
-        Find solutions for all aspects of relocation based on your origin and occupation.
+        {t('pageIntroSubtitle')}
       </Text>
       <Text style={isTabletMode ? styles.subtitleTablet : styles.subtitle}>
-        Get consultation from experts.
+        {t('pageIntroSubtitleTwo')}
       </Text>
     </>
   );

@@ -32,7 +32,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         setLanguage(userInfo?.language);
       }
     }else{
-      setLanguage('en')
+      setLanguage(selectedLanguage)
     }
   }, [selectedLanguage,userInfo?.language]);
 

@@ -7,13 +7,12 @@ import axios from "axios";
 export const useSelf = () => {
   const {userId, accessToken} = useContext(AuthContext);
   
-  const { data: user, error } = useSWR(
+  const { data: user, error, mutate: refetchUser} = useSWR(
     userId ? `${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}` : null
   );
 
   const updateUserProfile = async (userData) => {
     try {
-      console.log(accessToken)
       const response = await axios.put(
         `${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}`,
         userData,
@@ -36,6 +35,7 @@ export const useSelf = () => {
   return {
     user,
     error,
-    updateUserProfile
+    updateUserProfile,
+    refetchUser
   };
 };

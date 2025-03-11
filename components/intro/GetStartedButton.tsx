@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
+import { useLanguage } from '../util/LangContext';
 
 type GetStartedButtonProps = {
   onPress: () => void;
@@ -8,13 +9,15 @@ type GetStartedButtonProps = {
 };
 
 const GetStartedButton: FC<GetStartedButtonProps> = ({ onPress, isTabletMode }) => {
+  const {t} = useLanguage();
+
   return (
     <TouchableOpacity
       onPress={onPress}
       style={isTabletMode ? styles.buttonTablet : styles.button}
     >
       <Text style={isTabletMode ? styles.buttonTextTablet : styles.buttonText}>
-        Get started
+        {t('pageIntroButton')}
       </Text>
       <View style={styles.arrowContainer}>
         <Fontisto

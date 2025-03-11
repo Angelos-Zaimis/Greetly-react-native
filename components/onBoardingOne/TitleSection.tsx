@@ -3,10 +3,11 @@ import { View, Text, StyleSheet } from 'react-native';
 
 type TitleSectionProps = {
   text: string[];
+  description: string;
   isTabletMode: boolean;
 };
 
-const TitleSection: FC<TitleSectionProps> = ({ text, isTabletMode }) => {
+const TitleSection: FC<TitleSectionProps> = ({ text, isTabletMode, description }) => {
   return (
     <View>
       <Text style={isTabletMode ? styles.titleTablet : styles.title}>
@@ -24,7 +25,7 @@ const TitleSection: FC<TitleSectionProps> = ({ text, isTabletMode }) => {
         )}
       </Text>
       <Text style={isTabletMode ? styles.subtitleTablet : styles.subtitle}>
-        Tell us where you come from so we can provide you with customized information based on your origin.
+        {description}
       </Text>
     </View>
   );

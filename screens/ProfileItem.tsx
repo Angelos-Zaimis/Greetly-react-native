@@ -27,7 +27,7 @@ type ProfileItemProps = {
 const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
   const { status, language, country } = route.params;
   const { t } = useLanguage();
-  const { user: userInfo, updateUserProfile } = useSelf();
+  const { user: userInfo, updateUserProfile, refetchUser } = useSelf();
   const [selectedCountry, setSelectedCountry] = useState<string>(country ?? '');
   const [selectedLanguage, setSelectedLanguage] = useState<string>(language ?? '');
   const [selectedStatus, setSelectedStatus] = useState<string>(status ?? '');
@@ -85,18 +85,11 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
       if (updated) {
         setShowToastMessage(true);
         setSuccessToast(true);
-        setTimeout(() => {
-          setShowToastMessage(false);
-          navigation.navigate('Profile');
-        }, 1100);
       } else {
-        setToastText('No changes made');
         setShowToastMessage(true);
         setSuccessToast(false);
-        setTimeout(() => {
-          setShowToastMessage(false);
-        }, 1100);
       }
+      refetchUser();
     } catch (error) {
       setShowToastMessage(true);
       setSuccessToast(false);
