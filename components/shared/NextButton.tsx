@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import { Image,TouchableOpacity, Text } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { ScaledSheet } from 'react-native-size-matters';
+import { useLanguage } from '../util/LangContext';
 
 type NextButtonProps = {
   handlePress: () => void;
@@ -13,11 +14,12 @@ type NextButtonProps = {
 
 export const NextButton:FC<NextButtonProps> = ({handlePress, handleDisabled, isTabletMode}) => {
 
+  const {t} = useLanguage();
 
   if (isTabletMode) {
     return (
       <TouchableOpacity disabled={handleDisabled()} onPress={handlePress}  style={ handleDisabled() ? [styles.buttonTablet, {opacity: 0.7}] : styles.buttonTablet }>
-        <Text style={handleDisabled() ? styles.buttonTextTablet: styles.buttonTextTablet}>Next</Text>
+        <Text style={handleDisabled() ? styles.buttonTextTablet: styles.buttonTextTablet}>{t('next')}</Text>
         <FontAwesome5  name="long-arrow-alt-right" size={22} color="white" />
       </TouchableOpacity> 
     )
@@ -25,7 +27,7 @@ export const NextButton:FC<NextButtonProps> = ({handlePress, handleDisabled, isT
 
   return (
     <TouchableOpacity disabled={handleDisabled()} onPress={handlePress}  style={ handleDisabled() ? [styles.button, {opacity: 0.7}] : styles.button }>
-      <Text style={handleDisabled() ? styles.buttonText: styles.buttonText}>Next</Text>
+      <Text style={handleDisabled() ? styles.buttonText: styles.buttonText}>{t('next')}</Text>
       <FontAwesome5  name="long-arrow-alt-right" size={17} color="white" />
     </TouchableOpacity> 
   ); 

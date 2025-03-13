@@ -1,28 +1,34 @@
-import React, { FC, useCallback, useState } from 'react';
-import { Text, StyleSheet, View, Modal, TouchableOpacity } from 'react-native';
+import React, { FC, useState } from 'react';
+import {
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+  TextInput,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import InputField from '../onBoardingThree/InputField';
 import { useLanguage } from '../util/LangContext';
 import { languages } from '../../assets/languages';
-import { AntDesign, Fontisto } from '@expo/vector-icons';
-import { Dropdown } from 'react-native-element-dropdown';
 
 type TitleSectionProps = {
   isTabletMode: boolean;
 };
 
+
+
 const TitleSection: FC<TitleSectionProps> = ({ isTabletMode }) => {
+  const [showLanguagePopUp, setShowLanguagePopUp] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState<string>('');
+  const { t, selectedLanguage, setLanguage } = useLanguage();
 
-  const [showLanguagePopUp, setShowLanguagePopUp]  = useState<boolean>(false);
-  const {t,selectedLanguage, setLanguage} = useLanguage();
-
-  const getCountryLanguage = useCallback(
-    (languageCode: string) => {
-      const languageItem = languages.find((l) => l.language === languageCode);
-      return languageItem ? languageItem.countryLanguage : null;
-    },
-    []
+  const filteredLanguages = languages.filter((lang) =>
+    lang.countryLanguage.toLowerCase().includes(searchText.toLowerCase())
   );
+
   return (
     <View style={styles.content}>
       <View>
@@ -33,58 +39,88 @@ const TitleSection: FC<TitleSectionProps> = ({ isTabletMode }) => {
           {t('pageIntroSwitzerland')}
         </Text>
       </View>
-      <Ionicons name="language" size={34} onPress={() => setShowLanguagePopUp(true)} color="black" /> 
 
+      {/* Language icon to open modal */}
+      <Ionicons name="language" size={34} onPress={() => setShowLanguagePopUp(true)} color="black" />
+
+      {/* Language Selector Modal */}
       {showLanguagePopUp && (
-             <Modal visible={showLanguagePopUp} transparent>
-             <View style={isTabletMode ? styles.overlayTablet : styles.overlay}>
-               <View style={isTabletMode ? styles.popupTablet : styles.popup}>
-                 <View style={isTabletMode ? styles.selectTextTablet : styles.selectText}>
-                   <Text style={isTabletMode ? styles.dropdownTextTablet : styles.dropdownText}>
-                     {t('Selectyourlanuage')}
-                   </Text>
-                   <TouchableOpacity onPress={() => setShowLanguagePopUp(false)}>
-                     <Fontisto
-                       style={isTabletMode ? styles.deleteIconTablet : styles.deleteIcon}
-                       name="close-a"
-                       size={14}
-                       color="black"
-                     />
-                   </TouchableOpacity>
-                 </View>
-                 <Dropdown
+        <Modal visible={showLanguagePopUp} transparent>
+          <View style={isTabletMode ? styles.overlayTablet : styles.overlay}>
+            <View style={isTabletMode ? styles.popupTablet : styles.popup}>
+              <View style={isTabletMode ? styles.selectTextTablet : styles.selectText}>
+                <Text style={isTabletMode ? styles.dropdownTextTablet : styles.dropdownText}>
+                  {t('Selectyourlanuage')}
+                </Text>
+                <TouchableOpacity onPress={() => setShowLanguagePopUp(false)}>
+                  <Fontisto
+                    style={isTabletMode ? styles.deleteIconTablet : styles.deleteIcon}
+                    name="close-a"
+                    size={14}
+                    color="black"
+                  />
+                </TouchableOpacity>
+              </View>
 
-                   style={isTabletMode ? styles.dropdownTablet : styles.dropdown}
-                   renderLeftIcon={() => (
-                     <AntDesign
-                       name="search1"
-                       size={isTabletMode ? 24 : 20}
-                       style={{ marginRight: 14 }}
-                       color="#060607"
-                     />
-                   )}
-                   data={languages.map((l) => ({ label: l.countryLanguage, value: l.language }))}
-                   search
-                   maxHeight={isTabletMode ? 510 : 370}
-                   itemContainerStyle={isTabletMode ? styles.itemTablet : styles.item}
-                   labelField={'label'}
-                   valueField="value"
-                   placeholder={!selectedLanguage ? 'Search...' : selectedLanguage}
-                   searchPlaceholder="..."
-                   value={selectedLanguage}
-                   onChange={(item) => {
-                    console.log(item)
-                    setLanguage(item.value)
-                    setShowLanguagePopUp(false)
-                  }}
-                 />
-               </View>
-             </View>
-           </Modal>
+              {/* Search Bar */}
+              <View
+                style={[
+                  isTabletMode ? styles.dropdownTablet : styles.dropdown,
+                  { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+                ]}
+              >
+                <AntDesign
+                  name="search1"
+                  size={isTabletMode ? 24 : 20}
+                  style={{ marginRight: 14 }}
+                  color="#060607"
+                />
+                <TextInput
+                  style={{ flex: 1, height: 40 }}
+                  placeholder="Search..."
+                  value={searchText}
+                  onChangeText={setSearchText}
+                  autoFocus
+                />
+              </View>
+
+              {/* FlatList of filtered languages */}
+              <FlatList
+                data={filteredLanguages}
+                keyExtractor={(item) => item.language}
+                style={{ maxHeight: isTabletMode ? 510 : 370 }}
+                keyboardShouldPersistTaps="handled"
+                showsVerticalScrollIndicator={false}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={[
+                      isTabletMode ? styles.itemTablet : styles.item,
+                      { backgroundColor: '#fff', borderRadius: 12, marginVertical: 4, marginHorizontal: 2 },
+                    ]}
+                    activeOpacity={0.6}
+                    onPress={() => {
+                      console.log(item);
+                      setLanguage(item.language);
+                      setShowLanguagePopUp(false);
+                      setSearchText(''); // Reset search on selection
+                    }}
+                  >
+                    <Text style={{ fontSize: isTabletMode ? 18 : 16, color: '#333' }}>
+                      {item.countryLanguage}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </View>
+        </Modal>
       )}
     </View>
   );
 };
+
+
 
 export default TitleSection;
 
@@ -96,7 +132,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20
   },
   welcome: {
-    fontSize: 40,
+    fontSize: 32,
+    width: '100%',
     color: '#3F465C',
     fontWeight: '500',
   },
@@ -171,17 +208,29 @@ const styles = StyleSheet.create({
     padding: 7,
     borderRadius: 8,
   },
+  separator: {
+    height: 1,
+    backgroundColor: '#E4E6EB',
+    marginHorizontal: 8,
+  },
+  item: {
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  itemTablet: {
+    paddingVertical: 18,
+    paddingHorizontal: 24,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
   dropdown: {
     position: 'relative',
     backgroundColor: '#F8F9FC',
     borderRadius: 18,
     paddingHorizontal: 15,
     paddingVertical: 3,
-  },
-  item: {
-    borderBottomColor: '#d8d8dc',
-    borderBottomWidth: 0.5,
-    paddingHorizontal: 8,
   },
   // Tablet styles
   selectCountryTablet: {
@@ -243,9 +292,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 15,
   },
-  itemTablet: {
-    borderBottomColor: '#d8d8dc',
-    borderBottomWidth: 0.5,
-    paddingHorizontal: 8,
-  },
+
 });

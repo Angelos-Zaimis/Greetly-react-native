@@ -6,10 +6,13 @@ import {
   StyleSheet,
   Modal,
   useWindowDimensions,
+  FlatList,
+  TextInput,
 } from 'react-native';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import { countries } from '../../countriesAndStatus/countries';
+import { useLanguage } from '../util/LangContext';
 
 type CountrySelectorProps = {
   selectedCountry: string;
@@ -24,6 +27,8 @@ const CountrySelector: FC<CountrySelectorProps> = ({
 }) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const { height: SCREEN_HEIGHT } = useWindowDimensions();
+  const [searchText, setSearchText] = useState<string>('');
+  const {t} = useLanguage();
 
   const handleShowPopup = useCallback(() => {
     setShowPopup(true);
@@ -31,7 +36,12 @@ const CountrySelector: FC<CountrySelectorProps> = ({
 
   const closePopup = useCallback(() => {
     setShowPopup(false);
+    setSearchText('');
   }, []);
+
+  const filteredCountries = countries.filter((country) =>
+    country.label.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   return (
     <>
@@ -40,21 +50,22 @@ const CountrySelector: FC<CountrySelectorProps> = ({
         style={isTabletMode ? styles.selectCountryTablet : styles.selectCountry}
       >
         <Text style={isTabletMode ? styles.buttonTextTablet : styles.buttonText}>
-          I come from
+          {t('pageOnboardingIcome')}
         </Text>
         <View style={isTabletMode ? styles.selectContainerTablet : styles.selectContainer}>
           <Text style={isTabletMode ? styles.buttonTextTablet : styles.buttonText}>
-            {selectedCountry ? selectedCountry : 'Select...'}
+            {selectedCountry ? selectedCountry : (t('select'))}
           </Text>
           <AntDesign name="caretdown" size={16} color="#AFB1B5" />
         </View>
       </TouchableOpacity>
+
       <Modal visible={showPopup} transparent>
         <View style={isTabletMode ? styles.overlayTablet : styles.overlay}>
           <View style={isTabletMode ? styles.popupTablet : styles.popup}>
             <View style={isTabletMode ? styles.selectTextTablet : styles.selectText}>
               <Text style={isTabletMode ? styles.dropdownTextTablet : styles.dropdownText}>
-                Select your country of origin
+                {t('pageOnboardingSelectCoutnry')}
               </Text>
               <TouchableOpacity onPress={closePopup}>
                 <Fontisto
@@ -65,29 +76,45 @@ const CountrySelector: FC<CountrySelectorProps> = ({
                 />
               </TouchableOpacity>
             </View>
-            <Dropdown
-              style={isTabletMode ? styles.dropdownTablet : styles.dropdown}
-              renderLeftIcon={() => (
-                <AntDesign
-                  name="search1"
-                  size={isTabletMode ? 24 : 20}
-                  style={{ marginRight: 14 }}
-                  color="#060607"
-                />
+
+            <View
+              style={[
+                isTabletMode ? styles.dropdownTablet : styles.dropdown,
+                { flexDirection: 'row', alignItems: 'center' },
+              ]}
+            >
+              <AntDesign
+                name="search1"
+                size={isTabletMode ? 24 : 20}
+                style={{ marginRight: 14, }}
+                color="#060607"
+              />
+              <TextInput
+                style={{ flex: 1, height: 'auto' }}
+                placeholder="Search..."
+                value={searchText}
+                onChangeText={setSearchText}
+                autoFocus
+              />
+            </View>
+
+            <FlatList
+              data={filteredCountries}
+              keyExtractor={(item) => item.value}
+              style={{ maxHeight: isTabletMode ? 510 : 370 }}
+              keyboardShouldPersistTaps="handled"
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={isTabletMode ? styles.itemTablet : styles.item}
+                  onPress={() => {
+                    setSelectedCountry(item.label);
+                    setShowPopup(false);
+                    setSearchText('');
+                  }}
+                >
+                  <Text>{item.label}</Text>
+                </TouchableOpacity>
               )}
-              data={countries}
-              search
-              maxHeight={isTabletMode ? 510 : 370}
-              itemContainerStyle={isTabletMode ? styles.itemTablet : styles.item}
-              labelField={'label'}
-              valueField="value"
-              placeholder={!selectedCountry ? 'Search...' : selectedCountry}
-              searchPlaceholder="..."
-              value={selectedCountry}
-              onChange={(item) => {
-                setSelectedCountry(item.value);
-                setShowPopup(false);
-              }}
             />
           </View>
         </View>
@@ -144,23 +171,27 @@ const styles = StyleSheet.create({
   },
   popup: {
     backgroundColor: '#fff',
-    width: '80%',
-    height: '55%',
-    padding: 7,
+    width: '92%',
+    height: '50%',
+    paddingVertical: 12,
+    paddingHorizontal: 18,
     borderRadius: 8,
   },
   dropdown: {
     position: 'relative',
     backgroundColor: '#F8F9FC',
     borderRadius: 18,
-    paddingHorizontal: 15,
-    paddingVertical: 3,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    marginBottom: 10
   },
   item: {
-    borderBottomColor: '#d8d8dc',
-    borderBottomWidth: 0.5,
-    paddingHorizontal: 8,
-  },
+    paddingVertical: 15,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    borderBottomColor: '#E4E6EB',
+    borderBottomWidth: 1,
+  },  
   // Tablet styles
   selectCountryTablet: {
     marginLeft: 20,
@@ -209,7 +240,7 @@ const styles = StyleSheet.create({
   },
   popupTablet: {
     backgroundColor: '#fff',
-    width: '80%',
+    width: '92%',
     height: '55%',
     padding: 11,
     borderRadius: 8,
@@ -221,10 +252,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 15,
   },
+  
   itemTablet: {
-    borderBottomColor: '#d8d8dc',
-    borderBottomWidth: 0.5,
-    paddingHorizontal: 8,
+    paddingVertical: 18,
+    paddingHorizontal: 24,
+    justifyContent: 'center',
+    borderBottomColor: '#E4E6EB',
+    borderBottomWidth: 1,
   },
 });
 

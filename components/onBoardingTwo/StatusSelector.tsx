@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { statusList } from '../../assets/statuslist/statusList';
+import { useLanguage } from '../util/LangContext';
 
 type StatusSelectorProps = {
   status: string;
@@ -20,6 +21,7 @@ type StatusSelectorProps = {
 const StatusSelector: FC<StatusSelectorProps> = ({ status, setStatus, isTabletMode }) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const { height: SCREEN_HEIGHT } = useWindowDimensions();
+  const {t} = useLanguage();
 
   const handleShowPopup = useCallback(() => {
     setShowPopup(true);
@@ -58,12 +60,12 @@ const StatusSelector: FC<StatusSelectorProps> = ({ status, setStatus, isTabletMo
         onPress={handleShowPopup}
         style={isTabletMode ? styles.selectStatusTablet : styles.selectStatus}
       >
-        <Text style={isTabletMode ? styles.buttonTextTablet : styles.buttonText}>I am</Text>
+        <Text style={isTabletMode ? styles.buttonTextTablet : styles.buttonText}>{t('Iam')}</Text>
         <View style={isTabletMode ? styles.selectContainerTablet : styles.selectContainer}>
           <Text
             style={isTabletMode ? styles.buttonTextSelectedTablet : styles.buttonTextSelected}
           >
-            {status ? status : 'Select...'}
+            {status ? status : t('select')}
           </Text>
           <AntDesign name="caretdown" size={16} color="#AFB1B5" />
         </View>
@@ -73,7 +75,7 @@ const StatusSelector: FC<StatusSelectorProps> = ({ status, setStatus, isTabletMo
           <View style={isTabletMode ? styles.popupTablet : styles.popup}>
             <View style={isTabletMode ? styles.selectTextTablet : styles.selectText}>
               <Text style={isTabletMode ? styles.dropdownTextTablet : styles.dropdownText}>
-                Select your occupation
+                {t('pageOnboardingSelectStatus')}
               </Text>
               <TouchableOpacity onPress={closePopup}>
                 <Fontisto

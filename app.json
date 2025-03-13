@@ -2,7 +2,7 @@
   "expo": {
     "name": "Greetly.ch",
     "slug": "Greetlych",
-    "scheme": "Greetly.ch",
+    "scheme": ["greetly"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -38,7 +38,7 @@
         "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       },
-      "bundleIdentifier": "com.greetly.ch.Greetly.ch"
+      "bundleIdentifier": "ch.greetly.ch.greetly.ch"
     },
     "android": {
       "adaptiveIcon": {

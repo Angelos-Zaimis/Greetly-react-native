@@ -19,6 +19,7 @@ const AuthStack = () => {
     const checkIsFirstLaunchEver = async (): Promise<void> => {
       try {
         const value = await AsyncStorage.getItem('alreadyLaunched');
+
         if (value === null) {
           setIsFirstLaunchEver(true);
         } else {

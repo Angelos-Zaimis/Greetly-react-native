@@ -33,21 +33,28 @@ const InputField: FC<InputFieldProps> = ({
 }) => {
   return (
     <View style={isTabletMode ? styles.inputTablet : styles.input}>
-      <Text style={isTabletMode ? styles.inputTextLabelTablet : styles.inputTextLabel}>
-        {label}
-      </Text>
-      {setSecureTextEntry && (
-        <TouchableOpacity
-          onPress={() => setSecureTextEntry && setSecureTextEntry(!secureTextEntry)}
-          style={isTabletMode ? styles.eyeIconContainerTablet : styles.eyeIconContainer}
-        >
-          {secureTextEntry ? (
-            <Ionicons name="eye-off-outline" size={isTabletMode ? 22 : 16} color="black" />
-          ) : (
-            <Ionicons name="eye-outline" size={isTabletMode ? 22 : 16} color="black" />
-          )}
-        </TouchableOpacity>
-      )}
+      <View style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+      }}>
+        <Text style={isTabletMode ? styles.inputTextLabelTablet : styles.inputTextLabel}>
+          {label}
+        </Text>
+        {setSecureTextEntry && (
+          <TouchableOpacity
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
+            style={isTabletMode ? styles.eyeIconContainerTablet : styles.eyeIconContainer}
+          >
+            {secureTextEntry ? (
+              <Ionicons name="eye-off-outline" size={isTabletMode ? 22 : 16} color="black" />
+            ) : (
+              <Ionicons name="eye-outline" size={isTabletMode ? 22 : 16} color="black" />
+            )}
+          </TouchableOpacity>
+        )}
+      </View>
+
       {value !== '' && isValid !== undefined && (
         <View
           style={

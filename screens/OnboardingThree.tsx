@@ -17,6 +17,7 @@ import TitleSection from '../components/onBoardingThree/TitleSection';
 import InputField from '../components/onBoardingThree/InputField';
 import PrivacyPolicyModal from '../components/onBoardingThree/PrivacyPoliceModal';
 import ProgressDots from '../components/onBoardingThree/ProgressDots';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type OnboardingThreeProps = {
   navigation: NavigationProp<any>;
@@ -121,9 +122,17 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({ route, navigation }) => {
     navigation.navigate('OnboardingOne');
   }, [navigation]);
 
+  const setAsyncStorageValue = useCallback(async() => {
+    try { 
+      await AsyncStorage.setItem('alreadyLaunched', 'true');
+    } catch (error) {
+      console.log("Couldnt set asynce storage value")
+    }
+  }, [])
+
   const handleCreateAccount = useCallback(async () => {
     setSigninPending(true);
-
+  
     try {
       const response = await signUp({
         email,
@@ -131,16 +140,24 @@ const OnboardingThree: FC<OnboardingThreeProps> = ({ route, navigation }) => {
         country,
         status,
       });
-
-      if (response.status >= 200 && response.status < 300) {
+      
+      if ('status' in response && response.status >= 200 && response.status < 300) {
+        await setAsyncStorageValue();
         navigation.navigate('Login');
+      } else if ('error' in response) {
+        alert(response.error); 
+      } else {
+        alert('Unknown error occurred.');
       }
-    } catch (e) {
+  
+    } catch (e: any) {
+      console.error('Unexpected error:', e);
       alert('Something went wrong, please try again.');
+    } finally {
+      setSigninPending(false);
     }
-    setSigninPending(false);
   }, [email, password, country, status, signUp, navigation]);
-
+  
   const handleDisabled = useCallback(() => {
     if (
       email === '' ||

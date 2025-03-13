@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import React, { ReactNode, createContext, useEffect, useState } from "react";
 import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -64,7 +64,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const checkTokens = async () => {
       try {
-        console.log("Checking token....")
         const storedTokens = await AsyncStorage.getItem('authTokens');
       
         if (!storedTokens) {
@@ -178,14 +177,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signUp = async (body: SignUpProps): Promise<{ status: number } | { error: string }> => {
     try {
-      const response = await axios.post(`${AppURLS.middlewareInformationURL}/${AUTH_REGISTRATION_ENDPOINT}/`, body, {
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const response = await axios.post(
+        `${AppURLS.middlewareInformationURL}/${AUTH_REGISTRATION_ENDPOINT}/`,
+        body,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
       return { status: response.status };
     } catch (error: any) {
-      return { error: error.response?.data || 'Unknown error' };
+      const errorMessage = error.response?.data?.message || 'Something went wrong, please try again.';
+      return { error: errorMessage };
     }
   };
+  
   
   const updateToken = async () => {
     try {
