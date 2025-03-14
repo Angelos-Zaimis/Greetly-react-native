@@ -14,12 +14,12 @@ const LanguageSelector: FC<LanguageSelectorProps> = ({ handleFetchCantons, t }) 
       </TouchableOpacity>
     </View>
     <View style={styles.absoluteViewFrench}>
-      <TouchableOpacity onPress={() => handleFetchCantons('FR')} style={styles.name}>
+      <TouchableOpacity disabled onPress={() => handleFetchCantons('FR')} style={styles.name}>
         <Text style={styles.text}>{t('frenchSpeaking')}</Text>
       </TouchableOpacity>
     </View>
     <View style={styles.absoluteViewItalian}>
-      <TouchableOpacity onPress={() => handleFetchCantons('IT')} style={styles.name}>
+      <TouchableOpacity disabled onPress={() => handleFetchCantons('IT')} style={styles.name}>
         <Text style={styles.text}>{t('italianSpeaking')}</Text>
       </TouchableOpacity>
     </View>
@@ -38,12 +38,14 @@ const styles = StyleSheet.create({
     top: '45%',
     left: '2%',
     zIndex: 9999,
+    opacity: 0.7
   },
   absoluteViewItalian: {
     position: 'absolute',
     top: '59%',
     left: '60%',
     zIndex: 9999,
+    opacity: 0.7
   },
   name: {
     padding: 8,

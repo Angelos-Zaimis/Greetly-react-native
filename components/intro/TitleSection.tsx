@@ -100,7 +100,6 @@ const TitleSection: FC<TitleSectionProps> = ({ isTabletMode }) => {
                     ]}
                     activeOpacity={0.6}
                     onPress={() => {
-                      console.log(item);
                       setLanguage(item.language);
                       setShowLanguagePopUp(false);
                       setSearchText(''); // Reset search on selection

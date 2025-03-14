@@ -37,36 +37,41 @@ const AuthInputField: FC<AuthInputFieldProps> = ({
       >
         {label}
       </Text>
-      {setSecureTextEntry && (
-        <TouchableOpacity
-          onPress={() => setSecureTextEntry(!secureTextEntry)}
-          style={isTabletMode ? styles.eyeIconContainertablet : styles.eyeIconContainer}
-        >
-          {secureTextEntry ? (
-            <Ionicons
-              name="eye-off-outline"
-              size={16}
-              color="black"
-            />
-          ) : (
-            <Ionicons
-              name="eye-outline"
-              size={16}
-              color="black"
-            />
-          )}
-        </TouchableOpacity>
-      )}
-      <TextInput
-        style={isTabletMode ? styles.inputTexttablet : styles.inputText}
-        placeholderTextColor="#AFB1B5"
-        placeholder={`Enter your ${label.toLowerCase()}`}
-        value={value}
-        onChangeText={onChangeText}
-        autoCapitalize="none"
-        keyboardType={label === 'Email' ? 'email-address' : 'default'}
-        secureTextEntry={secureTextEntry}
-      />
+      <View style={styles.inputRow}>
+        <TextInput
+          style={[
+            isTabletMode ? styles.inputTexttablet : styles.inputText,
+            { flex: 1 }, // Make input take remaining space
+          ]}
+          placeholderTextColor="#AFB1B5"
+          placeholder={`Enter your ${label.toLowerCase()}`}
+          value={value}
+          onChangeText={onChangeText}
+          autoCapitalize="none"
+          keyboardType={label === 'Email' ? 'email-address' : 'default'}
+          secureTextEntry={secureTextEntry}
+        />
+        {setSecureTextEntry && (
+          <TouchableOpacity
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
+            style={isTabletMode ? styles.eyeIconContainertablet : styles.eyeIconContainer}
+          >
+            {secureTextEntry ? (
+              <Ionicons
+                name="eye-off-outline"
+                size={20}
+                color="black"
+              />
+            ) : (
+              <Ionicons
+                name="eye-outline"
+                size={20}
+                color="black"
+              />
+            )}
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
@@ -92,9 +97,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginBottom: 20,
   },
-  eyeIconContainer: {
-    alignItems: 'flex-end',
-  },
   // Tablet styles
   inputtablet: {
     width: '91%',
@@ -107,14 +109,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
   },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   inputTexttablet: {
     fontSize: 18,
+  },
+  eyeIconContainer: {
+    paddingHorizontal: 8, 
+  },
+  eyeIconContainertablet: {
+    paddingHorizontal: 8,
   },
   inputTextEmailtablet: {
     fontSize: 18,
     marginBottom: 20,
-  },
-  eyeIconContainertablet: {
-    alignItems: 'flex-end',
   },
 });

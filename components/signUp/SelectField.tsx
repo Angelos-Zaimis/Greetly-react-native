@@ -1,5 +1,12 @@
-import React, { FC, useCallback } from 'react';
-import { View, Text, TouchableOpacity, Modal, FlatList } from 'react-native';
+import React, { FC, useCallback, useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  FlatList,
+  TextInput,
+} from 'react-native';
 import { AntDesign, Fontisto } from '@expo/vector-icons';
 import { StyleSheet } from 'react-native';
 
@@ -20,15 +27,18 @@ const SelectField: FC<SelectFieldProps> = ({
   isTabletMode,
   onSelect,
 }) => {
-  const [showPopup, setShowPopup] = React.useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
-  const handleShowPopup = useCallback(() => {
-    setShowPopup(true);
-  }, []);
-
+  const handleShowPopup = useCallback(() => setShowPopup(true), []);
   const handleClosePopup = useCallback(() => {
     setShowPopup(false);
+    setSearchText(''); // Reset search when closing
   }, []);
+
+  const filteredData = data.filter((item) =>
+    item.label.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const renderItem = ({ item }: { item: { label: string; value: string } }) => (
     <TouchableOpacity
@@ -36,6 +46,7 @@ const SelectField: FC<SelectFieldProps> = ({
       onPress={() => {
         onSelect(item.value);
         setShowPopup(false);
+        setSearchText(''); // Reset search on select
       }}
     >
       <Text style={isTabletMode ? styles.renderedTextTablet : styles.renderedText}>
@@ -52,14 +63,14 @@ const SelectField: FC<SelectFieldProps> = ({
       >
         <Text style={isTabletMode ? styles.buttonTextTablet : styles.buttonText}>{label}</Text>
         <View style={styles.inputContainer}>
-          <Text
-            style={isTabletMode ? styles.buttonTextSelectedTablet : styles.buttonTextSelected}
-          >
-            {value ? value : placeholder}
+          <Text style={isTabletMode ? styles.buttonTextSelectedTablet : styles.buttonTextSelected}>
+            {value || placeholder}
           </Text>
           <AntDesign name="caretdown" size={16} color="#AFB1B5" />
         </View>
       </TouchableOpacity>
+
+      {/* Modal with Search and List */}
       <Modal visible={showPopup} transparent>
         <View style={isTabletMode ? styles.overlayTablet : styles.overlay}>
           <View style={isTabletMode ? styles.popupTablet : styles.popup}>
@@ -76,13 +87,39 @@ const SelectField: FC<SelectFieldProps> = ({
                 />
               </TouchableOpacity>
             </View>
+
+            <View
+              style={[
+                isTabletMode ? styles.dropdownTablet : styles.dropdown,
+                { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+              ]}
+            >
+              <AntDesign
+                name="search1"
+                size={isTabletMode ? 24 : 20}
+                style={{ marginRight: 14 }}
+                color="#060607"
+              />
+              <TextInput
+                style={{ flex: 1, height: 40 }}
+                placeholder="Search..."
+                value={searchText}
+                onChangeText={setSearchText}
+                autoFocus
+              />
+            </View>
+
+            {/* Filtered List */}
             <FlatList
-              data={data}
+              data={filteredData}
               renderItem={renderItem}
               keyExtractor={(item) => item.value}
               contentContainerStyle={
                 isTabletMode ? styles.popupFlatlistTablet : styles.popupFlatlist
               }
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
             />
           </View>
         </View>
@@ -93,7 +130,6 @@ const SelectField: FC<SelectFieldProps> = ({
 
 export default SelectField;
 
-
 const styles = StyleSheet.create({
   selectField: {
     borderWidth: 1,
@@ -102,8 +138,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     height: 80,
     justifyContent: 'center',
-    width: '91%',
     marginVertical: 15,
+    width: '100%', // Inherit from parent (91%)
   },
   buttonText: {
     fontSize: 16,
@@ -111,15 +147,37 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: 10,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+  dropdown: {
+    position: 'relative',
+    backgroundColor: '#F8F9FC',
+    borderRadius: 18,
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+    marginVertical: 10, // To give it space from other elements
+    borderWidth: 1,
+    borderColor: '#DADADC',
   },
+  
+  dropdownTablet: {
+    position: 'relative',
+    backgroundColor: '#F8F9FC',
+    borderRadius: 18,
+    paddingHorizontal: 25,
+    paddingVertical: 15,
+    marginVertical: 12, // A bit more margin for tablet spacing
+    borderWidth: 1,
+    borderColor: '#DADADC',
+  },
+  
   buttonTextSelected: {
     fontSize: 16,
     textTransform: 'capitalize',
     color: '#3F465C',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   overlay: {
     flex: 1,
@@ -130,14 +188,24 @@ const styles = StyleSheet.create({
   popup: {
     backgroundColor: '#fff',
     width: '80%',
-    height: '55%',
-    padding: 7,
-    borderRadius: 8,
+    height: '50%',
+    padding: 12,
+    borderRadius: 12,
   },
+  popupFlatlist: {
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#E4E6EB',
+    marginHorizontal: 8,
+  },
+  
   dropdownText: {
     fontSize: 16,
     color: '#72788D',
-    marginBottom: 20,
+    marginBottom: 15,
     alignSelf: 'center',
     paddingTop: 10,
   },
@@ -147,45 +215,40 @@ const styles = StyleSheet.create({
     top: -34,
   },
   renderedItem: {
-    marginVertical: 12,
-    alignItems: 'center',
+    marginVertical: 8,
     backgroundColor: '#F4F5F8',
-    width: 308,
-    height: 39,
+    width: '100%',
+    height: 45,
     borderRadius: 10,
     justifyContent: 'center',
+    paddingHorizontal: 16,
   },
   renderedText: {
     color: '#3F465C',
+    textAlign: 'left',
     fontWeight: '600',
     fontSize: 16,
     textTransform: 'capitalize',
   },
-  popupFlatlist: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
-  },
-  // Tablet styles
+
+  // ---------- Tablet styles ----------
   selectFieldTablet: {
     borderWidth: 1,
     borderColor: '#DADADC',
     borderRadius: 18,
-    paddingHorizontal: 16,
-    height: 90,
+    paddingHorizontal: 18,
+    height: 95,
     justifyContent: 'center',
-    width: '91%',
     marginVertical: 25,
+    width: '100%', // Inherit from parent (91%)
   },
   buttonTextTablet: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '500',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   buttonTextSelectedTablet: {
-    fontSize: 18,
+    fontSize: 20,
     textTransform: 'capitalize',
     color: '#3F465C',
   },
@@ -199,41 +262,39 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: '80%',
     height: '55%',
-    padding: 7,
-    borderRadius: 8,
+    padding: 14,
+    borderRadius: 14,
+  },
+  popupFlatlistTablet: {
+    width: '100%',
+    paddingHorizontal: 12,
   },
   dropdownTextTablet: {
-    fontSize: 23,
+    fontSize: 22,
     color: '#72788D',
-    marginBottom: 20,
+    marginBottom: 25,
     alignSelf: 'center',
     paddingTop: 10,
   },
   deleteIconTablet: {
     position: 'absolute',
-    right: 29,
-    top: -40,
+    right: 20,
+    top: -34,
   },
   renderedItemTablet: {
-    marginVertical: 12,
-    alignItems: 'center',
+    marginVertical: 10,
     backgroundColor: '#F4F5F8',
-    width: 640,
-    height: 64,
-    borderRadius: 10,
+    width: '100%',
+    height: 60,
+    borderRadius: 12,
     justifyContent: 'center',
+    paddingHorizontal: 18,
   },
   renderedTextTablet: {
     color: '#3F465C',
+    textAlign: 'left',
     fontWeight: '600',
     fontSize: 18,
     textTransform: 'capitalize',
-  },
-  popupFlatlistTablet: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 8,
   },
 });

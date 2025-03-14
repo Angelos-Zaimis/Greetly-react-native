@@ -19,17 +19,17 @@ const Help: FC<HelpProps> = ({ navigation }) => {
   const cantons = [
     { label: 'Zurich', value: 'ZH' },
     { label: 'Bern', value: 'BE' },
-    { label: 'Ticino', value: 'TI' },
-    { label: 'Geneva', value: 'GE' }
+    { label: 'Basel', value: 'BA' },
+    { label: 'Lucerne', value: 'LU' }
   ];
 
   const data = [
     { key: '1', text: 'InsuranceAgents', type: "InsuranceAgent", icon: require('../assets/help/helpback.png') },
     { key: '2', text: 'ImmigrationConsultants', type: "ImmigrationConsultant", icon: require('../assets/help/helpback.png') },
-    { key: '3', text: 'Lawyers', icon: require('../assets/help/helpback.png') },
-    { key: '4', text: 'Recruiters', icon: require('../assets/help/helpback.png') },
-    { key: '5', text: 'Doctors', icon: require('../assets/help/helpback.png') },
-    { key: '6', text: 'HousingSpecialists', icon: require('../assets/help/helpback.png') }
+    { key: '3', text: 'Lawyers', type: "Laywer", icon: require('../assets/help/helpback.png') },
+    { key: '4', text: 'Recruiters', type: "Recruiter", icon: require('../assets/help/helpback.png') },
+    { key: '5', text: 'Doctors', type: "Doctor", icon: require('../assets/help/helpback.png') },
+    { key: '6', text: 'HousingSpecialists', type: "HouseSpecialist", icon: require('../assets/help/helpback.png') }
   ];
 
   const isTabletMode = useMemo(() => SCREENWIDTH > 700, [SCREENWIDTH]);

@@ -18,19 +18,28 @@ type AuthContextType = {
   updateToken: () => void;
 }
 
+export type UserUpdateResponse = {
+  citizenship: string;  // e.g., 'EU-EFTA'
+  country: string;      // e.g., 'Greece'
+  id: string;           // UUID
+  language: string;     // e.g., 'el'
+  message: string;      // e.g., 'User updated successfully.'
+  status: string;       // e.g., 'employee'
+  user: string;         // e.g., email
+  username: string;     // e.g., email
+};
+
 type LoginResponse = {
   status: number;
-  data: {
-    detail?: string;
-    password?: string;
-    email?: string;
-    access?: string;
-    refresh?: string;
-    message?: string;
+  data?: {
+    access: string,
+    refresh: string,
+    username: string,
+    user_id: string
   };
 };
 
-type DecodedToken = {
+export type DecodedToken = {
   token_type: string,
   exp: number;
   iat: number;
@@ -97,7 +106,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const verifyToken = async () => {
     const storedTokens = await AsyncStorage.getItem('authTokens');
     const tokens = JSON.parse(storedTokens);
-    console.log("Verifying tokens...")
     const payload = {
         token: tokens.access
     }
@@ -112,7 +120,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         });
     
         if (response.ok) {
-          setIsLoggedIn(true);
+          setIsLoggedIn(true);    
         } else {
           setIsLoggedIn(false);
           localStorage.removeItem('access');
@@ -130,23 +138,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
-  
-      const data = await response.json();
-  
+    
       if (response.ok) {
+        const data = await response.json();
         const tokens = { access: data.access, refresh: data.refresh };
         await AsyncStorage.setItem('authTokens', JSON.stringify(tokens));
+
+
+        setUserId(data.user_id)
         setAccessToken(tokens.access);
         setIsLoggedIn(true);
-        return { status: response.status, data: tokens };
+        return { status: response.status};
       } else {
-        return { status: response.status, data };
+        return { status: response.status};
       }
     } catch (error) {
       console.error('Error during login:', error);
+      return undefined; 
     }
   };
-
+  
   const logout = async () => {
     setIsLoggedIn(false)
     await AsyncStorage.removeItem('authTokens');

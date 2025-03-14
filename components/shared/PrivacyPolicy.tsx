@@ -26,7 +26,7 @@ const PrivacyPolicy: FC<PrivacyPolicyProps> = ({ handleClose }) => {
 
         <Text style={styles.header}>{t('dataCollection')}</Text>
         <Text style={styles.text}>
-          {t('"dataCollectionText')}
+          {t('dataCollectionText')}
         </Text>
 
         <Text style={styles.header}>{t('dataSharing')}</Text>

@@ -35,8 +35,8 @@ export default MapSection;
 
 const styles = StyleSheet.create({
     map: {
-      width: '100%',
-      height: 300,
+      width: '85%',
+      height: 200,
       borderRadius: 10,
     },
     mapTablet: {

@@ -6,7 +6,7 @@ import axios from "axios";
 
 export const useSelf = () => {
   const {userId, accessToken} = useContext(AuthContext);
-  
+
   const { data: user, error, mutate: refetchUser} = useSWR(
     userId ? `${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}` : null
   );

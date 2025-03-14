@@ -20,7 +20,7 @@ const TeamMemberList: FC<TeamMemberListProps> = ({ data, onItemPress, isTabletMo
   return (
     <View style={styles.flatListContainer}>
       <FlatList
-        data={data}
+        data={data ?? []}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         numColumns={isTabletMode ? 1 : 2}
