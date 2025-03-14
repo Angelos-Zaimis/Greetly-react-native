@@ -7,6 +7,7 @@ import CityList from '../components/home/CityList';
 import LanguageSelector from '../components/home/LanguageSelector';
 import { useLanguage } from '../components/util/LangContext';
 import Map from '../components/shared/Map';
+import { useSelf } from '../components/hooks/useSelf';
 
 type CantonsPageProps = {
   navigation: any;
@@ -15,6 +16,7 @@ type CantonsPageProps = {
 
 const CantonsPage: FC<CantonsPageProps> = ({ navigation }) => {
   const [region, setRegion] = useState<string>('');
+  const {user} = useSelf();
   const {t} = useLanguage();
   const handleFetchCantons = useCallback((region: string) => {
     setRegion(region);

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Greetly.ch",
     "slug": "Greetlych",
-    "scheme": "Greetly.ch",
+    "scheme": ["greetly"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -11,7 +11,7 @@
       "tsconfigPaths": true
     },
     "extra": {
-      "middlewareInformationURL": "http://127.0.0.1:8000/middleware-info",
+      "middlewareInformationURL": "https://greetly-backend-yto7r.ondigitalocean.app/middleware-info",
       "eas": {
         "projectId": "d09e4437-92e7-45e5-9847-7595895222b0"
       }
@@ -38,7 +38,7 @@
         "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
       },
-      "bundleIdentifier": "com.greetly.ch.Greetly.ch"
+      "bundleIdentifier": "ch.greetly.ch.greetly.ch"
     },
     "android": {
       "adaptiveIcon": {

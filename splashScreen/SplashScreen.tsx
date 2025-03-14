@@ -3,7 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { useFonts } from 'expo-font';
 
-SplashScreen.preventAutoHideAsync();  // Prevent the splash screen from auto hiding
+SplashScreen.preventAutoHideAsync();
 
 export default function useSplashScreen() {
   const [appIsReady, setAppIsReady] = useState(false);

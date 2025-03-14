@@ -32,103 +32,104 @@ const SignUp: FC<SignUpProps> = ({ navigation }) => {
   const [password, setPassword] = useState<string>('');
   const [status, setStatus] = useState<string>('');
   const [country, setSelectedCountry] = useState<string>('');
-  const [signPending, setSignPending] = useState<boolean>(false);
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
-  const [isValidInputPasswordText, setIsValidPasswordInput] = useState<boolean | undefined>(
-    undefined
-  );
+  const [signPending, setSigninPending] = useState<boolean>(false);
+  const [isChecked, setChecked] = useState<boolean>(false);
+  const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
+  const { signUp } = useContext(AuthContext);
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const isTabletMode = useMemo(() => SCREEN_WIDTH > 700, [SCREEN_WIDTH]);
   const [isValidInputEmailText, setIsValidEmailInput] = useState<boolean | undefined>(
     undefined
   );
-  const [isChecked, setChecked] = useState<boolean>(false);
-  const { signUp } = useContext(AuthContext);
-  const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
+  const [isValidInputPasswordText, setIsValidPasswordInput] = useState<
+    boolean | undefined
+  >(undefined);
 
-  const {width: SCREEN_WIDTH } = useWindowDimensions();
+  const handleDisabled = useCallback(
+    () => !email || !password || !country || !status || !isChecked,
+    [email, password, country, status, isChecked]
+  );
 
-  const isTabletMode = useMemo(() => SCREEN_WIDTH > 700, [SCREEN_WIDTH]);
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const isValidEmail = useCallback((email: string) => {
+    const emailRegex =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const invalidCharsRegex = /[^\w.@+-]/;
-    const disposableDomain = "@example.com";
-    const spamDomain = "@spamdomain.com";
+    const disposableDomain = '@example.com';
+    const spamDomain = '@spamdomain.com';
     const maxLength = 254;
-  
+
     if (!emailRegex.test(email)) {
       return { valid: false };
     }
-  
+
     if (invalidCharsRegex.test(email)) {
       return { valid: false };
     }
-  
+
     if (email.length > maxLength) {
       return { valid: false };
     }
-  
+
     if (email.endsWith(disposableDomain)) {
       return { valid: false };
     }
-  
+
     if (email.endsWith(spamDomain)) {
       return { valid: false };
     }
-  
-    return { valid: true};
-  };
-  
-  const isValidPassword = (password: string) => {
+
+    return { valid: true };
+  }, []);
+
+  const isValidPassword = useCallback((password: string) => {
     const minLength = 8;
     const digitRegex = /\d/;
     const uppercaseRegex = /[A-Z]/;
     const lowercaseRegex = /[a-z]/;
 
-  
     if (password.length < minLength) {
-      return { valid: false};
+      return { valid: false };
     }
-  
+
     if (!digitRegex.test(password)) {
-      return { valid: false};
+      return { valid: false };
     }
-  
+
     if (!uppercaseRegex.test(password)) {
       return { valid: false };
     }
-  
+
     if (!lowercaseRegex.test(password)) {
-      return { valid: false};
+      return { valid: false };
     }
-  
-  
-    return { valid: true};
-  };
-  
-  const handleEmailInputChange = useCallback((text: string) => {
-    setEmail(text);
-    const isValid = isValidEmail(text);
-    setIsValidEmailInput(isValid.valid);
+
+    return { valid: true };
   }, []);
 
-  const handlePasswordInputChange = useCallback((text: string) => {
-    setPassword(text);
-    const isValid = isValidPassword(text);
-    setIsValidPasswordInput(isValid.valid);
-  }, []);
+  const handleEmailInputChange = useCallback(
+    (text: string) => {
+      setEmail(text);
 
-  const handleNavigationSignUp = useCallback(() => {
-    navigation.navigate('Login');
-  }, [navigation]);
+      const isValid = isValidEmail(text);
+      setIsValidEmailInput(isValid.valid);
+    },
+    [isValidEmail]
+  );
 
-  const handleDisabled = useCallback(() => {
-    if (email === '' || password === '' || country === '' || status === '' || !isChecked) {
-      return true;
-    }
-    return false;
-  }, [email, password, country, status, isChecked]);
+  const handlePasswordInputChange = useCallback(
+    (text: string) => {
+      setPassword(text);
+
+      const isValid = isValidPassword(text);
+      setIsValidPasswordInput(isValid.valid);
+    },
+    [isValidPassword]
+  );
 
   const handleCreateAccount = useCallback(async () => {
-    setSignPending(true);
+    setSigninPending(true);
+  
     try {
       const response = await signUp({
         email,
@@ -136,94 +137,82 @@ const SignUp: FC<SignUpProps> = ({ navigation }) => {
         country,
         status,
       });
-
+      
       if ('status' in response && response.status >= 200 && response.status < 300) {
         navigation.navigate('Login');
+      } else if ('error' in response) {
+        alert(response.error); 
       } else {
-        Alert.alert('Something went wrong, please try again.');
+        alert('Unknown error occurred.');
       }
-    } catch (e) {
-      console.log(e);
-      Alert.alert('Something went wrong, please try again.');
+  
+    } catch (e: any) {
+      console.error('Unexpected error:', e);
+      alert('Something went wrong, please try again.');
     } finally {
-      setSignPending(false);
+      setSigninPending(false);
     }
-  }, [email, password, country, status]);
-
+  }, [email, password, country, status, signUp, navigation]);
+  
   return (
     <>
       <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 25 }]}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <Header handleNavigationSignUp={handleNavigationSignUp} isTabletMode={isTabletMode} />
-          <View
-            style={
-              isTabletMode
-                ? styles.emailAndPasswordContainerTablet
-                : styles.emailAndPasswordContainer
-            }
-          >
-            <View style={isTabletMode ? styles.innerTablet : styles.inner}>
-              <InputField
-                label="Email"
-                value={email}
-                placeholder="enter your email"
-                onChangeText={handleEmailInputChange}
-                isValid={isValidInputEmailText}
-                isTabletMode={isTabletMode}
-              />
-              <InputField
-                label="Password"
-                value={password}
-                placeholder="enter your password"
-                onChangeText={handlePasswordInputChange}
-                secureTextEntry={secureTextEntry}
-                setSecureTextEntry={() => setSecureTextEntry(!secureTextEntry)}
-                isValid={isValidInputPasswordText}
-                isTabletMode={isTabletMode}
-              />
-            </View>
-          </View>
-          <SelectField
-            label={t('countryOfOrigin')}
-            value={country}
-            data={countries}
-            placeholder={t('pageOnboardingSelect')}
-            isTabletMode={isTabletMode}
-            onSelect={setSelectedCountry}
-          />
-          <SelectField
-            label={t('pageOnboardingIam')}
-            value={status}
-            data={statusList}
-            placeholder={t('pageOnboardingSelect')}
-            isTabletMode={isTabletMode}
-            onSelect={setStatus}
-          />
-          <View style={styles.privacyContainer}>
-            <View style={styles.privacySubContainer}>
-              <View style={styles.checkboxContainer}>
-                <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-                <Text style={styles.termsOfUse}>
-                  I've read and agreed to the terms of use and privacy notice:
-                </Text>
-              </View>
-              <Text
-                onPress={() => setShowPrivacyModal(true)}
-                style={styles.termsOfUseBlue}
-              >
-                Terms of use and privacy notice
-              </Text>
-            </View>
-          </View>
-          <PrivacyPolicyModal
-            visible={showPrivacyModal}
-            onClose={() => setShowPrivacyModal(false)}
-          />
-          <View style={styles.buttonContainer}>
-            <CreateButtonSignIn
-              handleDisabled={handleDisabled}
-              handleCreateAccount={handleCreateAccount}
+          <Header handleNavigationSignUp={() => navigation.navigate('Login')} isTabletMode={isTabletMode} />
+
+          <View style={styles.fieldsGroup}>
+            <InputField
+              label="Email"
+              value={email}
+              placeholder="enter your email"
+              onChangeText={handleEmailInputChange}
+              isTabletMode={isTabletMode}
+              isValid={isValidInputEmailText}
+              secureTextEntry={secureTextEntry}
+              setSecureTextEntry={() => setSecureTextEntry(!secureTextEntry)}
             />
+            <InputField
+              label="Password"
+              value={password}
+              placeholder="enter your password"
+              onChangeText={handlePasswordInputChange}
+              secureTextEntry={secureTextEntry}
+              setSecureTextEntry={() => setSecureTextEntry(!secureTextEntry)}
+              isTabletMode={isTabletMode}
+              isValid={isValidInputPasswordText}
+            />
+            <SelectField
+              label={t('countryOfOrigin')}
+              value={country}
+              data={countries}
+              placeholder={t('pageOnboardingSelect')}
+              isTabletMode={isTabletMode}
+              onSelect={setSelectedCountry}
+            />
+            <SelectField
+              label={t('pageOnboardingIam')}
+              value={status}
+              data={statusList}
+              placeholder={t('pageOnboardingSelect')}
+              isTabletMode={isTabletMode}
+              onSelect={setStatus}
+            />
+          </View>
+
+          <View style={styles.privacyContainer}>
+            <View style={styles.checkboxContainer}>
+              <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
+              <Text style={styles.termsOfUse}>I've read and agreed to the terms of use and privacy notice:</Text>
+            </View>
+            <Text onPress={() => setShowPrivacyModal(true)} style={styles.termsOfUseBlue}>
+              Terms of use and privacy notice
+            </Text>
+          </View>
+
+          <PrivacyPolicyModal visible={showPrivacyModal} onClose={() => setShowPrivacyModal(false)} />
+
+          <View style={styles.buttonContainer}>
+            <CreateButtonSignIn handleDisabled={handleDisabled} handleCreateAccount={handleCreateAccount} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -239,35 +228,28 @@ const styles = ScaledSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  emailAndPasswordContainer: {
-    marginTop: 10,
-    alignItems: 'center',
-  },
-  inner: {
+  fieldsGroup: {
     width: '91%',
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 30,
   },
   privacyContainer: {
     alignItems: 'center',
-    marginTop: 8,
-  },
-  privacySubContainer: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 25,
-    marginTop: 10,
+    marginVertical: 15,
   },
   checkboxContainer: {
-    width: '80%',
-    marginBottom: 8,
     flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   checkbox: {
-    margin: 2,
     marginRight: 10,
   },
   termsOfUse: {
     color: '#3F465C',
-    fontWeight: '800',
     fontSize: 13,
+    fontWeight: '600',
   },
   termsOfUseBlue: {
     color: '#719FFF',
@@ -275,16 +257,7 @@ const styles = ScaledSheet.create({
     textDecorationLine: 'underline',
   },
   buttonContainer: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  // Tablet styles
-  emailAndPasswordContainerTablet: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  innerTablet: {
-    width: '91%',
+    marginTop: 20,
   },
 });

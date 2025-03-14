@@ -25,6 +25,7 @@ const TeamMembers: FC<HelpProps> = ({ navigation, route }) => {
   const isTabletMode = useMemo(() => SCREEN_WIDTH > 700, [SCREEN_WIDTH]);
 
   const { teamMembers } = useTeamMembers(type, canton);
+  console.log(teamMembers)
 
   const handleItemPress = (item: any) => {
     navigation.navigate('TeamMember', {

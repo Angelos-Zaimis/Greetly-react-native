@@ -8,6 +8,7 @@ import Header from '../components/onBoardingTwo/Header';
 import TitleSection from '../components/onBoardingTwo/TitleSection';
 import StatusSelector from '../components/onBoardingTwo/StatusSelector';
 import ProgressDots from '../components/onBoardingTwo/ProgressDots';
+import { useLanguage } from '../components/util/LangContext';
 
 type OnBoardingTwoProps = {
   navigation: NavigationProp<any>;
@@ -17,8 +18,9 @@ type OnBoardingTwoProps = {
 const OnBoardingTwo: FC<OnBoardingTwoProps> = ({ navigation, route }) => {
   const [status, setStatus] = useState<string>('');
   const { selectedCountry } = route.params ?? {};
+  const {t} = useLanguage();
 
-  const text = 'Save time. Choose your status to filter the eligibility criteria'.split(' ');
+  const text = t('pageOnboardingOneTitleTwo').split(' ');
 
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
 
@@ -42,7 +44,7 @@ const OnBoardingTwo: FC<OnBoardingTwoProps> = ({ navigation, route }) => {
   return (
     <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 40 }]}>
       <Header onBackPress={handleNavigationBack} isTabletMode={isTabletMode} />
-      <TitleSection text={text} isTabletMode={isTabletMode} />
+      <TitleSection text={text} isTabletMode={isTabletMode} description={t('pageOnboardingOneSubtitleTwo')} />
       <View>
         <Image
           style={isTabletMode ? styles.imageTablet : [styles.image, { height: SCREEN_HEIGHT < 700 ? 200 : 280 }]}

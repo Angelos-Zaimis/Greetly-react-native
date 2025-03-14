@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useContext, useState } from 'react';
-import { SafeAreaView, StyleSheet, Platform } from 'react-native';
+import { SafeAreaView, StyleSheet, Platform, Alert } from 'react-native';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { AuthContext } from '../components/auth/AuthContext';
 import Spinner from '../components/shared/Spinner';

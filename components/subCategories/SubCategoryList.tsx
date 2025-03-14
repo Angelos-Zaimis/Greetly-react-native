@@ -47,7 +47,7 @@ const SubCategoryList: FC<SubCategoryListProps> = ({
                         styles.categoryContainer,
                         {
                         backgroundColor: showAsSubscribed ? '#F8F9FC' : '#F6E1DC6B',
-                        height: isTabletMode ? 60 : 40,
+                        height: isTabletMode ? 65 : 50,
                         },
                     ]}
                     >

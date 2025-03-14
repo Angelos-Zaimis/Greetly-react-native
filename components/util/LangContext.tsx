@@ -32,7 +32,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         setLanguage(userInfo?.language);
       }
     }else{
-      setLanguage('en')
+      setLanguage(selectedLanguage)
     }
   }, [selectedLanguage,userInfo?.language]);
 
@@ -78,7 +78,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   },[]);
 
   const contextValue: LanguageContextType = {
-    
     t: (key: string, options = {} ) => i18next.t(key, { ...options, lng: selectedLanguage ? selectedLanguage : 'en'}),
     setLanguage: (language: string) => setLanguage(language),
     selectedLanguage,

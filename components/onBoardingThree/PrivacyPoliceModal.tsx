@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import PrivacyPolicy from '../shared/PrivacyPolicy';
+import { useLanguage } from '../util/LangContext';
 
 type PrivacyPolicyModalProps = {
   isChecked: boolean;
@@ -17,6 +18,7 @@ type PrivacyPolicyModalProps = {
 
 const PrivacyPolicyModal: FC<PrivacyPolicyModalProps> = ({ isChecked, setChecked, isTabletMode }) => {
   const [showPrivacyModal, setShowPrivacyModal] = useState<boolean>(false);
+  const {t} = useLanguage();
 
   return (
     <View style={styles.privacyContainer}>
@@ -28,14 +30,14 @@ const PrivacyPolicyModal: FC<PrivacyPolicyModalProps> = ({ isChecked, setChecked
             onValueChange={setChecked}
           />
           <Text style={styles.termsOfUse}>
-            I've read and agreed to the terms of use and privacy notice:
+            {t('privacyPoliceTitle')}
           </Text>
         </View>
         <Text
           onPress={() => setShowPrivacyModal(true)}
           style={styles.termsOfUseBlue}
         >
-          Terms of use and privacy notice
+          {t('termsOfUse')}
         </Text>
       </View>
       <Modal visible={showPrivacyModal} transparent>

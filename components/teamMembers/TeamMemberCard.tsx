@@ -16,6 +16,7 @@ const TeamMemberCard: FC<TeamMemberCardProps> = ({ item, onPress, isTabletMode }
         <Image
           style={isTabletMode ? styles.profileImageTablet : styles.profileImage}
           source={{ uri: item.profileImage }}
+          contentFit='cover'
         />
       </View>
       <View style={isTabletMode ? styles.infoContainerTablet : styles.infoContainer}>
@@ -44,41 +45,36 @@ const TeamMemberCard: FC<TeamMemberCardProps> = ({ item, onPress, isTabletMode }
 };
 
 const styles = StyleSheet.create({
-  // Non-tablet styles
+  // Mobile styles
   card: {
     flex: 1,
-    margin: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 0,
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#F4F5F8', 
+    height: 100, 
+    position: 'relative', 
   },
   profileImageContainer: {
     position: 'absolute',
-    top: 2,
-    left: 2,
-    shadowColor: '#1C63F257',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 2,
+    top: 10,
+    left: 10,
   },
   profileImage: {
-    marginTop: 5,
-    height: 70,
+    height: 80,
     width: 95,
     borderRadius: 10,
   },
   infoContainer: {
     position: 'absolute',
-    left: '32%',
+    left: '30%',
     top: '15%',
+    right: '10%',
   },
   location: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 3,
+    marginBottom: 3,
   },
   locationText: {
     marginLeft: 3,
@@ -91,25 +87,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#3F465C',
     marginTop: 4,
-    marginLeft: 3,
   },
   occupation: {
     fontSize: 13,
     color: '#72788D',
     textTransform: 'uppercase',
     marginTop: 3,
-    marginLeft: 3,
   },
   languagesContainer: {
     position: 'absolute',
-    top: '88%',
-    left: '82%',
+    bottom: 5, // ✅ Bottom right corner
+    right: 5,
     flexDirection: 'row',
   },
   languageIcon: {
     height: 18,
     width: 18,
-    marginRight: 7,
+    marginLeft: 5,
   },
 
   // Tablet styles
@@ -118,37 +112,33 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf: 'center',
     width: '90%',
-    height: 120,
+    height: 140, // ✅ More height for better layout
     borderRadius: 20,
     paddingTop: 15,
     marginBottom: '5%',
-    backgroundColor: '#F8F9FC',
+    backgroundColor: '#F8F9FC', // ✅ Background for tablet
+    position: 'relative',
   },
   profileImageContainerTablet: {
     position: 'absolute',
-    top: 2,
-    left: 2,
-    shadowColor: '#1C63F257',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 2,
+    top: 10,
+    left: 10,
   },
   profileImageTablet: {
-    marginTop: 5,
     height: 95,
     width: 135,
     borderRadius: 10,
   },
   infoContainerTablet: {
     position: 'absolute',
-    left: '22%',
-    top: '15%',
+    left: '30%',
+    top: '20%',
+    right: '10%', // Optional for overflow handling
   },
   locationTablet: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 3,
+    marginBottom: 6,
   },
   locationTextTablet: {
     marginLeft: 6,
@@ -161,25 +151,23 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#3F465C',
     marginTop: 7,
-    marginLeft: 3,
   },
   occupationTablet: {
     fontSize: 18,
     color: '#72788D',
     textTransform: 'uppercase',
     marginTop: 6,
-    marginLeft: 3,
   },
   languagesContainerTablet: {
     position: 'absolute',
-    top: '88%',
-    left: '82%',
+    bottom: 10, // ✅ Bottom right
+    right: 10,
     flexDirection: 'row',
   },
   languageIconTablet: {
     height: 24,
     width: 26,
-    marginRight: 7,
+    marginLeft: 7,
   },
 });
 

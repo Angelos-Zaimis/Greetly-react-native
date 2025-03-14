@@ -109,7 +109,7 @@ const SubCategories: FC<SubCategoriesProps> = ({ navigation, route }) => {
       ) : (
         <Spinner />
       )}
-      {isNotSubscribed && <Animated.View style={{ opacity }} />}
+      {/* {isNotSubscribed && <Animated.View style={{ opacity }} />} */}
     </View>
   );
 };

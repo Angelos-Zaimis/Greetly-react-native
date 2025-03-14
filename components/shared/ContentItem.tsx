@@ -12,6 +12,7 @@ export const RenderContentItem = ({ item, navigation }) => {
 
     const {width: SCREENWIDTH} = useWindowDimensions();
   
+    console.log(item)
     const isTabletMode = useMemo(() => {
       if(SCREENWIDTH > 700) {
         return true;

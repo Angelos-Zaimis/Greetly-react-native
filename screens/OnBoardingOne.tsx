@@ -7,6 +7,7 @@ import Header from '../components/onBoardingOne/Header';
 import TitleSection from '../components/onBoardingOne/TitleSection';
 import CountrySelector from '../components/onBoardingOne/CountrySelector';
 import ProgressDots from '../components/onBoardingOne/ProgressDots';
+import { useLanguage } from '../components/util/LangContext';
 
 type OnBoardingOneProps = {
   navigation: NavigationProp<any>;
@@ -15,8 +16,9 @@ type OnBoardingOneProps = {
 const OnBoardingOne: FC<OnBoardingOneProps> = ({ navigation }) => {
   const [selectedCountry, setSelectedCountry] = useState<string>('');
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
+  const {t} = useLanguage();
 
-  const text = 'Get customized information based on your country of origin'.split(' ');
+  const text = t('pageOnboardingOneTitle').split(' ');
 
   const handleNavigationBack = useCallback(() => {
     navigation.navigate('Intro');
@@ -38,7 +40,7 @@ const OnBoardingOne: FC<OnBoardingOneProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <Header onBackPress={handleNavigationBack} isTabletMode={isTabletMode} />
-      <TitleSection text={text} isTabletMode={isTabletMode} />
+      <TitleSection text={text} isTabletMode={isTabletMode} description={t('pageOnboardingOneDescription')}/>
       <View>
         <Image
           style={

@@ -1,13 +1,17 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
+import { useLanguage } from '../util/LangContext';
 
-const HelpItem = ({ item, handleOpenTeamMembers, selectedCanton, isTablet }) => (
-  <TouchableOpacity onPress={() => handleOpenTeamMembers(item.type, item.text, selectedCanton)} style={isTablet ? styles.cellTablet : styles.cell}>
+const HelpItem = ({ item, handleOpenTeamMembers, selectedCanton, isTablet }) => {
+  const {t} = useLanguage();
+  return (
+    <TouchableOpacity onPress={() => handleOpenTeamMembers(item.type, item.text, selectedCanton)} style={isTablet ? styles.cellTablet : styles.cell}>
     <Image style={styles.cellImage} source={item.icon} />
-    <Text style={isTablet ? styles.overlayTextTablet : styles.overlayText}>{item.text}</Text>
+    <Text style={isTablet ? styles.overlayTextTablet : styles.overlayText}>{t(item.text)}</Text>
   </TouchableOpacity>
-);
+  )
+};
 
 const styles = StyleSheet.create({
   cell: {

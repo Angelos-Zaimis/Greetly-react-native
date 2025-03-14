@@ -1,84 +1,104 @@
-import { StyleSheet, Text, View, ScrollView} from 'react-native'
-import React, { FC } from 'react'
+import React, { FC } from 'react';
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { useLanguage } from '../util/LangContext';
 
 type PrivacyPolicyProps = {
-    handleClose: () => void;
-}
-const PrivacyPolicy:FC<PrivacyPolicyProps> = ({handleClose}) => {
-    return (
-      <ScrollView style={styles.container}>
-        <View style={styles.titleContainer}>
-            <Text style={styles.title}>Privacy Policy for Greetly.ch</Text>
-            <AntDesign onPress={handleClose} name="close" size={24} color="black" />
-        </View>
+  handleClose: () => void;
+};
 
-        <Text style={styles.header}>Introduction:</Text>
+const PrivacyPolicy: FC<PrivacyPolicyProps> = ({ handleClose }) => {
+  const {t} = useLanguage();
+
+  return (
+    <View style={styles.modalContainer}>
+      <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
+        <AntDesign name="close" size={24} color="#333" />
+      </TouchableOpacity>
+
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <Text style={styles.title}>{t('privacyPolicyTitle')}</Text>
+
+        <Text style={styles.header}>{t('Introduction')}</Text>
         <Text style={styles.text}>
-          Welcome to Greetly.ch! We are a mobile app dedicated to offering personalized information and professional assistance for individuals moving to or living in Switzerland. Our service is tailored to your profile, considering factors like country of origin, status, and canton, to provide you with the most relevant information and services for your life in Switzerland.
+          {t('introductionText')}
         </Text>
-  
-        <Text style={styles.header}>Data Collection and Use:</Text>
+
+        <Text style={styles.header}>{t('dataCollection')}</Text>
         <Text style={styles.text}>
-          To provide our personalized services, we collect the following information: Email Address, Password, Country of Origin, Status, and Canton Preferences. We use this data to personalize your experience with tailored information and services, connect you with the appropriate professionals and services, and show you ads and offers for products that might be of interest to you.
+          {t('dataCollectionText')}
         </Text>
-  
-        <Text style={styles.header}>Data Sharing:</Text>
+
+        <Text style={styles.header}>{t('dataSharing')}</Text>
         <Text style={styles.text}>
-          We may share your data with our partner companies so that they may offer you their products and services. Additionally, when processing your order, we may send your data to and use the resulting information from credit reference agencies to prevent fraudulent purchases.
+          {t('dataSharingText')}
         </Text>
-  
-        <Text style={styles.header}>Security Measures:</Text>
+
+        <Text style={styles.header}>{t('securityMeasures')}</Text>
         <Text style={styles.text}>
-          Your privacy and data security are paramount. We have implemented various security measures, including Encryption, Access Controls, Regular Audits and Monitoring, Data Anonymization, Physical Security Measures, Secure Development Practices, Data Backup and Recovery, and Employee Training and Awareness.
+          {t('securityMeasuresText')}
         </Text>
-  
-        <Text style={styles.header}>Your Rights:</Text>
+
+        <Text style={styles.header}>{t('yourRights')}</Text>
         <Text style={styles.text}>
-          You have the right to access, correct, or delete your personal information at any time. Should you wish to exercise these rights, please contact us through our website at www.greetly.ch.
+          {t('yourRightsText')}
         </Text>
-  
-        <Text style={styles.header}>Changes to This Policy:</Text>
+
+        <Text style={styles.header}>{t('changesPolicy')}</Text>
         <Text style={styles.text}>
-          We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+          {t('changesPolicyText')}
         </Text>
-  
-        <Text style={styles.header}>Contact Us:</Text>
+
+        <Text style={styles.header}>{t('contactUs')}</Text>
         <Text style={styles.text}>
-          If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at greetly.ch@gmail.com.
+          {t('contactUsText')}
         </Text>
       </ScrollView>
-    );
-  };
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: '#fff',
-    },
-    title: {
-      fontWeight: 'bold',
-      fontSize: 22,
-      marginBottom: 20,
-    },
-    header: {
-      fontWeight: 'bold',
-      fontSize: 18,
-      marginTop: 20,
-      marginBottom: 10,
-    },
-    text: {
-      fontSize: 16,
-      marginBottom: 10,
-      lineHeight: 24,
-    },
-    titleContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
+    </View>
+  );
+};
 
+const styles = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 16,
+    margin: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 5,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 15,
+    zIndex: 10,
+    padding: 8,
+  },
+  container: {
+    marginTop: 40, // space for the close button
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#333',
+  },
+  header: {
+    fontWeight: '600',
+    fontSize: 18,
+    marginTop: 24,
+    marginBottom: 8,
+    color: '#222',
+  },
+  text: {
+    fontSize: 16,
+    color: '#555',
+    lineHeight: 26,
+  },
 });
-  
 
-export default PrivacyPolicy
+export default PrivacyPolicy;

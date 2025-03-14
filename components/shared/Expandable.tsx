@@ -47,7 +47,7 @@ const Expandable: FC<ExpandableProps> = ({ title, content, listItems, items, ico
       }
     }).catch((err) => console.error('An error occurred', err));
   };
-console.log(listOfCompanies)
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleExpand} style={isTabletMode ? styles.headerTablet : styles.header}>
