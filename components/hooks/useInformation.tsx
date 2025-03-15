@@ -5,7 +5,6 @@ import { CITIES_ENDPOINT } from '../endpoints';
 import { useSelf } from './useSelf';
 
 export const useInformation = (cityName: string, category: string, subcategory: string) => {
-    
   const {user: userInfo} = useSelf();
 
     const { data: information , error} = useSWR(

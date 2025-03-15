@@ -205,26 +205,59 @@
     "WhatYouNeedToKnow": "Lo que hay que saber",
     "RequiredDocuments": "Documentos necesarios",
     "DiscoverBestBanks": "Descubre los mejores bancos",
+    "openBankAccountZurichEuEfta": "Abrir una cuenta bancaria como trabajador de {{country}} en Zúrich",
+    "openBankAccountZurichEuEftaMainTitle": "Abrir una cuenta bancaria en Zúrich como trabajador europeo ({{country}})",
+    "openBankAccountZurichEuEftaIntro": "Sigue estos pasos para abrir tu cuenta bancaria de manera eficiente.",
 
-    "openBankAccountZurichEuEfta": "Abrir una cuenta bancaria como empleado de {{country}} en Zurich",
-    "openBankAccountZurichEuEftaOrangeTxt": "Abrir una cuenta bancaria implica varios pasos y consideraciones, principalmente debido a las estrictas normas de cumplimiento de los bancos suizos.",
-    "openBankAccountZurichEuEftaWYNTKContent": "¿Se traslada de Grecia para trabajar en Zúrich y piensa abrir una cuenta bancaria? No se preocupe, es un proceso sencillo. Empiece por elegir un banco que se adapte a sus necesidades; si va a quedarse más de tres meses, asegúrese de tener en regla su permiso de residencia. Como ciudadano de la UE, tendrá que registrarse en la oficina local a su llegada.Asegúrese de tener a mano su pasaporte o documento de identidad, junto con una prueba de empleo en Suiza, como un contrato de trabajo. También tendrá que demostrar dónde vive en Suiza, así que tenga a mano una factura de servicios públicos o un contrato de alquiler. Visitar una sucursal bancaria puede ser muy útil, ya que le da la oportunidad de entender las características de la cuenta y hacer cualquier pregunta. Prepárese para hacer un depósito inicial si es necesario, y decida qué tipo de cuenta necesita, si para transacciones diarias o para ahorrar. Lea siempre la letra pequeña para conocer las posibles comisiones o normas.Tenga en cuenta que cada banco puede tener sus propios requisitos, por lo que conviene consultar su sitio web o llamar por teléfono. Viniendo de la UE, algunos pasos pueden ser un poco más fáciles gracias a los acuerdos existentes.",
-    "openBankAccountZurichEuEftaRDOne": "Un pasaporte válido como prueba de identidad",
-    "openBankAccountZurichEuEftaRDTwo": "Prueba del origen de tus ingresos",
-    "openBankAccountZurichEuEftaRDThree": "Prueba de domicilio",
-    "openBankAccountZurichEuEftaRDFour": "Permiso de residencia",
-    "openBankAccountZurichEuEftaArrayBanks": "Hemos seleccionado un conjunto de los mejores bancos en Zúrich, Suiza, que recomendamos para ti.",
+    "openBankAccountZurichEuEftaStep1": "Paso 1: Elige un banco adecuado",
+    "openBankAccountZurichEuEftaStep1Content": "Suiza ofrece una amplia variedad de opciones bancarias, incluyendo grandes bancos nacionales como UBS y Credit Suisse, así como bancos regionales y cantonales como Zürcher Kantonalbank. Cada banco ofrece diferentes servicios, tarifas y tipos de cuenta. Puedes visitar sus sitios web oficiales para comparar las opciones y elegir la que mejor se adapte a tus necesidades.",
 
-    "fabianSchneiderSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
-    "fabianSchneiderAboutMe": "Hola, soy Fabian Schneider, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga.",
+    "openBankAccountZurichEuEftaStep2": "Paso 2: Reúne los documentos requeridos",
+    "openBankAccountZurichEuEftaStep2Content": "Para abrir una cuenta bancaria en Suiza, normalmente necesitarás lo siguiente:\n- **Prueba de identidad:** Un pasaporte válido o documento nacional de identidad.\n- **Prueba de residencia:** Tu permiso de residencia suizo (por ejemplo, permiso B o L).\n- **Prueba de empleo:** Un contrato de trabajo o una nómina reciente.\n- **Prueba de domicilio:** Una factura de servicios, contrato de alquiler o documento oficial que muestre tu dirección en Suiza.\nEstos documentos son necesarios para que el banco pueda verificar tu identidad y cumplir con las regulaciones suizas contra el lavado de dinero.",
+
+    "openBankAccountZurichEuEftaStep3": "Paso 3: Visita una sucursal bancaria o solicita la apertura online",
+    "openBankAccountZurichEuEftaStep3Content": "Algunos bancos suizos ofrecen la posibilidad de abrir una cuenta online, pero visitar una sucursal en persona puede ser más rápido y seguro, especialmente si eres nuevo en Suiza. Visitar una sucursal también te permite hacer preguntas y asegurarte de cumplir con todos los requisitos.",
+
+    "openBankAccountZurichEuEftaStep4": "Paso 4: Completa el proceso de solicitud",
+    "openBankAccountZurichEuEftaStep4Content": "Durante tu cita (online o presencial), un empleado del banco te guiará en lo siguiente:\n- **Rellenar los formularios de solicitud:** Proporciona tu información personal y elige el tipo de cuenta (por ejemplo, cuenta corriente o de ahorros).\n- **Presentar los documentos:** Entrega todos los documentos mencionados anteriormente.\n- **Depósito inicial:** Algunos bancos requieren un depósito inicial para activar la cuenta. El monto varía según el banco y el tipo de cuenta.",
+
+    "openBankAccountZurichEuEftaStep5": "Paso 5: Espera la activación de la cuenta",
+    "openBankAccountZurichEuEftaStep5Content": "Una vez que entregues todos los documentos necesarios, el banco revisará tu solicitud. Este proceso puede tardar desde unos pocos días hasta un par de semanas. Tras la aprobación, recibirás los detalles de tu cuenta, junto con tu tarjeta de débito, acceso a la banca online y cualquier material adicional.",
+
+    "openBankAccountZurichEuEftaStep6": "Paso 6: Configura la banca online y móvil",
+    "openBankAccountZurichEuEftaStep6Content": "Los bancos suizos ofrecen plataformas avanzadas de banca online. Una vez que tu cuenta esté activa, regístrate en la banca online para gestionar fácilmente tu dinero, consultar saldos, hacer transferencias y pagar facturas desde la web o aplicaciones móviles. Consulta la página web de tu banco para obtener guías sobre cómo configurarlo.",
+
+    "openBankAccountZurichEuEftaAdditionalConsiderations": "Consideraciones adicionales",
+
+    "openBankAccountZurichEuEftaLanguage": "Idioma",
+    "openBankAccountZurichEuEftaLanguageContent": "Muchos empleados bancarios en Zúrich hablan inglés, pero tener conocimientos básicos de alemán puede facilitar mucho el proceso de apertura de cuenta. Considera tomar un curso corto de alemán para mejorar la comunicación.",
+
+    "openBankAccountZurichEuEftaFeesCharges": "Tarifas y costes",
+    "openBankAccountZurichEuEftaFeesChargesContent": "Las cuentas bancarias suizas pueden tener tarifas mensuales de mantenimiento, comisiones por transacción o requisitos de saldo mínimo. Siempre revisa las tarifas del banco antes de abrir una cuenta para evitar costos inesperados.",
+
+    "openBankAccountZurichEuEftaAlternativeBanking": "Soluciones bancarias alternativas",
+    "openBankAccountZurichEuEftaAlternativeBankingContent": "Si abrir una cuenta bancaria tradicional suiza te resulta complicado, considera opciones alternativas como Revolut o N26. Estos bancos digitales ofrecen cuentas multidivisa que se pueden abrir rápidamente en línea, a veces sin necesidad de residencia suiza.",
     
-    "ninaMüllerSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
-    "ninaMüllerAboutMe": "Hola, soy Nina Müller, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga.",
-
-    "efrosiniSioutiSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
-    "efrosiniSioutiAboutMe": "Hola, soy Nina Müller, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga.",
-
-    "peterSchweizerSpecialization": "Seguro de vida, Seguro de salud, Seguro de automóvil, Seguro de propiedad",
-    "peterSchweizerAboutMe": "Hola, soy Nina Müller, tu agente de seguros local de confianza. Con más de 5 años de experiencia en la industria de seguros, me apasiona ayudar a individuos y familias a asegurar su futuro. Mi enfoque es simple: escuchar tus necesidades, entender tus preocupaciones y ofrecer consejos y soluciones transparentes sin jerga."
-    
+    "doYourTaxesZurichEuEftaEmployee": "Haz tus impuestos como empleado de {{country}} en Zúrich",
+    "doYourTaxesZurichEuEftaEmployeeMainTitle": "Guía Fiscal para Empleados de la UE/EFTA en Zúrich",
+    "doYourTaxesZurichEuEftaEmployeeIntro": "Sigue estos pasos para gestionar tus obligaciones fiscales.",
+    "doYourTaxesZurichEuEftaEmployeeStep1": "Paso 1: Determina tu residencia fiscal",
+    "doYourTaxesZurichEuEftaEmployeeStep1Content": "Tus obligaciones fiscales dependen de tu residencia:\n- Residentes: Con permisos B o L, impuestos sobre ingresos globales.\n- Fronterizos: Reglas especiales (p. ej., Alemania).",
+    "doYourTaxesZurichEuEftaEmployeeStep2": "Paso 2: Entiende el impuesto retenido (Quellensteuer)",
+    "doYourTaxesZurichEuEftaEmployeeStep2Content": "Empleados sin permiso C pagan impuesto a través del empleador.",
+    "doYourTaxesZurichEuEftaEmployeeStep3": "Paso 3: ¿Debes declarar impuestos?",
+    "doYourTaxesZurichEuEftaEmployeeStep3Content": "Más de CHF 120,000, obligatorio. Menos, opcional pero luego anual.",
+    "doYourTaxesZurichEuEftaEmployeeStep4": "Paso 4: Usa calculadoras fiscales",
+    "doYourTaxesZurichEuEftaEmployeeStep4Content": "Herramientas:\n- Administración fiscal federal.\n- Talent.com.\n- ETH Zurich.",
+    "doYourTaxesZurichEuEftaEmployeeStep5": "Paso 5: Deducciones y exenciones",
+    "doYourTaxesZurichEuEftaEmployeeStep5Content": "Gastos laborales, seguros, dependientes.",
+    "doYourTaxesZurichEuEftaEmployeeStep6": "Paso 6: Consulta un asesor fiscal",
+    "doYourTaxesZurichEuEftaEmployeeStep6Content": "Asesores en Zúrich:\n- Rödl & Partner\n- EY\n- Grant Thornton\n- Taxolution",
+    "doYourTaxesZurichEuEftaEmployeeAdditionalConsiderations": "Consideraciones Adicionales",
+    "doYourTaxesZurichEuEftaEmployeeLanguage": "Idioma",
+    "doYourTaxesZurichEuEftaEmployeeLanguageContent": "Documentos en alemán. Se recomiendan cursos rápidos.",
+    "doYourTaxesZurichEuEftaEmployeeFeesCharges": "Fechas límite y Multas",
+    "doYourTaxesZurichEuEftaEmployeeFeesChargesContent": "Cumple plazos para evitar multas.",
+    "doYourTaxesZurichEuEftaEmployeeAlternativeBanking": "Recursos Alternativos",
+    "doYourTaxesZurichEuEftaEmployeeAlternativeBankingContent": "Asiste a talleres/seminarios sobre el sistema fiscal."
 }

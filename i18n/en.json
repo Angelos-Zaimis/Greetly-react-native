@@ -135,14 +135,12 @@
     "cancelSubscriptionSubTitle": "Please note that this is irreversible",
     "chooseYourPlan": "Choose your plan:",
     "advertismentText": "Our Top Picks for You",
-
     "Legal System & Immigration": "Legal System & Immigration",
     "Money & Banking": "Money & Banking",
     "Healthcare & Insurance": "Healthcare & insurance",
     "Employment": "Employment",
     "Housing": "Housing",
     "Education": "Education",
-
     "immigration, legal support, police": "immigration, legal matters, support services, police, etc.",
     "open a bank account, filling taxes": "open a bank account, filling taxes, etc.",
     "medical system, find a doctor": "medical system, find a doctor, etc.",
@@ -150,10 +148,7 @@
     "finding a place to rent or buy": "finding a place to rent or buy, etc.",
     "schools, universities": "education system, schools, universities, etc.",
     "DiscoverBestBanks": "Discover the best banks",
-
-    
     "Greece": "Greece",
-    
     "Register as a new resident": "Register as a new resident",
     "Renewal and extension of residence": "Renewal and extension of residence",
     "Passport Requirements": "Passport Requirements",
@@ -163,9 +158,6 @@
     "Visa Stamps and Entry": "Visa Stamps and Entry",
     "Integration Programs": "Integration Programs",
     "Legal Assistance": "Legal Assistance",
-
-
-    
     "Rent an apartment": "Rent an apartment",
     "Buy an apartment": "Buy an apartment",
     "Rental Market": "Rental Market",
@@ -176,7 +168,6 @@
     "Utilities and Services": "Utilities and Services",
     "Tenant Rights": "Tenant Rights",
     "Lease Aggreements": "Lease Aggreements",
-
     "Obtain Health Insurance": "Obtain Health Insurance",
     "Healthcare Providers": "Healthcare Providers",
     "Healthcare System": "Healthcare System",
@@ -187,8 +178,6 @@
     "Preventive Care": "Preventive Care",
     "Pharmacies":  "Pharmacies",
     "Premiums and Deductibles": "Premiums & Deductibles",
-
-
     "Open a bank account": "Open a bank account",
     "Do your taxes": "Do your taxes",
     "The Tax system": "The Tax system",
@@ -203,28 +192,51 @@
     "Loans & Mortgages": "Loans & Mortgages",
     "WhatYouNeedToKnow": "What you need to know",
     "RequiredDocuments": "Required Documents",
-
-
+    
     "openBankAccountZurichEuEfta": "Open a bank account as an employee from {{country}} in Zurich",
-    "openBankAccountZurichEuEftaOrangeTxt": "Opening a bank account involves several steps and considerations, primarily due to the strict compliance standards Swiss banks.",
-    "openBankAccountZurichEuEftaWYNTKContent": "Moving from Greece to work in Zurich and planning to open a bank account? No worries, it's a smooth process. Start by picking a bank that fits your needs; If you're staying for more than three months, ensure you have your residence permit in order. As an EU citizen, you'll need to register with the local office upon arrival.Make sure to have your passport or ID card ready, along with proof of employment in Switzerland, such as a job contract. You'll also need to show where you're living in Switzerland, so have a utility bill or rental agreement handy. Visiting a bank branch can be really helpful, as it gives you a chance to understand the account features and ask any questions. Be prepared to make an initial deposit if required, and decide what kind of account you need, whether it's for daily transactions or saving up. Always read the fine print to be aware of any fees or rules.Keep in mind that each bank might have its own set of requirements, so checking their website or calling them up is a good idea. Coming from the EU, some steps might be a bit easier thanks to existing agreements.",
-    "openBankAccountZurichEuEftaRDOne": "A valid passport as proof of identity",
-    "openBankAccountZurichEuEftaRDTwo": "Proof of the origin of your income",
-    "openBankAccountZurichEuEftaRDThree": "Proof of home address",
-    "openBankAccountZurichEuEftaRDFour": "Residence permit",
-    "openBankAccountZurichEuEftaArrayBanks": "We have selected an array of the best banks in Zurich, Switzerland, that we recommend for you.",
+    "openBankAccountZurichEuEftaMainTitle": "Open a Bank Account in Zurich as a European ({{country}}) Employee",
+    "openBankAccountZurichEuEftaIntro": "Follow these steps to open your bank account efficiently.",
+    "openBankAccountZurichEuEftaStep1": "Step 1: Choose a Suitable Bank",
+    "openBankAccountZurichEuEftaStep1Content": "Switzerland offers a variety of banking options, including large national banks like UBS and Credit Suisse, as well as regional and cantonal banks such as Zürcher Kantonalbank. Each bank offers different services, fees, and account types. You can explore their official websites to compare options and choose the one that best suits your needs.",
+    "openBankAccountZurichEuEftaStep2": "Step 2: Gather Required Documents",
+    "openBankAccountZurichEuEftaStep2Content": "To open a bank account in Switzerland, you will typically need the following:\n- **Proof of Identity:** A valid passport or national ID card.\n- **Proof of Residency:** Your Swiss residence permit (e.g., Permit B or L).\n- **Proof of Employment:** An employment contract or recent payslip.\n- **Proof of Address:** A utility bill, rental agreement, or official document showing your Swiss address.\nThese documents ensure that the bank can verify your identity and comply with Swiss anti-money laundering regulations.",
+    "openBankAccountZurichEuEftaStep3": "Step 3: Visit the Bank Branch or Apply Online",
+    "openBankAccountZurichEuEftaStep3Content": "Some Swiss banks offer online account opening, but visiting a branch in person can often be faster and more secure, especially if you are new to Switzerland. Visiting a branch allows you to ask questions and ensure you meet all the requirements.",
+    "openBankAccountZurichEuEftaStep4": "Step 4: Complete the Application Process",
+    "openBankAccountZurichEuEftaStep4Content": "During your appointment (online or in person), a bank employee will guide you through the following:\n- **Filling Out the Application Forms:** Provide your personal information and choose the type of account (e.g., checking or savings).\n- **Submitting Documents:** Share all the documents listed earlier.\n- **Initial Deposit:** Some banks require an initial deposit to activate the account. The amount varies based on the bank and account type.",
+    "openBankAccountZurichEuEftaStep5": "Step 5: Await Account Activation",
+    "openBankAccountZurichEuEftaStep5Content": "Once you submit all necessary documents, the bank will review your application. This process may take from a few days to a couple of weeks. Upon approval, you will receive your account details, along with your debit card, online banking login, and any additional materials.",
+    "openBankAccountZurichEuEftaStep6": "Step 6: Set Up Online and Mobile Banking",
+    "openBankAccountZurichEuEftaStep6Content": "Swiss banks provide advanced online banking platforms. Once your account is active, register for online banking to easily manage your money, check balances, make transfers, and pay bills via web or mobile apps. Check your bank's website for guides on setting this up.",
+    "openBankAccountZurichEuEftaAdditionalConsiderations": "Additional Considerations",
+    "openBankAccountZurichEuEftaLanguage": "Language",
+    "openBankAccountZurichEuEftaLanguageContent": "Many bank employees in Zurich speak English, but having basic German knowledge can help you during the account opening process. Consider taking a short language course to make communication easier.",
+    "openBankAccountZurichEuEftaFeesCharges": "Fees and Charges",
+    "openBankAccountZurichEuEftaFeesChargesContent": "Swiss bank accounts may have monthly maintenance fees, transaction charges, or minimum balance requirements. Always check your bank's fee schedule before opening an account to avoid unexpected costs.",
+    "openBankAccountZurichEuEftaAlternativeBanking": "Alternative Banking Solutions",
+    "openBankAccountZurichEuEftaAlternativeBankingContent": "If opening a traditional Swiss bank account is too complex, consider alternative banking services like Revolut or N26. These digital banks offer multi-currency accounts that can be opened online quickly, sometimes without Swiss residency.",
+    
+    "doYourTaxesZurichEuEftaEmployee": "Do your taxes as an employee from {{country}} in Zurich",    
+    "doYourTaxesZurichEuEftaEmployeeMainTitle": "Tax Guide for EU/EFTA Employees in Zurich",
+    "doYourTaxesZurichEuEftaEmployeeIntro": "Follow these steps to navigate your tax responsibilities effectively.",
+    "doYourTaxesZurichEuEftaEmployeeStep1": "Step 1: Determine Your Tax Residency Status",
+    "doYourTaxesZurichEuEftaEmployeeStep1Content": "Your tax obligations in Switzerland depend on your residency status:\n- Residents: If you hold a B or L permit and reside in Switzerland, you're typically considered a tax resident and are subject to Swiss taxation on your worldwide income.\n- Non-Residents/Cross-Border Commuters: If you live in a neighboring EU/EFTA country and commute to work in Switzerland, different tax rules may apply. For instance, cross-border commuters from Germany pay income tax in Germany and a reduced withholding tax in Switzerland.",
+    "doYourTaxesZurichEuEftaEmployeeStep2": "Step 2: Understand Withholding Tax (Quellensteuer)",
+    "doYourTaxesZurichEuEftaEmployeeStep2Content": "Foreign employees without a permanent residence permit (C permit) are typically subject to withholding tax, which is deducted directly from your salary by your employer. This tax constitutes the final tax liability in some cases.",
+    "doYourTaxesZurichEuEftaEmployeeStep3": "Step 3: Determine If You Need to File a Tax Return",
+    "doYourTaxesZurichEuEftaEmployeeStep3Content": "If your gross employment income exceeds CHF 120,000, you are required to file an ordinary tax return. Even below this threshold, you can request to file a tax return, but once this request is made, you're obliged to file annually thereafter.",
+    "doYourTaxesZurichEuEftaEmployeeStep4": "Step 4: Use Tax Calculation Tools",
+    "doYourTaxesZurichEuEftaEmployeeStep4Content": "To estimate your tax liability and net income, consider using these calculators:\n- Federal Tax Administration's Tax Calculator: Compare your tax burden at both federal and cantonal levels.\n- Talent.com Income Tax Calculator: Estimate your net pay based on gross salary and location.\n- ETH Zurich Salary Calculator: Calculate monthly net salary considering age, children, and employment level.",
+    "doYourTaxesZurichEuEftaEmployeeStep5": "Step 5: Consider Additional Deductions and Allowances",
+    "doYourTaxesZurichEuEftaEmployeeStep5Content": "Be aware of deductions that can reduce your taxable income:\n- Professional Expenses: Work-related expenses may be deductible.\n- Personal Deductions: Deductibles for dependents, insurance, and personal costs.",
+    "doYourTaxesZurichEuEftaEmployeeStep6": "Step 6: Seek Professional Tax Advisory Services",
+    "doYourTaxesZurichEuEftaEmployeeStep6Content": "Consider consulting tax advisors in Zurich to optimize your tax situation. Examples include:\n\n- Rödl & Partner: Swiss tax and advisory services.\n- EY Switzerland: Business and international tax experts.\n- Grant Thornton Switzerland: Expatriate tax services.\n- Taxolution Advisory: International employment and tax support.",
+    "doYourTaxesZurichEuEftaEmployeeAdditionalConsiderations": "Additional Considerations",
+    "doYourTaxesZurichEuEftaEmployeeLanguage": "Language",
+    "doYourTaxesZurichEuEftaEmployeeLanguageContent": "Many tax-related documents are in German. Basic German knowledge can simplify tax filing. Consider a short language course to improve communication.",
+    "doYourTaxesZurichEuEftaEmployeeFeesCharges": "Deadlines and Penalties",
+    "doYourTaxesZurichEuEftaEmployeeFeesChargesContent": "Be aware of tax deadlines to avoid penalties. Late submissions may result in fines or interest charges. Always check specific Zurich canton deadlines.",
+    "doYourTaxesZurichEuEftaEmployeeAlternativeBanking": "Alternative Resources",
+    "doYourTaxesZurichEuEftaEmployeeAlternativeBankingContent": "If unfamiliar with the Swiss tax system, join local workshops or seminars. These offer valuable insights into Swiss tax processes."
 
-
-
-    "fabianSchneiderSpecialization": "Life Insurance,Health Insurance,Auto Insurance,Property Insurance",
-    "fabianSchneiderAboutMe": "Hello, I'm Fabian Schneider, your trusted local insurance agent. With over 5 years of experience in the insurance industry, I'm passionate about helping individuals and families secure their futures. My approach is simple: listen to your needs, understand your concerns, and offer transparent advice and solutions without the jargon.",
-
-    "ninaMüllerSpecialization": "Life Insurance,Health Insurance,Auto Insurance,Property Insurance",
-    "ninaMüllerAboutMe": "Hello, I'm Nina M, your trusted local insurance agent. With over 5 years of experience in the insurance industry, I'm passionate about helping individuals and families secure their futures. My approach is simple: listen to your needs, understand your concerns, and offer transparent advice and solutions without the jargon.",
-
-    "efrosiniSioutiSpecialization": "Life Insurance,Health Insurance,Auto Insurance,Property Insurance",
-    "efrosiniSioutiAboutMe": "Hello, I'm Nina M, your trusted local insurance agent. With over 5 years of experience in the insurance industry, I'm passionate about helping individuals and families secure their futures. My approach is simple: listen to your needs, understand your concerns, and offer transparent advice and solutions without the jargon.",
-
-    "peterSchweizerSpecialization": "Life Insurance,Health Insurance,Auto Insurance,Property Insurance",
-    "peterSchweizerAboutMe": "Hello, I'm Nina M, your trusted local insurance agent. With over 5 years of experience in the insurance industry, I'm passionate about helping individuals and families secure their futures. My approach is simple: listen to your needs, understand your concerns, and offer transparent advice and solutions without the jargon."
 }

@@ -89,7 +89,12 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
         setShowToastMessage(true);
         setSuccessToast(false);
       }
-      refetchUser();
+      await refetchUser();
+      setShowToastMessage(true);
+      setSuccessToast(true);
+      setTimeout(() => {
+        setShowToastMessage(false);
+      },300);
     } catch (error) {
       setShowToastMessage(true);
       setSuccessToast(false);

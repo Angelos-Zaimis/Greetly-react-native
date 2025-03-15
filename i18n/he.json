@@ -207,27 +207,59 @@
     "WhatYouNeedToKnow": "מה שאתה צריך לדעת",
     "RequiredDocuments": "מסמכים נדרשים",
     "DiscoverBestBanks": "גלה את הבנקים הטובים ביותר",
-    
-    "openBankAccountZurichEuEfta": "פתח חשבון בנק כעובד מ{{country}} בציריך",
-    "openBankAccountZurichEuEftaOrangeTxt": "פתיחת חשבון בנק כוללת מספר שלבים ושיקולים, בעיקר בגלל תקנות הציות המחמירות של הבנקים השוויצריים.",
-    "openBankAccountZurichEuEftaWYNTKContent": "עובר מיוון לעבוד בציריך ומתכנן לפתוח חשבון בנק? אל דאגה, זה תהליך חלק. התחל בבחירת בנק שמתאים לצרכים שלך; אם אתה נשאר יותר משלושה חודשים, ודא שיש לך אישור מגורים בסדר. כאזרח איחוד אירופי, תצטרך להירשם במשרד המקומי לאחר ההגעה.\nודא שיש לך דרכון או תעודת זהות זמינה, יחד עם אישור על העסקה בשווייץ, כמו חוזה עבודה. תצטרך גם להראות היכן אתה גר בשווייץ, אז החזק חשבון חשמל או הסכם שכירות בנגיעה. ביקור בסניף בנק יכול להיות מאוד מועיל, מכיוון שהוא נותן לך הזדמנות להבין את תכונות החשבון ולשאול שאלות. היה מוכן לבצע הפקדה ראשונית אם נדרש, והחלט איזה סוג של חשבון אתה צריך, אם זה לעסקאות יומיומיות או לחסכון. תמיד קרא את הכתוב בקטן כדי להיות מודע לכל דמי או כללים.\nזכור שלכל בנק ייתכן שיהיו דרישות משלו, אז בדוק באתר שלהם או חייג אליהם זה רעיון טוב. בא במיוחד מהאיחוד האירופי, כמה שלבים ייתכן שיהיו קצת יותר קלים בזכות הסכמים קיימים.",
-    "openBankAccountZurichEuEftaRDOne": "דרכון תקף כהוכחה לזהות",
-    "openBankAccountZurichEuEftaRDTwo": "הוכחה למקור ההכנסה שלך",
-    "openBankAccountZurichEuEftaRDThree": "הוכחת כתובת מגורים",
-    "openBankAccountZurichEuEftaRDFour": "אישור מגורים",
-    "openBankAccountZurichEuEftaArrayBanks": "בחרנו מערך של הבנקים הטובים ביותר בציריך, שוויץ, שאנו ממליצים לכם.",
+    "openBankAccountZurichEuEfta": "פתיחת חשבון בנק כעובד מ-{{country}} בציריך",
+    "openBankAccountZurichEuEftaMainTitle": "פתיחת חשבון בנק בציריך כעובד אירופאי ({{country}})",
+    "openBankAccountZurichEuEftaIntro": "עקוב אחר השלבים הבאים כדי לפתוח חשבון בנק בקלות וביעילות.",
 
-    "fabianSchneiderSpecialization": "ביטוח חיים, ביטוח בריאות, ביטוח רכב, ביטוח נכסים",
-    "fabianSchneiderAboutMe": "שלום, אני פביאן שניידר, סוכן הביטוח המקומי המהימן שלך. עם למעלה מ-5 שנים של ניסיון בתעשיית הביטוח, אני נלהב לעזור ליחידים ולמשפחות להבטיח את עתידם. הגישה שלי פשוטה: להקשיב לצרכים שלך, להבין את הדאגות שלך ולהציע עצות ופתרונות שקופים ללא ג'רגון.",
-    
-    "ninaMüllerSpecialization": "ביטוח חיים, ביטוח בריאות, ביטוח רכב, ביטוח נכסים",
-    "ninaMüllerAboutMe": "שלום, אני נינה מילר, סוכנת הביטוח המקומית המהימנה שלך. עם למעלה מ-5 שנים של ניסיון בתעשיית הביטוח, אני נלהבת לעזור ליחידים ולמשפחות להבטיח את עתידם. הגישה שלי פשוטה: להקשיב לצרכים שלך, להבין את הדאגות שלך ולהציע עצות ופתרונות שקופים ללא ג'רגון.",
+    "openBankAccountZurichEuEftaStep1": "שלב 1: בחירת בנק מתאים",
+    "openBankAccountZurichEuEftaStep1Content": "שווייץ מציעה מגוון רחב של בנקים, כולל בנקים לאומיים גדולים כמו UBS ו-Credit Suisse, וכן בנקים אזוריים וקנטונליים כמו Zürcher Kantonalbank. כל בנק מציע שירותים, עמלות וסוגי חשבונות שונים. תוכל לבדוק את האתרים הרשמיים של הבנקים כדי להשוות אפשרויות ולבחור את הבנק המתאים ביותר לצרכיך.",
 
-    "efrosiniSioutiSpecialization": "ביטוח חיים, ביטוח בריאות, ביטוח רכב, ביטוח נכסים",
-    "efrosiniSioutiAboutMe": "שלום, אני נינה מילר, סוכנת הביטוח המקומית המהימנה שלך. עם למעלה מ-5 שנים של ניסיון בתעשיית הביטוח, אני נלהבת לעזור ליחידים ולמשפחות להבטיח את עתידם. הגישה שלי פשוטה: להקשיב לצרכים שלך, להבין את הדאגות שלך ולהציע עצות ופתרונות שקופים ללא ג'רגון.",
+    "openBankAccountZurichEuEftaStep2": "שלב 2: איסוף המסמכים הנדרשים",
+    "openBankAccountZurichEuEftaStep2Content": "כדי לפתוח חשבון בנק בשווייץ, תצטרך בדרך כלל את המסמכים הבאים:\n- **תעודת זהות:** דרכון בתוקף או תעודת זהות לאומית.\n- **אישור מגורים:** היתר השהייה שלך בשווייץ (למשל, אישור B או L).\n- **אישור עבודה:** חוזה עבודה או תלוש משכורת עדכני.\n- **אישור כתובת:** חשבון חשמל/מים, חוזה שכירות או מסמך רשמי שמאשר את כתובת מגוריך בשווייץ.\nמסמכים אלו נדרשים כדי לאמת את זהותך ולעמוד בדרישות החוק למניעת הלבנת הון בשווייץ.",
 
-    "peterSchweizerSpecialization": "ביטוח חיים, ביטוח בריאות, ביטוח רכב, ביטוח נכסים",
-    "peterSchweizerAboutMe": "שלום, אני נינה מילר, סוכנת הביטוח המקומית המהימנה שלך. עם למעלה מ-5 שנים של ניסיון בתעשיית הביטוח, אני נלהבת לעזור ליחידים ולמשפחות להבטיח את עתידם. הגישה שלי פשוטה: להקשיב לצרכים שלך, להבין את הדאגות שלך ולהציע עצות ופתרונות שקופים ללא ג'רגון."
+    "openBankAccountZurichEuEftaStep3": "שלב 3: ביקור בסניף בנק או פתיחת חשבון באינטרנט",
+    "openBankAccountZurichEuEftaStep3Content": "חלק מהבנקים בשווייץ מאפשרים פתיחת חשבון דרך האינטרנט, אך לעיתים ביקור בסניף פיזי יהיה מהיר ובטוח יותר, במיוחד אם אתה חדש במדינה. ביקור בסניף יאפשר לך לשאול שאלות ולוודא שאתה עומד בכל הדרישות.",
+
+    "openBankAccountZurichEuEftaStep4": "שלב 4: השלמת תהליך הבקשה",
+    "openBankAccountZurichEuEftaStep4Content": "במהלך הפגישה (מקוונת או פרונטלית), פקיד בנק ילווה אותך בתהליך:\n- **מילוי טפסי בקשה:** מסירת פרטים אישיים ובחירת סוג החשבון (למשל, עו\"ש או חיסכון).\n- **הגשת מסמכים:** הגשת כל המסמכים הדרושים.\n- **הפקדה ראשונית:** בחלק מהבנקים נדרשת הפקדה ראשונית להפעלת החשבון. סכום ההפקדה משתנה בהתאם לבנק ולסוג החשבון.",
+
+    "openBankAccountZurichEuEftaStep5": "שלב 5: המתנה לאישור ופתיחת החשבון",
+    "openBankAccountZurichEuEftaStep5Content": "לאחר הגשת כל המסמכים, הבנק יבחן את הבקשה. התהליך עשוי לארוך בין מספר ימים לשבועות. לאחר אישור החשבון, תקבל את פרטי החשבון, כרטיס דביט, פרטי כניסה לבנקאות אונליין ומסמכים נלווים נוספים.",
+
+    "openBankAccountZurichEuEftaStep6": "שלב 6: הגדרת חשבון אונליין ואפליקציה בנקאית",
+    "openBankAccountZurichEuEftaStep6Content": "הבנקים בשווייץ מציעים פלטפורמות מתקדמות לבנקאות דיגיטלית. לאחר פתיחת החשבון, תוכל להירשם לבנקאות אונליין כדי לנהל את כספך, לבדוק יתרות, לבצע העברות ולשלם חשבונות דרך האתר או האפליקציה. בקר באתר הבנק שלך להנחיות הגדרה.",
+
+    "openBankAccountZurichEuEftaAdditionalConsiderations": "היבטים נוספים",
+
+    "openBankAccountZurichEuEftaLanguage": "שפה",
+    "openBankAccountZurichEuEftaLanguageContent": "רבים מהפקידים בבנקים בציריך דוברים אנגלית, אך ידע בסיסי בגרמנית יכול להקל על התהליך. מומלץ לשקול קורס קצר בגרמנית לשיפור התקשורת.",
+
+    "openBankAccountZurichEuEftaFeesCharges": "עמלות ועלויות",
+    "openBankAccountZurichEuEftaFeesChargesContent": "חשבונות בנק בשווייץ עלולים לכלול עמלות חודשיות, עמלות פעולות בנקאיות או דרישות של יתרת מינימום. בדוק תמיד את תעריפי הבנק לפני פתיחת חשבון כדי להימנע מהוצאות לא צפויות.",
+
+    "openBankAccountZurichEuEftaAlternativeBanking": "פתרונות בנקאות אלטרנטיביים",
+    "openBankAccountZurichEuEftaAlternativeBankingContent": "אם פתיחת חשבון בנק מסורתי בשווייץ נראית מסובכת מדי, תוכל לשקול פתרונות דיגיטליים כגון Revolut או N26. בנקים אלו מציעים חשבונות רב-מטבעיים שניתן לפתוח אונליין במהירות, לעיתים ללא צורך במגורים בשווייץ.",
     
-    
+    "doYourTaxesZurichEuEftaEmployee": "הגש את המיסים שלך כעובד מ-{{country}} בציריך",
+    "doYourTaxesZurichEuEftaEmployeeMainTitle": "מדריך מיסים לעובדי EU/EFTA בציריך",
+    "doYourTaxesZurichEuEftaEmployeeIntro": "פנה לפי השלבים האלו לניהול נכון של המיסים שלך.",
+    "doYourTaxesZurichEuEftaEmployeeStep1": "שלב 1: קבע את מעמד המגורים שלך",
+    "doYourTaxesZurichEuEftaEmployeeStep1Content": "החובה המיסויית תלויה במעמד שלך:\n- תושבים: עם אישור B או L, מיסוי על הכנסות מכל העולם.\n- גבוליים: חוקים מיוחדים (למשל, גרמניה).",
+    "doYourTaxesZurichEuEftaEmployeeStep2": "שלב 2: הבן את מס במקור (Quellensteuer)",
+    "doYourTaxesZurichEuEftaEmployeeStep2Content": "ללא אישור C, המעסיק מנכה מס ישירות.",
+    "doYourTaxesZurichEuEftaEmployeeStep3": "שלב 3: בדוק אם עליך להגיש דו\"ח מס",
+    "doYourTaxesZurichEuEftaEmployeeStep3Content": "מעל 120,000 CHF חובה. מתחת, בחירה אך מחייבת שנתי לאחר מכן.",
+    "doYourTaxesZurichEuEftaEmployeeStep4": "שלב 4: השתמש בכלי חישוב מיסים",
+    "doYourTaxesZurichEuEftaEmployeeStep4Content": "כלים:\n- רשות המיסים הפדרלית.\n- Talent.com.\n- ETH ציריך.",
+    "doYourTaxesZurichEuEftaEmployeeStep5": "שלב 5: ניכויים והקלות",
+    "doYourTaxesZurichEuEftaEmployeeStep5Content": "הוצאות עבודה, ביטוחים, ילדים.",
+    "doYourTaxesZurichEuEftaEmployeeStep6": "שלב 6: ייעוץ מקצועי",
+    "doYourTaxesZurichEuEftaEmployeeStep6Content": "יועצים בציריך:\n- Rödl & Partner\n- EY\n- Grant Thornton\n- Taxolution",
+    "doYourTaxesZurichEuEftaEmployeeAdditionalConsiderations": "שיקולים נוספים",
+    "doYourTaxesZurichEuEftaEmployeeLanguage": "שפה",
+    "doYourTaxesZurichEuEftaEmployeeLanguageContent": "רוב המסמכים בגרמנית. מומלץ קורס קצר.",
+    "doYourTaxesZurichEuEftaEmployeeFeesCharges": "מועדים וקנסות",
+    "doYourTaxesZurichEuEftaEmployeeFeesChargesContent": "עמוד במועדים כדי להימנע מקנסות.",
+    "doYourTaxesZurichEuEftaEmployeeAlternativeBanking": "משאבים נוספים",
+    "doYourTaxesZurichEuEftaEmployeeAlternativeBankingContent": "השתתף בסדנאות/קורסים להבנת מערכת המס."
 }

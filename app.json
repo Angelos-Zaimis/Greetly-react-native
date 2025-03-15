@@ -2,7 +2,9 @@
   "expo": {
     "name": "Greetly.ch",
     "slug": "Greetlych",
-    "scheme": ["greetly"],
+    "scheme": [
+      "greetly"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -36,7 +38,8 @@
       },
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
-        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos."
+        "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos.",
+        "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "ch.greetly.ch.greetly.ch"
     },

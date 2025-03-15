@@ -1,7 +1,8 @@
 import React, { FC, useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, Linking, StyleSheet } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useLanguage } from '../util/LangContext';
+import CompanyProfile from './CompanyProfile';
 
 type Item = {
   text: string;
@@ -13,61 +14,88 @@ type Company = {
   id: number;
   imageUrl: string;
   link: string;
-  text: string
+  text: string;
 };
 
 type ExpandableProps = {
   title: string;
-  content: string;
-  text: string;
-  listItems: string[];
-  items: Item[];
+  content?: string;
+  text?: string;
+  listItems?: string[];
+  items?: Item[];
   iconDown: string;
   isTabletMode: boolean;
-  textLink: {
+  textLink?: {
     text: string;
     url: string;
     icon: string;
   };
-  listOfCompanies: Company[];
+  listOfCompanies?: Company[];
 };
 
-const Expandable: FC<ExpandableProps> = ({ title, content, listItems, items, iconDown, isTabletMode, textLink, listOfCompanies, text }) => {
+const cleanContent = (content: string): string => {
+  return content
+    .replace(/- \*\*/g, '')  // Remove "- **"
+    .replace(/\*\*:/g, ':') // Remove "**:"
+    .replace(/\n/g, '\n\n'); // Ensure line breaks are double for spacing
+};
+
+
+const Expandable: FC<ExpandableProps> = ({
+  title,
+  content,
+  listItems,
+  items,
+  iconDown,
+  isTabletMode,
+  textLink,
+  listOfCompanies,
+  text
+}) => {
   const [expanded, setExpanded] = useState(false);
   const { t } = useLanguage();
 
   const toggleExpand = () => setExpanded(!expanded);
 
   const openURL = (url: string) => {
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
-      }
-    }).catch((err) => console.error('An error occurred', err));
+    Linking.canOpenURL(url)
+      .then((supported) => supported && Linking.openURL(url))
+      .catch((err) => console.error('An error occurred', err));
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleExpand} style={isTabletMode ? styles.headerTablet : styles.header}>
         <Text style={isTabletMode ? styles.headerTextTablet : styles.headerText}>{t(title)}</Text>
-        <FontAwesome5 name={iconDown} size={21} color="black" style={[isTabletMode ? styles.iconTablet : styles.icon, expanded && { transform: [{ rotate: '180deg' }] }]} />
+        <FontAwesome5
+          name={iconDown}
+          size={21}
+          color="black"
+          style={[
+            isTabletMode ? styles.iconTablet : styles.icon,
+            expanded && { transform: [{ rotate: '180deg' }] }
+          ]}
+        />
       </TouchableOpacity>
 
       {expanded && (
-        <View>
-          {content && <Text style={isTabletMode ? styles.textTablet : styles.text}>{t(content)}</Text>}
-          {listItems && listItems.map((item, index) => <Text key={index} style={isTabletMode ? styles.listItemTablet : styles.listItem}>{` - ${t(item)}`}</Text>)}
-          {items && items.map((item, index) => (
-            <TouchableOpacity key={index} onPress={() => openURL(item.url)}>
-              <View style={isTabletMode ? styles.linkContainerTablet : styles.linkContainer}>
-                <FontAwesome5 name={item.icon} size={isTabletMode ? 18 : 14} color="#0090F5" />
-                <Text style={isTabletMode ? styles.linkTablet : styles.link}>{t(item.text)}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
-          {textLink && (
+        <View style={{backgroundColor: '#F9F9F9'}}>
+          {content && (
+            <Text style={isTabletMode ? styles.textTablet : styles.text}>
+              {cleanContent(t(content))}
+            </Text>)}
+
+          {items?.length > 0 &&
+            items.map((item, index) => (
+              <TouchableOpacity key={index} onPress={() => openURL(item.url)}>
+                <View style={isTabletMode ? styles.linkContainerTablet : styles.linkContainer}>
+                  <FontAwesome5 name={item.icon} size={isTabletMode ? 18 : 14} color="#0090F5" />
+                  <Text style={isTabletMode ? styles.linkTablet : styles.link}>{t(item.text)}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+
+          {textLink && textLink.url && (
             <TouchableOpacity onPress={() => openURL(textLink.url)}>
               <View style={isTabletMode ? styles.linkContainerTablet : styles.linkContainer}>
                 <Text style={isTabletMode ? styles.linkTablet : styles.link}>{t(textLink.text)}</Text>
@@ -75,19 +103,20 @@ const Expandable: FC<ExpandableProps> = ({ title, content, listItems, items, ico
               </View>
             </TouchableOpacity>
           )}
-          {listOfCompanies && (
-           <> 
-           <Text style={styles.text}>{t(text)}</Text>
-           <FlatList
-             style={{ flex: 1, width: '100%' }}
-             horizontal={true}
-             data={listOfCompanies}
-             renderItem={({ item }) => (
-               <CompanyProfile key={item.id} imageUrl={item.imageUrl} title={t(item.text)} link={item.link} />
-             )}
-             keyExtractor={(item) => item.id.toString()}
-           />
-           </>
+
+          {listOfCompanies?.length > 0 && (
+            <>
+              {text && <Text style={isTabletMode ? styles.textTablet : styles.text}>{t(text)}</Text>}
+              <FlatList
+                style={{ flex: 1, width: '100%' }}
+                horizontal
+                data={listOfCompanies}
+                renderItem={({ item }) => (
+                  <CompanyProfile key={item.id} imageUrl={item.imageUrl} title={t(item.text)} link={item.link} />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            </>
           )}
         </View>
       )}
@@ -96,121 +125,153 @@ const Expandable: FC<ExpandableProps> = ({ title, content, listItems, items, ico
 };
 
 export default Expandable;
-import { StyleSheet } from 'react-native';
-import CompanyProfile from './CompanyProfile';
+
 
 const styles = StyleSheet.create({
   container: {
-    // General container styles
     backgroundColor: '#fff',
     marginVertical: 8,
-    borderRadius: 4,
+    marginHorizontal: 10,
+    borderRadius: 12,
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4, 
   },
-  header: {
-    // Header styles for mobile
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 16,
-    borderRadius: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCC',
-  },
-  headerTablet: {
-    // Header styles for tablet
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#e0e0e0',
-  },
-  headerText: {
-    fontSize: 17,
-    fontWeight: '900',
-    color: '#3F465C',
-  },
-  headerTextTablet: {
-    // Header text styles for tablet
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  text: {
-    // Text styles for mobile
-    padding: 16,
-    lineHeight: 26,
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#3F465C',
-  },
-  textTablet: {
-    // Text styles for tablet
-    padding: 20,
-    fontSize: 18,
-  },
-  linkContainer: {
-    // Link container styles for mobile
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
-  linkContainerTablet: {
-    // Link container styles for tablet
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 20,
-  },
-  link: {
-    // Link text styles for mobile
-    marginLeft: 8,
-    color: '#0090F5',
-    fontSize: 14,
-  },
-  linkTablet: {
-    // Link text styles for tablet
-    marginLeft: 10,
-    color: '#0090F5',
-    fontSize: 18,
-  },
-  icon: {
-    // Icon styles for mobile
-    width: 14,
-    height: 14,
-  },
-  iconTablet: {
-    // Icon styles for tablet
-    width: 18,
-    height: 18,
-  },
-  listItem: {
-    // List item styles for mobile
 
-    padding: 16,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+    backgroundColor: '#F9F9F9',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+
+  headerTablet: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 26,
+    backgroundColor: '#F2F2F2',
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+  },
+
+  headerText: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#2B2D42',
+    flexShrink: 1,
+  },
+
+  headerTextTablet: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#2B2D42',
+    flexShrink: 1,
+  },
+
+  text: {
+    paddingHorizontal: 18,
+    paddingVertical: 12,
     lineHeight: 26,
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
     color: '#3F465C',
   },
-  listItemTablet: {
-    // List item styles for tablet
-    padding: 20,
+
+  textTablet: {
+    paddingHorizontal: 26,
+    paddingVertical: 16,
     fontSize: 18,
+    lineHeight: 30,
+    fontWeight: '600',
+    color: '#3F465C',
   },
+
+  listItem: {
+    paddingHorizontal: 22,
+    paddingVertical: 10,
+    lineHeight: 26,
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#555D70',
+  },
+
+  listItemTablet: {
+    paddingHorizontal: 30,
+    paddingVertical: 12,
+    fontSize: 18,
+    lineHeight: 30,
+    fontWeight: '600',
+    color: '#555D70',
+  },
+
+  linkContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+  },
+
+  linkContainerTablet: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 26,
+    paddingVertical: 12,
+  },
+
+  link: {
+    marginLeft: 10,
+    color: '#007AFF',
+    fontSize: 16,
+    fontWeight: '600',
+    flexShrink: 1,
+  },
+
+  linkTablet: {
+    marginLeft: 12,
+    color: '#007AFF',
+    fontSize: 18,
+    fontWeight: '600',
+    flexShrink: 1,
+  },
+
+  icon: {
+    width: 20,
+    height: 20,
+  },
+
+  iconTablet: {
+    width: 24,
+    height: 24,
+  },
+
   listContainer: {
-    // List container styles for mobile
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#FAFAFA',
+    paddingVertical: 4,
   },
+
   listContainerTablet: {
-    // List container styles for tablet
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#F5F5F5',
+    paddingVertical: 6,
   },
+
   textContainer: {
-    // Text container styles for mobile
-    padding: 16,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
   },
+
   textContainerTablet: {
-    // Text container styles for tablet
-    padding: 20,
+    paddingHorizontal: 26,
+    paddingVertical: 14,
   },
 });
-

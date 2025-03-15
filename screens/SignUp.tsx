@@ -168,8 +168,6 @@ const SignUp: FC<SignUpProps> = ({ navigation }) => {
               onChangeText={handleEmailInputChange}
               isTabletMode={isTabletMode}
               isValid={isValidInputEmailText}
-              secureTextEntry={secureTextEntry}
-              setSecureTextEntry={() => setSecureTextEntry(!secureTextEntry)}
             />
             <InputField
               label="Password"
