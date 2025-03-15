@@ -55,8 +55,8 @@ const Login: FC<LoginProps> = ({ navigation }) => {
   }, [navigation]);
 
   const handleDisabled = useCallback(() => {
-    return email === '' || password === '';
-  }, [email, password]);
+    return email === '' || password === '' || loginPending;
+  }, [email, password, loginPending]);
 
   const handleNavigationSignIn = useCallback(() => {
     navigation.navigate('SignIn');
@@ -68,17 +68,6 @@ const Login: FC<LoginProps> = ({ navigation }) => {
 
     if (response.status >= 300) {
       setLoginPending(false);
-
-      setErrorMessage({
-        email: response.data.email,
-        password: response.data.password,
-        message: response.data.message,
-      });
-      setShowToastMessage(true);
-
-      setTimeout(() => {
-        setShowToastMessage(false);
-      }, 1100);
     }
     setLoginPending(false);
   };
@@ -132,10 +121,6 @@ const Login: FC<LoginProps> = ({ navigation }) => {
           />
         </View>
       </ScrollView>
-      {loginPending && <Spinner />}
-      {showToastMessage && (
-        <CustomToaster errorLogin={errorMessage} success={false} />
-      )}
     </>
   );
 };
