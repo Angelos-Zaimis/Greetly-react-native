@@ -1,5 +1,5 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import React, { FC, useCallback, useEffect,  useMemo, useState } from 'react';
+import { useWindowDimensions, View, StyleSheet} from 'react-native';
 import { useLanguage } from '../components/util/LangContext';
 import { useBookmarks } from '../components/hooks/useBookmarks';
 import { useInformation } from '../components/hooks/useInformation';
@@ -64,9 +64,9 @@ const Informations: FC<InformationsProps> = ({ route, navigation }) => {
   useEffect(() => {
     mutateBookmark();
   }, [deleteBookmark, addToBookmark, mutateBookmark]);
-
+  console.log(information)
   return (
-    <>
+    <View style={styles.container}>
       <ImageSection imageUri={isTabletMode ? table_image : image} isTabletMode={isTabletMode} screenHeight={SCREEN_HEIGHT} />
       <HeaderSection
         onNavigateBack={handleNavigationBack}
@@ -76,10 +76,18 @@ const Informations: FC<InformationsProps> = ({ route, navigation }) => {
         isTabletMode={isTabletMode}
         t={t}
       />
-      <ContentList content={information?.content?.content || []} navigation={navigation} isTabletMode={isTabletMode} />
+      <ContentList content={information?.content ?? []} navigation={navigation} isTabletMode={isTabletMode} />
       <ToastMessage showToast={showToastMessage} success={successToast} />
-    </>
+    </View>
   );
 };
 
+
 export default Informations;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  }
+})

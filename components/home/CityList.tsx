@@ -29,7 +29,7 @@ const CityList: FC<CityListProps> = ({ sortedCities, navigation, opacity, setReg
           style={styles.imageContainer}
         >
           <View style={styles.cantonIconContainer}>
-            <Image source={{ uri: item.cantons_flag }} style={styles.cantonIcon} />
+            <Image source={{ uri: item.cantons_flag }}  style={styles.cantonIcon} />
           </View>
           <Image style={styles.image} source={{ uri: item.image }} />
         </TouchableOpacity>
