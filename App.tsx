@@ -3,7 +3,6 @@ import useSplashScreen from "./splashScreen/SplashScreen";
 import RootNavigation from "./navigation";
 import { AuthProvider } from "./components/auth/AuthContext";
 import { LanguageProvider } from "./components/util/LangContext";
-import { LogBox } from "react-native";
 
 
 export default function App() {

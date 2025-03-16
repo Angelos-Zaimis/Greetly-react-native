@@ -19,16 +19,17 @@ const SWRConfigProvider = ({ children }: SWRConfigProps) => {
 
     return fetch(url, { headers }).then((res) => res.json());
   };
-
+  
   const swrConfig = {
     revalidateOnMount: true,
-    revalidateOnFocus: false,
+    revalidateOnFocus: true,
     revalidateOnReconnect: false,
     refreshWhenOffline: false,
     refreshWhenHidden: false,
     refreshInterval: 0,
     fetcher,
   };
+  
 
   return <SWRConfig value={swrConfig}>{children}</SWRConfig>;
 };

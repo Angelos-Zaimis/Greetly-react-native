@@ -7,7 +7,6 @@ type BookmarksListProps = {
   isTabletMode: boolean;
   handleShowBookmark: (item) => void;
   deleteToBookmark: (bookmarkId: string) => void;
-  setIsNotSubscribed: (value: boolean) => void;
 };
 
 const BookmarksList: FC<BookmarksListProps> = ({
@@ -15,7 +14,6 @@ const BookmarksList: FC<BookmarksListProps> = ({
   isTabletMode,
   handleShowBookmark,
   deleteToBookmark,
-  setIsNotSubscribed,
 }) => {
   return (
     <View
@@ -31,7 +29,6 @@ const BookmarksList: FC<BookmarksListProps> = ({
             isTabletMode={isTabletMode}
             handleShowBookmark={handleShowBookmark}
             deleteToBookmark={deleteToBookmark}
-            setIsNotSubscribed={setIsNotSubscribed}
           />
         )}
         keyExtractor={(item) => item?.id}

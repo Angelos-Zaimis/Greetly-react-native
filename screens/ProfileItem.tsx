@@ -28,6 +28,7 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
   const { status, language, country } = route.params;
   const { t } = useLanguage();
   const { user: userInfo, updateUserProfile, refetchUser } = useSelf();
+
   const [selectedCountry, setSelectedCountry] = useState<string>(country ?? '');
   const [selectedLanguage, setSelectedLanguage] = useState<string>(language ?? '');
   const [selectedStatus, setSelectedStatus] = useState<string>(status ?? '');
@@ -36,16 +37,10 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
   const [toastText, setToastText] = useState<string>('');
 
   const { width: SCREENWIDTH } = useWindowDimensions();
-
   const isTabletMode = useMemo(() => SCREENWIDTH > 700, [SCREENWIDTH]);
 
-  const handleNavigationBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
-
-  const handleCancel = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+  const handleNavigationBack = useCallback(() => navigation.goBack(), [navigation]);
+  const handleCancel = useCallback(() => navigation.goBack(), [navigation]);
 
   const getCountryLanguage = useCallback(
     (languageCode: string) => {
@@ -55,52 +50,66 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
     []
   );
 
+  const updateCountry = async (): Promise<boolean> => {
+    if (country && country !== selectedCountry) {
+      await updateUserProfile({
+        email: userInfo?.user,
+        country: selectedCountry,
+      });
+      setToastText('Country');
+      return true;
+    }
+    return false;
+  };
+
+  const updateLanguage = async (): Promise<boolean> => {
+    if (language && language !== selectedLanguage) {
+      await updateUserProfile({
+        email: userInfo?.user,
+        language: selectedLanguage,
+      });
+      setToastText('Language');
+      return true;
+    }
+    return false;
+  };
+
+  const updateStatus = async (): Promise<boolean> => {
+    if (status && status !== selectedStatus) {
+      await updateUserProfile({
+        email: userInfo?.user,
+        status: selectedStatus,
+      });
+      setToastText('Occupation');
+      return true;
+    }
+    return false;
+  };
+
   const handleChange = async () => {
     let updated = false;
     try {
-      if (country && country !== selectedCountry) {
-        await updateUserProfile({
-          email: userInfo?.user,
-          country: selectedCountry,
-        });
-        setToastText('Country');
-        updated = true;
-      }
-      if (language && language !== selectedLanguage) {
-        await updateUserProfile({
-          email: userInfo?.user,
-          language: selectedLanguage,
-        });
-        setToastText('Language');
-        updated = true;
-      }
-      if (status && status !== selectedStatus) {
-        await updateUserProfile({
-          email: userInfo?.user,
-          status: selectedStatus,
-        });
-        setToastText('Occupation');
-        updated = true;
-      }
+      const countryUpdated = await updateCountry();
+      const languageUpdated = await updateLanguage();
+      const statusUpdated = await updateStatus();
+
+      updated = countryUpdated || languageUpdated || statusUpdated;
+
       if (updated) {
-        setShowToastMessage(true);
         setSuccessToast(true);
       } else {
-        setShowToastMessage(true);
         setSuccessToast(false);
+        setToastText('Nothing');
       }
+
+      setShowToastMessage(true);
       await refetchUser();
-      setShowToastMessage(true);
-      setSuccessToast(true);
-      setTimeout(() => {
-        setShowToastMessage(false);
-      },300);
     } catch (error) {
-      setShowToastMessage(true);
       setSuccessToast(false);
-      setTimeout(() => {
-        setShowToastMessage(false);
-      }, 1100);
+      setToastText('Update');
+      setShowToastMessage(true);
+    } finally {
+      setTimeout(() => setShowToastMessage(false), 1100);
     }
   };
 
@@ -112,23 +121,13 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
           <View style={isTabletMode ? styles.iconContainerTablet : styles.iconContainer}>
             <Entypo name="edit" size={isTabletMode ? 70 : 60} color="black" />
           </View>
+
           <View style={isTabletMode ? styles.titleContainerTablet : styles.titleContainer}>
-            {language && (
-              <Text style={isTabletMode ? styles.titleTablet : styles.title}>
-                {t('changeLanguage')}
-              </Text>
-            )}
-            {status && (
-              <Text style={isTabletMode ? styles.titleTablet : styles.title}>
-                {t('changeOccupation')}
-              </Text>
-            )}
-            {country && (
-              <Text style={isTabletMode ? styles.titleTablet : styles.title}>
-                {t('changethecountryoforigin')}
-              </Text>
-            )}
+            {language && <Text style={isTabletMode ? styles.titleTablet : styles.title}>{t('changeLanguage')}</Text>}
+            {status && <Text style={isTabletMode ? styles.titleTablet : styles.title}>{t('changeOccupation')}</Text>}
+            {country && <Text style={isTabletMode ? styles.titleTablet : styles.title}>{t('changethecountryoforigin')}</Text>}
           </View>
+
           {country && (
             <InputField
               label={t('country')}
@@ -142,9 +141,7 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
           {language && (
             <InputField
               label={t('language')}
-              value={
-                selectedLanguage ? getCountryLanguage(selectedLanguage) : getCountryLanguage(language)
-              }
+              value={selectedLanguage ? getCountryLanguage(selectedLanguage) : getCountryLanguage(language)}
               placeholder={t('Selectyourlanguage')}
               data={languages.map((l) => ({ label: l.countryLanguage, value: l.language }))}
               onSelect={setSelectedLanguage}
@@ -161,6 +158,7 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
               isTabletMode={isTabletMode}
             />
           )}
+
           <View style={isTabletMode ? styles.buttonContainerTablet : styles.buttonContainer}>
             <SaveButton handlePress={handleChange} isTabletMode={isTabletMode} />
             <TouchableOpacity
@@ -177,11 +175,7 @@ const ProfileItem: FC<ProfileItemProps> = ({ route, navigation }) => {
       {showToastMessage && (
         <CustomToaster
           success={successToast}
-          message={
-            successToast
-              ? `${toastText} Update Successful!`
-              : `${toastText} Update failed`
-          }
+          message={successToast ? `${toastText} Update Successful!` : `${toastText} Update failed`}
         />
       )}
     </SafeAreaView>

@@ -5,16 +5,19 @@ import { useLanguage } from '../util/LangContext';
 
 type PrivacyPolicyProps = {
   handleClose: () => void;
+  hideButton?: boolean;
 };
 
-const PrivacyPolicy: FC<PrivacyPolicyProps> = ({ handleClose }) => {
+const PrivacyPolicy: FC<PrivacyPolicyProps> = ({ handleClose, hideButton }) => {
   const {t} = useLanguage();
 
   return (
     <View style={styles.modalContainer}>
-      <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-        <AntDesign name="close" size={24} color="#333" />
-      </TouchableOpacity>
+      {!hideButton && (
+        <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
+          <AntDesign name="close" size={24} color="#333" />
+        </TouchableOpacity>
+      )}
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Text style={styles.title}>{t('privacyPolicyTitle')}</Text>

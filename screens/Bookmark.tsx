@@ -41,7 +41,7 @@ const Bookmark: FC<BookmarkProps> = ({ route, navigation }) => {
     <View style={styles.container}>
       <ImageSection imageUri={image} isTabletMode={isTabletMode} />
       <Header title={t(title)} onBackPress={handleNavigationBack} isTabletMode={isTabletMode} />
-      <ContentList contentItems={information?.content?.content || []} navigation={navigation} />
+      <ContentList contentItems={information?.content ?? []} navigation={navigation} />
     </View>
   );
 };

@@ -5,37 +5,32 @@ import { AuthContext } from "../auth/AuthContext";
 import axios from "axios";
 
 export const useSelf = () => {
-  const {userId, accessToken} = useContext(AuthContext);
-
-  const { data: user, error, mutate: refetchUser} = useSWR(
-    userId ? `${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}` : null
+  const { userId, accessToken } = useContext(AuthContext);
+  
+  const { data: user, error, mutate: refetchUser } = useSWR(
+    userId ? [AppURLS.middlewareInformationURL, userId] : null,
+    async () => {
+      const response = await fetch(`${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}`, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      });
+      return response.json();
+    }
   );
 
   const updateUserProfile = async (userData) => {
-    try {
-      const response = await axios.put(
-        `${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}`,
-        userData,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
-          },
-        }
-      );
-  
-      return response.data;
-    } catch (error) {
-      console.error("Error updating profile:", error.response?.data || error.message);
-      throw error;
-    }
+    const response = await axios.put(
+      `${AppURLS.middlewareInformationURL}/auth/user/?user_id=${userId}`,
+      userData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      }
+    );
+    refetchUser();
+    return response.data;
   };
-  
 
-  return {
-    user,
-    error,
-    updateUserProfile,
-    refetchUser
-  };
+  return { user, error, updateUserProfile, refetchUser };
 };

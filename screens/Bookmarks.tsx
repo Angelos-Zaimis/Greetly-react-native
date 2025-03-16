@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { useBookmarks } from '../components/hooks/useBookmarks';
-import { useSelf } from '../components/hooks/useSelf';
 import BookmarksList from '../components/bookmarks/BookmarkList';
 import NoBookmarks from '../components/bookmarks/NoBookmarks';
 import Header from '../components/bookmarks/Header';
@@ -19,10 +18,6 @@ type BookmarksProps = {
 
 const Bookmarks: FC<BookmarksProps> = ({ navigation }) => {
   const { bookmarks, deleteBookmark } = useBookmarks();
-  const { user: userInfo } = useSelf();
-  const [isNotSubscribed, setIsNotSubscribed] = useState<boolean>(false);
-  const [opacity] = useState(new Animated.Value(0));
-
   const { width: SCREENWIDTH } = useWindowDimensions();
 
   const isTabletMode = useMemo(() => SCREENWIDTH > 700, [SCREENWIDTH]);
@@ -49,21 +44,6 @@ const Bookmarks: FC<BookmarksProps> = ({ navigation }) => {
     [navigation]
   );
 
-  useEffect(() => {
-    if (isNotSubscribed) {
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
-    }
-  }, [isNotSubscribed, opacity]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -74,7 +54,6 @@ const Bookmarks: FC<BookmarksProps> = ({ navigation }) => {
           isTabletMode={isTabletMode}
           handleShowBookmark={handleShowBookmark}
           deleteToBookmark={deleteToBookmark}
-          setIsNotSubscribed={setIsNotSubscribed}
         />
       ) : (
         <NoBookmarks isTabletMode={isTabletMode} />

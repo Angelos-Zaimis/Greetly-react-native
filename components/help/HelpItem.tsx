@@ -6,7 +6,11 @@ import { useLanguage } from '../util/LangContext';
 const HelpItem = ({ item, handleOpenTeamMembers, selectedCanton, isTablet }) => {
   const {t} = useLanguage();
   return (
-    <TouchableOpacity onPress={() => handleOpenTeamMembers(item.type, item.text, selectedCanton)} style={isTablet ? styles.cellTablet : styles.cell}>
+    <TouchableOpacity onPress={() => {
+      if (!selectedCanton) return;
+
+      handleOpenTeamMembers(item.type, item.text, selectedCanton);
+    }} style={isTablet ? styles.cellTablet : styles.cell}>
     <Image style={styles.cellImage} source={item.icon} />
     <Text style={isTablet ? styles.overlayTextTablet : styles.overlayText}>{t(item.text)}</Text>
   </TouchableOpacity>

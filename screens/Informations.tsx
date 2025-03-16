@@ -64,7 +64,7 @@ const Informations: FC<InformationsProps> = ({ route, navigation }) => {
   useEffect(() => {
     mutateBookmark();
   }, [deleteBookmark, addToBookmark, mutateBookmark]);
-  console.log(information)
+  
   return (
     <View style={styles.container}>
       <ImageSection imageUri={isTabletMode ? table_image : image} isTabletMode={isTabletMode} screenHeight={SCREEN_HEIGHT} />

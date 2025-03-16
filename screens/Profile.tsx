@@ -95,7 +95,7 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
         />
         <SignOutButton isTabletMode={isTabletMode} onConfirm={handleLogout} />
         <View style={isTabletMode ? styles.lineTablet : styles.line}></View>
-        <TermsList isTabletMode={isTabletMode} />
+        <TermsList isTabletMode={isTabletMode} navigation={navigation} />
         <DeleteAccountButton isTabletMode={isTabletMode} onConfirm={handleDeleteAccount} />
       </SafeAreaView>
     </ScrollView>

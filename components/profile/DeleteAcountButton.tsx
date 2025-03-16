@@ -39,7 +39,7 @@ const DeleteAccountButton: FC<DeleteAccountButtonProps> = ({ isTabletMode, onCon
 
 const styles = StyleSheet.create({
   delete: {
-    marginTop: 15,
+    marginTop: 20,
     marginBottom: 40,
     flexDirection: 'row',
     alignItems: 'center',

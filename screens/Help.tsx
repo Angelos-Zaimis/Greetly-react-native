@@ -44,9 +44,7 @@ const Help: FC<HelpProps> = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, Platform.OS === 'android' && { paddingTop: 25 }]}>
       <HelpHeader text={text} t={t} isTablet={isTabletMode} />
-      {!isTabletMode && (
         <DropdownComponent cantons={cantons} selectedCanton={selectedCanton} setSelectedCanton={setSelectedCanton} />
-      )}
       <HelpList data={data} handleOpenTeamMembers={handleOpenTeamMembers} selectedCanton={selectedCanton} isTablet={isTabletMode} />
     </SafeAreaView>
   );
