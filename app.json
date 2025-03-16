@@ -28,20 +28,22 @@
     ],
     "ios": {
       "supportsTablet": true,
+      "deploymentTarget": "18.0",
       "splash": {
         "image": "./assets/images/splash.png",
         "resizeMode": "cover",
         "backgroundColor": "#F06748"
       },
       "config": {
-        "googleMapsApiKey": "AIzaSyBvmov87LzfiRvZy5PJWL6zzGP3QPo6uas"
+        "googleMapsApiKey": "AIzaSyBvmov87LzfiRvZy5PJWL6zzGP3QPo6uas",
       },
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Allow $(PRODUCT_NAME) to access your photos.",
         "NSPhotoLibraryAddUsageDescription": "Allow $(PRODUCT_NAME) to save photos.",
+        "NSLocationWhenInUseUsageDescription": "We use your location to show you relevant local services and experiences.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "bundleIdentifier": "ch.greetly.ch.greetly.ch"
+      "bundleIdentifier": "ch.greetly.ch.greetly"
     },
     "android": {
       "adaptiveIcon": {

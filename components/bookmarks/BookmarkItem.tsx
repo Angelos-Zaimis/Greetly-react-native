@@ -15,7 +15,6 @@ type BookmarkItemProps = {
   isTabletMode: boolean;
   handleShowBookmark: (item) => void;
   deleteToBookmark: (bookmarkId: string) => void;
-  setIsNotSubscribed: (value: boolean) => void;
 };
 
 const BookmarkItem: FC<BookmarkItemProps> = ({
@@ -23,18 +22,13 @@ const BookmarkItem: FC<BookmarkItemProps> = ({
   isTabletMode,
   handleShowBookmark,
   deleteToBookmark,
-  setIsNotSubscribed,
 }) => {
   const { t } = useLanguage();
   const { user: userInfo } = useSelf();
 
   const onPressItem = useCallback(() => {
-    if (userInfo?.isSubscribed) {
-      handleShowBookmark(item);
-    } else {
-      setIsNotSubscribed(true);
-    }
-  }, [userInfo, handleShowBookmark, item, setIsNotSubscribed]);
+    handleShowBookmark(item);
+  }, [userInfo, handleShowBookmark, item]);
 
   return (
     <View

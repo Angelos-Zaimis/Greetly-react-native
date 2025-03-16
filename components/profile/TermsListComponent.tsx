@@ -2,18 +2,19 @@ import React, { FC } from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useLanguage } from '../../components/util/LangContext';
+import { NavigationProp } from '@react-navigation/native';
 
 type TermsListProps = {
   isTabletMode: boolean;
+  navigation: NavigationProp<any>;
+
 };
 
-const TermsList: FC<TermsListProps> = ({ isTabletMode }) => {
+const TermsList: FC<TermsListProps> = ({ isTabletMode, navigation}) => {
   const { t } = useLanguage();
 
   const terms = [
-    { label: t('aboutTheApp'), onPress: () => {} },
-    { label: t('termsOfService'), onPress: () => {} },
-    { label: t('Privacy Policy'), onPress: () => {} },
+    { label: t('Privacy Policy'), onPress: () => navigation.navigate('AppInfo')},
   ];
 
   return (
