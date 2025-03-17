@@ -31,12 +31,6 @@ const Login: FC<LoginProps> = ({ navigation }) => {
   const { login } = useContext(AuthContext);
   const text = 'Sign in now'.split(' ');
   const subtitleCreateAccountText = 'NOT A MEMBER? CREATE AN ACCOUNT'.split(' ');
-  const [showToastMessage, setShowToastMessage] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState({
-    email: '',
-    password: '',
-    message: '',
-  });
 
   const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = useWindowDimensions();
 

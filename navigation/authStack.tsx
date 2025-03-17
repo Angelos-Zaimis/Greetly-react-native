@@ -77,6 +77,7 @@ const AuthStack = () => {
             name="ChangePassword"
             options={{ headerShown: false }}
             component={ChangePassword}
+            initialParams={{isProfilePage: false}}
           />
         </Stack.Navigator>
       </NavigationContainer>

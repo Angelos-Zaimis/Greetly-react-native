@@ -12,8 +12,8 @@ type AuthContextType = {
   login: (body: LoginProps) => Promise<LoginResponse>;
   signUp: (body: SignUpProps) => Promise<{ status: number } | { error: string }>;
   logout: () => void;
-  changePassword: (email: string) => Promise<string | void>;
-  changePasswordVerify: (body: { email: string; code: string; password: string }) => Promise<void>;
+  changePassword: (email: string) => Promise<AxiosResponse<any, any>>;
+  changePasswordVerify: (body: { email: string; code: string; password: string }) => Promise<AxiosResponse<any, any>>;
   deleteAccount: (email: string) => Promise<void>;
   updateToken: () => void;
 }
@@ -168,7 +168,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await axios.patch(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_VERIFY_ENDPOINT}/`, body, {
         headers: { 'Content-Type': 'application/json' },
       });
-      return response.data;
+      return response;
     } catch (error) {
       console.error('Error verifying password change:', error);
       throw error;
@@ -177,10 +177,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const changePassword = async (email: string) => {
     try {
-      const response = await axios.post(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_ENDPOINT}/`, { email }, {
+      const response = await axios.post(`${AppURLS.middlewareInformationURL}/${AUTH_CHANGE_PASSWORD_ENDPOINT}/`, 
+        { email }, {
         headers: { 'Content-Type': 'application/json' },
       });
-      return response.data;
+      console.log(response)
+      return response;
     } catch (error) {
       console.error('Error changing password:', error);
     }

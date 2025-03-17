@@ -10,13 +10,13 @@ import ChangePasswordButton from '../components/changePassword/Button';
 
 type ChangePasswordProps = {
   navigation: NavigationProp<any>;
-  route?: RouteProp<{ params: { inApp: boolean } }>;
+  route: RouteProp<{ params: { inApp?: boolean;} }>;
 };
 
-const ChangePassword: FC<ChangePasswordProps> = ({ navigation, route }) => {
+const ChangePassword: FC<ChangePasswordProps> = ({ navigation, route}) => {
   const { inApp } = route?.params ?? {};
   const [email, setEmail] = useState<string>('');
-  const [response, setResponse] = useState<string>('');
+  const [response, setResponse] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
   const [password, setNewPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,12 +41,12 @@ const ChangePassword: FC<ChangePasswordProps> = ({ navigation, route }) => {
       const res = await changePassword(email);
 
       if (
-        res.message ===
-        'Check your emails, you have received a code to change your password'
-      ) {
-        setResponse(res.message);
+        res.status === 200)
+        {
+        setResponse(true);
+        Alert.alert('Check your emails, you have received a code to change your password');
+
       }
-      Alert.alert(res.message);
     } catch (error) {
       console.log(error);
     }
@@ -57,9 +57,15 @@ const ChangePassword: FC<ChangePasswordProps> = ({ navigation, route }) => {
     setLoading(true);
     try {
       const res = await changePasswordVerify({ email, code, password });
-      if (res?.message === 'Password changed successfully.') {
-        navigation.navigate('Login');
+
+      if (res.status === 200) {
+        if (inApp){
+          navigation.navigate('Profile');
+        } else {
+          navigation.navigate('Login');
+        }
       }
+
       return res;
     } catch (error) {
       console.log(error);
@@ -70,7 +76,6 @@ const ChangePassword: FC<ChangePasswordProps> = ({ navigation, route }) => {
   const handleNavigationBack = useCallback(() => {
     navigation.goBack();
   }, [navigation]);
-
   return (
     <SafeAreaView
       style={[styles.container, Platform.OS === 'android' && { paddingTop: 25 }]}
